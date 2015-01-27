@@ -1,0 +1,3 @@
+D:\Users\engineer\Documents\Visual Studio 2012\Projects\IridiumTheme\Xtender\obj\Release\Iridium.csprojResolveAssemblyReference.cache
+D:\Users\engineer\Documents\Visual Studio 2012\Projects\IridiumTheme\Xtender\obj\Release\Iridium.Resources.resources
+D:\Users\engineer\Documents\Visual Studio 2012\Projects\IridiumTheme\Xtender\obj\Release\Iridium.csproj.GenerateResource.Cache

@@ -1,0 +1,8 @@
+D:\Users\engineer\Documents\Visual Studio 2012\Projects\IridiumTheme\IridiumTheme\obj\Debug\Iridium.csprojResolveAssemblyReference.cache
+D:\Users\engineer\Documents\Visual Studio 2012\Projects\IridiumTheme\IridiumTheme\obj\Debug\Iridium.Resources.resources
+D:\Users\engineer\Documents\Visual Studio 2012\Projects\IridiumTheme\IridiumTheme\obj\Debug\Iridium.csproj.GenerateResource.Cache
+D:\Users\engineer\Documents\Visual Studio 2012\Projects\IridiumTheme\IridiumTheme\bin\Debug\Iridium.dll
+D:\Users\engineer\Documents\Visual Studio 2012\Projects\IridiumTheme\IridiumTheme\bin\Debug\Iridium.pdb
+D:\Users\engineer\Documents\Visual Studio 2012\Projects\IridiumTheme\IridiumTheme\bin\Debug\MediaBrowser.Model.dll
+D:\Users\engineer\Documents\Visual Studio 2012\Projects\IridiumTheme\IridiumTheme\obj\Debug\Iridium.dll
+D:\Users\engineer\Documents\Visual Studio 2012\Projects\IridiumTheme\IridiumTheme\obj\Debug\Iridium.pdb
