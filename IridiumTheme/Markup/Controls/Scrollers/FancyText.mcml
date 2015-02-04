@@ -1,106 +1,75 @@
 <Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
 	  xmlns:cor="assembly://MSCorLib/System"
     xmlns:a="assembly://MediaBrowser/MediaBrowser"
+      xmlns:is="file://Iridium_Styles.mcml"
     xmlns:me="Me">
-
-
 
   <UI Name="FancyText">
     <Properties>
-      <Font        Name="Font"              Font="Neutra Text, 24"/>
+      <Font        Name="Font"              Font="font://is:SmallRALTitleText"/>
       <Color       Name="Color"             Color="White"/>
-      <cor:String  Name="Content"           String="This text will marquee scroll across the screen slowly." />
+      <cor:String  Name="Content"           String="" />
       <cor:Int32   Name="AvailableSpaceInt" Int32="250" />
       <cor:Boolean Name="AllowMarquee"      Boolean="true"/>
       <cor:Boolean Name="HasFocus"          Boolean="false"/>
-      <a:FancyTextHelper Name="fth"/>
     </Properties>
 
     <Locals>
       <cor:Single Name="AvailableSpace" />
       <cor:Int32 Name="DynamicDisplay" Int32="0" />
+      <a:FancyTextHelper Name="fth"/>
     </Locals>
 
 
     <Rules>
-
       <!-- Content string-->
       <Binding Source="[Content]" Target="[Label.Content]" />
       <Binding Source="[Content]" Target="[FancyLabel.Content]" />
       <Binding Source="[fth.ABC]" Target="[DynamicDisplay]" />
 
-      <Condition Source="[DynamicDisplay]" SourceValue="0" Target="[Label.Visible]" Value="true" />
+      <!--<Condition Source="[DynamicDisplay]" SourceValue="0" Target="[Label.Visible]" Value="true" />
       <Condition Source="[DynamicDisplay]" SourceValue="0" Target="[FancyLabel.Visible]" Value="false" />
       <Condition Source="[DynamicDisplay]" SourceValue="1" Target="[Label.Visible]" Value="false" />
-      <Condition Source="[DynamicDisplay]" SourceValue="1" Target="[FancyLabel.Visible]" Value="true" />
-
-      <!--<Binding Source="[fth.UseDynamic]" Target="[Label.Visible]" >
-        <Transformer>
-          <BooleanTransformer Inverse="true"/>
-        </Transformer>
-      </Binding>
-      
-      <Binding Source="[fth.UseDynamic]" Target="[FancyLabel.Visible]" />-->
-
+      <Condition Source="[DynamicDisplay]" SourceValue="1" Target="[FancyLabel.Visible]" Value="true" />-->
 
       <Default Target="[fth.FontName]" Value="[Font.FontName]"/>
       <Default Target="[fth.FontSize]" Value="[Font.FontSize]"/>
       <Default Target="[fth.FontStyle]" Value="[Font.FontStyle]"/>
       <Default Target="[fth.MaximumWidthInt]" Value="[AvailableSpaceInt]"/>
 
-      <Rule>
+      <Rule ConditionLogicalOp="And">
         <Conditions>
-          <Modified Source="[Content]"/>
+          <Modified Source="[Content]" InitialEvaluate="true"/>
+          <Equality Source="[AllowMarquee]"  ConditionOp="Equals" Value="true"/>
         </Conditions>
         <Actions>
           <Set Target="[fth.Content]" Value="[Content]"/>
-          <!--<Set Target="[FancyTextHelper.FontName]" Value="[Font.FontName]"/>
-          <Set Target="[FancyTextHelper.FontSize]" Value="[Font.FontSize]"/>
-          <Set Target="[FancyTextHelper.FontStyle]" Value="[Font.FontStyle]"/>
-
-         <Set Target="[FancyTextHelper.MaximumWidthInt]" Value="[AvailableSpaceInt]" />
-
-          <Invoke Target="[FancyTextHelper.CalculateDisplay]" />-->
-          <!--
-          <Set Target="[AvailableSpace]" Value="[FancyTextHelper.MaximumWidth]" />
-          <Set Target="[FancyLabel.AvailableSpace]" Value="[FancyTextHelper.MaximumWidth]" />-->
+          <Set Target="[FancyLabel.AvailableSpace]" Value="[AvailableSpaceInt!cor:Single]"/>
+          <Invoke Target="[fth.CalculateDisplay]" />
           <Invoke Target="[FancyLabel.ForceRefresh]" />
         </Actions>
       </Rule>
 
-
-      <!--<Rule>
+      <Rule>
         <Conditions>
-          <Equality Source="[AllowMarquee]" ConditionOp="Equals" Value="true"/>
+          <Equality Source="[HasFocus]" ConditionOp="Equals" Value="true" />
+          <Equality Source="[DynamicDisplay]" ConditionOp="Equals" Value="1" />
         </Conditions>
-        <Actions>          
-          <Set Target="[FancyTextHelper.MaximumWidthInt]" Value="[AvailableSpaceInt]"/>
-          <Set Target="[AvailableSpace]" Value="[FancyTextHelper.MaximumWidth]"/>
-          <Set Target="[FancyLabel.AvailableSpace]" Value="[FancyTextHelper.MaximumWidth]"/>
-          <Invoke Target="[FancyLabel.ForceRefresh]"/>
-          <Set Target="[FancyTextHelper.Content]" Value="[Content]"/>
-          <Set Target="[FancyTextHelper.FontName]" Value="[Font.FontName]"/>
-          <Set Target="[FancyTextHelper.FontSize]" Value="[Font.FontSize]"/>
-          <Set Target="[FancyTextHelper.FontStyle]" Value="[Font.FontStyle]"/>
+        <Actions>
+          <Set Target="[Label.Visible]" Value="false" />
+          <Set Target="[FancyLabel.Visible]" Value="true" />
         </Actions>
-      </Rule>-->
-
-      <!-- Determine if static or dynamic display should be used based on shouldscroll property -->
-
-
-
+      </Rule>
 
     </Rules>
 
     <Content>
       <Panel>
         <Children>
-          <Clip Visible="true" FadeSize="20" FadeAmount="0.8" Orientation="Vertical">
-            <Children>
-              <Text Name="Label" Color="[Color]" Font="[Font]" Content="[Content]"/>
-              <me:FancyTextAnimated Visible="false" AvailableSpace="[AvailableSpace]" Name="FancyLabel" Color="[Color]" Font="[Font]" Content="[Content]"/>
-            </Children>
-          </Clip>
+          <Text Name="Label" Visible="true" Color="[Color]" Font="[Font]" Content="[Content]"/>
+          <me:FancyTextAnimated Visible="false" AvailableSpace="[AvailableSpace]"
+                                Name="FancyLabel" Color="[Color]" Font="[Font]" Content="[Content]"/>
+
         </Children>
       </Panel>
     </Content>
@@ -108,7 +77,7 @@
 
   <UI Name="FancyTextAnimated">
     <Properties>
-      <Font       Name="Font"           Font="Neutra Text Demi, 24"/>
+      <Font       Name="Font"           Font="Segoe Media Center Semibold, 24"/>
       <Color      Name="Color"          Color="White"/>
       <cor:String Name="Content"        String="This text will marquee scroll across the screen slowly." />
       <cor:Single Name="AvailableSpace" Single="800" />
@@ -119,70 +88,64 @@
     <Content>
       <Scroller Orientation="Horizontal" FadeSize="-2" Margins="2,0,2,0" >
         <Children>
-          <Clip Visible="true" FadeSize="20" FadeAmount="0.8" Orientation="Vertical">
-            <Children>
-              <Text FadeSize="10" Name="Label" Content="[Content]" Font="[Font]" Color="[Color]">
-
-                <!--<Text Name="Label"  Color="[Color]" Font="[Font]" Content="[Content]" >-->
-                <Animations>
-                  <!-- Our animation will be a merger of a couple of different  -->
-                  <!-- components.                                              -->
-                  <MergeAnimation Name="FancyTextAnimation">
-                    <Sources>
-                      <!-- This is the first part of the animation, where the   -->
-                      <!-- text is totally still.  We don't want to have this   -->
-                      <!-- part time shifted like the rest.                     -->
-                      <Animation>
-                        <Keyframes>
-                          <PositionKeyframe Time="0.0"/>
-                          <PositionKeyframe Time="1"/>
-                          <AlphaKeyframe Time="0.0" Value="1.0"/>
-                        </Keyframes>
-                      </Animation>
-                      <!-- Take our position animation and delay it by some     -->
-                      <!-- fraction the text size.  This ensures that varying   -->
-                      <!-- text lengths have a similar scroll speed.            -->
-                      <TransformByAttributeAnimation Attribute="Width" Delay="0.0100">
+          <Text Name="Label"  Color="[Color]" Font="[Font]" Content="[Content]" >
+            <Animations>
+              <!-- Our animation will be a merger of a couple of different  -->
+              <!-- components.                                              -->
+              <MergeAnimation Name="FancyTextAnimation">
+                <Sources>
+                  <!-- This is the first part of the animation, where the   -->
+                  <!-- text is totally still.  We don't want to have this   -->
+                  <!-- part time shifted like the rest.                     -->
+                  <Animation>
+                    <Keyframes>
+                      <PositionKeyframe Time="0.0"/>
+                      <PositionKeyframe Time="1"/>
+                      <AlphaKeyframe Time="0.0" Value="1.0"/>
+                    </Keyframes>
+                  </Animation>
+                  <!-- Take our position animation and delay it by some     -->
+                  <!-- fraction the text size.  This ensures that varying   -->
+                  <!-- text lengths have a similar scroll speed.            -->
+                  <TransformByAttributeAnimation Attribute="Width" Delay="0.0100">
+                    <ValueTransformer>
+                      <MathTransformer Subtract="[AvailableSpace]"/>
+                    </ValueTransformer>
+                    <Source>
+                      <!-- Take our unit-vector (0 to 1) position animation -->
+                      <!-- and magnify it by the width of our text content. -->
+                      <TransformByAttributeAnimation Attribute="Width"
+                                                     Magnitude="1"
+                                                     Filter="Position">
                         <ValueTransformer>
                           <MathTransformer Subtract="[AvailableSpace]"/>
                         </ValueTransformer>
                         <Source>
-                          <!-- Take our unit-vector (0 to 1) position animation -->
-                          <!-- and magnify it by the width of our text content. -->
-                          <TransformByAttributeAnimation Attribute="Width"
-                                                         Magnitude="1"
-                                                         Filter="Position">
-                            <ValueTransformer>
-                              <MathTransformer Subtract="[AvailableSpace]"/>
-                            </ValueTransformer>
-                            <Source>
-                              <!-- The source animation is a position loop.     -->
-                              <!-- Note that it doesn't include the beginning   -->
-                              <!-- keyframes, because we don't want them time   -->
-                              <!-- shifted.                                     -->
-                              <Animation Type="Idle" Loop="-1">
-                                <Keyframes>
-                                  <PositionKeyframe Time="0.80" Value="-1,0,0"/>
-                                  <PositionKeyframe Time="1.70" Value="-1,0,0"/>
-                                  <PositionKeyframe Time="1.75" Value="0,0,0"/>
-                                  <PositionKeyframe Time="2.50" Value="0,0,0"/>
-                                  <AlphaKeyframe Time="1.00" Value="1.0"/>
-                                  <AlphaKeyframe Time="1.70" Value="0.0"/>
-                                  <AlphaKeyframe Time="1.75" Value="0.0"/>
-                                  <AlphaKeyframe Time="1.95" Value="1.0"/>
-                                  <AlphaKeyframe Time="2.50" Value="1.0"/>
-                                </Keyframes>
-                              </Animation>
-                            </Source>
-                          </TransformByAttributeAnimation>
+                          <!-- The source animation is a position loop.     -->
+                          <!-- Note that it doesn't include the beginning   -->
+                          <!-- keyframes, because we don't want them time   -->
+                          <!-- shifted.                                     -->
+                          <Animation Type="Idle" Loop="-1">
+                            <Keyframes>
+                              <PositionKeyframe Time="0.80" Value="-1,0,0"/>
+                              <PositionKeyframe Time="1.70" Value="-1,0,0"/>
+                              <PositionKeyframe Time="1.75" Value="0,0,0"/>
+                              <PositionKeyframe Time="2.50" Value="0,0,0"/>
+                              <AlphaKeyframe Time="1.00" Value="1.0"/>
+                              <AlphaKeyframe Time="1.70" Value="0.0"/>
+                              <AlphaKeyframe Time="1.75" Value="0.0"/>
+                              <AlphaKeyframe Time="1.95" Value="1.0"/>
+                              <AlphaKeyframe Time="2.50" Value="1.0"/>
+                            </Keyframes>
+                          </Animation>
                         </Source>
                       </TransformByAttributeAnimation>
-                    </Sources>
-                  </MergeAnimation>
-                </Animations>
-              </Text>
-            </Children>
-          </Clip>
+                    </Source>
+                  </TransformByAttributeAnimation>
+                </Sources>
+              </MergeAnimation>
+            </Animations>
+          </Text>
         </Children>
       </Scroller>
     </Content>

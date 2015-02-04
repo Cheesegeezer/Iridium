@@ -1,30 +1,31 @@
 <Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
-	  xmlns:cor="assembly://MSCorLib/System"
-    xmlns:a="assembly://MediaBrowser/MediaBrowser"
-    xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
-    xmlns:an="resx://MediaBrowser/MediaBrowser.Resources/Animations"
-    xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
-    xmlns:siw="resx://MediaBrowser/MediaBrowser.Resources/StudioImages"
-    xmlns:it="resx://Iridium/Iridium.Resources/Images"
-    xmlns:s="file://Styles_DoNotEdit.mcml"
-	  xmlns:f="file://Fonts_DoNotEdit.mcml"
-    xmlns:xs="file://Iridium_Styles.mcml"
-    xmlns:sr="resx://Iridium/Iridium.Resources/StarRating"
-    xmlns:mip="resx://MediaBrowser/MediaBrowser.Resources/MediaInfoPanel"      
-    xmlns:ih="assembly://Iridium/Iridium"
-    xmlns:st="resx://Iridium/Iridium.Resources/AutoScrollableText"
-    xmlns:lv="resx://Iridium/Iridium.Resources/LabelValue"
-    xmlns:mpaa="resx://MediaBrowser/MediaBrowser.Resources/MPAARating"
-    xmlns:pb="resx://Iridium/Iridium.Resources/PersonButton"
-    xmlns:si="resx://Iridium/Iridium.Resources/SpeakerInfo"
-    xmlns:esrb="resx://Iridium/Iridium.Resources/ESRBRating"
-    xmlns:cb="resx://Iridium/Iridium.Resources/ChapterButton"
-    xmlns:sb="resx://Iridium/Iridium.Resources/SpecialsButton"
-    xmlns:act="assembly://Iridium/Iridium.Actors"
-    xmlns:actp="resx://Iridium/Iridium.Resources/ActorPopup"
-    xmlns:als="resx://Iridium/Iridium.Resources/ActorScroller"
-    xmlns:gl="resx://MediaBrowser/MediaBrowser.Resources/GenreList"
-    xmlns:me = "Me">
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:a="assembly://MediaBrowser/MediaBrowser"
+      xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
+      xmlns:an="resx://MediaBrowser/MediaBrowser.Resources/Animations"
+      xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
+      xmlns:siw="resx://MediaBrowser/MediaBrowser.Resources/StudioImages"
+      xmlns:vi="resx://Iridium/Iridium.Resources/Images"
+      xmlns:s="file://Styles_DoNotEdit.mcml"
+      xmlns:f="file://Fonts_DoNotEdit.mcml"
+      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:sr="resx://Iridium/Iridium.Resources/StarRating"
+      xmlns:mip="resx://MediaBrowser/MediaBrowser.Resources/MediaInfoPanel"
+      xmlns:ih="assembly://Iridium/Iridium"
+      xmlns:st="resx://Iridium/Iridium.Resources/AutoScrollableText"
+      xmlns:lv="resx://Iridium/Iridium.Resources/LabelValue"
+      xmlns:mpaa="resx://MediaBrowser/MediaBrowser.Resources/MPAARating"
+      xmlns:pb="resx://Iridium/Iridium.Resources/PersonButton"
+      xmlns:si="resx://Iridium/Iridium.Resources/SpeakerInfo"
+      xmlns:esrb="resx://Iridium/Iridium.Resources/ESRBRating"
+      xmlns:cb="resx://Iridium/Iridium.Resources/ChapterButton"
+      xmlns:sb="resx://Iridium/Iridium.Resources/SpecialsButton"
+      xmlns:act="assembly://Iridium/Iridium.Actors"
+      xmlns:actp="resx://Iridium/Iridium.Resources/ActorPopup"
+      xmlns:als="resx://Iridium/Iridium.Resources/ActorScroller"
+      xmlns:gl="resx://MediaBrowser/MediaBrowser.Resources/GenreList"
+      xmlns:imb="resx://Iridium/Iridium.Resources/ImageButton"
+      xmlns:me="Me">
   
   <UI Name="InfoPanelSelector">
     <Properties>
@@ -70,6 +71,7 @@
           <Set Value="false" Target="[ReviewsItem.Visible]"></Set>
           <Set Value="false" Target="[Chapters.Visible]" />
           <Set Value="false" Target="[Specials.Visible]" />
+          <Set Value="false" Target="[SimilarPanel.Visible]" />
         </Actions>
       </Condition>
 
@@ -80,6 +82,7 @@
           <Set Value="true" Target="[ReviewsItem.Visible]"></Set>
           <Set Value="false" Target="[Chapters.Visible]" />
           <Set Value="false" Target="[Specials.Visible]" />
+          <Set Value="false" Target="[SimilarPanel.Visible]" />
         </Actions>
       </Condition>
 
@@ -90,6 +93,7 @@
           <Set Value="false" Target="[ReviewsItem.Visible]"></Set>
           <Set Value="false" Target="[Chapters.Visible]" />
           <Set Value="false" Target="[Specials.Visible]" />
+          <Set Value="false" Target="[SimilarPanel.Visible]" />
         </Actions>
       </Condition>
 
@@ -100,6 +104,7 @@
           <Set Value="false" Target="[ReviewsItem.Visible]"></Set>
           <Set Value="true" Target="[Chapters.Visible]" />
           <Set Value="false" Target="[Specials.Visible]" />
+          <Set Value="false" Target="[SimilarPanel.Visible]" />
         </Actions>
       </Condition>
 
@@ -110,6 +115,18 @@
           <Set Value="false" Target="[ReviewsItem.Visible]"></Set>
           <Set Value="false" Target="[Chapters.Visible]" />
           <Set Value="true" Target="[Specials.Visible]" />
+          <Set Value="false" Target="[SimilarPanel.Visible]" />
+        </Actions>
+      </Condition>
+      
+      <Condition Source="[Tab]" SourceValue="Similar">
+        <Actions>
+          <Set Value="true" Target="[SimilarPanel.Visible]" />
+          <Set Value="false" Target="[InfoPanels.Visible]"></Set>
+          <Set Value="false" Target="[Actors.Visible]"></Set>
+          <Set Value="false" Target="[ReviewsItem.Visible]"></Set>
+          <Set Value="false" Target="[Chapters.Visible]" />
+          <Set Value="false" Target="[Specials.Visible]" />
         </Actions>
       </Condition>
 
@@ -145,9 +162,9 @@
               <me:ConsoleInfoPanel Name="ConsoleInfoPanel" Item="[Item]" Application="[Application]" ThemeHelper="[ThemeHelper]" Visible="false"></me:ConsoleInfoPanel>
             </Children>
           </Panel>
-          <Panel Name="Actors" Navigation="RememberFocus">
+          <Panel Name="Actors" Navigation="RememberFocus" >
             <Children>
-              <me:ActorList Margins="-20,0,-20,0" Name="ActorScroller" Item="[Item]" Application="[Application]" CurrentIndex="[SelectedActorIndex]" />
+              <me:ActorList  Name="ActorScroller" Item="[Item]" Application="[Application]" CurrentIndex="[SelectedActorIndex]" />
             </Children>
           </Panel>
           <Panel Name="Reviews">
@@ -170,6 +187,12 @@
               <me:SpecialsList Name="SpecialsList" Item="[Item]" Application="[Application]" />
             </Children>
           </Panel>
+
+          <Panel Name="SimilarPanel">
+            <Children>
+              <me:SimilarList Name="SimilarList" Item="[Item]" Application="[Application]" CurrentIndex="[SelectedActorIndex]" />
+            </Children>
+          </Panel>
         </Children>
       </Panel>
     </Content>
@@ -181,19 +204,47 @@
       <ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
       <a:Application Name="Application" Application="$Required" />
     </Properties>
+    
+    <Locals>
+      <Command Name="PlayCommand"/>
+    </Locals>
 
     <Rules>
       
+      <Rule>
+        <Conditions>
+          <Equality Source="[Item.IsPlayable]" ConditionOp="Equals" Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[PlayButton.Visible]" Value="true" />
+        </Actions>
+      </Rule>
+      
+      <Changed Source="[PlayCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[Application.Play]" item="[Item]"/>
+        </Actions>
+      </Changed>
+
+      <!--  STAR RATINGS  -->
+      <Binding Source="[Item.ImdbRating]" Target="[StarRating.Value]" />
+      <Binding Source="[Item.ImdbRating]" Target="[StarRating.ImdbValue]" />
+      <Binding Source="[Item.ImdbRating]" Target="[StarRating.RTValue]" />
+      <Binding Source="[Item.RottenTomatoImage]" Target="[StarRating.RTImage]" />
+       <!--  MPAA RATINGS  -->
+      <Binding Source="[Item.MpaaRating]" Target="[mpaa.Value]"></Binding>
+      
       <Binding Target="[Summary.Text]" Source="[Item.Overview]"></Binding>
       <Binding Source="[Item.PrimaryImage]" Target="[ItemImage.Content]"></Binding>
+      <Binding Source="[Item.PhysicalParent.PrimaryImage]" Target="[SeasonPoster.Content]" >
+        <Conditions>
+          <Equality Source="[Item.ItemTypeString]" ConditionOp="Equals" Value="Episode" />
+        </Conditions>
+      </Binding>
       <Binding Source="[Item.RunningTimeString]" Target="[SideInfo.Value]"></Binding>
-      <Binding Source="[Item.MpaaRating]" Target="[mpaa.Value]"></Binding>
-
-      <!-- IMDB RATINGS VALUES -->
-      <Binding Source="[Item.ImdbRating]" Target="[StarRating.Value]"></Binding>
-      <Binding Source="[Item.ImdbRating]" Target="[StarRating.ImdbValue]"></Binding>
-      <Binding Source="[Item.CriticRating]" Target="[StarRating.RTValue]" />
-      <Binding Source="[Item.RottenTomatoImage]" Target="[StarRating.RTImage]" />
+      
+      <Default Value="Runtime: " Target="[SideInfo.Label]"></Default>
+      
       <!-- Watched Indicator -->
       <Rule>
         <Conditions>
@@ -207,10 +258,10 @@
       
       
 
-      <Default Value="[Application.LocalStrings.#RunsStr!cor:String] " Target="[SideInfo.Label]"></Default>
+      
 
-      <Binding Source="[ThemeHelper.EndTime]" Target="[SideInfo1.Value]"></Binding>
-      <Default Value=" [Application.LocalStrings.#EndStr!cor:String] " Target="[SideInfo1.Label]"></Default>
+      <!--<Binding Source="[ThemeHelper.EndTime]" Target="[SideInfo1.Value]"></Binding>
+      <Default Value=" [Application.LocalStrings.#EndStr!cor:String] " Target="[SideInfo1.Label]"></Default>-->
 
       <!--IMAGE PLACEMENT IF ITS POSTER OR THUMB-->
       <Rule>
@@ -218,11 +269,13 @@
           <Equality Source="[Item.ItemTypeString]" ConditionOp="Equals" Value="Episode"/>
         </Conditions>
         <Actions>
-          <Set Target="[ItemImage.Margins]" Value="-100,25,0,0" />
+          <Set Target="[ItemImage.Visible]" Value="true" />
+          <Set Target="[SeasonPoster.Visible]" Value="true" />
+          <Set Target="[ItemImage.Margins]" Value="1000,140,0,0" />
           <Set Target="[Summary.Margins]" Value="25,0,0,0" />
-          <Set Target="[Title.Margins]" Value="10,10,0,0" />
+          <!--<Set Target="[Title.Margins]" Value="10,10,0,0" />
           <Set Target="[LogoImage.Margins]" Value="25,0,0,0" />
-          <Set Target="[MediaInfoPanel.Margins]" Value="25,0,0,0" />
+          <Set Target="[MediaInfoPanel.Margins]" Value="25,0,0,0" />-->
         </Actions>
       </Rule>
 
@@ -232,11 +285,10 @@
           <Equality Source="[ThemeHelper.Config.GameDetailPosterLayout]" ConditionOp="Equals" Value="Prefer Thumb"/>
         </Conditions>
         <Actions>
-          <Set Target="[ItemImage.Margins]" Value="-100,15,0,0" />
+          <Set Target="[ItemImage.Margins]" Value="0,15,-5,0" />
           <Set Target="[Summary.Margins]" Value="25,0,0,0" />
-          <Set Target="[Title.Margins]" Value="175,10,0,0" />
-          <Set Target="[LogoImage.Margins]" Value="175,0,0,0" />
-          <Set Target="[MediaInfoPanel.Margins]" Value="25,0,0,0" />
+          <!--<Set Target="[Title.Margins]" Value="175,10,0,0" />
+          <Set Target="[LogoImage.Margins]" Value="175,0,0,0" />-->
         </Actions>
       </Rule>
 
@@ -248,9 +300,8 @@
         <Actions>
           <Set Target="[ItemImage.Margins]" Value="-50,10,0,0" />
           <Set Target="[Summary.Margins]" Value="25,0,0,0" />
-          <Set Target="[Title.Margins]" Value="175,10,0,0" />
-          <Set Target="[LogoImage.Margins]" Value="175,0,0,0" />
-          <Set Target="[MediaInfoPanel.Margins]" Value="25,0,0,0" />
+          <!--<Set Target="[Title.Margins]" Value="175,10,0,0" />
+          <Set Target="[LogoImage.Margins]" Value="175,0,0,0" />-->
         </Actions>
       </Rule>
 
@@ -274,150 +325,212 @@
         </Conditions>
       </Binding>
       
+      <Binding Target="[DiscImage.Content]"     Source="[Item.DiscImage]" />
+      <Binding Target="[ClearArtImage.Content]" Source="[Item.ArtImage]"/>
+       
+      
       <!--LOGO'S LOGIC-->
       <Binding Target="[Title.Content]"       Source="[Item.Name]"/>
       <Binding Target="[LogoImage.Content]" Source="[Item.LogoImage]"/>
       
       <Rule>
         <Conditions>
-          <Equality Source="[Item.HasLogoImage]" ConditionOp="Equals" Value="true" />
+          <Equality Source="[Item.ItemTypeString]" ConditionOp="NotEquals" Value="Movies"/>
           <Equality Source="[Item.ItemTypeString]" ConditionOp="NotEquals" Value="Season"/>
-          <Equality Source="[Item.ItemTypeString]" ConditionOp="NotEquals" Value="Episode"/>
+          <Equality Source="[Item.ItemTypeString]" ConditionOp="NotEquals" Value="Season"/>
+          <Equality Source="[Item.ItemTypeString]" ConditionOp="Equals" Value="Episode"/>
         </Conditions>
         <Actions>
-          <Set Target="[LogoImage.Visible]" Value="true" />
-          <Set Target="[Title.Visible]" Value="false" />
+          <Set Target="[LogoImage.Visible]" Value="false" />
+          <Set Target="[Title.Visible]" Value="true" />
         </Actions>
       </Rule>
       <Default Target="[LogoImage.Visible]" Value="false"/>
-      <Default Target="[Title.Visible]" Value="true"/>
+      <Default Target="[Title.Visible]" Value="false"/>
     </Rules>
     
     <Content>
       <Panel Layout="Form">
-        <Children>  
+        <Children>
+
           <!-- MPAA RATINGS ICONS-->
-          <ColorFill Name="MPAARatings" Content="Transparent"  MaximumSize="0,45" MinimumSize="0,45">
-            <LayoutInput>
-              <FormLayoutInput Bottom="Parent,1,-15" Right="Parent,1,-15"/>
-            </LayoutInput>
-            <Children>
-              <mpaa:MPAARating MaximumSize="80,48" Name="mpaa"  >
+              <ColorFill Name="MPAARatings" Content="Transparent" MaximumSize="0,45" MinimumSize="0,45" >
                 <LayoutInput>
-                  <DockLayoutInput Alignment="Far" Position="Top"/>
+                  <FormLayoutInput Bottom="StarRating,1" Left="StarRating,1,20" />
                 </LayoutInput>
-              </mpaa:MPAARating>
-              <esrb:ESRBRating MaximumSize="0,48" Name="esrb" >
-                <LayoutInput>
-                  <DockLayoutInput Alignment="Far" Position="Top"/>
-                </LayoutInput>
-              </esrb:ESRBRating>
-            </Children>
-          </ColorFill>
-
-          <Panel Name="Studio" MaximumSize="400,55" Layout="Scale">
-            <LayoutInput>
-              <AnchorLayoutInput Top="ChildBG,0,40" Right="ChildBG,1,-120"  />
-            </LayoutInput>
-            <Children>
-              <Repeater Name="StudioRepeater" Source="[Item.StudioItems]">
-                <Layout>
-                  <FlowLayout Orientation="Horizontal" ItemAlignment="Center" Spacing="10,10"/>
-                </Layout>
-                <Content>
-                  <siw:Studio StudioItem="[RepeatedItem!lib:StudioItemWrapper]" Name="StudioLogo"/>
-                </Content>
-              </Repeater>
-            </Children>
-          </Panel>
-          
-          <!--MEDIAINFO ICONS-->
-          <Panel >
-            <LayoutInput>
-              <FormLayoutInput Bottom="Parent,1" Left="OverviewPanel,0,275"  />
-            </LayoutInput>
-            <Children>
-              <mip:MediaInfoPanel Name="MediaInfoPanel" Item="[Item]" MaximumSize="0,45" />
-            </Children>
-          </Panel>
-
-          <st:ScrollableText Name="Summary" Font="font://xs:OverviewFont" Color="color://xs:OverviewColor" MaximumSize="480,150" >
-            <LayoutInput>
-              <FormLayoutInput Top="Parent,0,85" Left="Parent,0,275" />
-            </LayoutInput>
-          </st:ScrollableText>
-          
-          <Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Alpha="0.8" Name="TickIndicatorPanel" Visible="[Application.Config.EnableListViewTicks]" MaximumSize="30,30" >
-            <LayoutInput>
-              <AnchorLayoutInput Right="OverviewPanel,0,-10" Top="OverviewPanel,0,5"/>
-            </LayoutInput>
-            <Children>
-              <Panel Name="TickPanel" Layout="Center" Margins="2,10,0,0">
                 <Children>
-                  <Graphic Content="image://i:Watched"  MaximumSize="30,30" MaintainAspectRatio="true"  />
+                  <mpaa:MPAARating MaximumSize="80,48" Name="mpaa" Visible="true" >
+                    <LayoutInput>
+                      <DockLayoutInput Alignment="Far" Position="Top" />
+                    </LayoutInput>
+                  </mpaa:MPAARating>
+                  <esrb:ESRBRating MaximumSize="0,48" Name="esrb" Visible="false">
+                    <LayoutInput>
+                      <DockLayoutInput Alignment="Far" Position="Top" />
+                    </LayoutInput>
+                  </esrb:ESRBRating>
+                </Children>
+              </ColorFill>
+
+              <sr:StarRating Margins="0,4,0,0" MaximumSize="0,40" Name="StarRating" ThemeHelper="[ThemeHelper]">
+                  <LayoutInput>
+                    <FormLayoutInput Bottom="Parent,1,50" Left="Parent,0,40" />
+                  </LayoutInput>
+              </sr:StarRating>
+                
+
+              <Panel Name="Studio" MaximumSize="400,55" Layout="Scale" Visible="false">
+                <LayoutInput>
+                  <AnchorLayoutInput Top="ChildBG,0,40" Right="ChildBG,1,-120" />
+                </LayoutInput>
+                <Children>
+                  <Repeater Name="StudioRepeater" Source="[Item.StudioItems]">
+                    <Layout>
+                      <FlowLayout Orientation="Horizontal" ItemAlignment="Center" Spacing="10,10" />
+                    </Layout>
+                    <Content>
+                      <siw:Studio StudioItem="[RepeatedItem!lib:StudioItemWrapper]" Name="StudioLogo" />
+                    </Content>
+                  </Repeater>
                 </Children>
               </Panel>
-            </Children>
-          </Panel>
 
-          <!--MOVIE DETAILS INCLUDING SYNOPSIS, DIRECTORS RUNTIME ETC-->
-          <Graphic Name="OverviewPanel" Padding="30,15,15,-5">
-            <Layout>
-              <FlowLayout Orientation="Horizontal" Spacing="20,20"/>
-            </Layout>
-            <LayoutInput>
-              <FormLayoutInput Horizontal="Fill" Vertical="Fill"/>
-            </LayoutInput>
-            <Children>
-              <Graphic Name="ItemImage" MaximumSize="350,0" MaintainAspectRatio="true" />
-              <ColorFill Margins="0,14,0,0" Content="Transparent">
-                <Layout>
-                  <FlowLayout Orientation="Vertical" StripAlignment="Near"/>
-                </Layout>
+              <!--MEDIAINFO ICONS-->
+              <Panel>
+                <LayoutInput>
+                  <FormLayoutInput Bottom="Parent,1,50" Left="Parent,0,15" Horizontal="Center"/>
+                </LayoutInput>
                 <Children>
-                  <!--Text Content="Synopsis:" Font="font://f:OverviewFont" Color="color://c:SupportColor" Margins="0,0,0,5" /-->
-                  <Panel Layout="VerticalFlow" MaximumSize="480,210">
+                  <mip:MediaInfoPanel Name="MediaInfoPanel" Item="[Item]" MaximumSize="0,45" /> 
+                </Children>
+              </Panel>
+
+              <Panel MaximumSize="650,175">
+                <LayoutInput>
+                  <FormLayoutInput Top="Parent,0,-5" Left="Parent,0.3" />
+                </LayoutInput>
+                <Children>
+                  <st:ScrollableText Name="Summary" Font="font://xs:OverviewFont" Color="color://xs:OverviewColor" />
+                </Children>
+              </Panel>
+
+              <Panel Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Alpha="0.8" Name="TickIndicatorPanel" Visible="[Application.Config.EnableListViewTicks]" MaximumSize="30,30">
+                <LayoutInput>
+                  <AnchorLayoutInput Right="OverviewPanel,0,-10" Top="OverviewPanel,0,5" />
+                </LayoutInput>
+                <Children>
+                  <Panel Name="TickPanel" Layout="Center" Margins="2,10,0,0">
                     <Children>
-                      <Text Name="Title" Font="font://xs:FinalDetailsTitle" Color="color://xs:FinalDetailsTitleColor" Visible="false"/>
-                      <Graphic Name="LogoImage" Margins="18,0,0,5" MaintainAspectRatio="true" MaximumSize="0,50" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
+                      <Graphic Content="image://i:Watched" MaximumSize="30,30" MaintainAspectRatio="true" />
                     </Children>
                   </Panel>
                 </Children>
-              </ColorFill>
-            </Children>
-          </Graphic>
-          
-          
+              </Panel>
 
-          <Panel Layout="VerticalFlow" Margins="850,10,0,0" >
-            <Layout>
-              <FlowLayout Orientation="Vertical" StripAlignment="Near" ItemAlignment="Near"/>
-            </Layout>
-            <Children>
-              <lv:FinalLabelValue Name="TitleSupportlv"></lv:FinalLabelValue>
-              <Panel Layout="HorizontalFlow">
+              <!--MOVIE DETAILS INCLUDING SYNOPSIS, DIRECTORS RUNTIME ETC-->
+              <Graphic Name="OverviewPanel" Padding="30,15,15,-5">
+                <Layout>
+                  <FlowLayout Orientation="Horizontal" Spacing="20,20" />
+                </Layout>
+                <LayoutInput>
+                  <FormLayoutInput Horizontal="Fill" Vertical="Fill" />
+                </LayoutInput>
                 <Children>
-                  <Text Name="GenreLabel" Content="Genres: " Font="font://xs:FinalDetailsInfoLabelFont" Color="color://xs:FinalDetailsInfoLabelColor" />
-                  <gl:GenreList Name="Genres" SourceData="[Item.Genres]" Font="font://xs:FinalDetailsInfoValueFont" Color="color://xs:FinalDetailsInfoValueColor"/>
+
+                  <Panel Margins="0,14,0,0" >
+                    <Layout>
+                      <FlowLayout Orientation="Vertical" StripAlignment="Center" />
+                    </Layout>
+                    <Children>
+                      <!--Text Content="Synopsis:" Font="font://f:OverviewFont" Color="color://c:SupportColor" Margins="0,0,0,5" /-->
+                      <Panel Layout="VerticalFlow" MaximumSize="480,210">
+                        <Children>
+                          <Graphic Name="LogoImage" Margins="18,0,0,5" MaintainAspectRatio="true" MaximumSize="0,50" Visible="false" CenterPointPercent="0.5,0.5,0.5" />
+                        </Children>
+                      </Panel>
+                    </Children>
+                  </Panel>
+                </Children>
+              </Graphic>
+
+              <Panel Layout="VerticalFlow" Margins="0,-250,0,0" >
+                <Layout>
+                  <FlowLayout Orientation="Vertical" StripAlignment="Near" ItemAlignment="Center" />
+                </Layout>
+                <Children>
+                  <Text Name="Title" Font="font://xs:FinalDetailsTitle" Color="color://xs:FinalDetailsTitleColor" Visible="false" />
+                  <Panel Layout="HorizontalFlow">
+                    <Children>
+                      <!--<Text Name="GenreLabel" Content="Genres: " Font="font://xs:FinalDetailsInfoLabelFont" Color="color://xs:FinalDetailsInfoLabelColor" />-->
+                      <gl:GenreList Name="Genres" SourceData="[Item.Genres]" Font="font://xs:FinalDetailsGenresFont" Color="color://xs:FinalDetailsGenresColor" Margins="0,0,0,25" />
+                    </Children>
+                  </Panel>
+                  <lv:FinalLabelValue Name="TitleSupportlv"></lv:FinalLabelValue>
+                  <lv:FinalLabelValue Name="TitleSupportlv1"></lv:FinalLabelValue>
+                  <lv:FinalLabelValue Name="TitleSupportlv2"></lv:FinalLabelValue>
+                  <lv:FinalLabelValue Name="TitleSupportlv3"></lv:FinalLabelValue>
                 </Children>
               </Panel>
-              <lv:FinalLabelValue Name="TitleSupportlv1"></lv:FinalLabelValue>
-              <lv:FinalLabelValue Name="TitleSupportlv2"></lv:FinalLabelValue>
-              <lv:FinalLabelValue Name="TitleSupportlv3"></lv:FinalLabelValue> 
 
               <Panel Layout="HorizontalFlow" Name="RuntimeInfo" Visible="true">
+                <Layout>
+                  <FlowLayout Orientation="Vertical" StripAlignment="Near" ItemAlignment="Center" Spacing="10,10" />
+                </Layout>
+                <LayoutInput>
+                  <AnchorLayoutInput Bottom="Parent,1,-40" />
+                </LayoutInput>
                 <Children>
-                  <lv:FinalLabelValue Name="SideInfo"></lv:FinalLabelValue>
-                  <lv:FinalLabelValue Name="SideInfo1"></lv:FinalLabelValue>
+                  <lv:StandOutLabelValue Name="SideInfo"></lv:StandOutLabelValue>
+                <imb:ImageButtonSelector Name="PlayButton" Command="[PlayCommand]" Image="image://vi:PlayButton" MaximumSize="0,50" Visible="false" />
                 </Children>
               </Panel>
-              <sr:StarRating Margins="0,4,0,0" MaximumSize="0,40" Name="StarRating" ThemeHelper="[ThemeHelper]"/>
-            </Children>
-          </Panel>
 
-          <Graphic Name="ChildBG" Content="image://it:RALBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+            <!--<Panel Name="PlayButtonImage" Visible="false" >
             <LayoutInput>
-              <AnchorLayoutInput Left="Parent,0,-100" Right="Parent,1,100" Top="Parent,0,-20" Bottom="Parent,1,37"  />
+              <AnchorLayoutInput Top="RuntimeInfo,1,15" Left="Parent,0,625"/>
+            </LayoutInput>
+            <Children>
+              
+            </Children>
+          </Panel>-->
+          
+          <Graphic Name="ItemImage" MaximumSize="0,500" MaintainAspectRatio="true" >
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0,35" Top="Parent,0,-150"/>
+            </LayoutInput>
+          </Graphic>
+
+          <Graphic Name="SeasonPoster" MaximumSize="0,500" MaintainAspectRatio="true" Visible="false" >
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0,35" Top="Parent,0,-150"/>
+            </LayoutInput>
+          </Graphic>
+          
+          <Graphic Name="DiscImage" MaximumSize="0,250" MaintainAspectRatio="true" Rotation="-30deg;0,0,1" CenterPointPercent="0.5,0.5,0.5" >
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1,-5" Top="Parent,0,20"/>
+            </LayoutInput>
+          <Animations>
+          <Animation Loop="-1">
+            <Keyframes>
+              <RotateKeyframe Time="0.0" Value="0deg;0,0,1"/>
+              <RotateKeyframe Time="1500" Value="360deg;0,0,1"/>
+            </Keyframes>
+          </Animation>
+
+        </Animations>
+
+          </Graphic>
+          
+          <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1,-5" Bottom="Parent,1,75"/>
+            </LayoutInput>
+          </Graphic>
+
+          <Graphic Name="ChildBG" Content="image://vi:PanelBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,250" Right="Parent,1,5" Top="Parent,0,-125" Bottom="Parent,1,-25"  />
             </LayoutInput>
           </Graphic>
         
@@ -429,18 +542,19 @@
   <UI Name="MovieInfoPanel" BaseUI="me:InfoPanel">
 
     <Rules>
-      <Default Target="[TitleSupportlv.Label]" Value="[Application.LocalStrings.#DirectorStr!cor:String]"></Default>
+      <Default Target="[TitleSupportlv.Label]" Value="[Application.LocalStrings.#DirectorStr!cor:String]">
+      </Default>
       <Binding Target="[TitleSupportlv.Value]" Source="[Item.DirectorString]"></Binding>
 
-      <Default Target="[TitleSupportlv1.Label]" Value="[Application.LocalStrings.#WritersStr!cor:String]"></Default>
-      <Binding Target="[TitleSupportlv1.Value]" Source="[Item.WritersString]"/>
+      <!--<Default Target="[TitleSupportlv1.Label]" Value="[Application.LocalStrings.#WritersStr!cor:String]"></Default>
+      <Binding Target="[TitleSupportlv1.Value]" Source="[Item.WritersString]"/>-->
 
       <Binding Target="[Genres.SourceData]" Source="[Item.Genres]"/>
       <!--<Default Target="[TitleSupportlv2.Label]" Value="[Application.LocalStrings.#GenresStr!cor:String]"></Default>
       <Binding Target="[TitleSupportlv2.Value]" Source="[ThemeHelper.GenreString]"></Binding>-->
 
-      <Default Target="[TitleSupportlv3.Label]" Value="[Application.LocalStrings.#YearStr!cor:String]"></Default>
-      <Binding Target="[TitleSupportlv3.Value]" Source="[Item.ProductionYear.ToString]"></Binding>
+      <!--<Default Target="[TitleSupportlv3.Label]" Value="[Application.LocalStrings.#YearStr!cor:String]"></Default>
+      <Binding Target="[TitleSupportlv3.Value]" Source="[Item.ProductionYear.ToString]"></Binding>-->
     </Rules>
 
   </UI>
@@ -522,7 +636,6 @@
       <Binding Target="[TitleSupportlv2.Value]" Source="[Item.FirstAired]"></Binding>
       
       <Default Target="[TitleSupportlv3.Label]" Value="[Application.LocalStrings.#StatusStr!cor:String]"></Default>
-      <Binding Target="[TitleSupportlv3.Value]" Source="[Item.PhysicalParent.Status]" />
 
 
     </Rules>
@@ -546,8 +659,8 @@
       <Binding Target="[SideInfo.Value]" Source="[ThemeHelper.Duration]"></Binding>
 
 
-      <Binding Target="[SideInfo1.Value]" Source="[ThemeHelper.ProductionYear]" ></Binding>
-      <Default Target="[SideInfo1.Label]" Value=" Year: " ></Default>
+      <!--<Binding Target="[SideInfo1.Value]" Source="[ThemeHelper.ProductionYear]" ></Binding>
+      <Default Target="[SideInfo1.Label]" Value=" Year: " ></Default>-->
     </Rules>
 
   </UI>
@@ -577,7 +690,7 @@
       <Binding Target="[TitleSupportlv.Value]" Source="[ThemeHelper.Players]"></Binding>
       <Default Target="[TitleSupportlv2.Label]" Value="[Application.LocalStrings.#YearStr!cor:String]"/>
       <Binding Target="[TitleSupportlv2.Value]" Source="[Item.ProductionYearString]"/>
-      <Binding Source="[ThemeHelper.TgdbRating]" Target="[StarRating.Value]"></Binding>
+      <!--<Binding Source="[ThemeHelper.TgdbRating]" Target="[StarRating.Value]"></Binding>-->
       <Binding Source="[ThemeHelper.EsrbRating]" Target="[esrb.Value]"></Binding>
     </Rules>
 
@@ -625,6 +738,21 @@
       <Binding Source="[Item.RottenTomatoImage]" Target="[RTImage.Content]" />
 
       <Binding Source="[RatingValue!cor:String]" Target="[Rating.Content]" />
+      <Binding Target="[ClearArtImage.Content]" Source="[Item.ArtImage]"/>
+
+      <Condition Source="[RatingValue!cor:String]" ConditionOp="Equals" SourceValue="">
+        <Actions>
+          <Set Target="[NoRating.Visible]" Value="true" />
+        </Actions>
+      </Condition>
+      <Condition Source="[Item.CriticRatingSummary]" ConditionOp="Equals" SourceValue="">
+        <Conditions>
+          <Equality Source="[RatingValue!cor:String]" ConditionOp="NotEquals" Value="" />
+        </Conditions>
+        <Actions>
+          <Set Target="[NoCritic.Visible]" Value="true" />
+        </Actions>
+      </Condition>
     </Rules>
 
     <Content>
@@ -648,21 +776,36 @@
               <FlowLayout Orientation="Horizontal"/>
             </Layout>
             <LayoutInput>
-              <FormLayoutInput Left="Parent,0.2" Right="Parent,0.8" Top="Parent,0.3" Bottom="Parent,1"/>
+              <FormLayoutInput Left="Parent,0.2" Right="Parent,0.8" Top="Parent,0" Bottom="Parent,1"/>
             </LayoutInput>
             <Children>
-              <Graphic Name="RTImage" MaximumSize="100,100" Margins="0,0,10,0" />
-              <Text Name="Rating" WordWrap="true"  Visible="true" Margins="0,0,20,0" Font="font://xs:NoChaptersFont" Color="color://xs:NoChaptersTextColor" />
+              <Text Name="NoRating" Content="No Critic Rating Available" Visible="false" Font="font://xs:NoChaptersFont" Color="color://xs:NoChaptersTextColor" />
+              <Graphic Name="RTImage" MaximumSize="100,100" Margins="0,0,20,0" />
+              <Text Name="Rating" WordWrap="true"  Visible="true" Margins="0,0,100,0" Font="font://xs:NoChaptersFont" Color="color://xs:NoChaptersTextColor" />
+              <Text Name="NoCritic" Content="No Review Available" Visible="false" Font="font://xs:OverviewFont" Color="color://xs:OverviewColor"/>
               <!--Text Name="Summary" MaximumSize="400,0" WordWrap="true" Visible="true" Font="font://xs:OverviewFont" Color="color://xs:OverviewColor" /-->
                <st:ScrollableText Name="Summary" MaximumSize="600,200" Font="font://xs:OverviewFont" Color="color://xs:OverviewColor" />
             </Children>
           </Panel>
-          
-          <Graphic Content="image://it:RALBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+
+          <Text Name="ReviewTitle" Content="[Application.LocalStrings.#ReviewStr!cor:String]" Color="color://xs:XC_RALPopupItem" Font="font://xs:XF_RALPopupItem" >
             <LayoutInput>
-              <AnchorLayoutInput Left="Parent,0,-200" Right="Parent,1,200" Top="Parent,0,-20" Bottom="Parent,1,50"  />
+              <AnchorLayoutInput Left="Parent,0" Top="Parent,0,-135" />
+            </LayoutInput>
+          </Text>
+
+          <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1,100" Bottom="Parent,1,90"/>
             </LayoutInput>
           </Graphic>
+          
+          <Graphic Content="image://vi:PanelBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,-200" Right="Parent,1,200" Top="Parent,0,-145" Bottom="Parent,1,-10"  />
+            </LayoutInput>
+          </Graphic>
+          
         </Children>
       </Panel>
     </Content>
@@ -678,7 +821,8 @@
     </Properties>
     <Locals>
       <ScrollingHandler Name="ScrollingHandler" HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandlePageKeys="true" HandlePageCommands="true"/>
-      <ScrollingData Name="ScrollingData"/>
+      <ScrollingData Name="ScrollingData" LockedAlignment="0.2" LockedPosition="0.2" BeginPadding="25" EndPadding="25"/>
+      <FlowLayout Name="ActorFlowLayout" AllowWrap="false" ItemAlignment="Center" Spacing="75,75" Repeat="Never" Orientation ="Horizontal"/>
     </Locals>
 
     <Rules>
@@ -686,6 +830,16 @@
 
       <Binding Source="[Item.Actors]" Target="[ListRepeater.Source]" />
       <Default Target="[ScrollingHandler.ScrollingData]" Value="[ScrollingData]"/>
+
+      <Binding Target="[ClearArtImage.Content]" Source="[Item.ArtImage]"/>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Item.Actors.Count]" ConditionOp="Equals" Value="0" />
+        </Conditions>
+        <Actions>
+          <Set Target="[NoCast.Visible]" Value="true" />
+        </Actions>
+      </Rule>
     </Rules>
 
     <Content>
@@ -696,12 +850,12 @@
         </LayoutInput>
         <Children>
 
-          <Scroller Name="ActorScroller" Orientation="Horizontal" FadeSize="-1" ScrollingData="[ScrollingData]" Navigation="RememberFocus">
+          <Scroller Name="ActorScroller" Orientation="Horizontal" FadeSize="25" ScrollingData="[ScrollingData]" Navigation="RememberFocus">
             <LayoutInput>
-              <FormLayoutInput Left="Parent,0" Right="Parent,1" Vertical="Center"/>
+              <FormLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0,-75" Bottom="Parent,1,400" />
             </LayoutInput>
             <Children>
-              <Repeater Name="ListRepeater" Source="[Item.Actors]" Layout="HorizontalFlow" >
+              <Repeater Name="ListRepeater" Source="[Item.Actors]" Layout="[ActorFlowLayout]" Navigation="Row, RememberFocus" >
                 <Animations>
                   <Animation Type="Move">
                     <Keyframes>
@@ -716,9 +870,24 @@
               </Repeater>
             </Children>
           </Scroller>
-          <Graphic Content="image://it:RALBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+          <Text Name="NoCast" Content="[Application.LocalStrings.#NoCastStr!cor:String]" Visible="false" Font="font://xs:NoChaptersFont" Alpha=".7" Color="color://xs:NoChaptersTextColor" >
             <LayoutInput>
-              <AnchorLayoutInput Left="Parent,0,-200" Right="Parent,1,200" Top="Parent,0,-20" Bottom="Parent,1,50"  />
+              <AnchorLayoutInput Left="Parent,150" Top="Parent,0,-100" />
+            </LayoutInput>
+          </Text>
+          <Text Name="CastTitle" Content="[Application.LocalStrings.#CastStr!cor:String]" Color="color://xs:XC_RALPopupItem" Font="font://xs:XF_RALPopupItem" >
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0" Top="Parent,0,-135" />
+            </LayoutInput>
+          </Text>
+          <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1,100" Bottom="Parent,1,90"/>
+            </LayoutInput>
+          </Graphic>
+          <Graphic Content="image://vi:PanelBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,-200" Right="Parent,1,200" Top="Parent,0,-145" Bottom="Parent,1,-10"  />
             </LayoutInput>
           </Graphic>
         </Children>
@@ -757,7 +926,8 @@
     <Locals>
       <cor:Int32 Name="Startup" />
       <ScrollingHandler Name="ScrollingHandler" HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandlePageKeys="true" HandlePageCommands="true"/>
-      <ScrollingData Name="ScrollingData" BeginPadding="70" EndPadding="70" />
+      <ScrollingData Name="ScrollingData" BeginPadding="25" EndPadding="25" LockedAlignment="0.2" LockedPosition="0.2"/>
+      <FlowLayout Name="FlowLayout" AllowWrap="false" ItemAlignment="Center" Spacing="75,75" Repeat="Never" Orientation ="Horizontal"/>
     </Locals>
     
     <Rules>
@@ -772,7 +942,8 @@
             <Invoke Target="[ListRepeater.NavigateIntoIndex]"  index="[Folder.FirstUnwatchedIndex]"/>
           </Actions>
         </Default>-->
-      
+
+      <Binding Target="[ClearArtImage.Content]" Source="[Item.ArtImage]"/>
       <Rule>
         <Conditions>
           <Equality Source="[Item.Chapters.Count]" ConditionOp="Equals" Value="0" />
@@ -790,13 +961,13 @@
         </LayoutInput>
         <Children>
 
-          <Scroller Name="ChapterScroller" Orientation="Horizontal" FadeSize="5" ScrollingData="[ScrollingData]">
+          <Scroller Name="ChapterScroller" Orientation="Horizontal" FadeSize="25" ScrollingData="[ScrollingData]">
             <LayoutInput>
-              <FormLayoutInput Left="Parent,0" Right="Parent,1" Vertical="Center"/>
+              <FormLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0,-75" Bottom="Parent,1,400" />
             </LayoutInput>
             <Children>
 
-              <Repeater Name="ListRepeater" Source="[Item.Chapters]" Layout="HorizontalFlow" >
+              <Repeater Name="ListRepeater" Source="[Item.Chapters]" Layout="HorizontalFlow" Navigation="Row, RememberFocus" >
                 <Animations>
                   <Animation Type="Move">
                     <Keyframes>
@@ -812,10 +983,24 @@
               </Repeater>
             </Children>
           </Scroller>
-        <Text Name="NoChapters" Content="[Application.LocalStrings.#NoChaptersStr!cor:String]" Visible="false" Font="font://xs:NoChaptersFont" Alpha=".7" Color="color://xs:NoChaptersTextColor" />
-          <Graphic Content="image://it:RALBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+          <Text Name="ChaptersTitle" Content="[Application.LocalStrings.#ChapterStr!cor:String]" Color="color://xs:XC_RALPopupItem" Font="font://xs:XF_RALPopupItem" >
             <LayoutInput>
-              <AnchorLayoutInput Left="Parent,0,-200" Right="Parent,1,200" Top="Parent,0,-20" Bottom="Parent,1,50"  />
+              <AnchorLayoutInput Left="Parent,0" Top="Parent,0,-135" />
+            </LayoutInput>
+          </Text>
+          <Text Name="NoChapters" Content="[Application.LocalStrings.#NoChaptersStr!cor:String]" Visible="false" Font="font://xs:NoChaptersFont" Alpha=".7" Color="color://xs:NoChaptersTextColor" >
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,150" Top="Parent,0,-100" />
+            </LayoutInput>
+          </Text>
+          <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1,100" Bottom="Parent,1,90"/>
+            </LayoutInput>
+          </Graphic>
+          <Graphic Content="image://vi:PanelBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,-200" Right="Parent,1,200" Top="Parent,0,-145" Bottom="Parent,1,-10"  />
             </LayoutInput>
           </Graphic>
         </Children>
@@ -860,12 +1045,14 @@
 
     <Locals>
       <ScrollingHandler Name="ScrollingHandler" HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandlePageKeys="true" HandlePageCommands="true"/>
-      <ScrollingData Name="ScrollingData" BeginPadding="70" EndPadding="70" />
+      <ScrollingData Name="ScrollingData" BeginPadding="25" EndPadding="25" LockedAlignment="0.2" LockedPosition="0.2"/>
+      <FlowLayout Name="FlowLayout" AllowWrap="false" ItemAlignment="Center" Spacing="75,75" Repeat="Never" Orientation ="Horizontal"/>
     </Locals>
 
     <Rules>
       <Binding Source="[Item.SpecialFeatures]" Target="[ListRepeater.Source]" />
       <Default Target="[ScrollingHandler.ScrollingData]" Value="[ScrollingData]"/>
+      <Binding Target="[ClearArtImage.Content]" Source="[Item.ArtImage]"/>
       <Rule>
         <Conditions>
           <Equality Source="[Item.SpecialFeatures.Count]" ConditionOp="Equals" Value="0" />
@@ -883,9 +1070,9 @@
         </LayoutInput>
         <Children>
 
-          <Scroller Name="SpecialsScroller" Orientation="Horizontal" FadeSize="5" ScrollingData="[ScrollingData]">
+          <Scroller Name="SpecialsScroller" Orientation="Horizontal" FadeSize="25" ScrollingData="[ScrollingData]">
             <LayoutInput>
-              <FormLayoutInput Left="Parent,0" Right="Parent,1" Vertical="Center"/>
+              <FormLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0,-75" Bottom="Parent,1,400" />
             </LayoutInput>
             <Children>
 
@@ -905,10 +1092,24 @@
               </Repeater>
             </Children>
           </Scroller>
-          <Text Name="NoSpecials" Content="[Application.LocalStrings.#NoSpecialsStr!cor:String]" Visible="false" Font="font://xs:NoChaptersFont" Alpha=".7" Color="color://xs:NoChaptersTextColor" />
-          <Graphic Content="image://it:RALBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+          <Text Name="NoSpecials" Content="[Application.LocalStrings.#NoSpecialsStr!cor:String]" Visible="false" Font="font://xs:NoChaptersFont" Alpha=".7" Color="color://xs:NoChaptersTextColor" >
             <LayoutInput>
-              <AnchorLayoutInput Left="Parent,0,-200" Right="Parent,1,200" Top="Parent,0,-20" Bottom="Parent,1,50"  />
+              <AnchorLayoutInput Left="Parent,150" Top="Parent,0,-100" />
+            </LayoutInput>
+          </Text>
+          <Text Name="SpecialsTitle" Content="[Application.LocalStrings.#SpecialsStr!cor:String]" Color="color://xs:XC_RALPopupItem" Font="font://xs:XF_RALPopupItem" >
+          <LayoutInput>
+            <AnchorLayoutInput Left="Parent,0" Top="Parent,0,-135" />
+          </LayoutInput>
+          </Text>
+          <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1,100" Bottom="Parent,1,90"/>
+            </LayoutInput>
+          </Graphic>
+          <Graphic Content="image://vi:PanelBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,-200" Right="Parent,1,200" Top="Parent,0,-145" Bottom="Parent,1,-10"  />
             </LayoutInput>
           </Graphic>
         </Children>
@@ -945,6 +1146,166 @@
     </Content>
   </UI>
 
+  <UI Name="SimilarList">
+    <Properties>
+      <a:Application Name="Application" Application="$Required"/>
+      <lib:Item Name="Item" Item="$Required"/>
+      <IntRangedValue Name="CurrentIndex" IntRangedValue="$Required"/>
+      <ih:IridiumHelper Name="ThemeHelper" />
+
+    </Properties>
+    <Locals>
+      <ScrollingHandler Name="ScrollingHandler" HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandlePageKeys="true" HandlePageCommands="true"/>
+      <ScrollingData Name="ScrollingData" LockedAlignment="0.2" LockedPosition="0.2" BeginPadding="25" EndPadding="25"/>
+      <FlowLayout Name="ActorFlowLayout" AllowWrap="false" ItemAlignment="Center" Spacing="75,75" Repeat="Never" Orientation ="Horizontal"/>
+    </Locals>
+
+    <Rules>
+      <Default Target="[Input.CreateInterestOnFocus]" Value="true"/>
+
+      <Binding Source="[ThemeHelper.GetSimilar]" Target="[ListRepeater.Source]" />
+      <Default Target="[ScrollingHandler.ScrollingData]" Value="[ScrollingData]"/>
+
+      <Binding Target="[ClearArtImage.Content]" Source="[Item.ArtImage]"/>
+      <!--<Rule>
+        <Conditions>
+          <Equality Source="[ThemeHelper.GetSimilar.Count]" ConditionOp="Equals" Value="0" />
+        </Conditions>
+        <Actions>
+          <Set Target="[NoSimilar.Visible]" Value="true" />
+        </Actions>
+      </Rule>-->
+    </Rules>
+
+    <Content>
+      <Panel Name="SimilarMovies" Layout="Form" Padding="15,15,15,15">
+        <LayoutInput>
+          <FormLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0" Bottom="Parent,1"/>
+        </LayoutInput>
+        <Children>
+
+          <Scroller Name="SimilarScroller" Orientation="Horizontal" FadeSize="25" ScrollingData="[ScrollingData]" Navigation="RememberFocus">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0,-75" Bottom="Parent,1,400" />
+            </LayoutInput>
+            <Children>
+              <Repeater Name="ListRepeater" Layout="[ActorFlowLayout]" Navigation="Row, RememberFocus" >
+                <Animations>
+                  <Animation Type="Move">
+                    <Keyframes>
+                      <PositionKeyframe Time="0" RelativeTo="Current" Interpolation="Log,2"/>
+                      <PositionKeyframe Time="0.5" RelativeTo="Final"/>
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+                <Content>
+                  <me:SimilarItem Name="Test" Application="[Application]" Item="[RepeatedItem!lib:Item]" Index="[RepeatedItemIndex]" Font="font://xs:OverviewFont" />
+                </Content>
+              </Repeater>
+            </Children>
+          </Scroller>
+          <!--<Text Name="NoSimilar" Content="[Application.LocalStrings.#NoCastStr!cor:String]" Visible="false" Font="font://xs:NoChaptersFont" Alpha=".7" Color="color://xs:NoChaptersTextColor" >
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,150" Top="Parent,0,-100" />
+            </LayoutInput>
+          </Text>-->
+          <Text Name="SimilarMovieTitle" Content="Similar Movies" Color="color://xs:XC_RALPopupItem" Font="font://xs:XF_RALPopupItem" >
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0" Top="Parent,0,-135" />
+            </LayoutInput>
+          </Text>
+          <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1,100" Bottom="Parent,1,90"/>
+            </LayoutInput>
+          </Graphic>
+          <Graphic Content="image://vi:PanelBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,-200" Right="Parent,1,200" Top="Parent,0,-145" Bottom="Parent,1,-10"  />
+            </LayoutInput>
+          </Graphic>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="SimilarItem">
+    <Properties>
+      <a:Application Name="Application" Application="$Required"/>
+      <lib:Item Name="Item" Item="$Required" />
+      <Index Name="Index" Index="$Required"/>
+      <Font Name="Font" Font="$Required"/>
+    </Properties>
+    
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+    
+      <Changed Source="[Clicker.Invoked]">
+        <Actions>
+          <Invoke Target="[Application.Navigate]" item="[Item]" />
+        </Actions>
+      </Changed>
+    
+      <Binding Source="[Item.PrimaryImage]" Target="[ItemThumb.Content]" />
+      <Binding Source="[Item.Name]" Target="[Title.Content]" />
+    
+    <Changed Source="[Input.KeyFocus]" > 
+        <Conditions>
+          <Equality Source="[Input.KeyFocus]" Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[Application.CurrentItem]" Value="[Item]" />
+          <Set Target="[ItemThumb.Scale]" Value="1.1,1.1,1.1" />
+          <Set Target="[ItemThumb.ColorFilter]" Value="White" />
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Name="Main" Navigation="Row, RememberFocus" >
+        <Children>
+
+          <Panel Name="MainPanel">
+            <Layout>
+              <FlowLayout Orientation="Vertical" ItemAlignment="Center" Spacing="15,15" />
+            </Layout>
+            <Children>
+              <Graphic Name="ItemThumb" MaximumSize="0,250" Scale="1,1,1" ColorFilter="100,100,100" MaintainAspectRatio="true" >
+                <Animations>
+                  <Animation Loop="0" CenterPointPercent="0.5,0.5,1.0" Type="Scale">
+                    <Keyframes>
+                      <ScaleKeyframe Time="0.00" RelativeTo="Current" Interpolation="Log" />
+                      <ScaleKeyframe Time="0.4" RelativeTo="Final" />
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+              </Graphic>
+
+              <Panel Name="RecentItemPanel" Layout="VerticalFlow" Margins="0,0,0,0" MaximumSize="280,600">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent,0" Top="Parent,0" />
+                </LayoutInput>
+                <Children>
+                  <Panel>
+                    <Layout>
+                      <FlowLayout Orientation="Horizontal" />
+                    </Layout>
+                    <Children>
+                      <Text Name="Title" Color="color://xs:XC_RALItemTitle" Font="[Font]" Visible="true" />
+                    </Children>
+                  </Panel>
+                </Children>
+              </Panel>
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
 
   <UI Name="FullMediaInfo">
     <Properties>
@@ -1028,7 +1389,7 @@
             </Children>
           </Panel>
 
-          <Graphic Content="image://it:RALBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+          <Graphic Content="image://vi:PanelBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
             <LayoutInput>
               <AnchorLayoutInput Left="Parent,0,-200" Right="Parent,1,200" Top="Parent,0,-20" Bottom="Parent,1,50"  />
             </LayoutInput>

@@ -5,7 +5,7 @@
       xmlns:vi="resx://Iridium/Iridium.Resources/Images"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:me="Me"
       >
 
@@ -31,15 +31,15 @@
       
       <Condition Source="[Input.KeyFocus]" SourceValue="true">
         <Actions>
-          <Set Target="[Text.Color]" Value="color://xs:RALOptionButtonHighLight"/>
-          <Set Target="[Text.BackColor]" Value="color://xs:RALOptionButtonHighLightBG"/>
+          <Set Target="[Text.Color]" Value="color://is:RALOptionButtonHighLight"/>
+          <Set Target="[Text.BackColor]" Value="color://is:RALOptionButtonHighLightBG"/>
         </Actions>
       </Condition>
 
       <Condition Source="[Input.KeyFocus]" SourceValue="false">
         <Actions>
           <Set Target="[Text.BackColor]" Value="Transparent"/>
-          <Set Target="[Text.Color]" Value="color://xs:XC_RALOption"/>
+          <Set Target="[Text.Color]" Value="color://is:XC_RALOption"/>
         </Actions>
       </Condition>
 
@@ -50,7 +50,7 @@
         <Children>
           <Panel Layout="HorizontalFlow" >
             <Children>
-              <Text Name="Text" Content="[Label]" Font="font://xs:XF_RALOption" Color="color://xs:XC_RALOption"></Text>
+              <Text Name="Text" Content="[Label]" Font="font://is:XF_RALOption" Color="color://is:XC_RALOption"></Text>
             </Children>
           </Panel>
         </Children>

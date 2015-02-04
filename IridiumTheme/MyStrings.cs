@@ -15,18 +15,20 @@ namespace Iridium
     [Serializable]
     public class MyStrings : LocalizedStringData
     {
-        const string VERSION = "1.021"; //this is used to see if we have changed and need to re-save
+        const string VERSION = "1.000"; //this is used to see if we have changed and need to re-save
 
         // MCML: [Application.LocalStrings.#StringName!cor:String] 
 
         //these are our strings keyed by property name
         //EHS STRINGS
         public string EHSHeader = "<---------------------EHS LABELS--------------------->";
+        public string HomeLabelStr = "HOME";
         public string UpcomingTVBtnStr = "UPCOMING TV";
         public string UpcomingTVLabelStr = "FUTURE EPISODES";
         public string NextUpBtnStr = "NEXTUP";
         public string NextUpLabelStr = "NEXTUP";
         public string CriticallyAcclaimedLabelStr = "CRITICALLY ACCLAIMED";
+        public string GenresLabelStr = "GENRES";
         public string NewBtnStr = "NEW";
         public string NewLabelStr = "NEW";
         public string WatchedBtnStr = "WATCHED";
@@ -52,7 +54,7 @@ namespace Iridium
         public string WritersStr = "Writers: ";
         public string GenresStr = "Genres: ";
         public string YearStr = "Year: ";
-        public string RunsStr = "Runs ";
+        public string RunsStr = "Runtime :";
         public string EndStr = "Ends ";
         public string AiredStr = "Aired: ";
         public string StatusStr = "Status: ";
@@ -62,7 +64,7 @@ namespace Iridium
 
         //ACTOR BIO STRINGS
         public string ActorBioHeader = "<---------------------ACTOR BIO PAGE LABELS--------------------->";
-        public string AgeStr = "Age: ";
+        public string AgeStr = "Age:  ";
         public string BornStr = "Born: ";
         public string BirthPlaceStr = "From: ";
         public string DiedStr = "Died: ";
@@ -70,22 +72,23 @@ namespace Iridium
 
         //FINAL DETAILS BUTTONS
         public string DetailsHeader = "<---------------------FINAL DETAILS PAGE LABELS--------------------->";
-        public string ResumeStr = "RESUME";
-        public string PlayStr = "PLAY";
-        public string QuickPlayStr = "QUICKPLAY";
-        public string TrailersStr = "TRAILERS";
-        public string OverviewStr = "OVERVIEW";
-        public string CastStr = "ACTORS";
-        public string ChapterStr = "CHAPTERS";
-        public string SpecialsStr = "SPECIALS";
-        public string ReviewStr = "REVIEWS";
-        public string RefreshStr = "REFRESH";
-        public string DeleteStr = "DELETE";
+        public string ResumeStr = "Resume";
+        public string PlayStr = "Play";
+        public string QuickPlayStr = "QuickPlay";
+        public string TrailersStr = "Trailers";
+        public string OverviewStr = "Overview";
+        public string CastStr = "Actors";
+        public string ChapterStr = "Scenes";
+        public string SpecialsStr = "Specials";
+        public string ReviewStr = "Reviews";
+        public string RefreshStr = "Refresh";
+        public string DeleteStr = "Delete";
 
         public string NextBtnStr = "NEXT";
         public string PrevBtnStr = "PREV";
 
         public string NoChaptersStr = "No Chapter Information";
+        public string NoCastStr = "No Actors Available";
         public string NoSpecialsStr = "No Special Features";
 
         //MUSIC DETAILS

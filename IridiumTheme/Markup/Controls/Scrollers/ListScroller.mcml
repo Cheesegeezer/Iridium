@@ -5,7 +5,7 @@
     xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
     xmlns:s="file://Styles_DoNotEdit.mcml"
 	  xmlns:f="file://Fonts_DoNotEdit.mcml"
-    xmlns:xs="file://Iridium_Styles.mcml"
+    xmlns:is="file://Iridium_Styles.mcml"
     xmlns:lb="resx://Iridium/Iridium.Resources/ListButton">
 
   <UI Name="ListScroller">
@@ -92,8 +92,8 @@
             <Children>
               <Panel Layout="HorizontalFlow" Margins="0,5,0,0" >
                 <Children>
-                  <Text Name="List_Counter" Content="0" Color="color://xs:counterColor" Font="font://xs:counterFont" />
-                  <Text Name="List_Total" Content="0" Color="color://xs:totalCounterColor" Font="font://xs:totalCounterFont" Margins="0,0,20,0" />
+                  <Text Name="List_Counter" Content="0" Color="color://is:counterColor" Font="font://is:counterFont" />
+                  <Text Name="List_Total" Content="0" Color="color://is:totalCounterColor" Font="font://is:totalCounterFont" Margins="0,0,20,0" />
                 </Children>
               </Panel>
             </Children>
@@ -119,7 +119,7 @@
 
     </Content>
     <Content Name="BaseItem">
-      <lb:ListButton Application="[Application]" Folder="[Folder]" Index="[RepeatedItemIndex]" Item="[RepeatedItem!lib:Item]"  Font="font://xs:ListScrollerFont"/>
+      <lb:ListButton Application="[Application]" Folder="[Folder]" Index="[RepeatedItemIndex]" Item="[RepeatedItem!lib:Item]"  Font="font://is:ListScrollerFont"/>
     </Content>
   </UI>
 

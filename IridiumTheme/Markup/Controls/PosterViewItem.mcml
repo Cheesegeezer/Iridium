@@ -284,7 +284,7 @@
                           <Panel Name="TickPanel" Layout="Center">
                             <Children>
                               <Graphic Content="image://i:TickPoster"  MaximumSize="30,30"  />
-                              <Graphic Content="image://i:TickPosterBase" ColorFilter="color://xs:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
+                              <Graphic Content="image://i:TickPosterBase" ColorFilter="color://is:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
                             </Children>
                           </Panel>
                         </Children>

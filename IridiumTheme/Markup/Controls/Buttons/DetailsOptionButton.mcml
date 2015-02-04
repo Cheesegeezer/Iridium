@@ -5,7 +5,7 @@
       xmlns:vi="resx://Iridium/Iridium.Resources/Images"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:me="Me"
       >
 
@@ -14,10 +14,10 @@
       <ICommand Name="Command" ICommand="$Required"/>
       <cor:String Name="Label" String=""></cor:String>
       <cor:Boolean Name="Close" Boolean="false"/>
-      <Font Name="Font" Font="font://xs:DetailOptionFont" />
-      <Font Name="SelFont" Font="font://xs:DetailSelOptionFont" />
-      <Color Name="Color" Color="color://xs:DetailOptionColor" />
-      <Color Name="SelColor" Color="color://xs:DetailSelOptionColor" />
+      <Font Name="Font" Font="font://is:DetailOptionFont" />
+      <Font Name="SelFont" Font="font://is:DetailSelOptionFont" />
+      <Color Name="Color" Color="color://is:DetailOptionColor" />
+      <Color Name="SelColor" Color="color://is:DetailSelOptionColor" />
     </Properties>
     <Locals>
       <ClickHandler Name="Clicker" Command="[Command]"/>
@@ -35,15 +35,15 @@
       
       <Condition Source="[Input.KeyFocus]" SourceValue="true">
         <Actions>
-          <Set Target="[Text.Font]" Value="font://xs:DetailSelOptionFont"/>
-          <Set Target="[Text.Color]" Value="color://xs:DetailSelOptionColor"/>
+          <Set Target="[Text.Font]" Value="font://is:DetailSelOptionFont"/>
+          <Set Target="[Text.Color]" Value="color://is:DetailSelOptionColor"/>
         </Actions>
       </Condition>
 
       <Condition Source="[Input.KeyFocus]" SourceValue="false">
         <Actions>
-          <Set Target="[Text.Font]" Value="font://xs:DetailOptionFont"/>
-          <Set Target="[Text.Color]" Value="color://xs:DetailOptionColor"/>
+          <Set Target="[Text.Font]" Value="font://is:DetailOptionFont"/>
+          <Set Target="[Text.Color]" Value="color://is:DetailOptionColor"/>
         </Actions>
       </Condition>
 

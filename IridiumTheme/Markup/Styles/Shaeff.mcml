@@ -10,9 +10,9 @@
       xmlns:cor="assembly://MSCorLib/System">
 
   <!--EHS CONTENT-->
-  <Font Name="UnselectedEHSTitleFont" Font="Futurist Fixed-width,10" />
+  <Font Name="UnselectedEHSTitleFont" Font="Futurist Fixed-width,12" />
   <Color Name="UnselectedEHSTitleColor" Color="200,200,200"/>
-  <Font Name="SelectedEHSTitleFont" Font="Futurist Fixed-width,18" />
+  <Font Name="SelectedEHSTitleFont" Font="Futurist Fixed-width,24" />
   <Color Name="SelectedTitleColor" Color="111,184,227"/>
       <!--EHS BACKGROUND BAR COLORS-->
       <Color Name="RootHorizontalBGColor" Color="255,255,255" />
@@ -38,6 +38,14 @@
       <cor:Single Name="RALPanelAlpha" Single="0.8"/>
       <Font Name="RALOverviewFont" Font="Segoe UI Semilight, 12"/>
       <Color Name="RALOverviewColor" Color="230,230,230"/>
+      <Font Name="RALItemLabelFont" Font="Segoe UI SemiLight,12,Bold" />
+      <Color Name="RALItemLabelColor" Color="220,220,220" />
+      <Font Name="RALItemValueFont" Font="Segoe UI SemiLight,14,Bold" />
+      <Color Name="RALItemValueColor" Color="0,155,255" />
+      <Font Name="RALResumeItemTitleFont" Font="Futurist Fixed-width,12"/>
+      <Color Name="RALResumeItemTitleColor" Color="255,255,255"/>
+      <Font Name="SmallRALTitleText" Font="Segoe UI SemiLight,14,Bold"/>
+  
         <!--RAL SELECTOR FONTS & COLORS-->
         <Font Name="XF_RALOption" Font="InterBold, 14"/>
         <Color Name="XC_RALOption" Color="200,200,200"/>
@@ -53,35 +61,41 @@
   <Font Name="DetailsInfoValueFont" Font="InterOne,18" />
 
   <!-- FULL DETAILS AND MEDIA PAGE-->
-    <Font Name="OverviewFont" Font="InterOne, 16"/>
+    <Font Name="OverviewFont" Font="Segoe UI SemiLight, 16"/>
     <Color Name="OverviewColor" Color="230,230,230"/>
       <!--Options Scroller List Fonts-->
-      <Font Name="DetailOptionFont" Font="BebasNeue, 24"/>
-      <Font Name="DetailSelOptionFont" Font="BebasNeue, 24"/>
-      <Color Name="DetailOptionColor" Color="111,184,227"/>
-      <Color Name="DetailSelOptionColor" Color="240,240,240"/>
+      <Font Name="DetailOptionFont" Font="Futurist Fixed-width,14"/>
+      <Font Name="DetailSelOptionFont" Font="Futurist Fixed-width,20"/>
+      <Color Name="DetailOptionColor" Color="240,240,240"/>
+      <Color Name="DetailSelOptionColor" Color="0,155,255"/>
       <!--Actors Fonts-->
-      <Font Name="ActorNameFont" FontName="InterBold" FontSize="20" />
-      <Color Name="ActorNameColor" Color="230,230,230" />
-      <Font Name="ActorRoleFont" FontName="InterBold" FontSize="16" />
+      <Font Name="ActorNameFont" FontName="Futurist Fixed-width" FontSize="12" />
+      <Color Name="ActorNameColor" Color="255,255,255" />
+      <Font Name="ActorRoleFont" FontName="Segoe UI SemiLight" FontSize="12" />
       <Color Name="ActorRoleColor" Color="230,230,230" />
       <!--Chapters Fonts-->
-      <Font Name="ChapterNameFont" FontName="InterBold" FontSize="20" />
-      <Color Name="ChapterNameColor" Color="230,230,230" />
-      <Font Name="ChapterTimeFont" FontName="InterOne" FontSize="16" />
+      <Font Name="ChapterNameFont" FontName="Futurist Fixed-width" FontSize="14" />
+      <Color Name="ChapterNameColor" Color="255,255,255" />
+      <Font Name="ChapterTimeFont" FontName="Segoe UI SemiLight" FontSize="12" />
       <Color Name="ChapterTimeColor" Color="230,230,230" />
       <Color Name="ChapterItemColor" Color="230,230,230" />
       <Color Name="NoChaptersTextColor" Color="230,230,230" />
-      <Font Name="NoChaptersFont" Font="InterBold,36" />
+      <Font Name="NoChaptersFont" Font="Futurist Fixed-width,30" />
       <!--Final Page Items Details Fonts-->
-      <Font Name="FinalDetailsTitle" Font="InterBold,22" />
-      <Color Name="FinalDetailsTitleColor" Color="255,255,255" />
+      <Font Name="FinalDetailsTitle" Font="Futurist Fixed-width,18" />
+      <Color Name="FinalDetailsTitleColor" Color="0,155,255" />
       <Font Name="FinalTagLineFont" Font="InterOne,18" />
       <Color Name="FinalTaglineColor" Color="255,255,190" />
-      <Font Name="FinalDetailsInfoLabelFont" Font="InterBold,16" />
+      <Font Name="FinalDetailsInfoLabelFont" Font="Segoe UI SemiLight,12" />
       <Color Name="FinalDetailsInfoLabelColor" Color="240,240,240" />
-      <Font Name="FinalDetailsInfoValueFont" Font="InterOne,14" />
-      <Color Name="FinalDetailsInfoValueColor" Color="255,255,190" />
+      <Font Name="FinalDetailsInfoValueFont" Font="Segoe UI SemiLight,14" />
+      <Color Name="FinalDetailsInfoValueColor" Color="255,255,255" />
+      <Font Name="FinalDetailsStandOutLabelFont" Font="Futurist Fixed-width,12" />
+      <Color Name="FinalDetailsStandOutLabelColor" Color="240,240,240" />
+      <Font Name="FinalDetailsStandOutValueFont" Font="Futurist Fixed-width,12" />
+      <Color Name="FinalDetailsStandOutValueColor" Color="0,155,255" />
+      <Font Name="FinalDetailsGenresFont" Font="Futurist Fixed-width,14" />
+      <Color Name="FinalDetailsGenresColor" Color="240,240,240" />
   
 
   <!--POSTER VIEW-->
@@ -101,14 +115,14 @@
       <Color Name="PosterShadowTaglineColor" Color="25,25,25" />
       <Color Name="PosterDetailsInfoLabelColor" Color="255,255,190" />
       <Color Name="PosterDetailsInfoValueColor" Color="240,240,240" />
-      <Color Name="StarsColor" Color="255,255,30" />
+      <Color Name="StarsColor" Color="0,155,255" />
 
   <!--COVERFLOW VIEW-->
   <Font Name="CV_PosterTopLabelFont" Font="InterBold, 20" />
 
   <!--THUMBSTRIP VIEW-->
       <!--FONTS-->
-      <Font Name="ThumbStripTitleFont" Font="InterBold, 20" />
+      <Font Name="ThumbStripTitleFont" Font="InterBold, 20" /> 
       <Font Name="ThumbStripOverviewFont" Font="InterOne, 16" />
       <Font Name="ThumbStripShadowOverviewFont" Font="InterOne, 16" />
       <Font Name="ThumbStripYearFont" Font="InterBold, 16" />
@@ -126,7 +140,8 @@
   <!--FULL DETAILS VIEW-->
       <Font Name="ListScrollerFont" Font="Neutra Text,18"/>
       <Font Name="DetailsParentFolderHeadingFont" Font="InterBold,22" />
-      <Font Name="DetailsOverviewFont" Font="InterOne,20" />
+      <Font Name="DetailsOverviewFont" Font="Segoe UI SemiLight, 14"/>
+      <Color Name="DetailsOverviewColor" Color="230,230,230"/>
 
   <!--DETAILS QUICKLIST VIEW-->
       <Font Name="XF_DQLFolderTitle" Font="BebasNeue,24" />
@@ -160,28 +175,28 @@
       <Color Name="BottomBarColorOverlay" Color="111,184,227" />
   
   <!--ACTOR PAGE -->
-      <Font Name="ActorPopupNameFont" Font="BebasNeue,36,Bold"/>
+      <Font Name="ActorPopupNameFont" Font="Futurist Fixed-width,30"/>
       <Color Name="ActorPopupNameColor" Color="AntiqueWhite"/>
-      <Font Name="ActorInfoLabelFont" Font="InterBold, 20"/>
+      <Font Name="ActorInfoLabelFont" Font="Futurist Fixed-width,20"/>
       <Color Name="ActorInfoLabelColor" Color="111,184,227"/>
-      <Font Name="ActorInfoValueFont" Font="InterBold, 22"/>
+      <Font Name="ActorInfoValueFont" Font="Segoe UI Semilight, 22"/>
       <Color Name="ActorInfoValueColor" Color="AntiqueWhite"/>
-      <Font Name="ActorBioFont" Font="InterOne, 16"/>
+      <Font Name="ActorBioFont" Font="Segoe UI Semilight, 16"/>
       <Color Name="ActorBioColor" Color="AntiqueWhite"/>
           <!-- ACTOR CREDITS SCROLLER -->
-          <Font Name="ActorCreditTitleFont" Font="BebasNeue,36,Bold"/>
+          <Font Name="ActorCreditTitleFont" Font="Segoe UI Semilight,12"/>
           <Color Name="ActorCreditTitleColor" Color="AntiqueWhite"/>
           <Font Name="ActorCreditUnselectedTitleFont" Font="InterBold, 20"/>
           <Color Name="ActorCreditUnselectedTitleColor" Color="111,184,227"/>
   
   <!--COUNTERS-->
       <!--FONTS-->
-      <Font Name="UnwatchedCountFont" Font="InterOne, 12" />
-      <Font Name="counterFont" Font="InterBold, 14" />
-      <Font Name="totalCounterFont" Font="InterBold, 14" />
+      <Font Name="UnwatchedCountFont" Font="Segoe UI Semilight, 12" />
+      <Font Name="counterFont" Font="Segoe UI Semilight, 14" />
+      <Font Name="totalCounterFont" Font="Segoe UI Semilight, 14" />
       <!--COLORS-->
-      <Color Name="counterColor" Color="210,210,210" />
-      <Color Name="totalCounterColor" Color="210,210,210" />
+      <Color Name="counterColor" Color="0,155,255" />
+      <Color Name="totalCounterColor" Color="0,155,255" />
       <Color Name="XC_WatchedBG" Color="82,181,75" />
 
   <!--CONFIG UI POPUP PANELS-->
@@ -204,9 +219,9 @@
       <!-- Color and opacity of the panel used for the popup menu title -->
       <Color Name="XC_PopupMenuTitleBG" Color="150,0,0,0" />
         <!-- Font for the text used for the popup menu title -->
-        <Font Name="XF_PopupMenuTitle" Font="InterBold, 18" />
+        <Font Name="XF_PopupMenuTitle" Font="Futurist Fixed-width,15" />
         <!-- Font for the text used for the popup menu list items -->
-        <Font Name="XF_PopupMenuItem" Font="InterOne, 18" />
+        <Font Name="XF_PopupMenuItem" Font="Segoe UI Semilight, 15" />
         <!-- Color and opacity of the focus frame, if enabled -->
         <Color Name="XC_FocusFrame" Color="255,255,255,255" />
         <!-- Size that the focus frame extends from outside of the bounds of the poster -->

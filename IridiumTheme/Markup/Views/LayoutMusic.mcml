@@ -4,7 +4,7 @@
 	    xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
       xmlns:ib="resx://MediaBrowser/MediaBrowser.Resources/ItemButton"
       xmlns:ih="assembly://Iridium/Iridium"
-	    xmlns:xs="file://Iridium_Styles.mcml"
+	    xmlns:is="file://Iridium_Styles.mcml"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
 	    xmlns:bd="resx://Iridium/Iridium.Resources/Backdrop"
@@ -252,7 +252,7 @@
                           <FlowLayout Orientation="Vertical" ItemAlignment="Near" Spacing="0,0" />
                         </Layout>
                         <Children>
-                          <st:MarqueeText Name="AlbumTitle" Color="color://xs:RootHorizontalBGoverlayColor" Font="font://xs:XF_DQLSelected" />
+                          <st:MarqueeText Name="AlbumTitle" Color="color://is:RootHorizontalBGoverlayColor" Font="font://is:XF_DQLSelected" />
 
                           <!-- List of Items -->
                           <Scroller Name="ChildScroller" Orientation="Vertical" ScrollingData="[ChildSD]" Margins="0,30,0,0" FadeAmount="1" FadeSize="-25" Navigation="Column,RememberFocus">
@@ -292,7 +292,7 @@
                 </LayoutInput>
               </Graphic>
 
-              <Graphic Name="ChildBG" Content="image://it:RALBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+              <Graphic Name="ChildBG" Content="image://it:RALBG" ColorFilter="color://is:XC_RALPanelFilterColor" Alpha="global://is:RALPanelAlpha">
                 <LayoutInput>
                   <AnchorLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0.5" Bottom="Parent,1"  />
                 </LayoutInput>
@@ -340,9 +340,9 @@
         <Actions>
           <Set Target="[SelectedIndex.Value]" Value="[Index.SourceValue]"/>
           <Set Target="[Application.CurrentItem]" Value="[Item]" />
-          <Set Target="[ChildItemName.Font]" Value="font://xs:XF_DQLSelected"/>
-          <Set Target="[ChildItemName.Color]" Value="color://xs:XC_DQLHighlighted"/>
-          <Set Target="[Duration.Color]" Value="color://xs:XC_DQLHighlighted"/>
+          <Set Target="[ChildItemName.Font]" Value="font://is:XF_DQLSelected"/>
+          <Set Target="[ChildItemName.Color]" Value="color://is:XC_DQLHighlighted"/>
+          <Set Target="[Duration.Color]" Value="color://is:XC_DQLHighlighted"/>
         </Actions>
       </Condition>
       
@@ -365,7 +365,7 @@
               <AnchorLayoutInput Left="Parent,0" Right="Parent,1,-130" Vertical="Far" />
             </LayoutInput>
             <Children>
-              <Text Name="ChildItemName" Content="[Item.Name]" Font="font://xs:XF_DQLFolderTitle" Color="color://xs:XC_DQLUnselected" />
+              <Text Name="ChildItemName" Content="[Item.Name]" Font="font://is:XF_DQLFolderTitle" Color="color://is:XC_DQLUnselected" />
             </Children>
           </Scroller>
           <Panel Name="DurationPanel" Layout="HorizontalFlow">
@@ -373,7 +373,7 @@
               <AnchorLayoutInput Left="Parent,1,-120" Right="Parent,1,-20" Horizontal="Far" Vertical="Far" />
             </LayoutInput>
             <Children>
-              <Text Name="Duration" Font="font://xs:XF_DQLFolderTitle" Color="color://xs:XC_DQLUnselected" Margins="0,0,10,0" />
+              <Text Name="Duration" Font="font://is:XF_DQLFolderTitle" Color="color://is:XC_DQLUnselected" Margins="0,0,10,0" />
             </Children>
           </Panel>
           <!--<imb:ImageButton Name="QueueItemButton" Size="36,36" Command="[SingleQueue]" Application="[Application]" FocusImage="image://it:AddIcon" ImageNoFocus="image://it:AddIconSmall" >

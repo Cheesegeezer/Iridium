@@ -2,7 +2,7 @@
 	  xmlns:a="assembly://MediaBrowser/MediaBrowser"
 	  xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
 	  xmlns:cor="assembly://MSCorLib/System"
-    xmlns:xs="file://Iridium_Styles.mcml"    
+    xmlns:is="file://Iridium_Styles.mcml"    
     xmlns:vi="resx://Iridium/Iridium.Resources/Images"
     xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
       xmlns:in="resx://MediaBrowser/MediaBrowser.Resources/InfoMarquee"
@@ -135,8 +135,8 @@
               <AnchorLayoutInput Top="ThumbsBG,1,-165" Right="ThumbsBG,1,-8"/>
             </LayoutInput>
             <Children>
-              <Text Name="List_Counter" Content="0" Color="color://xs:counterColor" Font="font://xs:counterFont" />
-              <Text Name="List_Total" Content="0" Color="color://xs:totalCounterColor" Font="font://xs:totalCounterFont"/>
+              <Text Name="List_Counter" Content="0" Color="color://is:counterColor" Font="font://is:counterFont" />
+              <Text Name="List_Total" Content="0" Color="color://is:totalCounterColor" Font="font://is:totalCounterFont"/>
             </Children>
           </Panel>
 
@@ -224,11 +224,11 @@
     </Content>
 
     <Content Name="ScrollerItem">
-      <me:WaveItem SmallFont="[SmallFont]" Application="[Application]" Item="[RepeatedItem!lib:Item]" ParentFolder="[Folder]" Index="[RepeatedItemIndex]" ThemeHelper="[ThemeHelper]" FocusGained="[FocusGained]" FocusLost="[FocusLost]" />
+      <me:OptionItem SmallFont="[SmallFont]" Application="[Application]" Item="[RepeatedItem!lib:Item]" ParentFolder="[Folder]" Index="[RepeatedItemIndex]" ThemeHelper="[ThemeHelper]" FocusGained="[FocusGained]" FocusLost="[FocusLost]" />
     </Content>
   </UI>
 
-  <UI Name="WaveItem" BaseUI="ib:ItemButton">
+  <UI Name="OptionItem" BaseUI="ib:ItemButton">
     <Properties>
       <lib:FolderModel Name="ParentFolder" />
       <lib:Item Name="Item" Item="$Required"/>
@@ -240,8 +240,8 @@
     </Properties>
 
     <Locals>
-      <Font Name="WaveSelected" Font="font://xs:WaveSelected" />
-      <Font Name="WaveNotSelected" Font="font://xs:WaveNotSelected" />
+      <Font Name="WaveSelected" Font="font://is:WaveSelected" />
+      <Font Name="WaveNotSelected" Font="font://is:WaveNotSelected" />
     </Locals>
 
     <Rules>
@@ -294,14 +294,14 @@
           <DockLayoutInput Position="Left" Alignment="Center"/>
         </LayoutInput>
         <Children>
-          <mqt:MarqueeText Name="Title" Content="[Item.Name]" Font="font://xs:ThumbTitleFont" Color="color://xs:ThumbTitleColor" Visible="false"/>
+          <mqt:MarqueeText Name="Title" Content="[Item.Name]" Font="font://is:ThumbTitleFont" Color="color://is:ThumbTitleColor" Visible="false"/>
           <Panel>
             <Layout>
               <FlowLayout Orientation="Vertical"/>
             </Layout>
             <Children>
               <Graphic Name="LogoImage" Margins="50,5,50,0" Content="[Item.LogoImage]" MaintainAspectRatio="true" MaximumSize="0,80" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
-              <mqt:MarqueeText Name="SeriesTitle" Content="[Item.Name]" Font="font://xs:ThumbTitleFont" Color="color://xs:ThumbTitleColor" Visible="false"/>
+              <mqt:MarqueeText Name="SeriesTitle" Content="[Item.Name]" Font="font://is:ThumbTitleFont" Color="color://is:ThumbTitleColor" Visible="false"/>
             </Children>
           </Panel>
             </Children>

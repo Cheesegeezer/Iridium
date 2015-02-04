@@ -9,6 +9,14 @@ namespace Iridium
 {
     public class ActorInfo : ModelItem
     {
+
+        //Keep MCML Happy :)
+        public ActorInfo()
+        {
+            
+        }
+
+        public ActorItemWrapper Item { get; set; }
         private static Item _actorItem;
         private string _id;
         private string _name;
@@ -153,7 +161,7 @@ namespace Iridium
 
         public DateTime? BornDate
         {
-            get { return _bornDate; }
+            get { return _bornDate.ToUniversalTime(); }
             set
             {
                 if (value != null) _bornDate = (DateTime) value;
@@ -162,7 +170,7 @@ namespace Iridium
 
         public DateTime? DiedDate
         {
-            get { return _diedDate; }
+            get { return _diedDate.ToUniversalTime(); }
             set
             {
                 if (value != null) _diedDate = (DateTime) value;
@@ -173,8 +181,7 @@ namespace Iridium
         {
             get
             {
-                var today = DateTime.Today;
-
+                var today = DateTime.Today.ToUniversalTime();
                 var a = (today.Year * 100 + today.Month) * 100 + today.Day;
                 var b = (_bornDate.Year * 100 + _bornDate.Month) * 100 + _bornDate.Day;
 
@@ -215,9 +222,7 @@ namespace Iridium
             set { _hasLoaded = value; }
         }
 
-        public ActorItemWrapper Item { get; set; }
-
-        public ActorInfo() { }
+        
 
 
 

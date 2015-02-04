@@ -2,7 +2,7 @@
 	  xmlns:a="assembly://MediaBrowser/MediaBrowser"
 	  xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
 	  xmlns:cor="assembly://MSCorLib/System"
-    xmlns:ih="assembly://Iridium/Iridium"
+    xmlns:xh="assembly://Iridium/Iridium"
     xmlns:vi="resx://Iridium/Iridium.Resources/Images"
     xmlns:bd="resx://Iridium/Iridium.Resources/Backdrop"
     xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
@@ -12,16 +12,16 @@
     xmlns:lv="resx://Iridium/Iridium.Resources/LabelValue"
     xmlns:st="resx://Iridium/Iridium.Resources/AutoScrollableText" 
     xmlns:mqt="resx://Iridium/Iridium.Resources/MarqueeText"
-    xmlns:xs="file://Iridium_Styles.mcml"
+    xmlns:is="file://Iridium_Styles.mcml"
     xmlns:s="file://Styles_DoNotEdit.mcml"
     xmlns:me="Me"
     >
 
-	<UI Name="IridiumLayoutBannerView">
+	<UI Name="XenonLayoutBannerView">
     <Properties>
       <a:Application Name="Application" Application="$Required"/>
       <lib:FolderModel Name="Folder" FolderModel="$Required"/>
-      <ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
+      <xh:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
     </Properties>
 
     <Locals>
@@ -105,8 +105,8 @@
             <Children>
               <Panel Name="CounterPosition" Layout="HorizontalFlow">
                 <Children>
-                  <Text Name="List_Counter" Content="0" Color="color://xs:counterColor" Font="font://xs:counterFont" />
-                  <Text Name="List_Total" Content="0" Color="color://xs:totalCounterColor" Font="font://xs:totalCounterFont"/>
+                  <Text Name="List_Counter" Content="0" Color="color://is:counterColor" Font="font://is:counterFont" />
+                  <Text Name="List_Total" Content="0" Color="color://is:totalCounterColor" Font="font://is:totalCounterFont"/>
                 </Children>
               </Panel>
             </Children>
@@ -114,7 +114,7 @@
 
           <!--DETAILS LIST-->
 
-          <Text Name="ParentFolderName" Content="[Folder.Name]" WordWrap="true" Font="font://xs:XF_DQLFolderTitle" Color="color://xs:XC_DQLFolderTitleColor">
+          <Text Name="ParentFolderName" Content="[Folder.Name]" WordWrap="true" Font="font://is:XF_DQLFolderTitle" Color="color://is:XC_DQLFolderTitleColor">
             <LayoutInput>
               <AnchorLayoutInput Top="Parent,0,10" Left="Parent,0,20" Right="Parent,0,200" Bottom="Parent,0,100" />
             </LayoutInput>
@@ -151,7 +151,7 @@
     <Properties>
       <a:Application Name="Application" Application="$Required"/>
       <lib:FolderModel Name="Folder" FolderModel="$Required"/>
-      <ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
+      <xh:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
     </Properties>
 
     <Locals>
@@ -231,7 +231,7 @@
                             Item="[RepeatedItem!lib:Item]"
                             Index="[RepeatedItemIndex]"
                             InfoTimer="[InfoTimer]" NavCount="[NavCount]"
-                            UnwatchedCountFont="font://xs:UnwatchedCountFont"
+                            UnwatchedCountFont="font://is:UnwatchedCountFont"
                             SelectRepeaterIndex="[SelectRepeaterIndex]"/>
             </Content>
             <Animations>
@@ -247,14 +247,14 @@
       </Scroller>
     </Content>
     <Content Name="Divider">
-      <Graphic Content="image://vi:GlowLine" MaximumSize="500,15" ColorFilter="color://xs:QLDividerColor" />
+      <Graphic Content="image://vi:GlowLine" MaximumSize="500,15" ColorFilter="color://is:QLDividerColor" />
     </Content>
   </UI>
 
   <UI Name="SeriesListItems">
     <Properties>
       <a:Application Name="Application" Application="$Required" />
-      <ih:IridiumHelper Name="ThemeHelper" />
+      <xh:IridiumHelper Name="ThemeHelper" />
       <lib:FolderModel Name="ParentItem" FolderModel="$Required"/>
       <lib:Item Name="Item" Item="$Required" />
       <Index Name="Index" Index="$Required"/>
@@ -345,8 +345,8 @@
           <Equality Source="[Input.KeyFocus]" Value="true" />
         </Conditions>
         <Actions>
-          <!--<Set Target="[Title.Font]" Value="font://xs:XF_DQLSelected" />
-          <Set Target="[Title.Color]" Value="color://xs:XC_DQLHighlighted"/>-->
+          <!--<Set Target="[Title.Font]" Value="font://is:XF_DQLSelected" />
+          <Set Target="[Title.Color]" Value="color://is:XC_DQLHighlighted"/>-->
           <Set Target="[ParentItem.SelectedChildIndex]" Value="[Index.SourceValue]"/>
           <Invoke Target="[AnimTimer.Start]" />
         </Actions>
@@ -364,7 +364,7 @@
           <Equality Source="[Input.KeyFocus]" Value="false" />
         </Conditions>
         <Actions>
-          <Set Target="[Title.Color]" Value="color://xs:XC_DQLUnselected"/>
+          <Set Target="[Title.Color]" Value="color://is:XC_DQLUnselected"/>
         </Actions>
       </Condition>-->
 
@@ -390,7 +390,7 @@
             <Children>
               
 
-              <!--<Text Name="Title" WordWrap="false" Font="font://xs:XF_DQLUnselected" Margins="20,0,20,0" >
+              <!--<Text Name="Title" WordWrap="false" Font="font://is:XF_DQLUnselected" Margins="20,0,20,0" >
                 <LayoutInput>
                   <AnchorLayoutInput Left="PosterPanel,1,20" Top="PosterPanel,0,10" Right="PosterPanel,1,550"/>
                 </LayoutInput>
@@ -404,7 +404,7 @@
                   <Panel Name="TickPanel" Layout="Center">
                     <Children>
                       <Graphic Content="image://i:TickPoster"  MaximumSize="30,30"  />
-                      <Graphic Content="image://i:TickPosterBase" ColorFilter="color://xs:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
+                      <Graphic Content="image://i:TickPosterBase" ColorFilter="color://is:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
                     </Children>
                   </Panel>
                 </Children>
@@ -447,7 +447,7 @@
                       </Animation>
                     </Animations>
                   </Graphic>
-                  <Graphic Name="Border" Content="image://i:BlankImage" ColorFilter="color://xs:XC_FocusFrame" >
+                  <Graphic Name="Border" Content="image://i:BlankImage" ColorFilter="color://is:XC_FocusFrame" >
                     <LayoutInput>
                       <AnchorLayoutInput Left="ItemPoster,0,-2" Right="ItemPoster,1,2" Top="ItemPoster,0,-2" Bottom="ItemPoster,1,2" />
                     </LayoutInput>
@@ -466,7 +466,7 @@
     <Properties>
       <a:Application Name="Application" Application="$Required"/>
       <lib:FolderModel Name="Folder" FolderModel="$Required"/>
-      <ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
+      <xh:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
     </Properties>
 
     <Locals>
@@ -534,7 +534,7 @@
                   <AnchorLayoutInput Left="Parent,0" Top="Parent,0" />
                 </LayoutInput>
                 <Children>
-                  <mqt:MarqueeText Name="Title" Font="font://xs:PosterTitleFont" Color="color://xs:PosterTitleColor" Visible="false"/>
+                  <mqt:MarqueeText Name="Title" Font="font://is:PosterTitleFont" Color="color://is:PosterTitleColor" Visible="false"/>
                   <Graphic Name="LogoImage" Margins="0,5,5,15" MaintainAspectRatio="true" MaximumSize="0,75" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
                 </Children>
               </Panel>
@@ -546,7 +546,7 @@
                 </Children>
               </Panel>
 
-              <Clip Name="Divider" MaximumSize="350,0" Visible="true" ColorFilter="color://xs:ThumbDividerColor" >
+              <Clip Name="Divider" MaximumSize="350,0" Visible="true" ColorFilter="color://is:ThumbDividerColor" >
                 <LayoutInput>
                   <AnchorLayoutInput Left="Parent,0" Top="Parent,0" />
                 </LayoutInput>
@@ -555,7 +555,7 @@
                 </Children>
               </Clip>
               
-              <st:ScrollableText Name="Summary" Font="font://xs:PosterOverviewFont" Color="color://xs:PosterOverviewTextColor">
+              <st:ScrollableText Name="Summary" Font="font://is:PosterOverviewFont" Color="color://is:PosterOverviewTextColor">
                 <LayoutInput>
                   <AnchorLayoutInput Left="Parent,0" Top="Parent,0" Right="Parent,1" />
                 </LayoutInput>

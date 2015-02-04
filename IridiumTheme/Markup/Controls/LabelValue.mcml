@@ -2,18 +2,19 @@
 	  xmlns:cor="assembly://MSCorLib/System"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
 >
 
   <UI Name="FinalLabelValue">
 
     <Properties>
-      <Font Name="FinalFontLabel" Font="font://xs:FinalDetailsInfoLabelFont"/>
-      <Font Name="FinalValueFont" Font="font://xs:FinalDetailsInfoValueFont" />
-      <Color Name="FinalValueColor" Color="color://xs:FinalDetailsInfoValueColor" />
-      <Color Name="FinalLabelColor" Color="color://xs:FinalDetailsInfoLabelColor" />
+      <Font Name="FinalFontLabel" Font="font://is:FinalDetailsInfoLabelFont"/>
+      <Font Name="FinalValueFont" Font="font://is:FinalDetailsInfoValueFont" />
+      <Color Name="FinalValueColor" Color="color://is:FinalDetailsInfoValueColor" />
+      <Color Name="FinalLabelColor" Color="color://is:FinalDetailsInfoLabelColor" />
       <cor:String Name="Label" String=""></cor:String>
       <cor:String Name="Value" String=""></cor:String>
+      
     </Properties>
 
     <Rules>
@@ -34,11 +35,41 @@
     </Content>
   </UI>
 
+  <UI Name="StandOutLabelValue">
+
+    <Properties>
+      <Font Name="FinalLabelStandOutFont" Font="font://is:FinalDetailsStandOutLabelFont" />
+      <Font Name="FinalValueStandOutFont" Font="font://is:FinalDetailsStandOutValueFont" />
+      <Color Name="FinalLabelStandOutColor" Color="color://is:FinalDetailsStandOutLabelColor" />
+      <Color Name="FinalValueStandOutColor" Color="color://is:FinalDetailsStandOutLabelColor" />
+      <cor:String Name="Label" String="" />
+      <cor:String Name="Value" String="" />
+
+    </Properties>
+
+    <Rules>
+      <Binding Target="[StandOutLabelText.Content]" Source="[Label]" />
+      <Binding Target="[StandOutValueText.Content]" Source="[Value]" />
+
+      <Condition Source="[Value]" ConditionOp="Equals" SourceValue="" Target="[Panel.Visible]" Value="false"></Condition>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="HorizontalFlow" Name="Panel" Visible="true">
+        <Children>
+          <Text Name="StandOutLabelText" Color="[FinalLabelStandOutColor]" Font="[FinalLabelStandOutFont]"/>
+          <Text Name="StandOutValueText" Color="[FinalValueStandOutColor]" Font="[FinalValueStandOutFont]"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
   <UI Name="FinalTagLabelValue">
 
     <Properties>
-      <Font Name="TaglineFont" Font="font://xs:PosterTagLineFont"/>
-      <Color Name="TaglineColor" Color="color://xs:PosterTaglineColor"/>
+      <Font Name="TaglineFont" Font="font://is:PosterTagLineFont"/>
+      <Color Name="TaglineColor" Color="color://is:PosterTaglineColor"/>
       <cor:String Name="TagLabel" String="" />
     </Properties>
 
@@ -59,10 +90,10 @@
   <UI Name="PosterLabelValue">
 
     <Properties>
-      <Font Name="FontLabel" Font="font://xs:PosterDetailsInfoLabelFont"/>
-      <Font Name="ValueFont" Font="font://xs:PosterDetailsInfoValueFont" />
-      <Color Name="ValueColor" Color="color://xs:PosterDetailsInfoValueColor" />
-      <Color Name="LabelColor" Color="color://xs:PosterDetailsInfoLabelColor" />
+      <Font Name="FontLabel" Font="font://is:PosterDetailsInfoLabelFont"/>
+      <Font Name="ValueFont" Font="font://is:PosterDetailsInfoValueFont" />
+      <Color Name="ValueColor" Color="color://is:PosterDetailsInfoValueColor" />
+      <Color Name="LabelColor" Color="color://is:PosterDetailsInfoLabelColor" />
       <cor:String Name="Label" String=""></cor:String>
       <cor:String Name="Value" String=""></cor:String>
 
@@ -89,8 +120,8 @@
   <UI Name="PosterTagLabelValue">
 
     <Properties>
-      <Font Name="TaglineFont" Font="font://xs:PosterTagLineFont"/>
-      <Color Name="TaglineColor" Color="color://xs:PosterTaglineColor"/>
+      <Font Name="TaglineFont" Font="font://is:PosterTagLineFont"/>
+      <Color Name="TaglineColor" Color="color://is:PosterTaglineColor"/>
       <cor:String Name="TagLabel" String="" />
     </Properties>
 
@@ -111,8 +142,8 @@
   <UI Name="BBarLabelValue">
 
     <Properties>
-      <Font Name="BBarValueFont" Font="font://xs:BottomBarLabelFont" />
-      <Color Name="BBarValueColor" Color="color://xs:BottomBarLabelColor" />
+      <Font Name="BBarValueFont" Font="font://is:BottomBarLabelFont" />
+      <Color Name="BBarValueColor" Color="color://is:BottomBarLabelColor" />
       <cor:String Name="Value" String=""></cor:String>
     </Properties>
 

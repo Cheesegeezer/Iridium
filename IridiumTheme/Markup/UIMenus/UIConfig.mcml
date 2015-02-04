@@ -5,7 +5,7 @@ xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
 xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
 xmlns:vm="resx://MediaBrowser/MediaBrowser.Resources/ViewMenu"
 xmlns:ih="assembly://Iridium/Iridium"
-xmlns:xs="file://Iridium_Styles.mcml"
+xmlns:is="file://Iridium_Styles.mcml"
 xmlns:ui="resx://Iridium/Iridium.Resources/UI"
 xmlns:imb="resx://Iridium/Iridium.Resources/ImageButton"
 xmlns:cmd="resx://Iridium/Iridium.Resources/CommandButton"
@@ -709,7 +709,7 @@ xmlns:me="Me">
               </ui:GlowBottom>
 
               <!-- Main Menu -->
-              <Text Content="[Application.LocalStrings.#OptionsLabel!cor:String]" Color="color://xs:XC_PopupMenuTitle" Font="font://xs:XF_PopupMenuTitle">
+              <Text Content="[Application.LocalStrings.#OptionsLabel!cor:String]" Color="color://is:XC_PopupMenuTitle" Font="font://is:XF_PopupMenuTitle">
                 <LayoutInput>
                   <AnchorLayoutInput Left="MainTitleBG,0" Right="MainTitleBG,1" Top="MainTitleBG,0" Bottom="MainTitleBG,1" Vertical="Center" Horizontal="Center" />
                 </LayoutInput>
@@ -723,78 +723,78 @@ xmlns:me="Me">
                   <cmd:CommandButton Name="UnlockConfigButton"
                                      Text="[Application.LocalStrings.#UnlockConfigLabel!cor:String]"
                                      Command="[UnlockConfigCommand]"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel"
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel"
                                      Visible="false" />
 
                   <cmd:CommandButton Name="ConfigButton"
                                      Text="[Application.LocalStrings.#ConfigureLabel!cor:String]"
                                      Command="[ConfigureCommand]"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel"
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel"
                                      Visible="true" />
 
                   <cmd:CommandButton Name="ViewStyleButton"
                                      Text="[Application.LocalStrings.#ViewStyleLabel!cor:String]"
                                      Command="[ShowViewCommand]"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel"
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel"
                                      Visible="true"
                                      Enabled="true" />
 
                   <cmd:CommandButton Name="ViewOptsButton"
                                      Text="[Application.LocalStrings.#ViewOptionsLabel!cor:String]"
                                      Command="[ShowViewOptsCommand]"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel"
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel"
                                      Visible="true"
                                      Enabled="true" />
 
                   <!--<cmd:CommandButton Name="ExtraViewButton"
                                      Text="[Application.LocalStrings.#ExtraViewLabel!cor:String]"
                                      Command="[ShowExtraViewCommand]"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel"
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel"
                                      Visible="true"
                                      Enabled="true" />-->
 
                   <cmd:CommandButton Name="EHSViewOptsButton"
                                      Text="[Application.LocalStrings.#ViewOptionsLabel!cor:String]"
                                      Command="[ShowEHSViewOptsCommand]"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel"
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel"
                                      Visible="false"
                                      Enabled="true" />
 
                   <cmd:CommandButton Name="SortButton"
                                      Text="[Application.LocalStrings.#SortByLabel!cor:String]"
                                      Command="[ShowSortCommand]"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel"
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel"
                                      Visible="true"
                                      Enabled="true"/>
 
                   <cmd:CommandButton Name="GroupButton"
                                      Text="[Application.LocalStrings.#GroupByLabel!cor:String]"
                                      Command="[ShowGroupCommand]"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel"
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel"
                                      Visible="true"
                                      Enabled="true" />
 
@@ -802,20 +802,20 @@ xmlns:me="Me">
                                      Text="[Application.LocalStrings.#LockConfigLabel!cor:String]"
                                      Command="[LockConfigCommand]"
                                      Margins="0,20,0,0"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel"
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel"
                                      Visible="false" />
 
                   <cmd:CommandButton Name="CloseMainButton"
                                      Text="[Application.LocalStrings.#CloseCMenu!cor:String]"
                                      Command="[DoCloseCommand]"
                                      Margins="0,20,0,0"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel" />
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel" />
                 </Children>
               </Panel>
 
@@ -854,7 +854,7 @@ xmlns:me="Me">
               </ui:GlowBottom>
 
               <!-- View Menu -->
-              <Text Content="[Application.LocalStrings.#ViewStyleLabel!cor:String]" Color="color://xs:XC_PopupMenuTitle" Font="font://xs:XF_PopupMenuTitle">
+              <Text Content="[Application.LocalStrings.#ViewStyleLabel!cor:String]" Color="color://is:XC_PopupMenuTitle" Font="font://is:XF_PopupMenuTitle">
                 <LayoutInput>
                   <AnchorLayoutInput Left="ViewTitleBG,0" Right="ViewTitleBG,1" Top="ViewTitleBG,0" Bottom="ViewTitleBG,1" Vertical="Center" Horizontal="Center" />
                 </LayoutInput>
@@ -871,10 +871,10 @@ xmlns:me="Me">
                                      Text="[Application.LocalStrings.#CloseCMenu!cor:String]"
                                      Command="[HideViewCommand]"
                                      Margins="0,20,0,0"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel" />
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel" />
                 </Children>
               </Panel>
 
@@ -913,7 +913,7 @@ xmlns:me="Me">
               </ui:GlowBottom>-->
 
               <!-- Extra View Menu 
-              <Text Content="[Application.LocalStrings.#ExtraViewStyleLabel!cor:String]" Color="color://xs:XC_PopupMenuTitle" Font="font://xs:XF_PopupMenuTitle">
+              <Text Content="[Application.LocalStrings.#ExtraViewStyleLabel!cor:String]" Color="color://is:XC_PopupMenuTitle" Font="font://is:XF_PopupMenuTitle">
                 <LayoutInput>
                   <AnchorLayoutInput Left="ExtraViewTitleBG,0" Right="ExtraViewTitleBG,1" Top="ExtraViewTitleBG,0" Bottom="ExtraViewTitleBG,1" Vertical="Center" Horizontal="Center" />
                 </LayoutInput>
@@ -930,10 +930,10 @@ xmlns:me="Me">
                                      Text="[Application.LocalStrings.#CloseCMenu!cor:String]"
                                      Command="[HideExtraViewCommand]"
                                      Margins="0,20,0,0"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel" />
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel" />
                 </Children>
               </Panel>-->
 
@@ -974,7 +974,7 @@ xmlns:me="Me">
               </ui:GlowBottom>
 
               <!-- View Menu -->
-              <Text Content="[Application.LocalStrings.#ViewOptionsLabel!cor:String]" Color="color://xs:XC_PopupMenuTitle" Font="font://xs:XF_PopupMenuTitle">
+              <Text Content="[Application.LocalStrings.#ViewOptionsLabel!cor:String]" Color="color://is:XC_PopupMenuTitle" Font="font://is:XF_PopupMenuTitle">
                 <LayoutInput>
                   <AnchorLayoutInput Left="ViewOptsTitleBG,0" Right="ViewOptsTitleBG,1" Top="ViewOptsTitleBG,0" Bottom="ViewOptsTitleBG,1" Vertical="Center" Horizontal="Center" />
                 </LayoutInput>
@@ -1008,7 +1008,7 @@ xmlns:me="Me">
                       <FlowLayout Orientation="Horizontal" ItemAlignment="Center"/>
                     </Layout>
                     <Children>
-                      <Text Content="[Application.LocalStrings.#ThumbSizeDispPref!cor:String]" Color="color://xs:XC_PopupMenuItem" Font="font://xs:XF_PopupMenuItem"/>
+                      <Text Content="[Application.LocalStrings.#ThumbSizeDispPref!cor:String]" Color="color://is:XC_PopupMenuItem" Font="font://is:XF_PopupMenuItem"/>
                       <imb:ImageButtonSelector Command="[DecreaseThumbCommand]" Image="resx://Iridium/Iridium.Resources/minus" />
                       <imb:ImageButtonSelector Command="[IncreaseThumbCommand]" Image="resx://Iridium/Iridium.Resources/plus" />
                     </Children>
@@ -1018,10 +1018,10 @@ xmlns:me="Me">
                                      Text="[Application.LocalStrings.#CloseCMenu!cor:String]"
                                      Command="[HideViewOptsCommand]"
                                      Margins="0,20,0,0"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel" />
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel" />
                 </Children>
               </Panel>
 
@@ -1060,7 +1060,7 @@ xmlns:me="Me">
               </ui:GlowBottom>
 
               <!-- View Menu -->
-              <Text Content="[Application.LocalStrings.#ViewOptionsLabel!cor:String]" Color="color://xs:XC_PopupMenuTitle" Font="font://xs:XF_PopupMenuTitle">
+              <Text Content="[Application.LocalStrings.#ViewOptionsLabel!cor:String]" Color="color://is:XC_PopupMenuTitle" Font="font://is:XF_PopupMenuTitle">
                 <LayoutInput>
                   <AnchorLayoutInput Left="EHSViewOptsTitleBG,0" Right="EHSViewOptsTitleBG,1" Top="EHSViewOptsTitleBG,0" Bottom="EHSViewOptsTitleBG,1" Vertical="Center" Horizontal="Center" />
                 </LayoutInput>
@@ -1090,7 +1090,7 @@ xmlns:me="Me">
                       <FlowLayout Orientation="Horizontal" ItemAlignment="Center"/>
                     </Layout>
                     <Children>
-                      <Text Content="[Application.LocalStrings.#EHSHListSizeLabel!cor:String]" Color="color://xs:XC_PopupMenuItem" Font="font://xs:XF_PopupMenuItem"/>
+                      <Text Content="[Application.LocalStrings.#EHSHListSizeLabel!cor:String]" Color="color://is:XC_PopupMenuItem" Font="font://is:XF_PopupMenuItem"/>
                       <imb:ImageButtonSelector Command="[DecreaseEHSHSizeCommand]" Image="resx://Iridium/Iridium.Resources/minus" />
                       <imb:ImageButtonSelector Command="[IncreaseEHSHSizeCommand]" Image="resx://Iridium/Iridium.Resources/plus" />
                     </Children>
@@ -1101,7 +1101,7 @@ xmlns:me="Me">
                       <FlowLayout Orientation="Horizontal" ItemAlignment="Center"/>
                     </Layout>
                     <Children>
-                      <Text Content="[Application.LocalStrings.#EHSThumbSizeLabel!cor:String]" Color="color://xs:XC_PopupMenuItem" Font="font://xs:XF_PopupMenuItem"/>
+                      <Text Content="[Application.LocalStrings.#EHSThumbSizeLabel!cor:String]" Color="color://is:XC_PopupMenuItem" Font="font://is:XF_PopupMenuItem"/>
                       <imb:ImageButtonSelector Command="[DecreaseEHSThumbCommand]" Image="resx://Iridium/Iridium.Resources/minus" />
                       <imb:ImageButtonSelector Command="[IncreaseEHSThumbCommand]" Image="resx://Iridium/Iridium.Resources/plus" />
                     </Children>
@@ -1111,10 +1111,10 @@ xmlns:me="Me">
                                      Text="[Application.LocalStrings.#CloseCMenu!cor:String]"
                                      Command="[HideEHSViewOptsCommand]"
                                      Margins="0,20,0,0"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel" />
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel" />
                 </Children>
               </Panel>
 
@@ -1153,7 +1153,7 @@ xmlns:me="Me">
               </ui:GlowBottom>
 
               <!-- Sort Menu -->
-              <Text Content="[Application.LocalStrings.#SortByLabel!cor:String]" Color="color://xs:XC_PopupMenuTitle" Font="font://xs:XF_PopupMenuTitle">
+              <Text Content="[Application.LocalStrings.#SortByLabel!cor:String]" Color="color://is:XC_PopupMenuTitle" Font="font://is:XF_PopupMenuTitle">
                 <LayoutInput>
                   <AnchorLayoutInput Left="SortTitleBG,0" Right="SortTitleBG,1" Top="SortTitleBG,0" Bottom="SortTitleBG,1" Vertical="Center" Horizontal="Center" />
                 </LayoutInput>
@@ -1169,10 +1169,10 @@ xmlns:me="Me">
                   <cmd:CommandButton Name="CloseSortButton"
                                      Text="[Application.LocalStrings.#CloseCMenu!cor:String]"
                                      Command="[HideSortCommand]"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel" />
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel" />
                 </Children>
               </Panel>
 
@@ -1211,7 +1211,7 @@ xmlns:me="Me">
               </ui:GlowBottom>
 
               <!-- Group Menu -->
-              <Text Content="[Application.LocalStrings.#GroupByLabel!cor:String]" Color="color://xs:XC_PopupMenuTitle" Font="font://xs:XF_PopupMenuTitle">
+              <Text Content="[Application.LocalStrings.#GroupByLabel!cor:String]" Color="color://is:XC_PopupMenuTitle" Font="font://is:XF_PopupMenuTitle">
                 <LayoutInput>
                   <AnchorLayoutInput Left="GroupTitleBG,0" Right="GroupTitleBG,1" Top="GroupTitleBG,0" Bottom="GroupTitleBG,1" Vertical="Center" Horizontal="Center" />
                 </LayoutInput>
@@ -1227,10 +1227,10 @@ xmlns:me="Me">
                   <cmd:CommandButton Name="CloseGroupButton"
                                      Text="[Application.LocalStrings.#CloseCMenu!cor:String]"
                                      Command="[HideGroupCommand]"
-                                     Font="font://xs:XF_PopupMenuItem"
-                                     SelFont="font://xs:XF_PopupMenuItem"
-                                     Color="color://xs:XC_PopupMenuItem"
-                                     SelColor="color://xs:XC_PopupMenuItemSel" />
+                                     Font="font://is:XF_PopupMenuItem"
+                                     SelFont="font://is:XF_PopupMenuItem"
+                                     Color="color://is:XC_PopupMenuItem"
+                                     SelColor="color://is:XC_PopupMenuItemSel" />
                 </Children>
               </Panel>
 
@@ -1249,7 +1249,7 @@ xmlns:me="Me">
             </Children>
           </Panel>
 
-          <ColorFill Name="OverlayBG" Content="color://xs:XC_PopupMenuBG" Visible="true">
+          <ColorFill Name="OverlayBG" Content="color://is:XC_PopupMenuBG" Visible="true">
             <LayoutInput>
               <FormLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0" Bottom="Parent,1"/>
             </LayoutInput>
@@ -1352,7 +1352,7 @@ xmlns:me="Me">
         </Conditions>
         <Actions>
           <Set Target="[BoxImage.Content]" Value="image://i:RadioSelectFocus" />
-          <Set Target="[OptionLabel.Color]" Value="color://xs:XC_PopupMenuItemSel" />
+          <Set Target="[OptionLabel.Color]" Value="color://is:XC_PopupMenuItemSel" />
         </Actions>
       </Condition>
 
@@ -1362,7 +1362,7 @@ xmlns:me="Me">
         </Conditions>
         <Actions>
           <Set Target="[BoxImage.Content]" Value="image://i:RadioFocus" />
-          <Set Target="[OptionLabel.Color]" Value="color://xs:XC_PopupMenuItemSel" />
+          <Set Target="[OptionLabel.Color]" Value="color://is:XC_PopupMenuItemSel" />
         </Actions>
       </Condition>
 
@@ -1393,7 +1393,7 @@ xmlns:me="Me">
         <Children>
 
           <Graphic Content="image://i:RadioNoFocus" Name="BoxImage" MinimumSize="[BoxSize]" MaximumSize="[BoxSize]" />
-          <Text Name="OptionLabel" Content="[Option]" Color="color://xs:XC_PopupMenuItem" Font="font://xs:XF_PopupMenuItem"/>
+          <Text Name="OptionLabel" Content="[Option]" Color="color://is:XC_PopupMenuItem" Font="font://is:XF_PopupMenuItem"/>
         </Children>
       </Panel>
     </Content>
@@ -1467,7 +1467,7 @@ xmlns:me="Me">
         </Conditions>
         <Actions>
           <Set Target="[BoxImage.Content]" Value="image://i:CheckBoxCheckedFocus" />
-          <Set Target="[Lbl.Color]" Value="color://xs:XC_PopupMenuItemSel" />
+          <Set Target="[Lbl.Color]" Value="color://is:XC_PopupMenuItemSel" />
         </Actions>
       </Condition>
 
@@ -1477,7 +1477,7 @@ xmlns:me="Me">
         </Conditions>
         <Actions>
           <Set Target="[BoxImage.Content]" Value="image://i:CheckBoxUncheckedFocus" />
-          <Set Target="[Lbl.Color]" Value="color://xs:XC_PopupMenuItemSel" />
+          <Set Target="[Lbl.Color]" Value="color://is:XC_PopupMenuItemSel" />
         </Actions>
       </Condition>
 
@@ -1508,7 +1508,7 @@ xmlns:me="Me">
         </Layout>
         <Children>
           <Graphic Name="BoxImage" Content="image://i:CheckBoxUncheckedNoFocus" MaximumSize="34,34" />
-          <Text Name="Lbl" Color="color://xs:XC_PopupMenuItem" Font="font://xs:XF_PopupMenuItem" Margins="5,0,0,0" />
+          <Text Name="Lbl" Color="color://is:XC_PopupMenuItem" Font="font://is:XF_PopupMenuItem" Margins="5,0,0,0" />
         </Children>
       </Panel>
     </Content>
@@ -1575,7 +1575,7 @@ xmlns:me="Me">
         </Layout>
         <Children>
 
-          <Text Name="Text" Content="[Label]" Font="font://xs:XF_PopupMenuItem" Color="color://xs:XC_PopupMenuItem" Margins="0,0,5,0" />
+          <Text Name="Text" Content="[Label]" Font="font://is:XF_PopupMenuItem" Color="color://is:XC_PopupMenuItem" Margins="0,0,5,0" />
 
           <!-- Previous button -->
           <vm:ImageBtn Name="btnPrevious" Focused="image://i:DecrementFocus"
@@ -1590,7 +1590,7 @@ xmlns:me="Me">
           <!-- Current value -->
           <ColorFill Name="Background" Content="Transparent" MinimumSize="80,35" MaximumSize="175,35" Padding="5,0,0,5">
             <Children>
-              <Text Name="Value" Font="font://xs:XF_PopupMenuItem" Color="color://xs:XC_PopupMenuItem" />
+              <Text Name="Value" Font="font://is:XF_PopupMenuItem" Color="color://is:XC_PopupMenuItem" />
             </Children>
           </ColorFill>
 

@@ -5,7 +5,7 @@
 	  xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
     xmlns:ib="resx://Iridium/Iridium.Resources/ItemButton"
     xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
     xmlns:anim="resx://Iridium/Iridium.Resources/Animations"
@@ -137,9 +137,9 @@
                         SelectRepeaterIndex="[SelectRepeaterIndex]"
                         ImageSize="[Folder.ActualThumbSize]"
                         AnimDelay="[AnimDelay]" NavCount="[NavCount]"
-                        UnwatchedCountFont="font://xs:UnwatchedCountFont"
+                        UnwatchedCountFont="font://is:UnwatchedCountFont"
                         ShowLabels="[Folder.DisplayPrefs.ShowLabels]"
-                        TopLabelFont="font://xs:CV_PosterTopLabelFont"
+                        TopLabelFont="font://is:CV_PosterTopLabelFont"
                         ThemeHelper="[ThemeHelper]"/>
                 </Content>
               </Repeater>
@@ -344,7 +344,7 @@
                       <Panel Name="TickPanel" Layout="Center">
                         <Children>
                           <Graphic Content="image://i:TickPoster"  MaximumSize="30,30"  />
-                          <Graphic Content="image://i:TickPosterBase" ColorFilter="color://xs:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
+                          <Graphic Content="image://i:TickPosterBase" ColorFilter="color://is:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
                         </Children>
                       </Panel>
                     </Children>

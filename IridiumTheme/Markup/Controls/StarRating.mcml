@@ -6,7 +6,7 @@
       xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:ih="assembly://Iridium/Iridium"
       xmlns:me = "Me">
 
@@ -268,7 +268,7 @@
                   <FlowLayout Spacing="2,2" Orientation="Horizontal" />
                 </Layout>
                 <Children>
-                  <Clip Layout="HorizontalFlow" ColorFilter="color://xs:StarsColor" >
+                  <Clip Layout="HorizontalFlow" ColorFilter="color://is:StarsColor" >
                     <Children>
                       <Graphic Name="Star1" />
                       <Graphic Name="Star2" />
@@ -287,10 +287,10 @@
                 <Children>
                   <Clip Layout="HorizontalFlow" >
                     <Children>
-                      <Graphic Name="ImdbIcon" Margins="0,0,0,0" MaximumSize="125,0" Visible="false" Content="resx://Iridium/Iridium.Resources/IMDB" MaintainAspectRatio="true" ColorFilter="color://xs:StarsColor" />
-                      <Text Name="ImdbRating" Color="color://xs:counterColor" Font="font://xs:counterFont" Margins="-40,14,0,0" Visible="false" />
+                      <Graphic Name="ImdbIcon" Margins="0,0,0,0" MaximumSize="125,0" Visible="false" Content="resx://Iridium/Iridium.Resources/IMDB" MaintainAspectRatio="true" ColorFilter="color://is:StarsColor" />
+                      <Text Name="ImdbRating" Color="color://is:counterColor" Font="font://is:counterFont" Margins="-40,12,0,0" Visible="false" />
                       <Graphic Name="RTIcon" Margins="15,0,0,0" MaximumSize="0,60" Visible="false" MaintainAspectRatio="true" />
-                      <Text Name="RTRating" Color="color://xs:counterColor" Font="font://xs:counterFont" Margins="5,10,0,0" Visible="false" />
+                      <Text Name="RTRating" Color="color://is:counterColor" Font="font://is:counterFont" Margins="5,10,0,0" Visible="false" />
                     </Children>
                   </Clip>
                 </Children>

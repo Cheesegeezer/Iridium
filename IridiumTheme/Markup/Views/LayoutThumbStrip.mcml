@@ -3,7 +3,7 @@
     xmlns:a="assembly://MediaBrowser/MediaBrowser"
     xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
     xmlns:ib="resx://Iridium/Iridium.Resources/ItemButton"
-    xmlns:xs="file://Iridium_Styles.mcml"
+    xmlns:is="file://Iridium_Styles.mcml"
     xmlns:s="file://Styles_DoNotEdit.mcml"
 	  xmlns:f="file://Fonts_DoNotEdit.mcml"
     xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
@@ -343,8 +343,8 @@
             <Children>
               <Panel Name="CounterPosition" Layout="HorizontalFlow">
                 <Children>
-                  <Text Name="List_Counter" Content="0" Color="color://xs:counterColor" Font="font://xs:counterFont" />
-                  <Text Name="List_Total" Content="0" Color="color://xs:totalCounterColor" Font="font://xs:totalCounterFont"/>
+                  <Text Name="List_Counter" Content="0" Color="color://is:counterColor" Font="font://is:counterFont" />
+                  <Text Name="List_Total" Content="0" Color="color://is:totalCounterColor" Font="font://is:totalCounterFont"/>
                 </Children>
               </Panel>
             </Children>
@@ -368,7 +368,7 @@
             </Children>
           </Panel>
 
-          <Clip Name="Divider" MaximumSize="750,0" ColorFilter="color://xs:ThumbDividerColor" >
+          <Clip Name="Divider" MaximumSize="750,0" ColorFilter="color://is:ThumbDividerColor" >
             <LayoutInput>
               <AnchorLayoutInput Left="Parent,0.2" Top="YearPanel,1,10" />
             </LayoutInput>
@@ -377,7 +377,7 @@
             </Children>
           </Clip>
 
-          <st:ScrollableText Name="Summary" Font="font://xs:OverviewFont" Color="color://xs:OverviewColor" MaximumSize="850,125">
+          <st:ScrollableText Name="Summary" Font="font://is:OverviewFont" Color="color://is:OverviewColor" MaximumSize="850,125">
             <LayoutInput>
               <AnchorLayoutInput Top="Divider,1,10" Left="Parent,0.2" />
             </LayoutInput>
@@ -388,7 +388,7 @@
               <AnchorLayoutInput Left="Parent,0.21" Top="Parent,0,75" />
             </LayoutInput>
             <Children>
-              <Text Name="Title" Content="[SelectedItem.Name]" Font="font://xs:BottomBarTitleFont" Color="color://xs:BottomBarTitleColor" Visible="false"/>
+              <Text Name="Title" Content="[SelectedItem.Name]" Font="font://is:BottomBarTitleFont" Color="color://is:BottomBarTitleColor" Visible="false"/>
               <Graphic Name="LogoImage" Margins="0,0,0,0" MaintainAspectRatio="true" MaximumSize="175,50" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
               <Graphic Name="ClearArtImage" Margins="0,0,0,0" MaintainAspectRatio="true" MaximumSize="175,50" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
               <Graphic Name="ThumbnailImage" Margins="0,0,0,0" MaintainAspectRatio="true" MaximumSize="175,50" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
@@ -418,7 +418,7 @@
               <FormLayoutInput Horizontal="Center" Top="Parent,0,5" />
             </LayoutInput>
             <Children>
-              <Text Name ="TagLine" Font="font://xs:ThumbStripTagLineFont" Color="color://xs:ThumbStripTaglineColor" />
+              <Text Name ="TagLine" Font="font://is:ThumbStripTagLineFont" Color="color://is:ThumbStripTaglineColor" />
             </Children>
           </Panel>
           <Panel Name="TaglinePanelShadow" Navigation="None" >
@@ -426,7 +426,7 @@
               <FormLayoutInput Horizontal="Center" Top="Parent,0,7" Left="Parent,0,2" />
             </LayoutInput>
             <Children>
-              <Text Name ="TagLineShadow" Font="font://xs:ThumbStripShadowTagLineFont" Color="color://xs:ThumbStripShadowTaglineColor" />
+              <Text Name ="TagLineShadow" Font="font://is:ThumbStripShadowTagLineFont" Color="color://is:ThumbStripShadowTaglineColor" />
             </Children>
           </Panel>
           
@@ -800,7 +800,7 @@
                       <Panel Name="TickPanel" Layout="Center">
                         <Children>
                           <Graphic Content="image://i:TickPoster"  MaximumSize="30,30"  />
-                          <Graphic Content="image://i:TickPosterBase" ColorFilter="color://xs:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
+                          <Graphic Content="image://i:TickPosterBase" ColorFilter="color://is:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
                         </Children>
                       </Panel>
                     </Children>
@@ -893,7 +893,7 @@
                 </Children>
               </Panel>
 
-              <Text Name="BelowLabelPanel" Margins="0,5,0,-3" Alpha="1" Color="color://xs:PosterTitleColor"  Font="[TopLabelFont]"
+              <Text Name="BelowLabelPanel" Margins="0,5,0,-3" Alpha="1" Color="color://is:PosterTitleColor"  Font="[TopLabelFont]"
                     Content="[Item.Name]" MaximumLines="2" WordWrap="true" HorizontalAlignment="Near" MinimumSize="0,60"></Text>
             </Children>
           </Graphic>

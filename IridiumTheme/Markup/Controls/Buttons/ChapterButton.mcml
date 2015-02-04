@@ -6,7 +6,7 @@
 	    xmlns:sd="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:me="Me">
 
   <UI Name="ChapterButton">
@@ -17,13 +17,13 @@
       <cor:Boolean Name="IsNavigatingCommand" Boolean="false" />
       <cor:Boolean Name="LeftAlign" Boolean="true" />
       <lib:ChapterItem Name="ChapterItem" ChapterItem="$Required" />
-      <Color Name="Color" Color="color://xs:ChapterItemColor" />
+      <Color Name="Color" Color="color://is:ChapterItemColor" />
 
       <Image Name="ChapterImage" Image="image://me:ButtonDormant" />
       <cor:String Name="Name" String="" />
       <cor:String Name="Position" String="" />
 
-      <Size Name="Size" Size="0,150" />
+      <Size Name="Size" Size="500,300" />
       <Size Name="MinSize" Size="50,50" />
 
       <Image Name="ImageFocus" Image="image://me:ButtonLeftFocus" />
@@ -94,23 +94,22 @@
 
     <Content>
 
-      <Graphic Name="imgButton" Content="[ImageNoFocus]" MinimumSize="[Size]" MaximumSize="[Size]" Padding="10,5,10,5" Alpha="1">
+      <Graphic Name="imgButton" Content="[ImageNoFocus]" MinimumSize="[Size]" MaximumSize="[Size]" Padding="10,5,10,5" Alpha="1" MaintainAspectRatio="true">
         <Layout>
-          <FlowLayout Orientation="Horizontal" ItemAlignment="Near"/>
+          <FlowLayout Orientation="Vertical" ItemAlignment="Near"/>
         </Layout>
         <Children>
-              <Graphic Name="Image" Content="resx://MediaBrowser/MediaBrowser.Resources/MissingPerson"
-                       SizingPolicy="SizeToConstraint" MaximumSize="0,200" MaintainAspectRatio="true"/>
+              <Graphic Name="Image" Content="resx://MediaBrowser/MediaBrowser.Resources/MissingPerson" SizingPolicy="SizeToConstraint" MaximumSize="0,220" MaintainAspectRatio="true"/>
               <Panel Margins="5,0,0,0">
                 <LayoutInput>
                   <AnchorLayoutInput Bottom="Image,0,20" Left="Image,0,10" />
                 </LayoutInput>
                     <Layout>
-                      <FlowLayout Orientation="Vertical" ItemAlignment="Near"/>
+                      <FlowLayout Orientation="Vertical" ItemAlignment="Near" StripAlignment="Near"/>
                     </Layout>
                     <Children>
-                      <Text Name="CName" Font="font://xs:ChapterNameFont" Color="color://xs:ChapterNameColor" />
-                      <Text Name="Pos" Font="font://xs:ChapterTimeFont" Color="color://xs:ChapterTimeColor" />
+                      <Text Name="CName" Font="font://is:ChapterNameFont" Color="color://is:ChapterNameColor" WordWrap="true" />
+                      <Text Name="Pos" Font="font://is:ChapterTimeFont" Color="color://is:ChapterTimeColor" />
                     </Children>
               </Panel>
         </Children>

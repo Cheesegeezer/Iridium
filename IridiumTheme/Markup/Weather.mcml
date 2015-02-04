@@ -4,7 +4,7 @@
 	  xmlns:app="assembly://Iridium/Iridium"
 	  xmlns:s="file://Styles_DoNotEdit.mcml"
 	  xmlns:f="file://Fonts_DoNotEdit.mcml"
-    xmlns:xs="file://Iridium_Styles.mcml"
+    xmlns:is="file://Iridium_Styles.mcml"
 	  xmlns:i="resx://MediaBrowser/Mediabrowser.Resources/Images"
     xmlns:me="Me">
 
@@ -98,8 +98,8 @@
   <UI Name="SmallWeather">
     <Locals>
       <a:YahooWeather Name="YahooWeather"/>
-      <Font Name="Font" Font="font://xs:ClockFont" />
-      <Color Name="Color" Color="color://xs:ClockColor" />
+      <Font Name="Font" Font="font://is:ClockFont" />
+      <Color Name="Color" Color="color://is:ClockColor" />
       <Timer Name="WeatherStartupTimer" Interval="300" AutoRepeat="false" Enabled="true"/>
     </Locals>
 
@@ -129,7 +129,7 @@
         <Children>
           <!-- Icon -->
           <Graphic Name="Icon" Content="image://i:BlankImage" MaintainAspectRatio="true" Margins="0,-2,0,0" />
-          <Text Content="|" Font="font://xs:ClockFont" Color="color://xs:ClockColor" Margins="20,0,20,0" />
+          <Text Content="|" Font="font://is:ClockFont" Color="color://is:ClockColor" Margins="20,0,20,0" />
           <Text Name="Temp" Color="[Color]" Font="[Font]" />
           <Text Content="°" Color="[Color]" Font="[Font]" />
           <Text Name="Unit" Color="[Color]" Font="[Font]" />

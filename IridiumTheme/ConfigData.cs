@@ -36,7 +36,7 @@ namespace Iridium
         public string FolderMainArtList = "Poster";
         public bool ShowBanners = false;
         public bool ShowBackdrop = true;
-        public bool ShowBackdropOverlay = false;
+        public bool ShowBackdropOverlay = true;
         public bool FolderShowNewsScroller = true;
         public bool ShowDetailsQuickList = false;
         public bool ShowFlatCoverflow = false;
@@ -53,7 +53,7 @@ namespace Iridium
         public string TvRalOption = "NextUp";
         public string NonTVRalOption = "New";
         public string FolderStarRatingStyle = "Numeric";
-        public Single FolderBackdropOverlayAlpha = 0.3f;
+        public Single FolderBackdropOverlayAlpha = 0.9f;
         public Single FolderDetailsThumbAlpha = 1.0f;
 
         #region Load / Save Data

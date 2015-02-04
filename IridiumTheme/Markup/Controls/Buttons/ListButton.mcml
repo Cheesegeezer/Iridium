@@ -7,7 +7,7 @@
       xmlns:ib="resx://Iridium/Iridium.Resources/ItemButton"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"             
+      xmlns:is="file://Iridium_Styles.mcml"             
       xmlns:mq="resx://Iridium/Iridium.Resources/MarqueeText" >
 
   <UI Name="ListButton" BaseUI="ib:ItemButton">
@@ -74,8 +74,8 @@
         <Actions>
           <Invoke Target="[SetItem.Stop]" />
           <Invoke Target="[SetItem.Start]" />
-          <Set Target="[ItemName.Color]" Value="color://xs:RALSelectedColor"></Set>
-          <Set Target="[ItemName.Font]" Value="font://xs:RALSelectedFont" />
+          <Set Target="[ItemName.Color]" Value="color://is:RALSelectedColor"></Set>
+          <Set Target="[ItemName.Font]" Value="font://is:RALSelectedFont" />
           <Set Target="[Application.CurrentItem]" Value="[Item]"/>
         </Actions>
       </Condition>
@@ -162,7 +162,7 @@
                     <FlowLayout StripAlignment="Far"/>
                   </Layout>
                 <Children>
-                  <Text HorizontalAlignment="Near" FadeSize="5" Name="ItemName" Font="font://xs:RALUnselectedFont" Margins="10,-10,10,-10" Color="color://xs:RALUnselectedColor" Content="[Item.Name]" />
+                  <Text HorizontalAlignment="Near" FadeSize="5" Name="ItemName" Font="font://is:RALUnselectedFont" Margins="10,-10,10,-10" Color="color://is:RALUnselectedColor" Content="[Item.Name]" />
                 </Children>
               </Panel>
             </Children>

@@ -3,13 +3,13 @@
     xmlns:a="assembly://MediaBrowser/MediaBrowser"
     xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
     xmlns:ib="resx://Iridium/Iridium.Resources/ItemButton"
-    xmlns:xs="file://Iridium_Styles.mcml"
+    xmlns:is="file://Iridium_Styles.mcml"
     xmlns:s="file://Styles_DoNotEdit.mcml"
 	  xmlns:f="file://Fonts_DoNotEdit.mcml"
     xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
     xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
       xmlns:in="resx://MediaBrowser/MediaBrowser.Resources/InfoMarquee"
-    xmlns:xi="resx://Iridium/Iridium.Resources/Images"
+    xmlns:vi="resx://Iridium/Iridium.Resources/Images"
 	  xmlns:bd="resx://Iridium/Iridium.Resources/Backdrop"
     xmlns:mpaa="resx://MediaBrowser/MediaBrowser.Resources/MPAARating"
     xmlns:mip="resx://MediaBrowser/MediaBrowser.Resources/MediaInfoPanel"
@@ -32,7 +32,7 @@
       <Timer Name="InfoTimer" AutoRepeat="false" Interval="400" Enabled="false"/>
       
       <FormLayoutInput Name="ScrollerTop" Bottom="Parent,0.85" Top="Parent, 0.2" Left="Parent,0,15" Right="Parent,1,-15" />
-      <FormLayoutInput Name="ScrollerMiddle" Bottom="Parent,0.85" Top="Parent, 0.35" Left="Parent,0,15" Right="Parent,1,-15" />
+      <FormLayoutInput Name="ScrollerMiddle" Bottom="Parent,1" Top="Parent, 0.15" Left="Parent,0,-100" Right="Parent,1,500" />
       <FormLayoutInput Name="ScrollerBottom" Bottom="Parent,0.85" Top="Parent, 0.5" Left="Parent,0,15" Right="Parent,1,-15" />
       
       <AnchorLayoutInput Name="StarRatingAnchorLayout" Horizontal="Center" Bottom="Parent,1,-2" />
@@ -319,8 +319,8 @@
             <Children>
               <Panel Name="CounterPosition" Layout="HorizontalFlow">
                 <Children>
-                  <Text Name="List_Counter" Content="0" Color="color://xs:counterColor" Font="font://xs:counterFont" />
-                  <Text Name="List_Total" Content="0" Color="color://xs:totalCounterColor" Font="font://xs:totalCounterFont"/>
+                  <Text Name="List_Counter" Content="0" Color="color://is:counterColor" Font="font://is:counterFont" />
+                  <Text Name="List_Total" Content="0" Color="color://is:totalCounterColor" Font="font://is:totalCounterFont"/>
                 </Children>
               </Panel>
             </Children>
@@ -347,7 +347,7 @@
                   <AnchorLayoutInput Horizontal="Center" Bottom="Parent,1,-20" />
                 </LayoutInput>
                 <Children>
-                  <Text Name="Title" Content="[SelectedItem.Name]" Font="font://xs:BottomBarTitleFont" Color="color://xs:BottomBarTitleColor" Visible="false"/>
+                  <Text Name="Title" Content="[SelectedItem.Name]" Font="font://is:BottomBarTitleFont" Color="color://is:BottomBarTitleColor" Visible="false"/>
                   <Graphic Name="LogoImage" Margins="0,0,0,5" MaintainAspectRatio="true" MaximumSize="0,100" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
                   <Graphic Name="ClearArtImage" Margins="0,0,0,5" MaintainAspectRatio="true" MaximumSize="350,100" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
                   <Graphic Name="ThumbnailImage" Margins="0,0,0,5" MaintainAspectRatio="true" MaximumSize="350,100" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
@@ -398,12 +398,12 @@
                 </Children>
               </Panel>
 
-              <Clip Name="BottomBarGraphic" ColorFilter="color://xs:BottomBarColorOverlay" >
+              <Clip Name="BottomBarGraphic" ColorFilter="color://is:BottomBarColorOverlay" >
                 <LayoutInput>
                   <FormLayoutInput Left="Parent,0" Right="Parent,1" Bottom="Parent,1,5" Horizontal="Fill" />
                 </LayoutInput>
                 <Children>
-                  <Graphic Name="BottomBar" Content="image://xi:BottomBar" MaximumSize="0,100" MaintainAspectRatio="true" />
+                  <Graphic Name="BottomBar" Content="image://vi:BottomBar" MaximumSize="0,100" MaintainAspectRatio="true" />
                 </Children>
               </Clip>
             </Children>
@@ -419,10 +419,13 @@
             </Children>
           </Panel>
 
-          <ColorFill Name="Overlay" Layout="Fill" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]" Alpha="[ThemeHelper.Config.FolderBackdropOverlayAlpha]" Content="Black" />
+          <Graphic Name="GlassBG" Layout="Fill" Content="image://vi:GlassBG" Visible="[ThemeHelper.Config.FolderShowFlatCoverflow]" Alpha="1" ColorFilter="Black"/>
+
+          <Graphic Name="Overlay" Layout="Fill" Content="image://vi:BackgroundOverlay" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]" Alpha="[ThemeHelper.Config.FolderBackdropOverlayAlpha]"/>
           <bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]"/>
           <bd:Backdrop4 LoadDelay="280" FadeTime="[ThemeHelper.Config.BackdropTransitionTime]"  Application="[Application]" Name="Backdrop" Visible="[ThemeHelper.Config.FolderShowBackdrop]" Image="[Folder.SelectedChild.BackdropImage]" Item="[Folder.SelectedChild]"/>
 
+          
         </Children>
       </Panel>
     </Content>
@@ -768,7 +771,7 @@
                       <Panel Name="TickPanel" Layout="Center">
                         <Children>
                           <Graphic Content="image://i:TickPoster"  MaximumSize="30,30"  />
-                          <Graphic Content="image://i:TickPosterBase" ColorFilter="color://xs:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
+                          <Graphic Content="image://i:TickPosterBase" ColorFilter="color://is:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
                         </Children>
                       </Panel>
                     </Children>
@@ -861,7 +864,7 @@
                 </Children>
               </Panel>
 
-              <Text Name="BelowLabelPanel" Margins="0,5,0,-3" Alpha="1" Color="color://xs:PosterTitleColor"  Font="[TopLabelFont]"
+              <Text Name="BelowLabelPanel" Margins="0,5,0,-3" Alpha="1" Color="color://is:PosterTitleColor"  Font="[TopLabelFont]"
                     Content="[Item.Name]" MaximumLines="2" WordWrap="true" HorizontalAlignment="Near" MinimumSize="0,60"></Text>
             </Children>
           </Graphic>

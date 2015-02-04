@@ -442,41 +442,8 @@
   <data name="impact" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>fonts\impact.ttf;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="rootBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\rootbg.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="rootBGGlass" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\rootbgglass.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="rootbgoverlay" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\rootbgoverlay.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="rootbg_glow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\rootbg_glow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RootDownArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\rootdownarrow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="InfoPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\infopanel.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RALSelectorPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\ralselectorpanel.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RALLayoutScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>markup\controls\scrollers\rallayoutscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="NextUpLayoutScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>markup\controls\scrollers\nextuplayoutscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ralBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\ralbg.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="RALOptionButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>markup\controls\buttons\raloptionbutton.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="InfoPanelTime" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\infopaneltime.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="shutter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sounds\shutter.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -519,9 +486,6 @@
   </data>
   <data name="DetailsInfoPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\rootimages\detailsinfopanel.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LayoutBannerView" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>markup\views\extraviews\layoutbannerview.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SeasonListScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>markup\controls\scrollers\seasonlistscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -586,17 +550,11 @@
   <data name="PrevPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\rootimages\prevpanel.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="UpcomingTVLayoutScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>markup\controls\scrollers\upcomingtvlayoutscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="AddIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\icons\addicon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AddIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\icons\addiconsmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Concrete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\concrete.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="IMDB1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\icons\imdb.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -619,9 +577,6 @@
   <data name="ShortlistIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\icons\shortlisticonsmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="NewsScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>markup\controls\scrollers\newsscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="Shaeff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>markup\styles\shaeff.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -641,6 +596,66 @@
     <value>images\rootimages\button_playsmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AcclaimedScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>markup\controls\scrollers\acclaimedscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>markup\controls\homepage\acclaimedscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GenresLayoutScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\homepage\genreslayoutscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="HomePage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\homepage\homepage.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NewsScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\homepage\newsscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NextUpLayoutScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\homepage\nextuplayoutscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RALLayoutScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\homepage\rallayoutscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UpcomingTVLayoutScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\homepage\upcomingtvlayoutscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MenuTextGlow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\rootimages\menutextglow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PanelBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\panelbg.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BGOverlay" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\bgoverlay.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="testbanner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\testbanner.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="textglow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\textglow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="glowshine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\rootimages\glowshine.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayoutBannerView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\views\extraviews\layoutbannerview.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutDetailsBannerList" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\views\extraviews\layoutdetailsbannerlist.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="focusframe" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\focusframe.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FocusSelector" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\focusselector.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ResumeLayoutScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\homepage\resumelayoutscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RecentlyAddedLayout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\homepage\recentlyaddedlayout.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SelectedTitleBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\rootimages\selectedtitlebg.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlassBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\glassbg .png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

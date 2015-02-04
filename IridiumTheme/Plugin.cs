@@ -66,7 +66,7 @@ namespace Iridium
                     CustomResourceManager.AppendFonts("Iridium", Resources.Fonts, Resources.Fonts);
                     CustomResourceManager.AppendStyles("Iridium", Resources.Colors, Resources.Colors);
 
-                    //Registration.CheckRegistration(this.Version);
+                    Registration.CheckRegistration(this.Version);
                     //CustomStrings Editable by user - need to implement
                     kernel.StringData.AddStringData(MyStrings.FromFile(LocalizedStringData.GetFileName("Iridium-")));
 
@@ -81,7 +81,10 @@ namespace Iridium
             }
             catch (Exception ex)
             {
-                Logger.ReportException("Error adding theme - probably incompatable MB version", ex);
+                string text = string.Format("Error adding theme" + Name + "- probably the Author is a mong and forgotton to do something!!!")
+                ;
+                ;
+                Logger.ReportException(text, ex);
             }
 
         }

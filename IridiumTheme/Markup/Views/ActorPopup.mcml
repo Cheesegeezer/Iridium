@@ -5,11 +5,12 @@
       xmlns:pb="resx://MediaBrowser/MediaBrowser.Resources/PersonButton"
       xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
       xmlns:a="assembly://MediaBrowser/MediaBrowser"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:ih="assembly://Iridium/Iridium"
       xmlns:st="resx://Iridium/Iridium.Resources/AutoScrollableText"
       xmlns:cls="resx://Iridium/Iridium.Resources/CollectionScroller"
       xmlns:vsb="resx://Iridium/Iridium.Resources/SimpleButton"
+      xmlns:vi="resx://Iridium/Iridium.Resources/Images"
       xmlns:me="Me" >
 
   <UI Name="ActorPopup">
@@ -156,38 +157,38 @@
                               <FlowLayout Orientation="Vertical"/>
                             </Layout>
                             <Children>
-                              <Text Name="Title" Content="[Item.Name]" Color="color://xs:ActorPopupNameColor" Font="font://xs:ActorPopupNameFont" WordWrap="true" Margins="0,0,0,10"/>
+                              <Text Name="Title" Content="[Item.Name]" Color="color://is:ActorPopupNameColor" Font="font://is:ActorPopupNameFont" WordWrap="true" Margins="0,0,0,10"/>
 
                               <Panel Name="AgeInfoPanel" Layout="HorizontalFlow" Margins="0,0,0,10">
                                 <Children>
-                                  <Text Name="AgePanel" Content="[Application.LocalStrings.#AgeStr!cor:String]" Color="color://xs:ActorInfoLabelColor"  Font="font://xs:ActorInfoLabelFont" WordWrap="false"/>
-                                  <Text Name="Age" Content="[Person.Age]" Color="color://xs:ActorInfoValueColor"  Font="font://xs:ActorInfoValueFont" WordWrap="false"/>
+                                  <Text Name="AgePanel" Content="[Application.LocalStrings.#AgeStr!cor:String]" Color="color://is:ActorInfoLabelColor"  Font="font://is:ActorInfoLabelFont" WordWrap="false" Margins="0,0,25,0"/>
+                                  <Text Name="Age" Content="[Person.Age]" Color="color://is:ActorInfoValueColor"  Font="font://is:ActorInfoValueFont" WordWrap="false"/>
                                 </Children>
                               </Panel>
                               <Panel Name="BirthdatePanel" Layout="HorizontalFlow" Margins="0,0,0,10">
                                 <Children>
-                                  <Text Name="BornPanel" Content="[Application.LocalStrings.#BornStr!cor:String]" Color="color://xs:ActorInfoLabelColor"  Font="font://xs:ActorInfoLabelFont" WordWrap="false"/>
-                                  <Text Name="Birthdate" Content="[Person.Born]" Color="color://xs:ActorInfoValueColor"  Font="font://xs:ActorInfoValueFont" WordWrap="false"/>
+                                  <Text Name="BornPanel" Content="[Application.LocalStrings.#BornStr!cor:String]" Color="color://is:ActorInfoLabelColor"  Font="font://is:ActorInfoLabelFont" />
+                                  <Text Name="Birthdate" Content="[Person.Born]" Color="color://is:ActorInfoValueColor"  Font="font://is:ActorInfoValueFont" WordWrap="false"/>
                                 </Children>
                               </Panel>
                               <Panel Layout="HorizontalFlow" Margins="0,0,0,15">
                                 <Children>
-                                  <Text Name="BirthPlacePanel" Content="[Application.LocalStrings.#BirthPlaceStr!cor:String]" Color="color://xs:ActorInfoLabelColor"  Font="font://xs:ActorInfoLabelFont" WordWrap="false"/>
-                                  <Text Name="BirthPlace" Content="[Person.BirthPlace]" Color="color://xs:ActorInfoValueColor"  Font="font://xs:ActorInfoValueFont" WordWrap="false"/>
+                                  <Text Name="BirthPlacePanel" Content="[Application.LocalStrings.#BirthPlaceStr!cor:String]" Color="color://is:ActorInfoLabelColor"  Font="font://is:ActorInfoLabelFont" WordWrap="false"/>
+                                  <Text Name="BirthPlace" Content="[Person.BirthPlace]" Color="color://is:ActorInfoValueColor"  Font="font://is:ActorInfoValueFont" WordWrap="false"/>
                                 </Children>
                               </Panel>
                               <Panel Name="DeathPanel" Layout="HorizontalFlow" Margins="0,0,0,10">
                                 <Children>
-                                  <Text Content="[Application.LocalStrings.#DiedStr!cor:String]" Color="color://xs:ActorInfoLabelColor"  Font="font://xs:ActorInfoLabelFont" WordWrap="false"/>
-                                  <Text Name="Death" Content="[Person.Died]" Color="color://xs:ActorInfoValueColor"  Font="font://xs:ActorInfoValueFont" WordWrap="false"/>
-                                  <Text Content="[Application.LocalStrings.#DiedAgedStr!cor:String]" Color="color://xs:ActorInfoValueColor"  Font="font://xs:ActorInfoValueFont" WordWrap="false"/>
-                                  <Text Name="DeathAge" Content="[Person.DeathAge]" Color="color://xs:ActorInfoValueColor"  Font="font://xs:ActorInfoValueFont" WordWrap="false"/>
+                                  <Text Content="[Application.LocalStrings.#DiedStr!cor:String]" Color="color://is:ActorInfoLabelColor"  Font="font://is:ActorInfoLabelFont" WordWrap="false"/>
+                                  <Text Name="Death" Content="[Person.Died]" Color="color://is:ActorInfoValueColor"  Font="font://is:ActorInfoValueFont" WordWrap="false"/>
+                                  <Text Content="[Application.LocalStrings.#DiedAgedStr!cor:String]" Color="color://is:ActorInfoValueColor"  Font="font://is:ActorInfoValueFont" WordWrap="false"/>
+                                  <Text Name="DeathAge" Content="[Person.DeathAge]" Color="color://is:ActorInfoValueColor"  Font="font://is:ActorInfoValueFont" WordWrap="false"/>
                                 </Children>
                               </Panel>
 
                               <Panel Name="BiographyPanel" >
                                 <Children>
-                                  <st:ScrollableText Name="Biography" Margins="0,15,0,0" Text="" Font="font://xs:ActorBioFont" Color="color://xs:ActorBioColor" MaximumSize="525,215"/>
+                                  <st:ScrollableText Name="Biography" Margins="0,15,0,0" Text="" Font="font://is:ActorBioFont" Color="color://is:ActorBioColor" MaximumSize="525,215"/>
                                 </Children>
                               </Panel>
 
@@ -202,7 +203,17 @@
             </Children>
           </Graphic>
 
-          <Graphic Name="Backdrop" Content="resx://Iridium/Iridium.Resources/ActorBackdrop" HorizontalAlignment="Fill" VerticalAlignment="Fill" Visible="true" />
+          <Clip Name="Divider" MaximumSize="1500,0" ColorFilter="color://is:ThumbDividerColor" >
+            <LayoutInput>
+              <AnchorLayoutInput Horizontal="Fill" Top="Parent,1,-225" />
+            </LayoutInput>
+            <Children>
+              <Graphic Name="DividerGlowLine" Content="image://vi:GlowLine"/>
+            </Children>
+          </Clip>
+
+          <Graphic Name="Overlay" Layout="Fill" Content="image://vi:BackgroundOverlay" Alpha="1"/>
+          <Graphic Name="Backdrop" Content="resx://Iridium/Iridium.Resources/ActorBackdrop" HorizontalAlignment="Fill" VerticalAlignment="Fill" Visible="true" Alpha="0.3" />
 
         </Children>
       </Panel>

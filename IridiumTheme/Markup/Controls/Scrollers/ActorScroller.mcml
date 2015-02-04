@@ -10,7 +10,7 @@
       xmlns:actp="resx://Iridium/Iridium.Resources/ActorPopup"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:me="Me">
 
 
@@ -56,12 +56,12 @@
                   </Animation>
                 </Animations>
                 <Content>
-                  <me:Actor2 Name="Test" aiw="[RepeatedItem!lib:ActorItemWrapper]" Index="[RepeatedItemIndex]" SelectedIndex="[CurrentIndex]" Font="font://xs:OverviewFont" Application="[Application]" />
+                  <me:Actor2 Name="Test" aiw="[RepeatedItem!lib:ActorItemWrapper]" Index="[RepeatedItemIndex]" SelectedIndex="[CurrentIndex]" Font="font://is:OverviewFont" Application="[Application]" />
                 </Content>
               </Repeater>
             </Children>
           </Scroller>
-          <Graphic Content="image://it:RALBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
+          <Graphic Content="image://it:RALBG" ColorFilter="color://is:XC_RALPanelFilterColor" Alpha="global://is:RALPanelAlpha">
             <LayoutInput>
               <AnchorLayoutInput Left="Parent,0,-200" Right="Parent,1,200" Top="Parent,0,-20" Bottom="Parent,1,50"  />
             </LayoutInput>

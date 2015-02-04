@@ -10,7 +10,7 @@
     xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
     xmlns:mpaa="resx://Iridium/Iridium.Resources/MPAARating"
     xmlns:jil="resx://MediaBrowser/MediaBrowser.Resources/JilSelector"
-    xmlns:xs="file://Iridium_Styles.mcml"
+    xmlns:is="file://Iridium_Styles.mcml"
     xmlns:s="file://Styles_DoNotEdit.mcml"
     xmlns:me="Me"
     >
@@ -145,8 +145,8 @@
             <Children>
               <Panel Name="CounterPosition" Layout="HorizontalFlow">
                 <Children>
-                  <Text Name="List_Counter" Content="0" Color="color://xs:counterColor" Font="font://xs:counterFont" />
-                  <Text Name="List_Total" Content="0" Color="color://xs:totalCounterColor" Font="font://xs:totalCounterFont"/>
+                  <Text Name="List_Counter" Content="0" Color="color://is:counterColor" Font="font://is:counterFont" />
+                  <Text Name="List_Total" Content="0" Color="color://is:totalCounterColor" Font="font://is:totalCounterFont"/>
                 </Children>
               </Panel>
             </Children>
@@ -282,7 +282,7 @@
       </Scroller>
     </Content>
     <Content Name="Divider">
-      <Graphic Content="image://vi:GlowLine" MaximumSize="800,15" ColorFilter="color://xs:QLDividerColor" />
+      <Graphic Content="image://vi:GlowLine" MaximumSize="800,15" ColorFilter="color://is:QLDividerColor" />
     </Content>
   </UI>
 
@@ -401,8 +401,8 @@
           <Equality Source="[Input.KeyFocus]" Value="true" />
         </Conditions>
         <Actions>
-          <Set Target="[Title.Font]" Value="font://xs:XF_DQLSelected" />
-          <Set Target="[Title.Color]" Value="color://xs:XC_DQLHighlighted"/>
+          <Set Target="[Title.Font]" Value="font://is:XF_DQLSelected" />
+          <Set Target="[Title.Color]" Value="color://is:XC_DQLHighlighted"/>
           <Set Target="[ParentItem.SelectedChildIndex]" Value="[Index.SourceValue]"/>
           <Invoke Target="[AnimTimer.Start]" />
         </Actions>
@@ -420,7 +420,7 @@
           <Equality Source="[Input.KeyFocus]" Value="false" />
         </Conditions>
         <Actions>
-          <Set Target="[Title.Color]" Value="color://xs:XC_DQLUnselected"/>
+          <Set Target="[Title.Color]" Value="color://is:XC_DQLUnselected"/>
         </Actions>
       </Condition>
 
@@ -456,7 +456,7 @@
                       </Animation>
                     </Animations>
                   </Graphic>
-                  <Graphic Name="Border" Content="image://i:BlankImage" ColorFilter="color://xs:XC_FocusFrame" >
+                  <Graphic Name="Border" Content="image://i:BlankImage" ColorFilter="color://is:XC_FocusFrame" >
                     <LayoutInput>
                       <AnchorLayoutInput Left="ItemPoster,0,-2" Right="ItemPoster,1,2" Top="ItemPoster,0,-2" Bottom="ItemPoster,1,2" />
                     </LayoutInput>
@@ -464,7 +464,7 @@
                 </Children>
               </Clip>
 
-              <Text Name="Title" WordWrap="false" Font="font://xs:XF_DQLUnselected" Margins="20,0,20,0" >
+              <Text Name="Title" WordWrap="false" Font="font://is:XF_DQLUnselected" Margins="20,0,20,0" >
                 <LayoutInput>
                   <AnchorLayoutInput Left="PosterPanel,1,20" Top="PosterPanel,0,10" Right="PosterPanel,1,550"/>
                 </LayoutInput>
@@ -484,7 +484,7 @@
                   <Panel Name="TickPanel" Layout="Center">
                     <Children>
                       <Graphic Content="image://i:TickPoster"  MaximumSize="30,30"  />
-                      <Graphic Content="image://i:TickPosterBase" ColorFilter="color://xs:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
+                      <Graphic Content="image://i:TickPosterBase" ColorFilter="color://is:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
                     </Children>
                   </Panel>
                 </Children>

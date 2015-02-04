@@ -1,2 +1,4 @@
-# Iridium
-A MediaBrowser Classic Theme
+XenonTheme
+==========
+
+An MBC Theme

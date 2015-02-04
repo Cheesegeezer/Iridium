@@ -4,7 +4,7 @@
       xmlns:me="Me"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml" >
+      xmlns:is="file://Iridium_Styles.mcml" >
 
   <UI Name="RadioGroup" >
 
@@ -79,13 +79,13 @@
 
       <Condition Source="[Input.KeyFocus]" SourceValue="false">
         <Actions>
-          <Set Target="[Text.Color]" Value="color://xs:OptionButton" />
+          <Set Target="[Text.Color]" Value="color://is:OptionButton" />
         </Actions>
       </Condition>
 
       <Condition Source="[Input.KeyFocus]" SourceValue="true">
         <Actions>
-          <Set Target="[Text.Color]" Value="color://xs:OptionButtonHighLight" />
+          <Set Target="[Text.Color]" Value="color://is:OptionButtonHighLight" />
         </Actions>
       </Condition>
 
@@ -115,7 +115,7 @@
         <Children>
           <Panel Layout="HorizontalFlow">
             <Children>
-              <Text Name="Text" Font="font://xs:OptionButton" Color="color://xs:OptionButton"></Text>
+              <Text Name="Text" Font="font://is:OptionButton" Color="color://is:OptionButton"></Text>
               <Graphic Visible="false" Name="IconImage" Content="image://vi:Tick" MaximumSize="20,20" Margins="5,10,0,0" MinimumSize="20,20"></Graphic>
 
             </Children>

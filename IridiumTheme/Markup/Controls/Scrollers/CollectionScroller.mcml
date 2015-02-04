@@ -5,7 +5,7 @@
       xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
       xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
       xmlns:a="assembly://MediaBrowser/MediaBrowser"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
       xmlns:ih="assembly://Iridium/Iridium"
@@ -24,7 +24,7 @@
 
     <Locals>
       <ScrollingHandler HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" Name="ScrollingHandler"/>
-      <ScrollingData Name="ScrollingData" LockedAlignment="0.1" EndPaddingRelativeTo="Far" BeginPaddingRelativeTo="Near" EndPadding="30" />
+      <ScrollingData Name="ScrollingData" LockedAlignment="0.02" LockedPosition="0.02" EndPaddingRelativeTo="Far" BeginPaddingRelativeTo="Near" EndPadding="30" />
       
       <ShortcutHandler Name="JumpForward" Shortcut="SkipForward" HandlerStage="Bubbled" Handle="true" />
       <ShortcutHandler Name="JumpBack"    Shortcut="SkipBack"    HandlerStage="Bubbled" Handle="true"/>
@@ -61,7 +61,7 @@
     <Content>
       <Panel FocusOrder="0" Layout="Anchor">
         <Children>
-          <Scroller Orientation="Horizontal" FadeSize="5"  Name="Scroller" Navigation="RememberFocus" ScrollingData="[ScrollingData]">
+          <Scroller Orientation="Horizontal" FadeSize="15"  Name="Scroller" Navigation="RememberFocus" ScrollingData="[ScrollingData]">
             <LayoutInput>
               <AnchorLayoutInput Left="Parent,0" Right="Parent, 1"/>
             </LayoutInput>
@@ -100,7 +100,7 @@
 
     <Locals>
       <FormatTransformer Name="Count" Format="{0}"/>
-      <Color Name="Color"        Color="color://xs:OverviewColor" />
+      <Color Name="Color"        Color="color://is:OverviewColor" />
       <ClickHandler Name="Clicker"/>
     </Locals>
 
@@ -204,12 +204,12 @@
             </Animations>
           </Graphic>
 
-          <Panel Name="TitlePanel" Layout="VerticalFlow" Margins="5,-30,0,0" MaximumSize="150,0">
+          <Panel Name="TitlePanel" Layout="VerticalFlow" Margins="5,-40,0,0" MaximumSize="150,0">
             <LayoutInput>
               <AnchorLayoutInput Left="Parent,0" Top="Parent,0" />
             </LayoutInput>
             <Children>
-              <Text Name="Title" Content="[Item.Name]" Color="color://xs:XC_RALItemTitle" Font="font://xs:XF_RALItemTitle" Visible="false" />
+              <Text Name="Title" Content="[Item.Name]" Color="color://is:ActorCreditTitleColor" Font="font://is:ActorCreditTitleFont" Visible="false" />
             </Children>
           </Panel>
           

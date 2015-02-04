@@ -3,7 +3,7 @@
     xmlns:a="assembly://MediaBrowser/MediaBrowser"
     xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
     xmlns:ib="resx://Iridium/Iridium.Resources/ItemButton"
-    xmlns:xs="file://Iridium_Styles.mcml"
+    xmlns:is="file://Iridium_Styles.mcml"
     xmlns:s="file://Styles_DoNotEdit.mcml"
 	  xmlns:f="file://Fonts_DoNotEdit.mcml"
     xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
@@ -26,8 +26,8 @@
         <lib:FolderModel Name="Folder"/>
         <ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
         <a:Application Name="Application" Application="$Required"/>
-        <Color Name="TitleColor" Color="color://xs:XC_PopupMenuTitle" />
-        <Font Name="Font" Font="font://xs:XF_PopupMenuTitle"/>
+        <Color Name="TitleColor" Color="color://is:XC_PopupMenuTitle" />
+        <Font Name="Font" Font="font://is:XF_PopupMenuTitle"/>
         <Command Name="GetShortlist" Command="$Required"/>
         <Command Name="CloseShortlist" Command="$Required" />
         <Command Name="ClearShortlist" Command="$Required" />
@@ -95,9 +95,9 @@
                 <AnchorLayoutInput Left="Parent,0,20" Top="Parent,0.26" />
               </LayoutInput>
               <Children>
-                <Text Name="ShortlistTitle" Color="color://xs:XC_RALPopupItem" Font="font://xs:XF_RALPopupItem" Content="" Margins="0,0,0,0"/>
+                <Text Name="ShortlistTitle" Color="color://is:XC_RALPopupItem" Font="font://is:XF_RALPopupItem" Content="" Margins="0,0,0,0"/>
                 
-                <Text Name="NoRecent" Content="No Next Up Episodes Available." Color="color://xs:XC_PopupMenuTitle" Font="font://xs:XF_PopupMenuTitle" Visible="false" Margins="150,20,0,0"  />
+                <Text Name="NoRecent" Content="No Next Up Episodes Available." Color="color://is:XC_PopupMenuTitle" Font="font://is:XF_PopupMenuTitle" Visible="false" Margins="150,20,0,0"  />
               </Children>
             </Panel>
             
@@ -113,7 +113,7 @@
               </LayoutInput>
             </dob:OptionButton>
 
-            <Graphic Content="image://vi:RALBG" ColorFilter="color://xs:XC_RALPanelFilterColor" MinimumSize="0,250" MaximumSize="0,500" Alpha="1">
+            <Graphic Content="image://vi:RALBG" ColorFilter="color://is:XC_RALPanelFilterColor" MinimumSize="0,250" MaximumSize="0,500" Alpha="1">
               <LayoutInput>
                 <AnchorLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0.2" Bottom="Parent,0.8"  />
               </LayoutInput>
@@ -133,9 +133,9 @@
       <lib:Item Name="Item" Item="$Required" />
       <!--<Command Name="PlayTrailer" Command="$Required"/>-->
       <Index Name="Index" Index="$Required"/>
-      <Color Name="TitleColor" Color="color://xs:XC_PopupMenuItem" />
-      <Color Name="FocusColor" Color="color://xs:XC_PopupMenuTitle" />
-      <Font Name="Font" Font="font://xs:XF_PopupMenuTitle"/>
+      <Color Name="TitleColor" Color="color://is:XC_PopupMenuItem" />
+      <Color Name="FocusColor" Color="color://is:XC_PopupMenuTitle" />
+      <Font Name="Font" Font="font://is:XF_PopupMenuTitle"/>
     </Properties>
 
     <Locals>
@@ -273,12 +273,12 @@
                   <FlowLayout Orientation="Horizontal"/>
                 </Layout>
                 <Children>
-                  <Text Name="SeasonNo" Color="color://xs:XC_RALItemTitle" Font="font://xs:XF_RALItemTitle" Visible="false" Margins="0,0,5,0" />
-                  <!--<Text Name="EpisodeNo" Color="color://xs:XC_RALItemTitle" Font="font://xs:XF_RALItemTitle" Visible="true" />-->
-                  <Text Name="Title" Color="color://xs:XC_RALItemTitle" Font="font://xs:XF_RALItemTitle" Visible="false" />
+                  <Text Name="SeasonNo" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Visible="false" Margins="0,0,5,0" />
+                  <!--<Text Name="EpisodeNo" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Visible="true" />-->
+                  <Text Name="Title" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Visible="false" />
                 </Children>
               </Panel>
-              <Text Name="ProdYear" Content="" Color="color://xs:XC_RALItemTitle" Font="font://xs:XF_RALItemTitle" Visible="false" Margins="0,195,0,0" />
+              <Text Name="ProdYear" Content="" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Visible="false" Margins="0,195,0,0" />
             
             </Children>
           </Panel>

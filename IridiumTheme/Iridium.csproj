@@ -93,6 +93,7 @@
     <Compile Include="APICalls\GetAPIItems.cs" />
     <Compile Include="APICalls\APIQueries.cs" />
     <Compile Include="Library\Cache.cs" />
+    <Compile Include="Library\HomePage.cs" />
     <Compile Include="Library\IridiumHelper.cs" />
     <Compile Include="Library\DetailsItem.cs" />
     <Compile Include="MyConfig.cs" />
@@ -111,7 +112,10 @@
   <ItemGroup>
     <Content Include="Development Log.txt" />
     <Content Include="Images\ActorBackdrop.jpg" />
+    <Content Include="Images\BGOverlay.png" />
     <Content Include="Images\BottomInfoPane.png" />
+    <Content Include="Images\focusframe.png" />
+    <Content Include="Images\GlassBG .png" />
     <Content Include="Images\Icons\AddIcon.png" />
     <Content Include="Images\Icons\AddIconSmall.png" />
     <Content Include="Images\Icons\AddShortlistIcon.png" />
@@ -127,16 +131,21 @@
     <Content Include="Images\Icons\rottentomatoes.png" />
     <Content Include="Images\Icons\ShortlistIcon.png" />
     <Content Include="Images\Icons\ShortlistIconSmall.png" />
+    <Content Include="Images\PanelBG.png" />
+    <Content Include="Images\RootImages\glowshine.png" />
+    <Content Include="Images\RootImages\MenuTextGlow.png" />
+    <Content Include="Images\RootImages\MenuTextGlow2.png" />
     <Content Include="Images\RootImages\blue-honeycomb.jpg" />
     <Content Include="Images\RootImages\button_play.png" />
-    <Content Include="Images\RootImages\Concrete.jpg" />
     <Content Include="Images\RootImages\button_playsmall.png" />
     <Content Include="Images\RootImages\MainVFBG.png" />
     <Content Include="Images\RootImages\PrevPanel.png" />
     <Content Include="Images\RootImages\NextPanel.png" />
     <Content Include="Images\RootImages\DetailsInfoPanel.png" />
-    <Content Include="Images\RootImages\ralBG.png" />
     <Content Include="Images\RootImages\RALScrollerBG.png" />
+    <Content Include="Images\RootImages\SelectedTitleBG.png" />
+    <Content Include="Images\testbanner.png" />
+    <Content Include="Images\textglow.png" />
     <Content Include="Sounds\Clicker.wav" />
     <Content Include="Sounds\shutter.wav" />
     <None Include="Fonts\BebasNeue.ttf" />
@@ -191,46 +200,53 @@
     <Content Include="Images\Ratings\US\rated_tv_y.png" />
     <Content Include="Images\Ratings\US\rated_tv_y7.png" />
     <Content Include="Images\Ratings\US\rated_tv_y7_fv.png" />
-    <Content Include="Images\RootImages\InfoPanelTime.png" />
-    <Content Include="Images\RootImages\RALSelectorPanel.png" />
-    <Content Include="Images\RootImages\InfoPanel.png" />
-    <Content Include="Images\RootImages\rootBG.png" />
-    <Content Include="Images\RootImages\rootBGGlass.png" />
-    <Content Include="Images\RootImages\rootbg_glow.png" />
-    <Content Include="Images\RootImages\rootBGblack.png" />
-    <Content Include="Images\RootImages\rootbgoverlay.png" />
-    <Content Include="Images\RootImages\RootDownArrow.png" />
     <Content Include="Images\ThumbPanelBlack.png" />
     <None Include="Markup\Animations.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\ContentSelectors.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Controls\BusyIndicator.mcml" />
     <None Include="Markup\Controls\Buttons\DetailsOptionButton.mcml" />
     <None Include="Markup\Controls\Buttons\ItemButton.mcml" />
     <None Include="Markup\Controls\Buttons\RALOptionButton.mcml" />
-    <None Include="Markup\Controls\Buttons\SpecialsButton.mcml" />
+    <None Include="Markup\Controls\Buttons\SpecialsButton.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\Controls\FocusSelector.mcml" />
+    <None Include="Markup\Controls\HomePage\RecentlyAddedLayout.mcml" />
+    <None Include="Markup\Controls\HomePage\ResumeLayoutScroller.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\Controls\HomePage\HomePage.mcml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Markup\Controls\InfoPanels\BottomInfoBar.mcml" />
     <None Include="Markup\Controls\MBPosterViewItem.mcml" />
     <None Include="Markup\Controls\ProgressBar.mcml" />
     <None Include="Markup\Controls\Scrollers\ActorScroller.mcml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Markup\Controls\Scrollers\AcclaimedScroller.mcml">
+    <None Include="Markup\Controls\HomePage\AcclaimedScroller.mcml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Markup\Controls\Scrollers\NewsScroller.mcml">
+    <None Include="Markup\Controls\HomePage\GenresLayoutScroller.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\Controls\HomePage\NewsScroller.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Controls\Scrollers\ShortlistScroller.mcml" />
-    <None Include="Markup\Controls\Scrollers\UpcomingTVLayoutScroller.mcml">
+    <None Include="Markup\Controls\HomePage\UpcomingTVLayoutScroller.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Controls\Scrollers\CoverflowScroller.mcml" />
-    <None Include="Markup\Controls\Scrollers\NextUpLayoutScroller.mcml">
+    <None Include="Markup\Controls\HomePage\NextUpLayoutScroller.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Controls\Scrollers\PosterScroller.mcml" />
-    <None Include="Markup\Controls\Scrollers\RALLayoutScroller.mcml">
+    <None Include="Markup\Controls\HomePage\RALLayoutScroller.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Controls\Scrollers\SeasonListScroller.mcml" />
@@ -245,16 +261,23 @@
     <Content Include="Markup\Views\LayoutDetails.mcml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Markup\Views\Copy of LayoutRoot.mcml">
+    <None Include="Markup\Views\XenonRef\OldLayoutCoverflow.mcml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Markup\Views\XenonRef\Copy of LayoutRoot.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\Views\ExtraViews\LayoutBannerView.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\Views\ExtraViews\LayoutDetailsBannerList.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\Views\XenonRef\XenonLayoutDetails.mcml" />
     <None Include="Markup\Views\LayoutRoot.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Views\LayoutCoverflow.mcml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Markup\Views\ExtraViews\LayoutBannerView.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Views\LayoutMusic.mcml">

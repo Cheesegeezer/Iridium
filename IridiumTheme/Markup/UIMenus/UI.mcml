@@ -1,12 +1,12 @@
 <Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
 	  xmlns:cor="assembly://MsCorLib/System"
       xmlns:ih="assembly://Iridium/Iridium"
-	  xmlns:xs="file://Iridium_Styles.mcml"
+	  xmlns:is="file://Iridium_Styles.mcml"
 	  xmlns:me="Me">
 
   <UI Name="PanelPrimary">
     <Content>
-      <ColorFill Content="color://xs:XC_PanelPrimaryBG" />
+      <ColorFill Content="color://is:XC_PanelPrimaryBG" />
     </Content>
   </UI>
 
@@ -16,7 +16,7 @@
         <Children>
           <Clip Orientation="Horizontal" FadeAmount="1" FadeSize="2" Layout="Fill">
             <Children>
-              <ColorFill Content="color://xs:XC_PanelPrimaryBG" />
+              <ColorFill Content="color://is:XC_PanelPrimaryBG" />
             </Children>
           </Clip>
         </Children>
@@ -26,7 +26,7 @@
 
   <UI Name="PanelSecondary">
     <Content>
-      <ColorFill Content="color://xs:XC_PanelSecondaryBG" />
+      <ColorFill Content="color://is:XC_PanelSecondaryBG" />
     </Content>
   </UI>
 
@@ -36,7 +36,7 @@
         <Children>
           <Clip Orientation="Horizontal" FadeAmount="1" FadeSize="2" Layout="Fill">
             <Children>
-              <ColorFill Content="color://xs:XC_PanelSecondaryBG" />
+              <ColorFill Content="color://is:XC_PanelSecondaryBG" />
             </Children>
           </Clip>
         </Children>
@@ -46,13 +46,13 @@
 
   <UI Name="PanelPopupList">
     <Content>
-      <ColorFill Content="color://xs:XC_PopupMenuItemBG" />
+      <ColorFill Content="color://is:XC_PopupMenuItemBG" />
     </Content>
   </UI>
 
   <UI Name="PanelPopupTitle">
     <Content>
-      <ColorFill Content="color://xs:XC_PopupMenuTitleBG" />
+      <ColorFill Content="color://is:XC_PopupMenuTitleBG" />
     </Content>
   </UI>
 
@@ -60,7 +60,7 @@
     <Properties>
       <cor:Single Name="VFadeSize" Single="50" />
       <cor:Single Name="HFadeSize" Single="50" />
-      <Color Name="Color" Color="color://xs:XC_PanelGlow" />
+      <Color Name="Color" Color="color://is:XC_PanelGlow" />
     </Properties>
 
     <Rules>
@@ -85,7 +85,7 @@
     <Properties>
       <cor:Single Name="VFadeSize" Single="50" />
       <cor:Single Name="HFadeSize" Single="50" />
-      <Color Name="Color" Color="color://xs:XC_PanelGlow" />
+      <Color Name="Color" Color="color://is:XC_PanelGlow" />
     </Properties>
 
     <Rules>
@@ -110,7 +110,7 @@
     <Properties>
       <cor:Single Name="VFadeSize" Single="50" />
       <cor:Single Name="HFadeSize" Single="50" />
-      <Color Name="Color" Color="color://xs:XC_PanelGlow" />
+      <Color Name="Color" Color="color://is:XC_PanelGlow" />
     </Properties>
 
     <Rules>
@@ -135,7 +135,7 @@
     <Properties>
       <cor:Single Name="VFadeSize" Single="50" />
       <cor:Single Name="HFadeSize" Single="50" />
-      <Color Name="Color" Color="color://xs:XC_PanelGlow" />
+      <Color Name="Color" Color="color://is:XC_PanelGlow" />
     </Properties>
 
     <Rules>
@@ -158,8 +158,8 @@
 
   <UI Name="FocusFrame">
     <Properties>
-      <cor:Int32 Name="Size" Int32="global://xs:UI_FocusFrameSize" />
-      <Color Name="Color" Color="color://xs:XC_FocusFrame" />
+      <cor:Int32 Name="Size" Int32="global://is:UI_FocusFrameSize" />
+      <Color Name="Color" Color="color://is:XC_FocusFrame" />
       <ih:IridiumHelper Name="Helper" />
     </Properties>
 

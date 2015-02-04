@@ -5,7 +5,7 @@
       xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
       xmlns:an="resx://MediaBrowser/MediaBrowser.Resources/Animations"
       xmlns:vsb="resx://Iridium/Iridium.Resources/SimpleButton"
@@ -667,7 +667,7 @@
                   <FormLayoutInput Top="Parent,0,5" Right="Parent,1,-20" />
                 </LayoutInput>
                 <Children>
-                  <Text Name="TimeDisplay" Color="color://xs:ClockColor" Font="font://xs:ClockFont"/>
+                  <Text Name="TimeDisplay" Color="color://is:ClockColor" Font="font://is:ClockFont"/>
                 </Children>
               </Panel>
 
@@ -693,7 +693,7 @@
               <!--Options buttons, Search, Settings and NPV button-->
               <Panel Name="ButtonPanel" Visible="false" Layout="HorizontalFlow" FocusOrder="100" Navigation="PreferFocusOrder" Margins="0,-10,0,0" >
                 <LayoutInput>
-                  <AnchorLayoutInput Top="Parent,0" Right="Parent,1,-10" />
+                  <AnchorLayoutInput Top="Parent,0,35" Right="Parent,1,-10" />
                 </LayoutInput>
                 <Animations>
                   <Animation Type="Show">

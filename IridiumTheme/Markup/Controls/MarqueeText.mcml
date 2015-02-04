@@ -5,7 +5,7 @@
       xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:me="Me">
 
 

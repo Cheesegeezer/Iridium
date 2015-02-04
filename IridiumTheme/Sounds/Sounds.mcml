@@ -2,7 +2,7 @@
       xmlns:ih="assembly://Iridium/Iridium"
       xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
       xmlns:cor="assembly://MsCorLib/System"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:me="Me">
 
   

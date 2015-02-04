@@ -81,7 +81,7 @@ namespace Iridium
 
         public void CheckActiveStyle()
         {
-            Logger.ReportInfo("Iridium - Checking active style: " + StyleFilePath);
+            //Logger.ReportInfo("Iridium - Checking active style: " + StyleFilePath);
 
             // Force Iridium_Styles.mcml to be updated with active style
             string activeStyle = ThemeStyle;
@@ -281,7 +281,7 @@ namespace Iridium
 
                     string sourceFilePath = Path.Combine(CustomStyles.StylesFolderPath, value + ".mcml");
 
-                    Logger.ReportInfo("Iridium - Setting active style: " + sourceFilePath);
+                    //Logger.ReportInfo("Iridium - Setting active style: " + sourceFilePath);
 
                     File.Copy(sourceFilePath, StyleFilePath, true);
 

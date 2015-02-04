@@ -2,7 +2,7 @@
 	    xmlns:cor="assembly://MSCorLib/System"
       xmlns:a="assembly://MediaBrowser/MediaBrowser"
 	    xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
-	    xmlns:xs="file://Iridium_Styles.mcml"
+	    xmlns:is="file://Iridium_Styles.mcml"
       xmlns:in="resx://MediaBrowser/MediaBrowser.Resources/InfoMarquee"
       xmlns:wea="resx://Iridium/Iridium.Resources/Weather"
 	    xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
@@ -17,6 +17,9 @@
       xmlns:imb="resx://Iridium/Iridium.Resources/ImageButton"
       xmlns:ns="resx://Iridium/Iridium.Resources/NewsScroller"
       xmlns:as="resx://Iridium/Iridium.Resources/AcclaimedScroller"
+      xmlns:gp="resx://Iridium/Iridium.Resources/GenresLayoutScroller"
+      xmlns:ris="resx://Iridium/Iridium.Resources/ResumeLayoutScroller"
+      xmlns:home="resx://Iridium/Iridium.Resources/HomePage"
       xmlns:me="Me">
 
 
@@ -29,31 +32,25 @@
 
     <Locals>
       <ih:XNewsItem Name="NewsItems" />
-      <ScrollingHandler Name="ScrollingHandler"  HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" />
+      <ScrollingHandler Name="ScrollingHandler" HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" />
       <ScrollingData Name="ScrollingData" LockedAlignment="0.05" LockedPosition="0.05" />
 
-      <FormLayoutInput Name="ScrollerHorizontalLayoutInput" Left="Parent,0,35" Top="Parent,0,10" Right="Parent,1"  Horizontal="Fill" />
-      <FlowLayout Name="HorizontalFlowLayout" Orientation="Horizontal" AllowWrap="true" RepeatGap="50,0" Spacing="50,50" ItemAlignment="Near"/>
+      <FormLayoutInput Name="ScrollerHorizontalLayoutInput" Left="Parent,0,35" Top="Parent,0,10" Right="Parent,1" Horizontal="Fill" />
+      <FlowLayout Name="HorizontalFlowLayout" Orientation="Horizontal" AllowWrap="true" RepeatGap="100,0" Spacing="50,50" ItemAlignment="Near" />
       <FormLayoutInput Name="RootHorizontalLayoutInput" Left="Parent,0" Right="Parent,1" />
       <FormLayoutInput Name="MBInfoHorizontalLayout" Top="Parent,0.95" Right="Parent,1,50" />
 
-      <lib:Item Name="SelectedItem" Item="[Folder.SelectedChild]"/>
-      <IntRangedValue Name="SelectedIndex" Value="0"/>
+      <lib:Item Name="SelectedItem" Item="[Folder.SelectedChild]" />
+      <IntRangedValue Name="SelectedIndex" Value="0" />
+      <cor:Int32 Name="CurrentPosition" Int32="0" />
 
       <Timer Name="FocusViewTimer" AutoRepeat="false" Interval="500" Enabled="false" />
       <Timer Name="ShowNewsTickerTimer" AutoRepeat="false" Interval="2000" Enabled="false" />
 
-      <Command Name="Configure"/>
-      <Command Name="CycleRecentCommand" />
-      <Command Name="FocusRootCommand" />
-      <Command Name="FocusCycleRecentCommand" />
+      <Command Name="Configure" />
+      <Command Name="Refresh" />
 
-      <Command Name="RecentlyAddedCommand" />
-      <Command Name="WatchedCommand" />
-      <Command Name="UnwatchedCommand" />
-      <Command Name="NextUpCommand" />
-      <Command Name="UpcomingTVCommand"/>
-
+      <Command Name="ShowHome" />
       <Command Name="ShowNew" />
       <Command Name="ShowWatched" />
       <Command Name="ShowUnwatched" />
@@ -61,22 +58,122 @@
       <Command Name="ShowUpcomingTV" />
       <Command Name="ShowNextUp" />
       <Command Name="ShowAcclaimed" />
-      
+      <Command Name="ShowGenres" />
+
       <!--RAL Positioning-->
-      <FormLayoutInput Name="RALHalfHorizontalLayout" Left="Parent,0.35" Right="Parent,1" Top="Parent,0.3" Bottom="Parent,0.78" />
-      <FormLayoutInput Name="RALFullHorizontalLayout" Left="Parent,0" Right="Parent,1" Top="Parent,0.3" Bottom="Parent,0.78" />
 
       <cor:Int32 Name="backFocus" Int32="[Folder.SelectedChildIndex]" />
-      <cor:Int32 Name="Startup"/>
+      <cor:Int32 Name="Startup" />
       <!-- Variable that uses the .NET Framework DateTime object -->
-      <cor:String Name="CurrentDate" String="[ThemeHelper.CurrentDate]"/>
-      <cor:String Name="CurrentTime" String="[ThemeHelper.CurrentTime]"/>
-      <Timer Name="MyTimer" AutoRepeat="true" Interval="500" Enabled="true"/>
-      <IntRangedValue Name="Hour"/>
+      <cor:String Name="CurrentDate" String="[ThemeHelper.CurrentDate]" />
+      <cor:String Name="CurrentTime" String="[ThemeHelper.CurrentTime]" />
+      <Timer Name="MyTimer" AutoRepeat="true" Interval="500" Enabled="true" />
+      <IntRangedValue Name="Hour" />
+      
+      <cor:Int32 Name="RALScrollerBackFocus" Int32="[Folder.SelectedChildIndex]" />
+      
     </Locals>
     
     <Rules>
 
+      <!-- Folder Pref Backdrop -->
+      <Binding Source="[Folder.SelectedChild.BackdropImage]" Target="[Backdrop.Image]" ConditionLogicalOp="And">
+        <Conditions>
+          <Equality Source="[ThemeHelper.Config.FolderShowBackdrop]" ConditionOp="Equals" Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[Backdrop.Visible]" Value="true" />
+        </Actions>
+      </Binding>
+      <Binding Source="[Folder.SelectedChild]" Target="[Backdrop.Item]" ConditionLogicalOp="And">
+        <Conditions>
+          <Equality Source="[ThemeHelper.Config.FolderShowBackdrop]" ConditionOp="Equals" Value="true" /> 
+        </Conditions>
+        <Actions>
+          <Set Target="[Backdrop.Visible]" Value="true" />
+        </Actions>
+      </Binding>
+      
+      <!-- WRAP EHS VF LIST LOGIC -->
+      <Condition Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" SourceValue="Always" Target="[HorizontalFlowLayout.Repeat]" Value="Always" />
+      <Condition Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" SourceValue="Never" Target="[HorizontalFlowLayout.Repeat]" Value="Never" />
+      <Condition Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" SourceValue="When Too Big" Target="[HorizontalFlowLayout.Repeat]" Value="WhenTooBig" />
+
+      <Changed Source="[ThemeHelper.Config.FolderWrapEHSList]" >
+        <Conditions>
+          <Equality Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" Value="Always" />
+        </Conditions>
+        <Actions>
+          <Set Target="[HorizontalFlowLayout.Repeat]" Value="Always" />
+        </Actions>
+      </Changed>
+      <Changed Source="[ThemeHelper.Config.FolderWrapEHSList]" >
+        <Conditions>
+          <Equality Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" Value="When Too Big" />
+        </Conditions>
+        <Actions>
+          <Set Target="[HorizontalFlowLayout.Repeat]" Value="WhenTooBig" />
+        </Actions>
+      </Changed>
+      <Changed Source="[ThemeHelper.Config.FolderWrapEHSList]" >
+        <Conditions>
+          <Equality Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" Value="Never" />
+        </Conditions>
+        <Actions>
+          <Set Target="[HorizontalFlowLayout.Repeat]" Value="Never" />
+        </Actions>
+      </Changed>
+
+      <!--CLOCK DISPLAY-->
+      <Changed Source="[MyTimer.Tick]" InitialEvaluate="true">
+        <Actions>
+          <Set Target="[CurrentTime]" Value="[ThemeHelper.CurrentTime]"/>
+          <Set Target="[ITimeDisplay.Content]" Value="[CurrentTime]"/>
+          <!--<Set Target="[CurrentDate]" Value="[ThemeHelper.CurrentDate]"/>
+          <Set Target="[DateDisplay.Content]" Value="[CurrentDate]"/>-->
+        </Actions>
+      </Changed>
+
+      <!-- Backdrop Overlay-->
+      <Binding Target="[Overlay.Visible]"   Source="[ThemeHelper.Config.FolderShowBackdropOverlay]">
+        <Conditions>
+          <Equality Source="[ThemeHelper.Config.FolderShowBackdropOverlay]" ConditionOp="Equals" Value="true" />
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[Overlay.Alpha]" Source="[ThemeHelper.Config.FolderBackdropOverlayAlpha]"/>
+
+      <!-- News Scroller
+      <Binding Target="[NewsPanel.Visible]"   Source="[ThemeHelper.Config.FolderShowNewsScroller]">
+        <Conditions>
+          <Equality Source="[ThemeHelper.Config.FolderShowNewsScroller]" ConditionOp="Equals" Value="true" />
+        </Conditions>
+      </Binding>
+      
+      <Binding Target="[NewsBGPanel.Visible]"   Source="[ThemeHelper.Config.FolderShowNewsScroller]">
+        <Conditions>
+          <Equality Source="[ThemeHelper.Config.FolderShowNewsScroller]" ConditionOp="Equals" Value="true" />
+        </Conditions>
+      </Binding> -->
+      
+      <Condition Source="[Folder.SelectedChild.ParentalAllowed]" ConditionOp="Equals" SourceValue="false" Target="[PCLock.Visible]" Value="true" />
+      
+      <Rule>
+        <Conditions>
+          <Equality Source="[Application.NavigatingForward]" Value="false"/>
+          <Equality Source="[Folder.Children.Count]" ConditionOp="GreaterThan" Value="0" />
+        </Conditions>
+        <Actions>
+          <Set Target="[RootItemRepeater.DefaultFocusIndex]"  Value="[backFocus]"/>
+        </Actions>
+      </Rule>
+      
+      <Changed Source="[Refresh.Invoked]">
+        <Actions>
+          <Invoke Target="[SelectedItem.RecentItemsChanged]"/>
+        </Actions>
+      </Changed>
+      
       <!-- Navigation Rules -->
       <Binding Source="[SelectedIndex.Value]" Target="[Folder.SelectedChildIndex]" />
       <Default Target="[Startup]" Value="1" ConditionLogicalOp="And">
@@ -116,107 +213,6 @@
       <Binding Source="[Folder.Children]" Target="[RootItemRepeater.Source]" />
       <Default Target="[ScrollingHandler.ScrollingData]" Value="[ScrollingData]" />
       <Default Target="[ScrollingData.Repeater]" Value="[RootItemRepeater]" />
-      
-      <!-- Folder Pref Backdrop -->
-      <Binding Source="[Folder.SelectedChild.BackdropImage]" Target="[Backdrop.Image]" ConditionLogicalOp="And">
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowBackdrop]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-        <Actions>
-          <Set Target="[Backdrop.Visible]" Value="true" />
-        </Actions>
-      </Binding>
-      <Binding Source="[Folder.SelectedChild]" Target="[Backdrop.Item]" ConditionLogicalOp="And">
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowBackdrop]" ConditionOp="Equals" Value="true" /> 
-        </Conditions>
-        <Actions>
-          <Set Target="[Backdrop.Visible]" Value="true" />
-        </Actions>
-      </Binding>
-
-      <!-- Backdrop Overlay-->
-      <Binding Target="[Overlay.Visible]"   Source="[ThemeHelper.Config.FolderShowBackdropOverlay]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowBackdropOverlay]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-      </Binding>
-
-      <Binding Target="[Overlay.Alpha]" Source="[ThemeHelper.Config.FolderBackdropOverlayAlpha]"/>
-
-      <!-- News Scroller
-      <Binding Target="[NewsPanel.Visible]"   Source="[ThemeHelper.Config.FolderShowNewsScroller]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowNewsScroller]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-      </Binding>
-      
-      <Binding Target="[NewsBGPanel.Visible]"   Source="[ThemeHelper.Config.FolderShowNewsScroller]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowNewsScroller]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-      </Binding> -->
-        
-      <!-- WRAP EHS VF LIST LOGIC -->
-      <Condition Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" SourceValue="Always" Target="[HorizontalFlowLayout.Repeat]" Value="Always" />
-      <Condition Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" SourceValue="Never" Target="[HorizontalFlowLayout.Repeat]" Value="Never" />
-      <Condition Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" SourceValue="When Too Big" Target="[HorizontalFlowLayout.Repeat]" Value="WhenTooBig" />
-
-      <Changed Source="[ThemeHelper.Config.FolderWrapEHSList]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" Value="Always" />
-        </Conditions>
-        <Actions>
-          <Set Target="[HorizontalFlowLayout.Repeat]" Value="Always" />
-        </Actions>
-      </Changed>
-      <Changed Source="[ThemeHelper.Config.FolderWrapEHSList]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" Value="When Too Big" />
-        </Conditions>
-        <Actions>
-          <Set Target="[HorizontalFlowLayout.Repeat]" Value="WhenTooBig" />
-        </Actions>
-      </Changed>
-      <Changed Source="[ThemeHelper.Config.FolderWrapEHSList]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderWrapEHSList]" ConditionOp="Equals" Value="Never" />
-        </Conditions>
-        <Actions>
-          <Set Target="[HorizontalFlowLayout.Repeat]" Value="Never" />
-        </Actions>
-      </Changed>
-      
-      <!--SHOW FULL RAL WIDTH WHEN IN HORIZONTAL VIEW
-      <Condition Source="[ThemeHelper.Config.FolderShowFullRAL]" ConditionOp="Equals" SourceValue="true" Target="[NextUpPopup.LayoutInput]" Value="[RALFullHorizontalLayout]" />
-      <Condition Source="[ThemeHelper.Config.FolderShowFullRAL]" ConditionOp="Equals" SourceValue="true" Target="[RecentItemsPopup.LayoutInput]" Value="[RALFullHorizontalLayout]" />
-      <Condition Source="[ThemeHelper.Config.FolderShowFullRAL]" ConditionOp="Equals" SourceValue="true" Target="[UpcomingTVPopup.LayoutInput]" Value="[RALFullHorizontalLayout]" />-->
-
-      <!--CLOCK DISPLAY-->
-      <Changed Source="[MyTimer.Tick]" InitialEvaluate="true">
-        <Actions>
-          <Set Target="[CurrentTime]" Value="[ThemeHelper.CurrentTime]"/>
-          <Set Target="[ITimeDisplay.Content]" Value="[CurrentTime]"/>
-          <!--<Set Target="[CurrentDate]" Value="[ThemeHelper.CurrentDate]"/>
-          <Set Target="[DateDisplay.Content]" Value="[CurrentDate]"/>-->
-        </Actions>
-      </Changed>
-      
-      
-      <!-- Selection/Info Display 
-      <Binding Source="[SelectedIndex.Value]" Target="[Folder.SelectedChildIndex]" />
-
-      <Changed Source="[Folder.SelectedChildIndex]" InitialEvaluate="true">
-        <Conditions>
-          <Equality ConditionOp="NotEquals" Source="[Folder.SelectedChildIndex]" Value="-1" />
-        </Conditions>
-        <Actions>
-          <Set Target="[FocusViewTimer.Enabled]" Value="false" ExclusiveApply="false" />
-          <Set Target="[FocusViewTimer.Enabled]" Value="true"/>
-        </Actions>
-      </Changed>-->
-
-      <Condition Source="[Folder.SelectedChild.ParentalAllowed]" ConditionOp="Equals" SourceValue="false" Target="[PCLock.Visible]" Value="true" />
 
       <!-- Initial Focus -->
       <Rule>
@@ -234,14 +230,21 @@
         <Actions>
           <Invoke Target="[RootScroller.NavigateInto]" />
           <Invoke Target="[ThemeHelper.GetNewsItems]" />
+          
         </Actions>
       </Changed>
 
-      <!--<Binding Source="[Folder.SelectedChild.Name]" Target="[FolderName.Content]" >
+      <!-- Folder/Item Selection -->
+      <Changed Source="[Folder.SelectedChildIndex]">
         <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
+          <Equality ConditionOp="NotEquals" Source="[Folder.SelectedChildIndex]" Value="-1"></Equality>
         </Conditions>
-      </Binding>-->
+        <Actions>
+          <Set Target="[SelectedItem]" Value="[Folder.SelectedChild]" />
+          <Set Target="[CurrentPosition]" Value="[Folder.SelectedChildIndex]" />
+          <Set Target="[Application.CurrentItem]" Value="[SelectedItem]" />
+        </Actions>
+      </Changed>
 
       <!-- COMMANDS -->
       <Changed Source="[Configure.Invoked]">
@@ -249,505 +252,12 @@
           <Invoke Target="[Application.OpenConfiguration]" showFullOptions="true" />
         </Actions>
       </Changed>
-
-      <!--RAL Handlers
-      <Changed Source="[Folder.SelectedChild]">
-        <Actions>
-          <Set Target="[RecentItemsPopup.Folder]"  Value="[Folder.SelectedChild!lib:FolderModel]"></Set>
-        </Actions>
-      </Changed>-->
-
-      <!--<Changed Source="[Folder.SelectedChild]">
-        <Actions>
-          <Set Target="[NextUpPopup.Folder]" Value="[Folder.SelectedChild!lib:FolderModel]" />
-        </Actions>
-      </Changed>-->
-
-      <!--  CHECK WHICH FOLDER IT IS AND ENSURE THAT TV SHOW FOLDER KEEPS ITS OWN SETTINGS
-      <Changed Source="[Folder.SelectedChild]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" Value="true" />
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-        <Actions>
-          <Set Target="[Application.RecentItemOption]" Value="[ThemeHelper.Config.TvRalOption]" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[Folder.SelectedChild]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" Value="false" />
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-        <Actions>
-          <Set Target="[Application.RecentItemOption]" Value="[ThemeHelper.Config.NonTVRalOption]" />
-        </Actions>
-      </Changed>-->
-      <!-- END CHECK-->
       
-      <!-- WATCH FOR RAL OPTION WHEN CHANGED FOR TV SHOW FOLDERS
-      <Changed Source="[ThemeHelper.Config.TvRalOption]" InitialEvaluate="true">
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="NextUp"/>
-        </Conditions>
+      <Changed Source="[ShowHome.Invoked]">
         <Actions>
-          <Set Target ="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[NextUpPopup.Visible]" Value="true" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
+          <Set Target="[RALGetters.Tab]" Value="Home"></Set>
         </Actions>
       </Changed>
-      
-      <Changed Source="[ThemeHelper.Config.TvRalOption]" InitialEvaluate="true">
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="UpcomingTV"/>
-        </Conditions>
-        <Actions>
-          <Set Target ="[UpcomingTVPopup.Visible]" Value="true" />
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[ThemeHelper.Config.TvRalOption]" InitialEvaluate="true">
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="NotEquals" Value="UpcomingTV"/>
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="NotEquals" Value="NextUp"/>
-        </Conditions>
-        <Actions>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[ThemeHelper.Config.NonTVRalOption]" InitialEvaluate="true">
-        <Actions>
-          <Set Target ="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-        </Actions>
-      </Changed>-->
-      <!--  END WATCH  -->
-
-      <!--  ENSURE THAT THE NEXTUP BUTTONS ARE ALWAYS THERE WHEN CHANGING THE THE RAL SELECTOR IF TV SHOW FOLDER
-      <Rule>
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-        <Actions>
-          <Set Target ="[UpcomingTVButton.Visible]" Value="true" />
-          <Set Target ="[UpcomingTVDivider.Visible]" Value="true" />
-          <Set Target="[NextUpButton.Visible]" Value="true" />
-          <Set Target="[NextUpDivider.Visible]" Value="true" />
-        </Actions>
-      </Rule>-->
-
-      <!--MAKE SURE RAL IS ALWAYS SHOWN WHEN RETURNING TO EHS SCREEN
-      <Rule>
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="false" />
-        </Conditions>
-        <Actions>
-          <Set Target ="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-        </Actions>
-      </Rule>
-
-      <Rule>
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="NextUp"/>
-        </Conditions>
-        <Actions>
-          <Set Target ="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[NextUpPopup.Visible]" Value="true" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
-          <Set Target="[FolderName.Visible]" Value="true" />
-        </Actions>
-      </Rule>
-
-      <Rule>
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="UpcomingTV"/>
-        </Conditions>
-        <Actions>
-          <Set Target ="[UpcomingTVPopup.Visible]" Value="true" />
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
-          <Set Target="[FolderName.Visible]" Value="true" />
-        </Actions>
-      </Rule>
-
-      <Rule>
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="NotEquals" Value="UpcomingTV"/>
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="NotEquals" Value="NextUp"/>
-        </Conditions>
-        <Actions>
-          <Set Target ="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-          <Set Target="[FolderName.Visible]" Value="true" />
-        </Actions>
-      </Rule>-->
-
-      <!--RAL BUTTONS-->
-      <!--RAL ALWAYS ON == OFF
-      <Changed Source="[Folder.SelectedChild]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="false" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-        <Actions>
-          <Set Target="[NextUpButton.Visible]" Value="true" />
-          <Set Target="[NextUpDivider.Visible]" Value="true" />
-          <Set Target ="[UpcomingTVButton.Visible]" Value="true" />
-          <Set Target ="[UpcomingTVDivider.Visible]" Value="true" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[Folder.SelectedChild]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="false" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="false" />
-        </Conditions>
-        <Actions>
-          <Set Target="[NextUpButton.Visible]" Value="false" />
-          <Set Target="[NextUpDivider.Visible]" Value="false" />
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[NewLabel.Margins]" Value="5,0,0,0" />
-          <Set Target ="[UpcomingTVButton.Visible]" Value="false" />
-          <Set Target ="[UpcomingTVDivider.Visible]" Value="false" />
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false" />
-        </Actions>
-      </Changed>-->
-
-      <!--RAL ALWAYS ON == ON-->
-      <!--ENSURE OPTION UPDATES THE RAL CORRECTLY
-      <Changed Source="[ThemeHelper.Config.FolderShowRALAlways]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="NextUp" />
-        </Conditions>
-        <Actions>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[NextUpPopup.Visible]" Value="true" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
-        </Actions>
-      </Changed>
-      <Changed Source="[ThemeHelper.Config.FolderShowRALAlways]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="UpcomingTV" />
-        </Conditions>
-        <Actions>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="true" />
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
-        </Actions>
-      </Changed>
-      <Changed Source="[ThemeHelper.Config.FolderShowRALAlways]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="NotEquals" Value="UpcomingTV" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="NotEquals" Value="NextUp" />
-        </Conditions>
-        <Actions>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[ThemeHelper.Config.FolderShowRALAlways]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="false" />
-        </Conditions>
-        <Actions>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-        </Actions>
-      </Changed>-->
-      <!--END OF ENSURE OPTION UPDATES THE RAL CORRECTLY-->
-
-      <!--<Changed Source="[Folder.SelectedChild]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="NextUp" />
-        </Conditions>
-        <Actions>
-          <Invoke Target="[ThemeHelper.GetNextUpEpisodes]" />
-          <Set Target="[NextUpPopup.Visible]" Value="true" />
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
-        </Actions>
-      </Changed>
-      <Changed Source="[Folder.SelectedChild]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="UpcomingTV" />
-        </Conditions>
-        <Actions>
-          <Invoke Target="[ThemeHelper.GetUpcomingTV]" />
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[UpcomingTVPopup.Visible]" Value="true" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
-        </Actions>
-      </Changed>
-      <Changed Source="[Folder.SelectedChild]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="added" />
-        </Conditions>
-        <Actions>
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-        </Actions>
-      </Changed>
-      <Changed Source="[Folder.SelectedChild]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="unwatched" />
-        </Conditions>
-        <Actions>
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-        </Actions>
-      </Changed>
-      <Changed Source="[Folder.SelectedChild]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="watched" />
-        </Conditions>
-        <Actions>
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[Folder.SelectedChild]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="false" />
-        </Conditions>
-        <Actions>
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-          <Set Target="[NewLabel.Margins]" Value="5,0,0,0" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[Folder.SelectedChild]" >
-        <Conditions>
-          <Equality Source="[ThemeHelper.Config.FolderShowRALAlways]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.IsGameFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[ThemeHelper.Config.TvRalOption]" ConditionOp="Equals" Value="watched" />
-          <Equality Source="[Application.Config.TreatWatchedAsInProgress]" ConditionOp="Equals" Value="true"/>
-        </Conditions>
-        <Actions>
-          <Set Target="[NextUpPopup.Visible]" Value="false" />
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-        </Actions>
-      </Changed>-->
-
-      <!-- CHANGE RAL BACK TO ADDED IF ANOTHER OPTION IS NOT IN Iridium'S LIST
-      <Rule>
-        <Conditions>
-          <Equality Source="[Application.RecentItemOption]" ConditionOp="NotEquals" Value="added"/>
-          <Equality Source="[Application.RecentItemOption]" ConditionOp="NotEquals" Value="watched"/>
-          <Equality Source="[Application.RecentItemOption]" ConditionOp="NotEquals" Value="unwatched"/>
-          <Equality Source="[Application.RecentItemOption]" ConditionOp="NotEquals" Value="NextUp"/>
-          <Equality Source="[Application.RecentItemOption]" ConditionOp="NotEquals" Value="UpcomingTV"/>
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Folder.SelectedChild.RecentItemsChanged]" />
-          <Set Target="[Application.RecentItemOption]" Value="added" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true"/>
-          <Set Target="[ThemeHelper.Config.TvRalOption]" Value="added" />
-          <Set Target="[ThemeHelper.Config.NonTVRalOption]" Value="added" />
-        </Actions>
-      </Rule>-->
-      
-      <!--TV SHOW FOLDER RAL SELECTOR COMMANDS
-      <Changed Source ="[UpcomingTVCommand.Invoked]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-        <Actions>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="true"/>
-          <Set Target="[NextUpPopup.Visible]" Value="false"/>
-          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
-          <Set Target="[ThemeHelper.Config.TvRalOption]" Value="UpcomingTV" />
-        </Actions>
-      </Changed>
-        
-      <Changed Source ="[NextUpCommand.Invoked]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-        <Actions>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false"/>
-          <Set Target="[NextUpPopup.Visible]" Value="true"/>
-          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
-          <Set Target="[ThemeHelper.Config.TvRalOption]" Value="NextUp" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[RecentlyAddedCommand.Invoked]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Folder.SelectedChild.RecentItemsChanged]" />
-          <Set Target="[Application.RecentItemOption]" Value="added" />
-          <Set Target="[NextUpPopup.Visible]" Value="false"/>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false"/>
-          <Set Target="[RecentItemsPopup.Visible]" Value="true"/>
-          <Set Target="[ThemeHelper.Config.TvRalOption]" Value="[Application.RecentItemOption]" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[WatchedCommand.Invoked]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[Application.Config.TreatWatchedAsInProgress]" Value="false"/>
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Folder.SelectedChild.RecentItemsChanged]" />
-          <Set Target="[Application.RecentItemOption]" Value="watched" />
-          <Set Target="[NextUpPopup.Visible]" Value="false"/>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false"/>
-          <Set Target="[RecentItemsPopup.Visible]" Value="true"/>
-          <Set Target="[ThemeHelper.Config.TvRalOption]" Value="[Application.RecentItemOption]" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[WatchedCommand.Invoked]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-          <Equality Source="[Application.Config.TreatWatchedAsInProgress]" Value="true"/>
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Folder.SelectedChild.RecentItemsChanged]" />
-          <Set Target="[Application.RecentItemOption]" Value="watched" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true"/>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false"/>
-          <Set Target="[NextUpPopup.Visible]" Value="false"/>
-          <Set Target="[ThemeHelper.Config.TvRalOption]" Value="[Application.RecentItemOption]" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[UnwatchedCommand.Invoked]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Folder.SelectedChild.RecentItemsChanged]" />
-          <Set Target="[Application.RecentItemOption]" Value="unwatched" />
-          <Set Target="[NextUpPopup.Visible]" Value="false"/>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false"/>
-          <Set Target="[RecentItemsPopup.Visible]" Value="true"/>
-          <Set Target="[ThemeHelper.Config.TvRalOption]" Value="[Application.RecentItemOption]" />
-        </Actions>
-      </Changed>-->
-      <!--  END TV SHOW RAL SELECTORS  -->
-      
-      <!--  NON TV SHOW FOLDER RAL SELECTOR COMMANDS-->
-      <!--<Changed Source="[RecentlyAddedCommand.Invoked]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="false" />
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Folder.SelectedChild.RecentItemsChanged]" />
-          <Set Target="[Application.RecentItemOption]" Value="added" />
-          <Set Target="[NextUpPopup.Visible]" Value="false"/>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false"/>
-          <Set Target="[RecentItemsPopup.Visible]" Value="true"/>
-          <Set Target="[ThemeHelper.Config.NonTVRalOption]" Value="[Application.RecentItemOption]" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[WatchedCommand.Invoked]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="false" />
-          <Equality Source="[Application.Config.TreatWatchedAsInProgress]" Value="false"/>
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Folder.SelectedChild.RecentItemsChanged]" />
-          <Set Target="[Application.RecentItemOption]" Value="watched" />
-          <Set Target="[NextUpPopup.Visible]" Value="false"/>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false"/>
-          <Set Target="[RecentItemsPopup.Visible]" Value="true"/>
-          <Set Target="[ThemeHelper.Config.NonTVRalOption]" Value="[Application.RecentItemOption]" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[WatchedCommand.Invoked]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="false" />
-          <Equality Source="[Application.Config.TreatWatchedAsInProgress]" Value="true"/>
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Folder.SelectedChild.RecentItemsChanged]" />
-          <Set Target="[Application.RecentItemOption]" Value="watched" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true"/>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false"/>
-          <Set Target="[NextUpPopup.Visible]" Value="false"/>
-          <Set Target="[ThemeHelper.Config.NonTVRalOption]" Value="[Application.RecentItemOption]" />
-        </Actions>
-      </Changed>
-      
-      <Changed Source="[WatchedCommand.Invoked]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="false" />
-          <Equality Source="[Application.Config.TreatWatchedAsInProgress]" Value="true"/>
-          <Equality Source="[ThemeHelper.IsGameFolder]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Folder.SelectedChild.RecentItemsChanged]" />
-          <Set Target="[Application.RecentItemOption]" Value="watched" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true"/>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false"/>
-          <Set Target="[NextUpPopup.Visible]" Value="false"/>
-          <Set Target="[ThemeHelper.Config.NonTVRalOption]" Value="lastplayed" />
-        </Actions>
-      </Changed>
-
-      <Changed Source="[UnwatchedCommand.Invoked]">
-        <Conditions>
-          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="false" />
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Folder.SelectedChild.RecentItemsChanged]" />
-          <Set Target="[Application.RecentItemOption]" Value="unwatched" />
-          <Set Target="[NextUpPopup.Visible]" Value="false"/>
-          <Set Target="[UpcomingTVPopup.Visible]" Value="false"/>
-          <Set Target="[RecentItemsPopup.Visible]" Value="true"/>
-          <Set Target="[ThemeHelper.Config.NonTVRalOption]" Value="[Application.RecentItemOption]" />
-        </Actions>
-      </Changed>-->
 
       <Changed Source="[ShowUnwatched.Invoked]">
         <Actions>
@@ -775,8 +285,6 @@
 
       <Changed Source="[ShowResume.Invoked]">
         <Actions>
-          <Invoke Target="[Folder.SelectedChild.RecentItemsChanged]" />
-          <Set Target="[Application.RecentItemOption]" Value="inprogress" />
           <Set Target="[RALGetters.Tab]" Value="Resume"></Set>
         </Actions>
       </Changed>
@@ -799,10 +307,11 @@
         </Actions>
       </Changed>
 
-      
-      <!--<Condition Source="[Application.Config.TreatWatchedAsInProgress]" ConditionOp="Equals" SourceValue="false" Target="[WatchedLabel.Label]" Value="[Application.LocalStrings.#WatchedLabelStr!cor:String]"></Condition>
-      <Condition Source="[Application.Config.TreatWatchedAsInProgress]" ConditionOp="Equals" SourceValue="true" Target="[WatchedLabel.Label]" Value="[Application.LocalStrings.#ResumeLabelStr!cor:String]"></Condition>-->
-     
+      <Changed Source="[ShowGenres.Invoked]">
+        <Actions>
+          <Set Target="[RALGetters.Tab]" Value="Genres"></Set>
+        </Actions>
+      </Changed>
     </Rules>
 
     <!--EHS UI PANEL LAYOUT-->
@@ -810,7 +319,7 @@
       <Panel Layout="Form" >
         <Children>
 
-          <!--<Text Name="FolderName" Color="color://xs:XC_RALPopupItem" Font="font://xs:XF_RALPopupItem" Content="" Margins="0,0,0,0">
+          <!--<Text Name="FolderName" Color="color://is:XC_RALPopupItem" Font="font://is:XF_RALPopupItem" Content="" Margins="0,0,0,0">
             <LayoutInput>
               <FormLayoutInput Right="Parent,1,-5" Top="Parent,0.35"/>
             </LayoutInput>
@@ -825,27 +334,38 @@
                     <Animations>
                       <Animation Type="Move">
                         <Keyframes>
-                          <PositionKeyframe Time="0" RelativeTo="Current" Interpolation="Log, 2"/>
-                          <PositionKeyframe Time="1" RelativeTo="Final"/>
+                          <PositionKeyframe Time="0" RelativeTo="Current" Interpolation="EaseIn, 1.0, 0.25"/>
+                          <PositionKeyframe Time="0.4" RelativeTo="Final"/>
                         </Keyframes>
-                      </Animation>
+                  </Animation>
                     </Animations>
                   </Repeater>
                 </Children>
               </Scroller>
                 
-              <Graphic Name="RootMenuBG" ColorFilter="AliceBlue" Alpha="0.7" Navigation="None" Content="image://vi:MainVFBG" >
-                <LayoutInput>
-                  <AnchorLayoutInput Left="Parent,0" Top="Parent,0,5" Right="Parent,1" Bottom="Parent,0,70"/>
-                </LayoutInput>
-              </Graphic>
+            <Graphic Name="RootMenuBG" ColorFilter="0,155,255" Alpha="0.7" Navigation="None" Content="image://vi:MainVFBG" >
+              <LayoutInput>
+                <AnchorLayoutInput Left="Parent,0" Top="Parent,0,5" Right="Parent,1" Bottom="Parent,0,70"/>
+              </LayoutInput>
+            </Graphic>
               
           <Panel Name="RalselectorScroller" >
             <LayoutInput>
-              <AnchorLayoutInput Left="Parent,0.06" Top="Parent,0,90" />
+              <AnchorLayoutInput Left="Parent,0.12" Top="Parent,0,90" />
             </LayoutInput>
             <Children>
-               <me:RALSelectorScroller Application="[Application]" Folder="[Folder]" ShowNew="[ShowNew]" ShowWatched="[ShowWatched]" ShowUnwatched="[ShowUnwatched]" ShowResume="[ShowResume]" ShowUpcomingTV="[ShowUpcomingTV]" ShowNextUp="[ShowNextUp]" ShowAcclaimed="[ShowAcclaimed]" />
+               <me:RALSelectorScroller Application="[Application]" 
+                                       Folder="[Folder.SelectedChild!lib:FolderModel]" 
+                                       Refresh="[Refresh]"
+                                       ShowHome="[ShowHome]" 
+                                       ShowNew="[ShowNew]" 
+                                       ShowWatched="[ShowWatched]" 
+                                       ShowUnwatched="[ShowUnwatched]" 
+                                       ShowResume="[ShowResume]" 
+                                       ShowUpcomingTV="[ShowUpcomingTV]" 
+                                       ShowNextUp="[ShowNextUp]" 
+                                       ShowAcclaimed="[ShowAcclaimed]" 
+                                       ShowGenres="[ShowGenres]" />
             </Children>
           </Panel>
           
@@ -855,7 +375,7 @@
             </LayoutInput>
           </me:RALGetters>
           
-          <Graphic Name="RALMenuBG" ColorFilter="AliceBlue" Alpha="0.5" Navigation="None" Content="image://vi:RALScrollerBG" >
+          <Graphic Name="RALMenuBG" ColorFilter="0,155,255" Alpha="0.5" Navigation="None" Content="image://vi:RALScrollerBG" >
             <LayoutInput>
               <AnchorLayoutInput Left="Parent,0" Top="Parent,0,80" Right="Parent,1" Bottom="Parent,0.17"/>
             </LayoutInput>
@@ -864,10 +384,10 @@
 
           <Panel Name="ClockDisplay">
             <LayoutInput>
-              <AnchorLayoutInput Right="Parent,1,-1" Top="Parent,0,42" />
+              <AnchorLayoutInput Right="Parent,1,-1" Top="Parent,0,10" />
             </LayoutInput>
             <Children>
-              <Text Name="ITimeDisplay" Color="color://xs:ClockColor" Font="font://xs:ClockFont" Margins="10,2,10,0"/>
+              <Text Name="ITimeDisplay" Color="color://is:ClockColor" Font="font://is:ClockFont" Margins="10,2,10,0"/>
             </Children>
           </Panel>
                   
@@ -883,12 +403,12 @@
                     </Layout>
                     <Children>
                       <wea:SmallWeather Name="MiniWeather" MaximumSize="0,50" Margins="0,0,10,0"/>
-                      <Text Content="|" Font="font://xs:ClockFont" Color="color://xs:ClockColor" />
-                      <Text Name="DateDisplay" Color="color://xs:ClockColor" Font="font://xs:ClockFont" Margins="10,2,0,0"/>
-                      <Text Name="TimeDisplay" Color="color://xs:ClockColor" Font="font://xs:ClockFont" Margins="10,2,30,0"/>
+                      <Text Content="|" Font="font://is:ClockFont" Color="color://is:ClockColor" />
+                      <Text Name="DateDisplay" Color="color://is:ClockColor" Font="font://is:ClockFont" Margins="10,2,0,0"/>
+                      <Text Name="TimeDisplay" Color="color://is:ClockColor" Font="font://is:ClockFont" Margins="10,2,30,0"/>
                     </Children>
                   </Clip>
-                  <Graphic Name="WeatherPanel" Content="image://vi:InfoPanelTime" MinimumSize="0,50" MaximumSize="0,70" ColorFilter="color://xs:RootHorizontalBGoverlayColor" />
+                  <Graphic Name="WeatherPanel" Content="image://vi:InfoPanelTime" MinimumSize="0,50" MaximumSize="0,70" ColorFilter="color://is:RootHorizontalBGoverlayColor" />
                 </Children>
               </Panel>-->
               
@@ -918,7 +438,7 @@
                   <AnchorLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0" Bottom="Parent,0,35"  />
                 </LayoutInput>
                 <Children> 
-                  <Graphic Name="NewsScrollerBG" Content="image://vi:RALBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="0.6" />
+                  <Graphic Name="NewsScrollerBG" Content="image://vi:RALBG" ColorFilter="color://is:XC_RALPanelFilterColor" Alpha="0.6" />
                 </Children>
               </Panel> -->
               
@@ -960,8 +480,9 @@
       <ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
     </Properties>
     <Locals>
-      <Font Name="UnselectedTitleFont" Font="font://xs:UnselectedEHSTitleFont" />
-      <Color Name="UnselectedTitleColor" Color="color://xs:UnselectedEHSTitleColor" />
+      <Font Name="UnselectedTitleFont" Font="font://is:UnselectedEHSTitleFont" />
+      <Color Name="UnselectedTitleColor" Color="color://is:UnselectedEHSTitleColor" />
+      <AnchorLayoutInput Name="TextGlowLayoutInput" Left="Title,0,-5" Top="Title,0,-5" Right="Title,1,5" Bottom="Title,1,5" />
     </Locals>
 
     <Rules>
@@ -973,7 +494,7 @@
 
       <Condition Source="[Input.DeepKeyFocus]" ConditionOp="Equals" SourceValue="false">
         <Actions>
-          <Set Target="[Title.Margins]" Value="0,30,0,0" />
+          <Set Target="[Title.Margins]" Value="0,20,0,0" />
         </Actions>
       </Condition>
       
@@ -982,9 +503,10 @@
           <Equality Source="[Input.DeepKeyFocus]" Value="true" />
         </Conditions>
         <Actions>
-          <Set Target="[Title.Margins]" Value="0,0,0,0" />
-          <Set Target="[Title.Font]" Value="font://xs:SelectedEHSTitleFont" />
-          <Set Target="[Title.Color]" Value="white" />
+          <Set Target="[Title.Margins]" Value="0,10,0,0" />
+          <Set Target="[Title.Font]" Value="font://is:SelectedEHSTitleFont" />
+          <Set Target="[Title.Color]" Value="0,155,255" />
+          <Set Target="[TextGlow.Visible]" Value="true" />
           <Set Target="[SelectedIndex.Value]" Value="[Index]"/>
         </Actions>
       </Changed>
@@ -1002,21 +524,28 @@
     </Rules>
 
     <Content>
-      <Clip MaximumSize="0,112" FadeSize="20" FadeAmount="0.7" FarOffset="1" Orientation="Vertical" ColorMask="0,0,0" CenterPointOffset="0.5,0.8,0">
+      <Panel>
         <Children>
-          <Text FadeSize="1"  Name="Title" Content="[Item.Name]" Color="[UnselectedTitleColor]" Font="[UnselectedTitleFont]"/>
-        </Children>
-      </Clip>
-      <!--Text Name="Title" Content="[Item.Name]" Color="[UnselectedTitleColor]" Margins="0,-5,0,0" Font="[UnselectedTitleFont]" >
-        <LayoutInput>
-          <AnchorLayoutInput Horizontal="Center" Vertical="Center"/>
-        </LayoutInput>
-      </Text-->
+          <Text Name="Title" Content="[Item.Name]" Color="[UnselectedTitleColor]" Font="[UnselectedTitleFont]" Padding="0,-14,0,0" >
+            <Children>
+              <Graphic Name="TextGlow" SizingPolicy="SizeToContent" MaintainAspectRatio="true" ColorFilter="White" Content="image://vi:MenuTextGlow" Alpha="1" Visible="false"  />
+            </Children>
+          </Text>
+             
+          
+                
+              
+              <!--<Text Name="TitleGlow" Content="[Item.Name]" Color="[UnselectedTitleColor]" FadeSize="5" CenterPointPercent="0.5,0.5,0.5" Padding="-2,-2,2,2" Font="[UnselectedTitleFont]" Visible="false" Alpha="1" /> -->
+            </Children>
+          
+      </Panel>
     </Content>
   </UI>
 
   <UI Name="RALSelectorScroller" >
     <Properties>
+      <Command Name="Refresh" Command="$Required"/>
+      <Command Name="ShowHome" Command="$Required"/>
       <Command Name="ShowNew" Command="$Required"/>
       <Command Name="ShowWatched" Command="$Required"/>
       <Command Name="ShowUnwatched" Command="$Required"/>
@@ -1024,6 +553,7 @@
       <Command Name="ShowUpcomingTV" Command="$Required"/>
       <Command Name="ShowNextUp" Command="$Required"/>
       <Command Name="ShowAcclaimed" Command="$Required"/>
+      <Command Name="ShowGenres" Command="$Required"/>
 
       <a:Application Name="Application" Application="$Required"/>
       <lib:FolderModel Name="Folder" FolderModel="$Required"/>
@@ -1054,13 +584,16 @@
               </Animation>
             </Animations>
             <Children>
-              <me:RALItem Name="NextUpItems"      Focus="[ShowNextUp]" Description="NextUp" />
-              <me:RALItem Name="UpComingTVItems"  Focus="[ShowUpcomingTV]" Description="Upcoming TV" />
-              <me:RALItem Name="NewItems"         Focus="[ShowNew]" Description="New" />
-              <me:RALItem Name="ResumeItems"      Focus="[ShowResume]" Description="Resume" />
-              <me:RALItem Name="WatchedItems"     Focus="[ShowWatched]" Description="Watched" />
-              <me:RALItem Name="UnwatchedItems"   Focus="[ShowUnwatched]" Description="Unwatched" />
-              <me:RALItem Name="AcclaimedItems"   Focus="[ShowAcclaimed]" Description="Critically Acclaimed" />
+              <me:RALItem Name="HomeItems"        Focus="[ShowHome]"       Description="Home" RefreshCommand="[Refresh]" />
+              <me:RALItem Name="NextUpItems"      Focus="[ShowNextUp]"     Description="NextUp" RefreshCommand="[Refresh]"/>
+              <me:RALItem Name="UpComingTVItems"  Focus="[ShowUpcomingTV]" Description="Upcoming TV" RefreshCommand="[Refresh]" />
+              <me:RALItem Name="NewItems"         Focus="[ShowNew]"        Description="New" RefreshCommand="[Refresh]" />
+              <me:RALItem Name="ResumeItems"      Focus="[ShowResume]"     Description="Resume" RefreshCommand="[Refresh]" />
+              <me:RALItem Name="WatchedItems"     Focus="[ShowWatched]"    Description="Watched" RefreshCommand="[Refresh]" />
+              <me:RALItem Name="UnwatchedItems"   Focus="[ShowUnwatched]"  Description="Unwatched" RefreshCommand="[Refresh]" />
+              <me:RALItem Name="GenreItems"       Focus="[ShowGenres]"     Description="Genres" RefreshCommand="[Refresh]" />
+              <me:RALItem Name="AcclaimedItems"   Focus="[ShowAcclaimed]"  Description="Critically Acclaimed"  RefreshCommand="[Refresh]"/>
+              
             </Children>
           </Panel>
         </Children>
@@ -1076,10 +609,11 @@
       <cor:String Name="Description" String="$Required"></cor:String>
       <Command Name="Click" />
       <Command Name="Focus" Command="$Required"/>
+      <Command Name="RefreshCommand" Command="$Required"/>
     </Properties>
     <Locals>
-      <Font Name="RALSelected" Font="font://xs:RALSelectedFont" />
-      <Font Name="RALNotSelected" Font="font://xs:RALUnselectedFont" />
+      <Font Name="RALSelected" Font="font://is:RALSelectedFont" />
+      <Font Name="RALNotSelected" Font="font://is:RALUnselectedFont" />
       <ClickHandler Name="Clicker"/>
     </Locals>
     
@@ -1119,29 +653,31 @@
           <Set Target="[RecentItemsPopup.Folder]"  Value="[Folder.SelectedChild!lib:FolderModel]"></Set>
         </Actions>
       </Changed>
+
+      <Changed Source="[Folder.SelectedChild]">
+        <Conditions>
+          <Equality Source="[ThemeHelper.IsTVShowFolder]" ConditionOp="Equals" Value="false" />
+        </Conditions>
+        <Actions>
+          <Set Target="[NextUpPanel.Visible]" Value="false" />
+          <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
+        </Actions>
+      </Changed>
+
       
-      <Condition Source="[Tab]" SourceValue="New">
+      <Changed Source="[Folder.SelectedChild]">
         <Actions>
-          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-          <Set Target="[NextUpPanel.Visible]" Value="false" />
-          <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
+          <Set Target="[AcclaimedPanel.Folder]"  Value="[Folder.SelectedChild!lib:FolderModel]"></Set>
         </Actions>
-      </Condition>
-
-      <Condition Source="[Tab]" SourceValue="Watched">
+      </Changed>
+      
+      <Condition Source="[Tab]" SourceValue="Home">
         <Actions>
+          <Set Target="[HomePanel.Visible]" Value="true" />
+          <Set Target="[GenresPopup.Visible]" Value="false" />
           <Set Target="[AcclaimedPanel.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
-          <Set Target="[NextUpPanel.Visible]" Value="false" />
-          <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
-        </Actions>
-      </Condition>
-
-      <Condition Source="[Tab]" SourceValue="Unwatched">
-        <Actions>
-          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
+          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
+          <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
           <Set Target="[NextUpPanel.Visible]" Value="false" />
           <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
         </Actions>
@@ -1149,17 +685,59 @@
 
       <Condition Source="[Tab]" SourceValue="Resume">
         <Actions>
+          <Set Target="[HomePanel.Visible]" Value="false" />
+          <Set Target="[GenresPopup.Visible]" Value="false" />
           <Set Target="[AcclaimedPanel.Visible]" Value="false" />
-          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
+          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
+          <Set Target="[ResumeItemsPopup.Visible]" Value="true" />
           <Set Target="[NextUpPanel.Visible]" Value="false" />
           <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
         </Actions>
       </Condition>
       
+      <Condition Source="[Tab]" SourceValue="New">
+        <Actions>
+          <Set Target="[HomePanel.Visible]" Value="false" />
+          <Set Target="[GenresPopup.Visible]" Value="false" />
+          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
+          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
+          <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
+          <Set Target="[NextUpPanel.Visible]" Value="false" />
+          <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Tab]" SourceValue="Watched">
+        <Actions>
+          <Set Target="[HomePanel.Visible]" Value="false" />
+          <Set Target="[GenresPopup.Visible]" Value="false" />
+          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
+          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
+          <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
+          <Set Target="[NextUpPanel.Visible]" Value="false" />
+          <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Tab]" SourceValue="Unwatched">
+        <Actions>
+          <Set Target="[HomePanel.Visible]" Value="false" />
+          <Set Target="[GenresPopup.Visible]" Value="false" />
+          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
+          <Set Target="[RecentItemsPopup.Visible]" Value="true" />
+          <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
+          <Set Target="[NextUpPanel.Visible]" Value="false" />
+          <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
+        </Actions>
+      </Condition>
+
       <Condition Source="[Tab]" SourceValue="Acclaimed">
         <Actions>
+          <Set Target="[HomePanel.Visible]" Value="false" />
+          <Set Target="[GenresPopup.Visible]" Value="false" />
           <Set Target="[AcclaimedPanel.Visible]" Value="true" />
           <Set Target="[RecentItemsPopup.Visible]" Value="false" />
+          <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
           <Set Target="[NextUpPanel.Visible]" Value="false" />
           <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
         </Actions>
@@ -1167,8 +745,11 @@
 
       <Condition Source="[Tab]" SourceValue="NextUp">
         <Actions>
+          <Set Target="[HomePanel.Visible]" Value="false" />
+          <Set Target="[GenresPopup.Visible]" Value="false" />
           <Set Target="[AcclaimedPanel.Visible]" Value="false" />
           <Set Target="[RecentItemsPopup.Visible]" Value="false" />
+          <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
           <Set Target="[NextUpPanel.Visible]" Value="true" />
           <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
         </Actions>
@@ -1176,27 +757,52 @@
 
       <Condition Source="[Tab]" SourceValue="UpcomingTV">
         <Actions>
+          <Set Target="[HomePanel.Visible]" Value="false" />
+          <Set Target="[GenresPopup.Visible]" Value="false" />
           <Set Target="[AcclaimedPanel.Visible]" Value="false" />
           <Set Target="[RecentItemsPopup.Visible]" Value="false" />
+          <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
           <Set Target="[NextUpPanel.Visible]" Value="false" />
           <Set Target="[UpcomingTVPanel.Visible]" Value="true" />
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Tab]" SourceValue="Genres">
+        <Actions>
+          <Set Target="[HomePanel.Visible]" Value="false" />
+          <Set Target="[GenresPopup.Visible]" Value="true" />
+          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
+          <Set Target="[RecentItemsPopup.Visible]" Value="false" />
+          <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
+          <Set Target="[NextUpPanel.Visible]" Value="false" />
+          <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
         </Actions>
       </Condition>
     </Rules>
     <Content>
       <Panel>
         <Children>
-          
+
+          <home:HomePopup Name="HomePanel"
+                          Folder="[Folder]"
+                          Application="[Application]"
+                          ThemeHelper="[ThemeHelper]"
+                          Visible="false" />
+
           <nus:NextUpPopup Name="NextUpPanel"
-                               Application="[Application]"
-                               ThemeHelper="[ThemeHelper]"
-                               Visible="false"/>
-            
+                           Application="[Application]"
+                           ThemeHelper="[ThemeHelper]"
+                           Visible="false" />
+
+          <ris:ResumeItemsPopup Name="ResumeItemsPopup"
+                           Application="[Application]"
+                           ThemeHelper="[ThemeHelper]"
+                           Visible="false" />
 
           <utv:UpcomingTVPopup Name="UpcomingTVPanel"
                                Application="[Application]"
                                ThemeHelper="[ThemeHelper]"
-                               Visible="false"/>
+                               Visible="false" />
 
           <rip:RecentItemsPopup Name="RecentItemsPopup"
                                 Application="[Application]"
@@ -1204,9 +810,15 @@
                                 Visible="false" />
 
           <as:AcclaimedPopup Name="AcclaimedPanel"
-                               Application="[Application]"
-                               ThemeHelper="[ThemeHelper]"
-                               Visible="false"/>
+                             Folder="[Folder]"
+                             Application="[Application]"
+                             ThemeHelper="[ThemeHelper]"
+                             Visible="false" />
+
+          <gp:GenresPopup Name="GenresPopup"
+                          Application="[Application]"
+                          ThemeHelper="[ThemeHelper]"
+                          Visible="false" />
           
         
         </Children>

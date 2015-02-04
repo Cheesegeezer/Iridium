@@ -8,9 +8,9 @@
     xmlns:ps="resx://Iridium/Iridium.Resources/PosterScroller"
     xmlns:bd="resx://Iridium/Iridium.Resources/Backdrop"
     xmlns:s="file://Styles_DoNotEdit.mcml"
-    xmlns:xs="file://Iridium_Styles.mcml"
+    xmlns:is="file://Iridium_Styles.mcml"
     xmlns:ih="assembly://Iridium/Iridium"
-    xmlns:it="resx://Iridium/Iridium.Resources/Images"
+    xmlns:vi="resx://Iridium/Iridium.Resources/Images"
     xmlns:st="resx://Iridium/Iridium.Resources/AutoScrollableText"
     xmlns:mqt="resx://Iridium/Iridium.Resources/MarqueeText"
     xmlns:mpaa="resx://MediaBrowser/MediaBrowser.Resources/MPAARating"
@@ -229,7 +229,7 @@
               <FormLayoutInput Horizontal="Center" Bottom="Parent,1,-10" />
             </LayoutInput>
             <Children>
-              <Text Name ="TagLine" Font="font://xs:PosterTagLineFont" Color="color://xs:PosterTaglineColor" />
+              <Text Name ="TagLine" Font="font://is:PosterTagLineFont" Color="color://is:PosterTaglineColor" />
             </Children>
           </Panel>
           <Panel Name="TaglinePanelShadow" >
@@ -237,17 +237,17 @@
               <FormLayoutInput Horizontal="Center" Bottom="Parent,1,-8" Left="Parent,0,2" />
             </LayoutInput>
             <Children>
-              <Text Name ="TagLineShadow" Font="font://xs:PosterShadowTagLineFont" Color="color://xs:PosterShadowTaglineColor" />
+              <Text Name ="TagLineShadow" Font="font://is:PosterShadowTagLineFont" Color="color://is:PosterShadowTaglineColor" />
             </Children>
           </Panel>
 
           <!--Post Scroller-->
-          <Panel Name="PosterScroller" FocusOrder="1" Rotation="-20deg;-0.4,1,0" CenterPointPercent="0.5,0.5,0.5" >
+          <Panel Name="PosterScroller" FocusOrder="1" Rotation="0deg;0,0,0" CenterPointPercent="0.5,0.5,0.5" >
             <LayoutInput>
-              <FormLayoutInput Left="Parent,0,-10" Right="Parent,1,-280" Vertical="Center"  />
+              <FormLayoutInput Left="Parent,0,280" Right="Parent,1,-15" Top="Parent,0,25" Bottom="Parent,1,-125" />
             </LayoutInput>
             <Children>
-              <me:PosterScroller Name="MyItems" Application="[Application]" Folder="[Folder]" TopLabelFont="font://xs:PosterSmallFont" LabelFont="font://xs:PosterSmallFont" UnwatchedCountFont="font://xs:UnwatchedCountFont"/>
+              <me:PosterScroller Name="MyItems" Application="[Application]" Folder="[Folder]" TopLabelFont="font://is:PosterSmallFont" LabelFont="font://is:PosterSmallFont" UnwatchedCountFont="font://is:UnwatchedCountFont"/>
             </Children>
           </Panel>
 
@@ -256,7 +256,7 @@
               <FlowLayout Orientation="Vertical" />
             </Layout>
             <LayoutInput>
-              <AnchorLayoutInput Left="Parent,1,-325" Top="Parent,0.2" Right="Parent,1" Bottom="Parent,0.8"/>
+              <AnchorLayoutInput Left="Parent,0,10" Top="Parent,0.2" Right="Parent,0,325" Bottom="Parent,0.8"/>
             </LayoutInput>
             <Children>
               <Panel Name="ItemPanel" Visible="true">
@@ -264,7 +264,7 @@
                   <AnchorLayoutInput Left="Parent,0" Top="Parent,0" />
                 </LayoutInput>
                 <Children>
-                  <mqt:MarqueeText Name="Title" Font="font://xs:PosterTitleFont" Color="color://xs:PosterTitleColor" Visible="false"/>
+                  <mqt:MarqueeText Name="Title" Font="font://is:PosterTitleFont" Color="color://is:PosterTitleColor" Visible="false"/>
                   <Graphic Name="LogoImage" Margins="0,5,5,15" MaintainAspectRatio="true" MaximumSize="0,75" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
                 </Children>
               </Panel>
@@ -276,20 +276,23 @@
                 </Children>
               </Panel>
 
-              <Clip Name="Divider" MaximumSize="350,0" Visible="true" ColorFilter="color://xs:ThumbDividerColor" >
+              <Clip Name="Divider" MaximumSize="350,0" Visible="true" ColorFilter="color://is:ThumbDividerColor" >
                 <LayoutInput>
                   <AnchorLayoutInput Left="Parent,0" Top="Parent,0" />
                 </LayoutInput>
                 <Children>
-                  <Graphic Name="DividerGlowLine" Content="image://it:GlowLine"/>
+                  <Graphic Name="DividerGlowLine" Content="image://vi:GlowLine"/>
                 </Children>
               </Clip>
 
-              <st:ScrollableText Name="Summary" Font="font://xs:PosterOverviewFont" Color="color://xs:PosterOverviewTextColor">
+              <st:ScrollableText Name="Summary" Font="font://is:PosterOverviewFont" Color="color://is:PosterOverviewTextColor">
                 <LayoutInput>
                   <AnchorLayoutInput Left="Parent,0" Top="Parent,0" Right="Parent,1" />
                 </LayoutInput>
               </st:ScrollableText>
+
+              
+
             </Children>
           </Clip>
 
@@ -314,17 +317,32 @@
               <mip:MediaInfoPanel Name="MediaInfoPanel" Item="[Item]" MaximumSize="0,35" Layout="Center"/>
 
 
-              <!--<Clip Name="BottomBarGraphic" ColorFilter="color://xs:BottomBarColorOverlay" >
+              <!--<Clip Name="BottomBarGraphic" ColorFilter="color://is:BottomBarColorOverlay" >
             <LayoutInput>
               <FormLayoutInput Left="Parent,0" Right="Parent,1" Bottom="Parent,1,5" Horizontal="Fill" />
             </LayoutInput>
             <Children>
               <Graphic Name="BottomBar" Content="image://vi:BottomBar" MaximumSize="0,80" MaintainAspectRatio="true" />
             </Children>
-          </Clip>-->
+          </Clip>
+          
+          <mip:MediaInfoPanel Name="MediaInfoPanel" Item="[Item]" MaximumSize="0,35" >
+            <LayoutInput>
+              <AnchorLayoutInput Horizontal="Center" Top="Parent,0,125" Bottom="Parent,1,-25"  />
+            </LayoutInput>
+          </mip:MediaInfoPanel>-->
 
             </Children>
           </Panel>
+
+          
+          
+
+          <Graphic Name="ChildBG" Content="image://vi:PanelBG" ColorFilter="color://is:XC_RALPanelFilterColor" Alpha="global://is:RALPanelAlpha">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0" Right="Parent,0,350" Top="Parent,0,125" Bottom="Parent,1,-25"  />
+            </LayoutInput>
+          </Graphic>
 
           <!-- Welcome to MB & Update Info Panel-->
           <Panel Name="MBInfo" Alpha="0.7" >
@@ -339,7 +357,7 @@
             </Children>
           </Panel>
 
-          <ColorFill Name="Overlay" Layout="Fill" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]" Alpha="[ThemeHelper.Config.FolderBackdropOverlayAlpha]" Content="Black" />
+          <Graphic Name="Overlay" Layout="Fill" Content="image://vi:BackgroundOverlay" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]" Alpha="[ThemeHelper.Config.FolderBackdropOverlayAlpha]"/>
           <bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]"/>
           <bd:Backdrop4 Name="Backdrop"  Application="[Application]" LoadDelay="90" FadeTime="[ThemeHelper.Config.BackdropTransitionTime]" Visible="[ThemeHelper.Config.FolderShowBackdrop]" Image="[Folder.SelectedChild.BackdropImage]" Item="[Folder.SelectedChild]"/>
 

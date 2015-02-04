@@ -5,7 +5,7 @@
       xmlns:vi="resx://Iridium/Iridium.Resources/Images"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:me="Me"
       >
 
@@ -35,7 +35,7 @@
           <Equality Source="[Close]" ConditionOp="Equals" Value="false"></Equality>
         </Conditions>
         <Actions>
-          <Set Target="[Text.Color]" Value="color://xs:OptionButtonHighLight"/>
+          <Set Target="[Text.Color]" Value="color://is:OptionButtonHighLight"/>
         </Actions>
       </Condition>
 
@@ -44,7 +44,7 @@
           <Equality Source="[Close]" ConditionOp="Equals" Value="true"></Equality>
         </Conditions>
         <Actions>
-          <Set Target="[Text.Color]" Value="color://xs:OptionButtonSmallHighLight"/>
+          <Set Target="[Text.Color]" Value="color://is:OptionButtonSmallHighLight"/>
         </Actions>
       </Condition>
 
@@ -52,7 +52,7 @@
       <Binding Target="[IconImage.Content]" Source="[Icon]"></Binding>
       <Condition Source="[Icon]" ConditionOp="NotEquals" SourceValue="image://vi:BlankGraphic" Target="[IconImage.Visible]" Value="true"></Condition>
 
-      <Condition Source="[Close]" ConditionOp="Equals" SourceValue="true" Target="[Text.Font]" Value="font://xs:OptionButtonSmall"></Condition>
+      <Condition Source="[Close]" ConditionOp="Equals" SourceValue="true" Target="[Text.Font]" Value="font://is:OptionButtonSmall"></Condition>
 
 
 
@@ -63,7 +63,7 @@
           <Panel Layout="HorizontalFlow" >
             <Children>
               <Graphic Visible="false" Name="IconImage" Content="image://vi:BlankGraphic" MaximumSize="25,25" Margins="0,5,5,0" MinimumSize="25,25"></Graphic>
-              <Text Name="Text" Font="font://xs:XF_PopupMenuItem" Content="[Label]" Color="color://xs:XC_PopupMenuItem"></Text>
+              <Text Name="Text" Font="font://is:XF_PopupMenuItem" Content="[Label]" Color="color://is:XC_PopupMenuItem"></Text>
             </Children>
           </Panel>
         </Children>

@@ -6,7 +6,7 @@
       xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
       xmlns:s="file://Styles_DoNotEdit.mcml"
 	    xmlns:f="file://Fonts_DoNotEdit.mcml"
-      xmlns:xs="file://Iridium_Styles.mcml"
+      xmlns:is="file://Iridium_Styles.mcml"
       xmlns:me="Me">
 
   <Image Name="Concrete" Source="resx://Iridium/Iridium.Resources/Concrete" />
@@ -18,6 +18,13 @@
   <Image Name="RALScrollerBG" Source="resx://Iridium/Iridium.Resources/RALScrollerBG" />
   <Image Name="PlayButton" Source="resx://Iridium/Iridium.Resources/button_play" />
   <Image Name="PlayButtonSmall" Source="resx://Iridium/Iridium.Resources/button_playsmall" />
+  <Image Name="MenuTextGlow" Source="resx://Iridium/Iridium.Resources/glowshine" />
+  <Image Name="PanelBG" Source="resx://Iridium/Iridium.Resources/PanelBG" />
+  <Image Name="BackgroundOverlay" Source="resx://Iridium/Iridium.Resources/BGOverlay" />
+  <Image Name="TestBanner" Source="resx://Iridium/Iridium.Resources/testbanner" />
+  <Image Name="FocusFrame" Source="resx://Iridium/Iridium.Resources/focusframe" />
+  <Image Name="SelectedTitleBG" Source="resx://Iridium/Iridium.Resources/SelectedTitleBG"/>
+  <Image Name="GlassBG" Source="resx://Iridium/Iridium.Resources/GlassBG"/>
   
   <Image Name="rootBGGlass" Source="resx://Iridium/Iridium.Resources/rootBGGlass" />
   <Image Name="rootBGglow" Source="resx://Iridium/Iridium.Resources/rootbg_glow" /> 

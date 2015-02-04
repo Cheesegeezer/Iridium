@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using MediaBrowser;
 using MediaBrowser.Library;
 using MediaBrowser.Library.Entities;
@@ -79,6 +82,11 @@ namespace Iridium
         public FolderModel CurrentFolder
         {
             get { return Application.CurrentInstance.CurrentFolder; }
+        }
+
+        public Guid CurrentFolderGuid
+        {
+            get { return Application.CurrentInstance.CurrentFolderModel.Id; }
         }
 
         public FolderModel SelectedChild
@@ -222,12 +230,10 @@ namespace Iridium
         }
 
         private bool _isShortlistOpen;
+
         public bool IsShortlistOpen
         {
-            get
-            {
-                return _isShortlistOpen;
-            }
+            get { return _isShortlistOpen; }
             set
             {
                 _isShortlistOpen = value;
@@ -288,6 +294,11 @@ namespace Iridium
         public float PercentWatched
         {
             get { return CalculatePercentWatched(); }
+        }
+
+        public string PercentWatchedString
+        {
+            get { return CalculatePercentWatched().ToString(CultureInfo.CurrentCulture); }
         }
 
         private bool _ralHasFocus;
@@ -628,6 +639,7 @@ namespace Iridium
                     num = totalMinutes/((float) num2);
                 }
             }
+            Logger.ReportInfo("PercentageWatched = {0}", num.ToString(CultureInfo.CurrentCulture));
             return num;
         }
 
@@ -929,16 +941,94 @@ namespace Iridium
             return itemSet;
         }
 
-        #region Oh Yeah
+        #region APICalls for MCML
+
+        public int ResumeSetCount
+        {
+            get { return GetAPIItems.ResumeSet.Count; }
+        }
+        public int GenresSetCount
+        {
+            get { return GetAPIItems.GenresSet.Count; }
+        }
+        public int AcclaimedMoviesSetCount
+        {
+            get { return GetAPIItems.AcclaimedMoviesSet.Count; }
+        }
+        public int RecentlyAddedSetCount
+        {
+            get { return GetAPIItems.RecentlyAddedSet.Count; }
+        }
+
+        public int RemainingRecentlyAddedSetCount
+        {
+            get { return GetAPIItems.RemainingRecentlyAddedSet.Count; }
+        }
+        public int RecentlyWatchedSetCount
+        {
+            get { return GetAPIItems.RecentlyWatchedSet.Count; }
+        }
+        public int RecentlyUnatchedSetCount
+        {
+            get { return GetAPIItems.RecentlyUnwatchedSet.Count; }
+        }
+        public int NextUpSetCount
+        {
+            get { return GetAPIItems.NextUpSet.Count; }
+        }
+        public int UpcomingTVSetCount
+        {
+            get { return GetAPIItems.UpComingTVSet.Count; }
+        }
+        public int RecommendedSetCount
+        {
+            get { return GetAPIItems.RecommendedSet.Count; }
+        }
+
+        
+        public string RecommendedReason()
+        {
+            return GetAPIItems.BecauseYouWatchedName;
+        }
+
+        public ArrayListDataSet GetRecommendedSet()
+        {
+            return GetAPIItems.GetRecommendedSet();
+        }
+
+        public ArrayListDataSet ShowNewItems()
+        {
+            return GetAPIItems.GetRecentlyAddedSet();
+        }
+
+        public ArrayListDataSet ShowRemainingNewItems()
+        {
+            return GetAPIItems.GetRemainingRecentlyAddedSet();
+        }
 
         public ArrayListDataSet GetNextUpEpisodes()
         {
             return GetAPIItems.GetNextUpSet();
         }
 
+        public ArrayListDataSet GetResumeItems()
+        {
+            return GetAPIItems.GetResumeSet();
+        }
+
         public ArrayListDataSet GetAcclaimedMovies()
         {
             return GetAPIItems.GetAcclaimedSet();
+        }
+
+        public ArrayListDataSet GetSimilar()
+        {
+            return GetAPIItems.GetSimilarMoviesSet();
+        }
+
+        public ArrayListDataSet GetGenres()
+        {
+            return GetAPIItems.GenresSet;
         }
 
         public ArrayListDataSet GetNewsItems()
@@ -960,7 +1050,8 @@ namespace Iridium
             {
                 pluginUpdateString = "Restart to Update Plugins";
             }
-            if(!Application.CurrentInstance.PluginUpdatesAvailable){
+            if (!Application.CurrentInstance.PluginUpdatesAvailable)
+            {
                 pluginUpdateString = "";
             }
             return pluginUpdateString;
@@ -987,7 +1078,8 @@ namespace Iridium
             properties.Add("Application", Application.CurrentInstance);
             properties.Add("Item", item);
             properties.Add("Person", pInfo);
-            Application.CurrentInstance.OpenMCMLPage("resx://Iridium/Iridium.Resources/ActorPopup#ActorPopup", properties);
+            Application.CurrentInstance.OpenMCMLPage("resx://Iridium/Iridium.Resources/ActorPopup#ActorPopup",
+                properties);
         }
 
         public ArrayListDataSet GetActorCollection()
@@ -1051,6 +1143,7 @@ namespace Iridium
                 //Microsoft.MediaCenter.UI.Application.DeferredInvoke(_ => Navigate(ItemFactory.Instance.Create(index)));
             });
         }
+        #endregion
 
         private static Item GetActorCollectionItem(BaseItem collectionItem)
         {
@@ -1063,7 +1156,23 @@ namespace Iridium
             return item;
         }
 
-        #endregion
+        private void AddWeatherMenu()
+        {
+            var kernel = new Kernel();
+            Guid weatherFolderGuid = new Guid("F4F97F4C-7512-41A7-B50E-AE08740C158E");
+            //Create Genre collection
+            BaseItem weatherFolder = new BaseItem();
+            {
+
+                /*Id = weatherFolderGuid,
+                Name = "Weather",
+                DisplayMediaType = "MovieGenres",
+                IncludeItemTypes = new[] {"Weather"}*/
+            }
+            ;
+            kernel.RootFolder.AddVirtualChild(weatherFolder);
+        }
+
 
     }
 }
