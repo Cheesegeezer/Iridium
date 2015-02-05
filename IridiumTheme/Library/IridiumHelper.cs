@@ -43,6 +43,7 @@ namespace Iridium
         {
             OverviewTimer = new Timer();
             setupHelper();
+            _bigImageSize = new Size(200,112);
         }
 
         public IridiumHelper(Item Item)
@@ -82,11 +83,6 @@ namespace Iridium
         public FolderModel CurrentFolder
         {
             get { return Application.CurrentInstance.CurrentFolder; }
-        }
-
-        public Guid CurrentFolderGuid
-        {
-            get { return Application.CurrentInstance.CurrentFolderModel.Id; }
         }
 
         public FolderModel SelectedChild
@@ -291,15 +287,35 @@ namespace Iridium
             }
         }
 
-        public float PercentWatched
+        public float PercentWatched()
         {
-            get { return CalculatePercentWatched(); }
+            Item item = CurrentItem;
+            return ((item.RunTimeTicks > 0L) ? (item.PlayState.PositionTicks / ((float)item.RunTimeTicks)) : 0f);
         }
 
         public string PercentWatchedString
         {
-            get { return CalculatePercentWatched().ToString(CultureInfo.CurrentCulture); }
+            get { return PercentWatched().ToString(CultureInfo.CurrentCulture); }
         }
+
+        private readonly Size _bigImageSize;
+        public Size GetBigImageSize
+        {
+            get
+            {
+                return new Size((this.BigImageSize.Width * 2), (this.BigImageSize.Height * 2));
+            }
+        }
+
+        public Size BigImageSize
+        {
+            get
+            {
+                return this._bigImageSize;
+            }
+        }
+
+        
 
         private bool _ralHasFocus;
 
@@ -959,7 +975,6 @@ namespace Iridium
         {
             get { return GetAPIItems.RecentlyAddedSet.Count; }
         }
-
         public int RemainingRecentlyAddedSetCount
         {
             get { return GetAPIItems.RemainingRecentlyAddedSet.Count; }
@@ -1060,6 +1075,7 @@ namespace Iridium
         #region Actor Bio Page and Collection Scroller
 
         public static ArrayListDataSet ActorCollection = new ArrayListDataSet();
+        
 
         public ActorItemWrapper GetActor(Item item, int index)
         {

@@ -79,7 +79,7 @@ namespace Iridium.APICalls
             return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
         }
 
-        public IList<RecommendationDto> RecommendationDtoQuery(string url)
+        public IEnumerable<RecommendationDto> RecommendationDtoQuery(string url)
         {
             if (string.IsNullOrEmpty(url))
             {
@@ -87,14 +87,14 @@ namespace Iridium.APICalls
             }
             using (var stream = Kernel.ApiClient.GetSerializedStream(url))
             {
-                return DeserializeFromStream<IList<RecommendationDto>>(stream);
+                return DeserializeFromStream<IEnumerable<RecommendationDto>>(stream);
             }
         }
 
-        public IList<RecommendationDto> GetRecommendedItems(Guid userId, Guid folderId, string category, string limit)
+        public IEnumerable<RecommendationDto> GetRecommendedItems(Guid userId, Guid folderId)
         {
             string query = string.Format("&ParentId={0}&format=Json", folderId); //Add additional filters to this line
-            string queryUrl = string.Format("{0}Movies/Recommendations?Category={1}&ItemLimit={2}&UserId={3}{4}", APIUrl(),category, limit, userId, query); //Query Format taken from Swagger
+            string queryUrl = string.Format("{0}Movies/Recommendations?Category=1&ItemLimit=8&UserId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
             return RecommendationDtoQuery(queryUrl);//Interrogate the API based on the query string.
         }
 

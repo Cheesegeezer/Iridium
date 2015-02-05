@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.IO;
+using System.Linq;
 using Iridium.APICalls;
 using MediaBrowser.Library;
 using MediaBrowser.Library.Entities;
@@ -246,6 +248,7 @@ namespace Iridium
 
         internal static ArrayListDataSet GetRecommendedSet()
         {
+            RecommendationDto rdto = null;
             Logger.ReportInfo("IRIDIUM - Attempting to Get Recommended Items for this folder");
             try
             {
@@ -255,24 +258,25 @@ namespace Iridium
                 const string category = "1";
                 const string limit = "5";
 
-                foreach (RecommendationDto dto in APIQuery.GetRecommendedItems(id, folderId, category, limit))
+                //BecauseYouWatchedName = dto.BaselineItemName;
+                rdto = APIQuery.GetRecommendedItems(id, folderId).FirstOrDefault();
+                if (rdto != null)
                 {
-                    Logger.ReportInfo("************ IRIDIUM - RecommendedTypes = {0}", dto.RecommendationType.ToString());
-                    
-                    BecauseYouWatchedName = dto.BaselineItemName;
-                    Logger.ReportInfo("************ IRIDIUM - BECAUSE YOU WATCHED {0}", BecauseYouWatchedName );
-                    
-                    foreach (BaseItemDto i in dto.Items)
+                    BecauseYouWatchedName = rdto.BaselineItemName;
+                    //Logger.ReportInfo("************ IRIDIUM - RecommendedTypes = {0}", dto.RecommendationType.ToString());
+
+                    foreach (BaseItemDto i in rdto.Items)
                     {
                         {
                             Item item = GetGenericItem(i);
-                            if (item != null  && dto.RecommendationType == RecommendationType.SimilarToRecentlyPlayed)
+                            if (item != null)
                             {
                                 RecommendedSet.Add(item);
                             }
                         }
                     }
                 }
+
                 //Random rand = new Random();
                 //int r = rand.Next(RecommendedSet.Count);
                 //return RecommendedSet[r] as ArrayListDataSet;

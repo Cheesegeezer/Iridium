@@ -42,6 +42,7 @@
 
       <lib:Item Name="SelectedItem" Item="[Folder.SelectedChild]" />
       <IntRangedValue Name="SelectedIndex" Value="0" />
+      <IntRangedValue Name="RALSelectedIndex" Value="0" />
       <cor:Int32 Name="CurrentPosition" Int32="0" />
 
       <Timer Name="FocusViewTimer" AutoRepeat="false" Interval="500" Enabled="false" />
@@ -62,14 +63,18 @@
 
       <!--RAL Positioning-->
 
-      <cor:Int32 Name="backFocus" Int32="[Folder.SelectedChildIndex]" />
       <cor:Int32 Name="Startup" />
       <!-- Variable that uses the .NET Framework DateTime object -->
       <cor:String Name="CurrentDate" String="[ThemeHelper.CurrentDate]" />
       <cor:String Name="CurrentTime" String="[ThemeHelper.CurrentTime]" />
       <Timer Name="MyTimer" AutoRepeat="true" Interval="500" Enabled="true" />
       <IntRangedValue Name="Hour" />
-      
+
+      <!-- Who has Focus Local Properties -->
+      <Command Name="VFHasFocus"/>
+      <cor:Boolean Name="VFHasFocusBool" Boolean="true"/>
+      <Command Name="VFLostFocus"/>
+      <cor:Int32 Name="VFBackFocus" Int32="[Folder.SelectedChildIndex]" />
       <cor:Int32 Name="RALScrollerBackFocus" Int32="[Folder.SelectedChildIndex]" />
       
     </Locals>
@@ -164,9 +169,23 @@
           <Equality Source="[Folder.Children.Count]" ConditionOp="GreaterThan" Value="0" />
         </Conditions>
         <Actions>
-          <Set Target="[RootItemRepeater.DefaultFocusIndex]"  Value="[backFocus]"/>
+          <Set Target="[RootItemRepeater.DefaultFocusIndex]"  Value="[VFBackFocus]"/>
         </Actions>
       </Rule>
+
+      
+
+      <Changed Source="[VFHasFocus.Invoked]" InitialEvaluate="true">
+        <Actions>
+          <Set Target="[Application.CurrentItem]" Value="[Folder.SelectedChild]"/>
+          <Set Target="[VFHasFocusBool]" Value="true"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[VFLostFocus.Invoked]">
+        <Actions>
+          <Set Target="[VFHasFocusBool]" Value="false"/>
+        </Actions>
+      </Changed>
       
       <Changed Source="[Refresh.Invoked]">
         <Actions>
@@ -191,7 +210,7 @@
           <Equality Source="[Folder.Children.Count]" ConditionOp="GreaterThan" Value="0" />
         </Conditions>
         <Actions>
-          <Invoke Target="[RootItemRepeater.NavigateIntoIndex]"  index="[backFocus]"/>
+          <Invoke Target="[RootItemRepeater.NavigateIntoIndex]"  index="[VFBackFocus]"/>
         </Actions>
       </Rule>
       <Changed Source="[Folder.SelectedChildIndex]" InitialEvaluate="true">
@@ -301,7 +320,7 @@
         </Actions>
       </Changed>
 
-      <Changed Source="[ShowAcclaimed.Invoked]">
+      <!--<Changed Source="[ShowAcclaimed.Invoked]">
         <Actions>
           <Set Target="[RALGetters.Tab]" Value="Acclaimed"></Set>
         </Actions>
@@ -311,7 +330,7 @@
         <Actions>
           <Set Target="[RALGetters.Tab]" Value="Genres"></Set>
         </Actions>
-      </Changed>
+      </Changed>-->
     </Rules>
 
     <!--EHS UI PANEL LAYOUT-->
@@ -349,23 +368,24 @@
               </LayoutInput>
             </Graphic>
               
-          <Panel Name="RalselectorScroller" >
+          <Panel Name="RalSelectorScroller" >
             <LayoutInput>
               <AnchorLayoutInput Left="Parent,0.12" Top="Parent,0,90" />
             </LayoutInput>
             <Children>
-               <me:RALSelectorScroller Application="[Application]" 
-                                       Folder="[Folder.SelectedChild!lib:FolderModel]" 
+               <me:RALSelectorScroller Application="[Application]"
+                                       Folder="[Folder.SelectedChild!lib:FolderModel]"
                                        Refresh="[Refresh]"
-                                       ShowHome="[ShowHome]" 
-                                       ShowNew="[ShowNew]" 
-                                       ShowWatched="[ShowWatched]" 
-                                       ShowUnwatched="[ShowUnwatched]" 
-                                       ShowResume="[ShowResume]" 
-                                       ShowUpcomingTV="[ShowUpcomingTV]" 
-                                       ShowNextUp="[ShowNextUp]" 
-                                       ShowAcclaimed="[ShowAcclaimed]" 
-                                       ShowGenres="[ShowGenres]" />
+                                       ShowHome="[ShowHome]"
+                                       ShowNew="[ShowNew]"
+                                       ShowWatched="[ShowWatched]"
+                                       ShowUnwatched="[ShowUnwatched]"
+                                       ShowResume="[ShowResume]"
+                                       ShowUpcomingTV="[ShowUpcomingTV]"
+                                       ShowNextUp="[ShowNextUp]"
+                                       SelectedIndex="[RALSelectedIndex]" />
+                                       <!--ShowAcclaimed="[ShowAcclaimed]" 
+                                       ShowGenres="[ShowGenres]"-->
             </Children>
           </Panel>
           
@@ -468,7 +488,7 @@
     </Content>
     <Content Name="BaseItem">
       <me:RootScrollerItem Item="[RepeatedItem!lib:FolderModel]" ParentFolder="[Folder]" Application="[Application]"
-                          Index="[RepeatedItemIndex.SourceValue]" SelectedIndex="[SelectedIndex]" ThemeHelper="[ThemeHelper]" />
+                          Index="[RepeatedItemIndex.SourceValue]" SelectedIndex="[SelectedIndex]" VFHasFocus="[VFHasFocus]" VFLostFocus="[VFLostFocus]" ThemeHelper="[ThemeHelper]" />
     </Content>
   </UI>
 
@@ -478,6 +498,8 @@
       <IntRangedValue Name="SelectedIndex" IntRangedValue="$Required"/>
       <cor:Int32 Name="Index" Int32="0"/>
       <ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
+      <Command Name="VFHasFocus" Command="$Required"/>
+      <Command Name="VFLostFocus" Command="$Required"/>
     </Properties>
     <Locals>
       <Font Name="UnselectedTitleFont" Font="font://is:UnselectedEHSTitleFont" />
@@ -495,6 +517,7 @@
       <Condition Source="[Input.DeepKeyFocus]" ConditionOp="Equals" SourceValue="false">
         <Actions>
           <Set Target="[Title.Margins]" Value="0,20,0,0" />
+          <Invoke Target="[VFLostFocus.Invoke]" />
         </Actions>
       </Condition>
       
@@ -503,6 +526,7 @@
           <Equality Source="[Input.DeepKeyFocus]" Value="true" />
         </Conditions>
         <Actions>
+          <Invoke Target="[VFHasFocus.Invoke]" />
           <Set Target="[Title.Margins]" Value="0,10,0,0" />
           <Set Target="[Title.Font]" Value="font://is:SelectedEHSTitleFont" />
           <Set Target="[Title.Color]" Value="0,155,255" />
@@ -552,11 +576,14 @@
       <Command Name="ShowResume" Command="$Required"/>
       <Command Name="ShowUpcomingTV" Command="$Required"/>
       <Command Name="ShowNextUp" Command="$Required"/>
-      <Command Name="ShowAcclaimed" Command="$Required"/>
-      <Command Name="ShowGenres" Command="$Required"/>
+      <!--<Command Name="ShowAcclaimed" Command="$Required"/>
+      <Command Name="ShowGenres" Command="$Required"/>-->
 
       <a:Application Name="Application" Application="$Required"/>
       <lib:FolderModel Name="Folder" FolderModel="$Required"/>
+
+      <IntRangedValue Name="SelectedIndex" IntRangedValue="$Required"/>
+      <cor:Int32 Name="IndexValue" Int32="0"/>
 
 
     </Properties>
@@ -567,6 +594,18 @@
       <ShortcutHandler Name="JumpForward" Shortcut="SkipForward" HandlerStage="Bubbled" Handle="true" />
       <ShortcutHandler Name="JumpBack" Shortcut="SkipBack" HandlerStage="Bubbled" Handle="true"/>
     </Locals>
+
+    <Rules>
+
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[SelectedIndex.Value]" Value="[IndexValue]"/>
+        </Actions>
+      </Condition>
+      
+      
+    
+    </Rules>
     
     <Content>
       <Scroller FadeSize="10" Navigation="RememberFocus, ContainHorizontal" Orientation="Horizontal" ScrollingData="[ScrollingData]">
@@ -584,16 +623,16 @@
               </Animation>
             </Animations>
             <Children>
-              <me:RALItem Name="HomeItems"        Focus="[ShowHome]"       Description="Home" RefreshCommand="[Refresh]" />
-              <me:RALItem Name="NextUpItems"      Focus="[ShowNextUp]"     Description="NextUp" RefreshCommand="[Refresh]"/>
-              <me:RALItem Name="UpComingTVItems"  Focus="[ShowUpcomingTV]" Description="Upcoming TV" RefreshCommand="[Refresh]" />
-              <me:RALItem Name="NewItems"         Focus="[ShowNew]"        Description="New" RefreshCommand="[Refresh]" />
-              <me:RALItem Name="ResumeItems"      Focus="[ShowResume]"     Description="Resume" RefreshCommand="[Refresh]" />
-              <me:RALItem Name="WatchedItems"     Focus="[ShowWatched]"    Description="Watched" RefreshCommand="[Refresh]" />
-              <me:RALItem Name="UnwatchedItems"   Focus="[ShowUnwatched]"  Description="Unwatched" RefreshCommand="[Refresh]" />
-              <me:RALItem Name="GenreItems"       Focus="[ShowGenres]"     Description="Genres" RefreshCommand="[Refresh]" />
-              <me:RALItem Name="AcclaimedItems"   Focus="[ShowAcclaimed]"  Description="Critically Acclaimed"  RefreshCommand="[Refresh]"/>
-              
+                  <me:RALItem Name="HomeItems"        Focus="[ShowHome]"       Description="Home" RefreshCommand="[Refresh]" IndexValue="0" />
+                  <me:RALItem Name="NextUpItems"      Focus="[ShowNextUp]"     Description="NextUp" RefreshCommand="[Refresh]" IndexValue="1" />
+                  <me:RALItem Name="UpComingTVItems"  Focus="[ShowUpcomingTV]" Description="Upcoming TV" RefreshCommand="[Refresh]" IndexValue="2" />
+                  <me:RALItem Name="NewItems"         Focus="[ShowNew]"        Description="New" RefreshCommand="[Refresh]" IndexValue="3" />
+                  <me:RALItem Name="ResumeItems"      Focus="[ShowResume]"     Description="Resume" RefreshCommand="[Refresh]" IndexValue="4" />
+                  <me:RALItem Name="WatchedItems"     Focus="[ShowWatched]"    Description="Watched" RefreshCommand="[Refresh]" IndexValue="5" />
+                  <me:RALItem Name="UnwatchedItems"   Focus="[ShowUnwatched]"  Description="Unwatched" RefreshCommand="[Refresh]" IndexValue="6" />
+                  <!--<me:RALItem Name="GenreItems"       Focus="[ShowGenres]"     Description="Genres" RefreshCommand="[Refresh]" IndexValue="7" />
+                  <me:RALItem Name="AcclaimedItems"   Focus="[ShowAcclaimed]"  Description="Critically Acclaimed"  RefreshCommand="[Refresh]" IndexValue="8" />-->
+                
             </Children>
           </Panel>
         </Children>
@@ -610,6 +649,7 @@
       <Command Name="Click" />
       <Command Name="Focus" Command="$Required"/>
       <Command Name="RefreshCommand" Command="$Required"/>
+      <cor:Int32 Name="IndexValue" Int32="0"/>
     </Properties>
     <Locals>
       <Font Name="RALSelected" Font="font://is:RALSelectedFont" />
@@ -665,17 +705,9 @@
       </Changed>
 
       
-      <Changed Source="[Folder.SelectedChild]">
-        <Actions>
-          <Set Target="[AcclaimedPanel.Folder]"  Value="[Folder.SelectedChild!lib:FolderModel]"></Set>
-        </Actions>
-      </Changed>
-      
       <Condition Source="[Tab]" SourceValue="Home">
         <Actions>
           <Set Target="[HomePanel.Visible]" Value="true" />
-          <Set Target="[GenresPopup.Visible]" Value="false" />
-          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
           <Set Target="[RecentItemsPopup.Visible]" Value="false" />
           <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
           <Set Target="[NextUpPanel.Visible]" Value="false" />
@@ -686,8 +718,6 @@
       <Condition Source="[Tab]" SourceValue="Resume">
         <Actions>
           <Set Target="[HomePanel.Visible]" Value="false" />
-          <Set Target="[GenresPopup.Visible]" Value="false" />
-          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
           <Set Target="[RecentItemsPopup.Visible]" Value="false" />
           <Set Target="[ResumeItemsPopup.Visible]" Value="true" />
           <Set Target="[NextUpPanel.Visible]" Value="false" />
@@ -698,8 +728,6 @@
       <Condition Source="[Tab]" SourceValue="New">
         <Actions>
           <Set Target="[HomePanel.Visible]" Value="false" />
-          <Set Target="[GenresPopup.Visible]" Value="false" />
-          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
           <Set Target="[RecentItemsPopup.Visible]" Value="true" />
           <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
           <Set Target="[NextUpPanel.Visible]" Value="false" />
@@ -710,8 +738,6 @@
       <Condition Source="[Tab]" SourceValue="Watched">
         <Actions>
           <Set Target="[HomePanel.Visible]" Value="false" />
-          <Set Target="[GenresPopup.Visible]" Value="false" />
-          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
           <Set Target="[RecentItemsPopup.Visible]" Value="true" />
           <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
           <Set Target="[NextUpPanel.Visible]" Value="false" />
@@ -722,8 +748,6 @@
       <Condition Source="[Tab]" SourceValue="Unwatched">
         <Actions>
           <Set Target="[HomePanel.Visible]" Value="false" />
-          <Set Target="[GenresPopup.Visible]" Value="false" />
-          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
           <Set Target="[RecentItemsPopup.Visible]" Value="true" />
           <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
           <Set Target="[NextUpPanel.Visible]" Value="false" />
@@ -731,7 +755,7 @@
         </Actions>
       </Condition>
 
-      <Condition Source="[Tab]" SourceValue="Acclaimed">
+      <!--<Condition Source="[Tab]" SourceValue="Acclaimed">
         <Actions>
           <Set Target="[HomePanel.Visible]" Value="false" />
           <Set Target="[GenresPopup.Visible]" Value="false" />
@@ -741,13 +765,11 @@
           <Set Target="[NextUpPanel.Visible]" Value="false" />
           <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
         </Actions>
-      </Condition>
+      </Condition>-->
 
       <Condition Source="[Tab]" SourceValue="NextUp">
         <Actions>
           <Set Target="[HomePanel.Visible]" Value="false" />
-          <Set Target="[GenresPopup.Visible]" Value="false" />
-          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
           <Set Target="[RecentItemsPopup.Visible]" Value="false" />
           <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
           <Set Target="[NextUpPanel.Visible]" Value="true" />
@@ -758,8 +780,6 @@
       <Condition Source="[Tab]" SourceValue="UpcomingTV">
         <Actions>
           <Set Target="[HomePanel.Visible]" Value="false" />
-          <Set Target="[GenresPopup.Visible]" Value="false" />
-          <Set Target="[AcclaimedPanel.Visible]" Value="false" />
           <Set Target="[RecentItemsPopup.Visible]" Value="false" />
           <Set Target="[ResumeItemsPopup.Visible]" Value="false" />
           <Set Target="[NextUpPanel.Visible]" Value="false" />
@@ -767,7 +787,7 @@
         </Actions>
       </Condition>
 
-      <Condition Source="[Tab]" SourceValue="Genres">
+      <!--<Condition Source="[Tab]" SourceValue="Genres">
         <Actions>
           <Set Target="[HomePanel.Visible]" Value="false" />
           <Set Target="[GenresPopup.Visible]" Value="true" />
@@ -777,7 +797,8 @@
           <Set Target="[NextUpPanel.Visible]" Value="false" />
           <Set Target="[UpcomingTVPanel.Visible]" Value="false" />
         </Actions>
-      </Condition>
+      </Condition>-->
+      
     </Rules>
     <Content>
       <Panel>
@@ -809,7 +830,7 @@
                                 ThemeHelper="[ThemeHelper]"
                                 Visible="false" />
 
-          <as:AcclaimedPopup Name="AcclaimedPanel"
+          <!--<as:AcclaimedPopup Name="AcclaimedPanel"
                              Folder="[Folder]"
                              Application="[Application]"
                              ThemeHelper="[ThemeHelper]"
@@ -818,7 +839,7 @@
           <gp:GenresPopup Name="GenresPopup"
                           Application="[Application]"
                           ThemeHelper="[ThemeHelper]"
-                          Visible="false" />
+                          Visible="false" />-->
           
         
         </Children>
