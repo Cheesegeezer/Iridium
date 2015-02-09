@@ -211,8 +211,15 @@
 
       <Binding Source="[Folder.SelectedChild]" Target="[MediaInfoPanel.Item]" />
       <Binding Target="[Summary.Text]" Source="[Folder.SelectedChild.Overview]"></Binding>
+      <Binding Target="[SummaryPopout.Text]" Source="[Folder.SelectedChild.Overview]"></Binding>
       <Binding Source="[Folder.SelectedChild.RunningTimeString]" Target="[SideInfo.Value]"></Binding>
       <Binding Source="[Folder.SelectedChild.MpaaRating]" Target="[mpaa.Value]"></Binding>
+
+      <Binding Source="[Folder.SelectedChild.LastPlayedString]" Target="[LastPlayedValue.Content]" />
+      <Condition Source="[Folder.SelectedChild.LastPlayedString]" ConditionOp="Equals" SourceValue="" Target="[LastPlayedValue.Content]" Value="Never" />
+
+      
+      <Default Value="RUNTIME: " Target="[SideInfo.Label]"></Default>
       
       <Default Value="[Application.LocalStrings.#RunsStr!cor:String] " Target="[SideInfo.Label]"></Default>
 
@@ -274,6 +281,7 @@
           <Set Target="[Title.Visible]" Value="false" />
         </Actions>
       </Rule>
+      <Default Target="[UnwatchedPanel.Visible]" Value="false" />
 
       <!--LOGO'S LOGIC
       <Binding Target="[Title.Content]"       Source="[Folder.SelectedChild.Name]"/>
@@ -336,6 +344,7 @@
       <!-- Conditions for Title or Fanart views-->
       <Binding Source="[Folder.SelectedChild.Name]" Target="[Title.Content]" />
       <Binding Source="[Folder.SelectedChild.PrimaryImage]" Target="[PosterImage.Content]" />
+      <Binding Source="[Folder.SelectedChild.PrimaryImage]" Target="[ListPosterImage.Content]" />
       <Binding Source="[Folder.SelectedChild.LogoImage]" Target="[LogoImage.Content]" />
       <Binding Source="[Folder.SelectedChild.ArtImage]" Target="[ClearArtImage.Content]" />
       <Binding Source="[Folder.SelectedChild.ThumbnailImage]" Target="[ThumbnailImage.Content]" />
@@ -765,7 +774,7 @@
 
           <Panel Name="ListPanel"> 
             <LayoutInput>
-              <FormLayoutInput Left="Parent,0" Top="Parent,0,80" Right="Parent,1" Bottom="Parent,1" />
+              <FormLayoutInput Left="Parent,0.5" Top="Parent,0,80" Right="Parent,1" Bottom="Parent,1" />
             </LayoutInput>
             <Children>
               <me:DetailListScroller Name="ListItems" Application="[Application]" Folder="[Folder]" ThemeHelper="[ThemeHelper]" UnwatchedCountFont="font://is:UnwatchedCountFont" />
@@ -799,12 +808,12 @@
             </Children>
           </Panel>
 
-          <Panel Name="InfoPanel" MaximumSize="600,900" >
+          <Panel Name="InfoPanel"  >
             <Layout>
-              <FlowLayout Orientation="Vertical" ItemAlignment="Center" StripAlignment="Near"/>
+              <FlowLayout Orientation="Vertical" ItemAlignment="Center" />
             </Layout>
             <LayoutInput>
-              <FormLayoutInput Left="Parent,0.45" Top="Parent,0.32"  />
+              <FormLayoutInput Left="Parent,0.08" Top="Parent,0.2" Right="Parent,0.5" />
             </LayoutInput>
             <Children>
               <!--MOVIE DETAILS INCLUDING SYNOPSIS, DIRECTORS RUNTIME ETC-->
@@ -818,9 +827,34 @@
                 </Children>
               </Panel>
 
-              <gl:GenreList Name="Genres" SourceData="[Folder.SelectedChild.Genres]" Font="font://is:FinalDetailsInfoValueFont" Color="color://is:FinalDetailsInfoValueColor" Margins="0,0,0,25" />
+              <gl:GenreList Name="Genres" SourceData="[Folder.SelectedChild.Genres]" Font="font://is:FinalDetailsInfoValueFont" Color="color://is:FinalDetailsInfoValueColor" Margins="0,0,0,10" />
 
-              <Panel Name="SummaryPanel" MaximumSize="650,150">
+              <Panel Margins="0,0,0,10" Layout="HorizontalFlow">
+                <Children>
+                  <Text Name="LastPlayedLabel" Content="LAST WATCHED:  " Color="color://is:RALItemLabelColor" Font="font://is:RALItemLabelFont" />
+                  <Text Name="LastPlayedValue"  Color="color://is:RALItemValueColor" Font="font://is:RALItemValueFont" Margins="0,-2,0,0" />
+                </Children>
+              </Panel>
+
+              <Panel Name="ListPosterPanel" >
+                <Children>
+                  <Graphic Name="ListPosterImage" Content="[Folder.SelectedChild.PrimaryImage]" CenterPointPercent="0.5,0.5,0.5" MaintainAspectRatio="true" MaximumSize="0,300" >
+                    <LayoutInput>
+                      <AnchorLayoutInput Horizontal="Center"/>
+                    </LayoutInput>
+                  </Graphic>
+                </Children>
+              </Panel>
+              
+              <Panel Margins="0,25,0,0">
+                <Children>
+                  <lv:StandOutLabelValue Name="SideInfo"></lv:StandOutLabelValue>
+                </Children>
+              </Panel>
+              
+              
+              
+              <Panel Name="SummaryPanel" MaximumSize="650,150" Visible="false">
                 <LayoutInput>
                   <FormLayoutInput Top="ImagePanel,1,25" Left="ImagePanel,0" Right="ImagePanel,1" Bottom="Parent,1,-400" />
                 </LayoutInput>
@@ -829,10 +863,19 @@
                 </Children>
               </Panel>
 
+              <Panel Name="SummaryPopoutPanel" MaximumSize="650,150" Visible="false">
+                <LayoutInput>
+                  <FormLayoutInput Top="ImagePanel,1,25" Left="ImagePanel,0" Right="ImagePanel,1" Bottom="Parent,1,-400" />
+                </LayoutInput>
+                <Children>
+                  <st:ScrollableText Name="SummaryPopout" Font="font://is:DetailsOverviewFont" Color="color://is:DetailsOverviewColor"  Margins="50,0,0,20" />
+                </Children>
+              </Panel>
+
             </Children>
           </Panel>
 
-          <Panel Name="UnwatchedPanel">
+          <Panel Name="UnwatchedPanel" Visible="false">
             <Layout>
               <FlowLayout Orientation="Horizontal"  StripAlignment="Center" Spacing="10,10" />
             </Layout>
@@ -858,9 +901,9 @@
                   <!--<lv:FinalLabelValue Name="TitleSupportlv2"></lv:FinalLabelValue> Genres -->
                   <lv:FinalLabelValue Name="TitleSupportlv3"></lv:FinalLabelValue>
 
-                  <Panel Layout="HorizontalFlow" Name="RuntimeInfo" Visible="true">
+                  <Panel Layout="HorizontalFlow" Name="RuntimeInfo1" Visible="true">
                     <Children>
-                      <lv:FinalLabelValue Name="SideInfo"></lv:FinalLabelValue>
+                      <lv:FinalLabelValue Name="SideInfo1"></lv:FinalLabelValue>
                       <!--<lv:FinalLabelValue Name="SideInfo1"></lv:FinalLabelValue>-->
                     </Children>
                   </Panel>
@@ -875,7 +918,7 @@
 
           <mip:MediaInfoPanel Name="MediaInfoPanel" Item="[Folder.SelectedChild]" MaximumSize="0,45" Visible="false">
             <LayoutInput>
-              <FormLayoutInput Bottom="Parent,1,-20" Horizontal="Center" />
+              <FormLayoutInput Bottom="Parent,1,-20" Left="Parent,0,50" />
             </LayoutInput>
           </mip:MediaInfoPanel>
           
@@ -892,9 +935,21 @@
             </Children>
           </Panel>
 
+          <Graphic Name="RootMenuBG" ColorFilter="0,155,255" Alpha="1" Navigation="None" Content="image://vi:MainVFBG" >
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0" Top="Parent,0,5" Right="Parent,1" Bottom="Parent,0,75"/>
+            </LayoutInput>
+          </Graphic>
+          
+          <Graphic Name="ChildBG" Content="image://vi:TestBanner" ColorFilter="color://is:XC_RALPanelFilterColor" Alpha="global://is:RALPanelAlpha">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0" Top="Parent,0,5" Right="Parent,1" Bottom="Parent,0,75"/>
+            </LayoutInput>
+          </Graphic>
+
           <Graphic Content="image://vi:PanelBG" ColorFilter="color://is:XC_RALPanelFilterColor" Alpha="1">
             <LayoutInput>
-              <AnchorLayoutInput Left="Parent,0.4" Right="Parent,1,50" Top="Parent,0.3" Bottom="Parent,1,-150"  />
+              <AnchorLayoutInput Left="Parent,0.49" Right="Parent,1,10" Top="Parent,0,78" Bottom="Parent,1,10"  />
             </LayoutInput>
           </Graphic>
           
@@ -922,7 +977,7 @@
       <lib:Item Name="SelectedItem" Item="[Folder.SelectedChild]" />
       <!-- DETAILS SCROLLING DATA  -->
       <ScrollingHandler HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" Name="DetailsSH"/>
-      <ScrollingData Name="DetailsSD" LockedAlignment="0.1" LockedPosition="0.1"  />
+      <ScrollingData Name="DetailsSD" LockedAlignment="0.5" LockedPosition="0.5"  />
       
       <FlowLayout Name="Layout" Orientation="Vertical" AllowWrap="true" RepeatGap="20,0" />
       <IntRangedValue Name="SelectRepeaterIndex"/>
@@ -1060,6 +1115,7 @@
       <IntRangedValue Name="SelectRepeaterIndex" IntRangedValue="$Required"/>
       <IntRangedValue Name="NavCount" IntRangedValue="$Required" />
       <Font Name="UnwatchedCountFont" Font="$Required"/>
+      
     </Properties>
 
     <Locals>
@@ -1076,6 +1132,18 @@
 
 
     <Rules>
+
+
+      <!--<Binding Source="[Item.Name]" Target="[Title.Content]">
+        <Transformer>
+          <FormatTransformer ToUpper="true"/>
+        </Transformer>
+      </Binding>
+      Binding Source="[Item.Name]" Target="[SelTitleShadow.Content]">
+        <Transformer>
+          <FormatTransformer ToUpper="true"/>
+        </Transformer>
+      </Binding-->
       
        <!-- Watched Toggle Commands -->
       <Rule ConditionLogicalOp="Or">
@@ -1118,9 +1186,13 @@
           <Equality Source="[Input.KeyFocus]" Value="true" />
         </Conditions>
         <Actions>
+          <Set Target="[Title.Content]" Value="[Item.Name]" >
+            <Transformer>
+              <FormatTransformer ToUpper="true"/>
+            </Transformer>
+          </Set>
           <Set Target="[Title.Font]" Value="font://is:XF_DQLSelected" />
           <Set Target="[Title.Color]" Value="color://is:XC_DQLHighlighted"/>
-          <Set Target="[Title.MaximumSize]" Value="800,0" />
           <Set Target="[TickPanel.Margins]" Value="2,15,0,-5" />
           <Set Target="[UnwatchedIndicator.Margins]" Value="2,10,0,-5" />
           <Set Target="[ParentItem.SelectedChildIndex]" Value="[Index.SourceValue]"/> 
@@ -1140,8 +1212,12 @@
           <Equality Source="[Input.KeyFocus]" Value="false" />
         </Conditions>
         <Actions>
+          <Set Target="[Title.Content]" Value="[Item.Name]" >
+            <Transformer>
+              <FormatTransformer ToUpper="false"/>
+            </Transformer>
+          </Set>
           <Set Target="[Title.Color]" Value="color://is:XC_DQLUnselected"/>
-          <Set Target="[Title.MaximumSize]" Value="360,0" />
         </Actions>
       </Condition>
       
@@ -1224,7 +1300,7 @@
             </LayoutInput>
             <Children>
               
-              <Text Name="Title" WordWrap="false" Font="font://is:XF_DQLUnselected" Margins="35,0,20,0" >
+              <Text Name="Title" WordWrap="false" Font="font://is:XF_DQLUnselected" Margins="15,0,20,0" >
                 <LayoutInput>
                   <AnchorLayoutInput Left="Parent,0,20" Top="Parent,0,10" />
                 </LayoutInput>

@@ -146,10 +146,10 @@
   <!--DETAILS QUICKLIST VIEW-->
       <Font Name="XF_DQLFolderTitle" Font="BebasNeue,24" />
       <Color Name="XC_DQLFolderTitleColor" Color="111,184,227"/>
-      <Font Name="XF_DQLUnselected" Font="BebasNeue,24" />
-      <Font Name="XF_DQLSelected" Font="BebasNeue,32" />
+      <Font Name="XF_DQLUnselected" Font="Segoe UI SemiLight, 24" />
+      <Font Name="XF_DQLSelected" Font="Futurist Fixed-width,20" />
       <Color Name="XC_DQLUnselected" Color="150,150,150"/>
-      <Color Name="XC_DQLHighlighted" Color="255,255,255"/>
+      <Color Name="XC_DQLHighlighted" Color="0,155,255"/>
       <Color Name="XC_DQLHighlightedBG" Color="230,230,230"/>
       <Color Name="QLDividerColor" Color="111,184,227" />
 

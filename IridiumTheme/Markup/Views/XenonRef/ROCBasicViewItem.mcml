@@ -1,0 +1,675 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:a="assembly://MediaBrowser/MediaBrowser"
+      xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
+
+      xmlns:app="assembly://ROC/ROC"
+
+      xmlns:ib="resx://ROC/ROC.Resources/ItemButton"
+      xmlns:tb="resx://ROC/ROC.Resources/ToolBox"
+
+      xmlns:anim="resx://ROC/ROC.Resources/Animations"
+      xmlns:il="resx://ROC/ROC.Resources/Images"
+
+      xmlns:s="resx://ROC/ROC.Resources/StylesMerged"
+      xmlns:f="file://Fonts_DoNotEdit.mcml"
+
+      xmlns:me="Me">
+
+
+
+	
+	
+	
+	<UI Name="ROCBasicViewItem" BaseUI="ib:ItemButton">
+
+		<Properties>
+			<lib:FolderModel Name="ParentItem" FolderModel="$Required" />
+			<Index Name="ItemIndex" Index="$Required" />
+			<IntRangedValue Name="SelectRepeaterIndex" IntRangedValue="$Required" />
+			<IntRangedValue Name="SelectSourceIndex" IntRangedValue="$Required" />
+			<IntRangedValue Name="NavCount" IntRangedValue="$Required" />
+
+			<BooleanChoice Name="SelectedItemInFocus" Value="false" />
+
+			<lib:SizeRef Name="ImageSize" Value="0,0" />
+			<lib:SizeRef Name="MaximumImageSize" Value="0,0" />
+			<lib:SizeRef Name="MinimumImageSize" Value="0,0" />
+
+			<!-- Default item state when first displayed and within bothered about viewport area -->
+			<Rotation Name="DefaultRotation" Rotation="0deg;0,0,0" />
+			<Vector3 Name="DefaultScale" Vector3="1,1,1" />
+			<Inset Name="DefaultPadding" Inset="0,0,0,0" />
+			<Inset Name="DefaultMargins" Inset="0,0,0,0" />
+
+			<!-- Item state when currently has key or mouse focus (standard or deep) -->
+			<Vector3 Name="CurrentItemScale" Vector3="1.3,1.3,1" />
+			<Rotation Name="CurrentItemRotation" Rotation="0deg;0,1,0" />
+			<Inset Name="CurrentItemPadding" Inset="0,0,0,0" />
+			<Inset Name="CurrentItemMargins" Inset="0,0,0,0" />
+
+
+			<IntRangedValue Name="AnimDelay" Value="300" />
+			<BooleanChoice Name="AnimDelayShowFocus" Value="true" />
+
+			<app:AppUtil Name="AppUtil" AppUtil="$Required" />
+			<app:ImageUtil Name="ImageUtil" />
+
+			<!-- Aztec defaults -->
+			<!--
+			<cor:String Name="ShowAnimationMode" String="RANDOM" />
+			<Animation Name="ShowAnimationName" Animation="animation://anim:ContentShowSlideFromLeft" />
+			-->
+
+			<cor:String Name="ShowAnimationMode" String="DEFAULT" />
+			<Animation Name="ShowAnimationName" Animation="animation://anim:ContentShowSlideFromLeftAndBelow" />
+			<cor:Single Name="ShowAnimDelay" Single="0.05" />
+			<cor:Single Name="ShowAnimDelayLonger" Single="0.08" />
+			<MathTransformer Name="ShowAnimDelayTransformer" />
+			<cor:Random Name="Random" />
+
+			<MathTransformer Name="PositiveTransformer" Absolute="true" />
+			<MathTransformer Name="ComputeNormalizedPositiveIndex" Absolute="true" />
+			<Command Name="AttachDefaultAnimationCommand" />
+			<Command Name="AttachRandomAnimationCommand" />
+
+			<IntRangedValue Name="BotheringRangeMinValue" Value="-10"  />
+			<IntRangedValue Name="BotheringRangeMaxValue" Value="10" />
+
+			<MathTransformer Name="BotheringSizeLeftTransformer" AddInt="0" />
+			<MathTransformer Name="BotheringSizeRightTransformer" SubtractInt="0" />
+			<IntRangedValue Name="VisibleIndexRangeForSelectRepeaterIndex" IntRangedValue="$Required" />
+			<IntRangedValue Name="VisibleItemIndexRangeFrom" IntRangedValue="$Required" />
+			<IntRangedValue Name="VisibleItemIndexRangeTo" IntRangedValue="$Required" />
+
+		</Properties>
+
+		<Locals>
+			<BooleanChoice Name="InFocus" Value="false" />
+
+			<cor:Boolean Name="ItemWorthBothering" Boolean="false" />
+			<cor:Boolean Name="IgnoreFocusEvents" Boolean="false" />
+
+			<Timer Name="AnimTimer" Interval="[AnimDelay.Value]" Enabled="false" AutoRepeat="false" />
+			<Timer Name="CurrentItemScaleTimer" Interval="[AnimDelay.Value]" Enabled="false" AutoRepeat="false" />
+
+			<cor:Int32 Name="TheRandomNumberMaxValue" Int32="5" />
+			<cor:Int32 Name="TheRandomNumber" Int32="0" />
+
+			<TransformAnimation Name="ShowAnimation" Source="[ShowAnimationName]" />
+
+			<Inset Name="BesideSelectionTmpMargins" Inset="0,0,0,0" />
+		</Locals>
+
+		<Rules>
+
+			<Default Target="[Input.MakeTopmostOnFocus]" Value="true" />
+
+			<!--<Binding Target="[BotheringRangeMinValue.Value]" Source="[RangeFrom]" />
+			<Binding Target="[BotheringRangeMaxValue.Value]" Source="[RangeTo]" />-->
+
+			<Binding Target="[BotheringSizeLeftTransformer.AddInt]" Source="[BotheringRangeMinValue.Value]" >
+				<Transformer>
+					<MathTransformer Absolute="true"/>
+				</Transformer>
+			</Binding>
+			<Binding Target="[BotheringSizeRightTransformer.SubtractInt]" Source="[BotheringRangeMaxValue.Value]" />
+
+
+
+			<!--<Rule>
+				<Actions>
+					<DebugTrace Message="bothtrans {0}, {1}">
+						<Params>
+							<ObjectPath ObjectPath="[BotheringSizeLeftTransformer.AddInt]"/>
+							<ObjectPath ObjectPath="[BotheringSizeRightTransformer.SubtractInt]"/>
+						</Params>
+					</DebugTrace>
+				</Actions>
+			</Rule>-->
+
+			<!-- ******************* -->
+			<!-- INPUT FOCUS CHANGES -->
+			<!-- ******************* -->
+
+			<Changed Source="[Input.KeyFocus]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Input.KeyFocus]" Value="true" />
+					<!--<Equality Source="[InFocus.Value]" ConditionOp="Equals" Value="false" />
+					<Equality Source="[AnimTimer.Enabled]" ConditionOp="Equals" Value="false" />-->
+				</Conditions>
+				<Actions>
+					<Invoke Target="[AnimTimer.Start]" InvokePolicy="AsynchronousNormal" />
+
+					<Set Target="[SelectRepeaterIndex.Value]" Value="[ItemIndex.Value]" />
+					<Set Target="[ParentItem.SelectedChildIndex]" Value="[ItemIndex.SourceValue]" />
+					<Set Target="[SelectSourceIndex.Value]" Value="[ItemIndex.SourceValue]" />
+					<Set Target="[Application.CurrentItem]" Value="[Item]" />
+
+					<!--<Set Target="[Main.Rotation]" Value="[CurrentItemRotation]" />-->
+					<!--<DebugTrace Message="item {0} just gained keyfocus at index {1}, NavCount is now {2}, starting animtimer">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+							<ObjectPath ObjectPath="[SelectRepeaterIndex.Value]" />
+							<ObjectPath ObjectPath="[NavCount.Value]" />
+						</Params>
+					</DebugTrace>-->
+				</Actions>
+			</Changed>
+
+			<Condition Source="[Input.KeyFocus]" ConditionOp="Equals" SourceValue="true" Target="[Main.ColorFilter]" Value="White"
+						 ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[AnimDelayShowFocus.Value]" ConditionOp="Equals" Value="true" />
+				</Conditions>
+			</Condition>
+			<Condition Source="[Input.KeyFocus]" ConditionOp="Equals" SourceValue="true" Target="[Main.Alpha]" Value="1"
+						 ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[AnimDelayShowFocus.Value]" ConditionOp="Equals" Value="true" />
+				</Conditions>
+			</Condition>
+
+
+			
+			
+			<Changed Source="[Input.KeyFocus]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Input.KeyFocus]" Value="false" />
+					<Equality Source="[AnimTimer.Enabled]" Value="true" />
+				</Conditions>
+				<Actions>
+					<Invoke Target="[AnimTimer.Stop]" InvokePolicy="AsynchronousLowPri" />
+
+					<!--<DebugTrace Message="item {0} just lost focus at navcount {1} and stopping animtimer">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+							<ObjectPath ObjectPath="[NavCount.Value]" />
+						</Params>
+					</DebugTrace>-->
+					
+				</Actions>
+			</Changed>
+
+			<Changed Source="[Input.KeyFocus]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Input.KeyFocus]" Value="false" />
+				</Conditions>
+				<Actions>
+
+					<Set Target="[NavCount.Value]" Value="[NavCount.Value]" ExclusiveApply="false">
+						<Transformer>
+							<MathTransformer Add="1" />
+						</Transformer>
+					</Set>
+					<Set Target="[InFocus.Value]" Value="false" />
+
+					<!--<DebugTrace Message="item {0} just lost focus so NavCount is now {1}">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+							<ObjectPath ObjectPath="[NavCount.Value]" />
+						</Params>
+					</DebugTrace>-->
+				</Actions>
+			</Changed>
+
+
+			
+			<!-- *************************************************************************** -->
+			<!-- ITEM FOCUS WHEN NAVIGATION HAS PAUSED AND NOT JUST WHIZZED BY IN A SCROLLER -->
+			<!-- *************************************************************************** -->
+
+			<Changed Source="[AnimTimer.Tick]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Input.KeyFocus]" ConditionOp="Equals" Value="true" />
+					<!--<Equality Source="[InFocus.Value]" ConditionOp="Equals" Value="false" />-->
+					<Equality Source="[AnimDelayShowFocus.Value]" ConditionOp="Equals" Value="true" />
+				</Conditions>
+				<Actions>
+
+					<Set Target="[NavCount.Value]" Value="0" ExclusiveApply="true" />
+					<Set Target="[InFocus.Value]" Value="true" />
+
+					<!--<DebugTrace Message="item {0} AnimTimer.Tick just fired and defaulting item state and navcount reset">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+						</Params>
+					</DebugTrace>-->
+				</Actions>
+			</Changed>
+
+			<Changed Source="[AnimTimer.Tick]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Input.KeyFocus]" ConditionOp="Equals" Value="true" />
+					<!--<Equality Source="[InFocus.Value]" ConditionOp="Equals" Value="false" />-->
+					<Equality Source="[AnimDelayShowFocus.Value]" ConditionOp="Equals" Value="false" />
+				</Conditions>
+				<Actions>
+
+					<!-- Don't set InFocus.Value when focus has been requested to not change on-screen appearance -->
+					<Set Target="[NavCount.Value]" Value="0" ExclusiveApply="true" />
+
+					<!--<DebugTrace Message="item {0} AnimTimer.Tick just fired and InFocus now true">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+						</Params>
+					</DebugTrace>-->
+				</Actions>
+			</Changed>
+
+			
+			<!-- ********************************************************************* -->
+			<!-- DETECT WHETHER THIS ITEM IS WITHIN "BOTHERING" VIEWPORT/VISIBLE RANGE -->
+			<!-- ********************************************************************* -->
+
+			<Changed Source="[SelectRepeaterIndex.Value]" InitialEvaluate="true" ConditionLogicalOp="And">
+				<Conditions>
+					<!--<Equality Source="[NavCount.Value]" ConditionOp="LessThanOrEquals" Value="3" />-->
+					<Equality Source="[ItemIndex.Value]" ConditionOp="Equals" Value="[SelectRepeaterIndex.Value]" />
+					<Equality Source="[VisibleIndexRangeForSelectRepeaterIndex.Value]" ConditionOp="NotEquals" Value="[SelectRepeaterIndex.Value]" />
+				</Conditions>
+				<Actions>
+
+					<!--<DebugTrace Message="**SRI** changed to {0}, visiblerange {1} to {2},  cached for {3}, itemindex {4}">
+						<Params>
+							<ObjectPath ObjectPath="[SelectRepeaterIndex.Value]"/>
+							<ObjectPath ObjectPath="[VisibleItemIndexRangeFrom.Value]"/>
+							<ObjectPath ObjectPath="[VisibleItemIndexRangeTo.Value]"/>
+							<ObjectPath ObjectPath="[VisibleIndexRangeForSelectRepeaterIndex.Value]"/>
+							<ObjectPath ObjectPath="[ItemIndex.Value]"/>
+						</Params>
+					</DebugTrace>-->		
+					
+					<Set Target="[VisibleItemIndexRangeTo.Value]" Value="[SelectRepeaterIndex.Value]" Transformer="[BotheringSizeLeftTransformer]" />
+					<Set Target="[VisibleItemIndexRangeFrom.Value]" Value="[SelectRepeaterIndex.Value]" Transformer="[BotheringSizeRightTransformer]" />
+
+					<!--<DebugTrace Message=">>>>>>>> calculating visible index range from item {0}, index {1} and transformed visible range to {2} to {3}, cached offset {4}">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]"/>
+							<ObjectPath ObjectPath="[SelectRepeaterIndex.Value]"/>
+							<ObjectPath ObjectPath="[VisibleItemIndexRangeFrom.Value]"/>
+							<ObjectPath ObjectPath="[VisibleItemIndexRangeTo.Value]"/>
+							<ObjectPath ObjectPath="[VisibleIndexRangeForSelectRepeaterIndex.Value]"/>
+						</Params>
+					</DebugTrace>-->
+
+					<Set Target="[VisibleIndexRangeForSelectRepeaterIndex.Value]" Value="[SelectRepeaterIndex.Value]" ExclusiveApply="true" />
+
+					<!--<DebugTrace Message=">>>>>>>>     cached offset now {0}">
+						<Params>
+							<ObjectPath ObjectPath="[VisibleIndexRangeForSelectRepeaterIndex.Value]"/>
+						</Params>
+					</DebugTrace>-->
+
+				</Actions>
+			</Changed>
+
+
+
+			<Changed Source="[VisibleItemIndexRangeFrom.Value]" ConditionLogicalOp="And">
+				<Conditions >
+					<Equality Source="[ItemIndex.Value]" ConditionOp="GreaterThanOrEquals" Value="[VisibleItemIndexRangeFrom.Value]" />
+					<Equality Source="[ItemIndex.Value]" ConditionOp="LessThanOrEquals" Value="[VisibleItemIndexRangeTo.Value]" />
+				</Conditions>
+				<Actions>
+
+					<Set Target="[ItemWorthBothering]" Value="true" ExclusiveApply="true" />
+
+					<!--<DebugTrace Message="item {0} getting default item state at NavCount {1}, margins is now {2}">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+							<ObjectPath ObjectPath="[NavCount.Value]" />
+							<ObjectPath ObjectPath="[Main.Margins.ToString]" />
+						</Params>
+					</DebugTrace>-->
+
+				</Actions>
+			</Changed>
+
+			<Changed Source="[VisibleIndexRangeForSelectRepeaterIndex.Value]" InitialEvaluate="true" ConditionLogicalOp="And">
+				<Conditions >
+					<Equality Source="[ItemIndex.Value]" ConditionOp="GreaterThanOrEquals" Value="[VisibleItemIndexRangeFrom.Value]" />
+					<Equality Source="[ItemIndex.Value]" ConditionOp="LessThanOrEquals" Value="[VisibleItemIndexRangeTo.Value]" />
+					<Equality Source="[SelectRepeaterIndex.Value]" ConditionOp="NotEquals" Value="[ItemIndex.Value]" />
+				</Conditions>
+				<Actions>
+
+					<Set Target="[Main.Scale]" Value="[DefaultScale]" ExclusiveApply="false"   />
+					<Set Target="[Main.Rotation]" Value="[DefaultRotation]" ExclusiveApply="false"   />
+					<Set Target="[Main.Padding]" Value="[DefaultPadding]" ExclusiveApply="false"   />
+					<Set Target="[Main.Margins]" Value="[DefaultMargins]" ExclusiveApply="false"   />
+
+					<!--<DebugTrace Message="item {0} getting default item state at NavCount {1}, margins is now {2}">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+							<ObjectPath ObjectPath="[NavCount.Value]" />
+							<ObjectPath ObjectPath="[Main.Margins.ToString]" />
+						</Params>
+					</DebugTrace>-->
+
+				</Actions>
+			</Changed>
+
+			<Default Target="[ItemWorthBothering]" Value="false" />
+
+			
+			
+			<!-- ****************************************************************************** -->
+			<!-- DETECTION OF ITEM PROXIMITY TO CURRENTLY FOCUSED ITEM TO SAVE WASTED CPU  TIME -->
+			<!-- ****************************************************************************** -->
+
+			<!--<Changed Source="[SelectRepeaterIndex.Value]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Input.DeepMouseFocus]" ConditionOp="Equals" Value="true" />
+				</Conditions>
+				<Actions>
+					<Set Target="[ItemWorthBothering]" Value="true" ExclusiveApply="true" />
+				</Actions>
+			</Changed>-->
+
+			<!--<Changed Source="[VisibleItemIndexRange]" InitialEvaluate="true" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[ItemIndex.Value]" ConditionOp="GreaterThanOrEquals" Value="[VisibleItemIndexRange.MinValue]" />
+					<Equality Source="[ItemIndex.Value]" ConditionOp="LessThanOrEquals" Value="[VisibleItemIndexRange.MaxValue]" />
+				</Conditions>
+				<Actions>
+					
+					<DebugTrace Message="item {0} worth bothering with">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+						</Params>
+					</DebugTrace>
+					
+					<Set Target="[ItemWorthBothering]" Value="true" ExclusiveApply="true" />
+				</Actions>
+			</Changed>-->
+			
+			<!--<Changed Source="[SelectRepeaterIndex.Value]" InitialEvaluate="true">
+				<Actions>
+					<Set Target="[ItemWorthBothering]" Value="false" />
+				</Actions>
+			</Changed>-->
+
+			<!--<Default Target="[ItemWorthBothering]" Value="false" />-->
+
+
+			<!-- ****************************************************************************** -->
+			<!-- SET ITEM DEFAULT STATE - IF IT'S WITHIN THE VIEWABLE AREA WORTH BOTHERING WITH -->
+			<!-- ****************************************************************************** -->
+
+			<!--<Changed Source="[SelectRepeaterIndex.Value]" InitialEvaluate="true" ConditionLogicalOp="And">
+				<Conditions>
+					--><!--<Equality Source="[SelectRepeaterIndex.Value]" ConditionOp="NotEquals" Value="[ItemIndex.Value]" />--><!--
+					<Equality Source="[ItemWorthBothering]" ConditionOp="Equals" Value="true" />
+				</Conditions>
+				<Actions>
+					<Set Target="[Main.Scale]" Value="[DefaultScale]" ExclusiveApply="false" />
+					<Set Target="[Main.Rotation]" Value="[DefaultRotation]" ExclusiveApply="false" />
+					<Set Target="[Main.Padding]" Value="[DefaultPadding]" ExclusiveApply="false" />
+					<Set Target="[Main.Margins]" Value="[DefaultMargins]" ExclusiveApply="false" />
+
+					--><!--<Set Target="[MainOuter.Padding]" Value="0,0,0,0" />--><!--
+
+					--><!--<DebugTrace Message="item {0} getting default state from ROCBasicViewItem">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+						</Params>
+					</DebugTrace>--><!--
+
+				</Actions>
+			</Changed>-->
+
+			<Changed Source="[SelectRepeaterIndex.Value]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[SelectRepeaterIndex.Value]" ConditionOp="Equals" Value="[ItemIndex.Value]" />
+					<!--<Equality Source="[ItemWorthBothering]" ConditionOp="Equals" Value="true" />-->
+				</Conditions>
+				<Actions>
+					<Set Target="[Main.Padding]" Value="[CurrentItemPadding]" />
+					<Set Target="[Main.Rotation]" Value="[CurrentItemRotation]" />
+
+					<!--<Set Target="[MainOuter.Padding]" Value="0,0,0,0" />-->
+
+					<!--<DebugTrace Message="item {0} getting SRI item state at NavCount {1}, margins is now {2}">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+							<ObjectPath ObjectPath="[NavCount.Value]" />
+							<ObjectPath ObjectPath="[Main.Margins.ToString]" />
+						</Params>
+					</DebugTrace>-->
+
+				</Actions>
+			</Changed>
+
+			
+			
+			
+			<Changed Source="[InFocus.Value]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[InFocus.Value]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[SelectRepeaterIndex.Value]" ConditionOp="Equals" Value="[ItemIndex.Value]" />
+					<!--<Equality Source="[ItemWorthBothering]" ConditionOp="Equals" Value="true" />-->
+					<!--<Equality Source="[NavCount.Value]" ConditionOp="LessThanOrEquals" Value="1" />-->
+				</Conditions>
+				<Actions>
+					<Set Target="[Main.Padding]" Value="[CurrentItemPadding]" />
+					<Set Target="[Main.Rotation]" Value="[CurrentItemRotation]" />
+					<Set Target="[Main.Margins]" Value="[CurrentItemMargins]" />
+
+					<Set Target="[FocusFrame.Content]" Value="image://il:FocusFrame" />
+					
+					<Set Target="[Main.Scale]" Value="[CurrentItemScale]" />
+
+					<Set Target="[SelectedItemInFocus.Value]" Value="true" />
+
+
+					<!-- THIS IS THE SPOT TO UPGRADE THE ITEM IMAGE QUALITY TO HI RES IN ANY UI VIEWITEM EXTENDING THIS BASE -->
+
+
+					<DebugTrace Message="item {0} has focus at NavCount {1} - setting scale to {2}">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+							<ObjectPath ObjectPath="[NavCount.Value]" />
+							<ObjectPath ObjectPath="[CurrentItemScale.ToString]" />
+						</Params>
+					</DebugTrace>
+				</Actions>
+			</Changed>
+
+			<Changed Source="[InFocus.Value]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[InFocus.Value]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[SelectRepeaterIndex.Value]" ConditionOp="Equals" Value="[ItemIndex.Value]" />
+					<!--<Equality Source="[ItemWorthBothering]" ConditionOp="Equals" Value="true" />-->
+					<!--<Equality Source="[NavCount.Value]" ConditionOp="LessThanOrEquals" Value="1" />-->
+				</Conditions>
+				<Actions>
+					<Set Target="[Main.Rotation]" Value="[CurrentItemRotation]" />
+					<Set Target="[Main.Margins]" Value="[CurrentItemMargins]" />
+
+					<DebugTrace Message="item {0} has focus at NavCount {1} - setting rotation and padding">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+							<ObjectPath ObjectPath="[NavCount.Value]" />
+						</Params>
+					</DebugTrace>
+				</Actions>
+			</Changed>
+
+
+			<!--<Changed Source="[CurrentItemScaleTimer.Tick]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[InFocus.Value]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[SelectRepeaterIndex.Value]" ConditionOp="Equals" Value="[ItemIndex.Value]" />
+				</Conditions>
+				<Actions>
+
+					<Set Target="[Main.Scale]" Value="[CurrentItemScale]" />
+
+				</Actions>
+			</Changed>-->
+
+			<!--<Changed Source="[InFocus.Value]" ConditionLogicalOp="And">
+				<Conditions>
+					--><!--<Equality Source="[Input.KeyFocus]" Value="false" />
+					<Equality Source="[Input.KeyFocus]" Value="false" />--><!--
+					--><!--<Equality Source="[ItemWorthBothering]" ConditionOp="Equals" Value="true" />--><!--
+					<Equality Source="[InFocus.Value]" Value="false" />
+					<Equality Source="[AnimTimer.Enabled]" Value="true" />
+				</Conditions>
+				<Actions>
+					<Invoke Target="[AnimTimer.Stop]" InvokePolicy="AsynchronousLowPri" />
+
+					--><!--<DebugTrace Message="item {0} just lost deepfocus and keyfocus at navcount {1} and stopping animtimer">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+							<ObjectPath ObjectPath="[NavCount.Value]" />
+						</Params>
+					</DebugTrace>--><!--
+				</Actions>
+			</Changed>-->
+
+			<Changed Source="[InFocus.Value]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[InFocus.Value]" ConditionOp="Equals" Value="false" />
+					<!--<Equality Source="[ItemWorthBothering]" ConditionOp="Equals" Value="true" />-->
+				</Conditions>
+				<Actions>
+					<Set Target="[Main.Scale]" Value="[DefaultScale]" />
+					<Set Target="[FocusFrame.Content]" Value="null" />
+					
+					<Set Target="[SelectedItemInFocus.Value]" Value="false" />
+
+					<!--<DebugTrace Message="item {0} Infocus now false so setting default scale/rotation etc state">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+						</Params>
+					</DebugTrace>-->
+				</Actions>
+			</Changed>
+
+
+
+			<!--<Changed Source="[SelectedItemInFocus.Value]" InitialEvaluate="true" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[SelectedItemInFocus.Value]" ConditionOp="Equals" Value="true" />
+					--><!--<Equality Source="[NavCount.Value]" ConditionOp="LessThanOrEquals" Value="1" />--><!--
+					<Equality Source="[ItemIndex.Value]" ConditionOp="Equals" Value="[SelectRepeaterIndex.Value]">
+						<SourceTransformer>
+							<MathTransformer SubtractInt="1" />
+						</SourceTransformer>
+					</Equality>
+				</Conditions>
+				<Actions>
+
+					<Set Target="[BesideSelectionTmpMargins]" Value="[Main.Margins]" ExclusiveApply="false" />
+					<Set Target="[BesideSelectionTmpMargins.Left]" Value="[CurrentItemMargins.Right]"  />
+
+					<Set Target="[Main.Margins]" Value="[BesideSelectionTmpMargins]" ExclusiveApply="true"  />
+
+
+					<DebugTrace Message="should set beside focus left margin on {0} to {1}... {2}">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]"/>
+							<ObjectPath ObjectPath="[BesideSelectionTmpMargins.ToString]"/>
+							<ObjectPath ObjectPath="[Main.Margins.ToString]"/>
+						</Params>
+					</DebugTrace>
+				</Actions>
+			</Changed>
+
+			<Changed Source="[SelectedItemInFocus.Value]" InitialEvaluate="true" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[SelectedItemInFocus.Value]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[ItemIndex.Value]" ConditionOp="Equals" Value="[SelectRepeaterIndex.Value]">
+						<SourceTransformer>
+							<MathTransformer AddInt="1" />
+						</SourceTransformer>
+					</Equality>
+				</Conditions>
+				<Actions>
+					<Set Target="[BesideSelectionTmpMargins]" Value="[Main.Margins]" ExclusiveApply="false" />
+					<Set Target="[BesideSelectionTmpMargins.Right]" Value="[CurrentItemMargins.Left]"  />
+
+					<Set Target="[Main.Margins]" Value="[BesideSelectionTmpMargins]" ExclusiveApply="true"  />
+
+					<DebugTrace Message="should set beside focus right margin on {0} to {1}... {2}">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]"/>
+							<ObjectPath ObjectPath="[BesideSelectionTmpMargins.ToString]"/>
+							<ObjectPath ObjectPath="[Main.Margins.ToString]"/>
+						</Params>
+					</DebugTrace>
+				</Actions>
+			</Changed>-->
+
+
+			<!--<Changed Source="[SelectRepeaterIndex.Value]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[SelectedItemInFocus.Value]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[ItemIndex.Value]" ConditionOp="Equals" Value="[SelectRepeaterIndex.Value]">
+						<SourceTransformer>
+							<MathTransformer SubtractInt="1" />
+						</SourceTransformer>
+					</Equality>
+				</Conditions>
+				<Actions>
+					<Set Target="[BesideSelectionTmpMargins]" Value="[Main.Margins]" ExclusiveApply="false" />
+					<Set Target="[BesideSelectionTmpMargins.Left]" Value="[CurrentItemMargins.Left]" />
+					<Set Target="[Main.Margins]" Value="[BesideSelectionTmpMargins]" ExclusiveApply="true" />
+				</Actions>
+			</Changed>
+
+			<Changed Source="[SelectRepeaterIndex.Value]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[SelectedItemInFocus.Value]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[ItemIndex.Value]" ConditionOp="Equals" Value="[SelectRepeaterIndex.Value]">
+						<SourceTransformer>
+							<MathTransformer AddInt="1" />
+						</SourceTransformer>
+					</Equality>
+				</Conditions>
+				<Actions>
+					<Set Target="[BesideSelectionTmpMargins]" Value="[Main.Margins]" ExclusiveApply="false" />
+					<Set Target="[BesideSelectionTmpMargins.Right]" Value="[CurrentItemMargins.Right]" />
+					<Set Target="[Main.Margins]" Value="[BesideSelectionTmpMargins]" ExclusiveApply="true" />
+				</Actions>
+			</Changed>-->
+			
+
+			<!-- Hide focus frame if user has turned it off -->
+			<Binding Source="[Application.Config.HideFocusFrame]" Target="[FocusFrame.Visible]" ConditionLogicalOp="And">
+				<Conditions>
+					<IsValid Source="[FocusFrame.Visible]" />
+				</Conditions>
+				<Transformer>
+					<BooleanTransformer Inverse="true" />
+				</Transformer>
+			</Binding>
+			
+		</Rules>
+
+
+
+		<Content>
+
+				<Panel Name="Main" CenterPointPercent=".5,.5,.5">
+					<Children>
+
+						<ColorFill Name="ConstraintPanel1" Content="Transparent" ColorFilter="color://s:ROC_CoverDimOverlay" MouseInteractive="false" />
+
+						<Graphic Name="FocusFrame" Content="null" ColorFilter="color://s:ROC_FocusFrameColor"
+										 MaintainAspectRatio="false" SizingPolicy="SizeToConstraint" Margins="-8,-8,-8,-8"
+										 Visible="true">
+						</Graphic>
+
+					</Children>
+				</Panel>
+
+			</Content>
+
+	</UI>
+	
+
+
+</Mcml>

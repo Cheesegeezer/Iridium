@@ -62,10 +62,10 @@
                         <FlowLayout Orientation="Horizontal" Spacing="50,50" />
                       </Layout>
                       <Children>
-                        <me:RecentlyAddedGridLayout Application="[Application]" ThemeHelper="[ThemeHelper]" Folder="[Folder]" MaximumSize="500,500"/>
+                        <me:RecentlyAddedGridLayout Application="[Application]" ThemeHelper="[ThemeHelper]" Folder="[Folder]" MaximumSize="1200,1000"/>
                         <me:ResumeGridLayout Application="[Application]" ThemeHelper="[ThemeHelper]" Folder="[Folder]" MaximumSize="300,450" />
-                        <me:RecommendedGridLayout Application="[Application]" ThemeHelper="[ThemeHelper]" Folder="[Folder]" MaximumSize="450,500"/>
-                        <me:AcclaimedGridLayout Application="[Application]" ThemeHelper="[ThemeHelper]" Folder="[Folder]"  MaximumSize="450,500"/>
+                        <me:RecommendedGridLayout Application="[Application]" ThemeHelper="[ThemeHelper]" Folder="[Folder]" MaximumSize="900,600"/>
+                        <me:AcclaimedGridLayout Application="[Application]" ThemeHelper="[ThemeHelper]" Folder="[Folder]"  MaximumSize="900,600"/>
                       </Children>
                       <Animations>
                         <Animation Type="Move">
@@ -93,7 +93,7 @@
       <a:Application Name="Application" Application="$Required"/>
       <Color Name="TitleColor" Color="color://is:XC_PopupMenuTitle" />
       <Font Name="Font" Font="font://is:XF_PopupMenuTitle"/>
-      <Size Name="Size" Size="200,112"/>
+      <Size Name="Size" Size="310,172"/>
     </Properties>
     <Locals>
       <cor:Int32 Name="Startup" />
@@ -118,42 +118,79 @@
         <Children>
 
 
-          <Clip FadeAmount="1" Name="Scroller1" Margins="0,0,0,0">
+          <Clip FadeAmount="1" Name="Scroller1" Margins="0,0,0,0" Navigation="PreferFocusOrder">
             <Children>
               <Text Name="Title" Content="Recently Added" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Margins="0,-25,0,0" />
               <Text Name="NoRecent" Content="No Recommendations" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Visible="false" Margins="0,50,0,0" />
 
               
-                  <Panel Name="RALItems" Layout="VerticalFlow" Margins="0,20,0,0" >
-                    <Layout>
-                      <FlowLayout Orientation="Vertical" ItemAlignment="Near" />
-                    </Layout>
+                  <Panel Name="RALItems" Layout="Anchor" Margins="0,20,0,0" >
                     <Children>
-                      <Repeater Source="[ThemeHelper.ShowNewItems]" Name="FirstItems" DiscardOffscreenVisuals="false" Margins="5,0,0,0" FocusOrder="0">
-                        <Content>
-                          <me:AddedItem Application="[Application]" Item="[RepeatedItem!lib:Item]" Index="[RepeatedItemIndex]" Size="[ThemeHelper.GetBigImageSize]" />
-                        </Content>
-                      </Repeater>
-                      <Scroller Orientation="Vertical" Margins="5,0,0,0" Name="Scroller" FadeSize="-5" ScrollingData="[ScrollingData]" Visible="true" MaximumSize="500,600" >
-                       <Children>
-                      <Repeater Source="[ThemeHelper.ShowRemainingNewItems]" Name="RemainingItems" DiscardOffscreenVisuals="true" Margins="0,4,0,0" FocusOrder="2" MaximumSize="500,260">
-                        <Layout>
-                          <FlowLayout Orientation="Vertical" AllowWrap="true" Spacing="4,4" />
-                        </Layout>
+                      
+                      <Panel Name="FIP">
+                        <Children>
+                          <Repeater Source="[ThemeHelper.ShowFirstNewItem]" Name="FirstItems" DiscardOffscreenVisuals="false"  FocusOrder="0">
+                            <Content>
+                              <me:AddedItem Application="[Application]" Item="[RepeatedItem!lib:Item]" Index="[RepeatedItemIndex]" Size="[ThemeHelper.GetBigImageSize]" />
+                            </Content>
+                          </Repeater>
+                        </Children>
+                      </Panel>
+                      
+                      <Panel Name="SIP" MaximumSize="[Size]">
+                        <LayoutInput>
+                          <AnchorLayoutInput Left="FIP, 1,5" Top="FIP,0,0"/>
+                        </LayoutInput>
+                        <Children>
+                      <Repeater Source="[ThemeHelper.ShowSecondNewItem]" Name="SecondItem" DiscardOffscreenVisuals="false" Margins="5,0,0,0" >
                         <Content>
                           <me:AddedItem Application="[Application]" Item="[RepeatedItem!lib:Item]" Index="[RepeatedItemIndex]" Size="[Size]" />
                         </Content>
-                        <Animations>
-                          <Animation Type="Move">
-                            <Keyframes>
-                              <PositionKeyframe Time="0" RelativeTo="Current" Interpolation="EaseIn, 1.0, 0.25" />
-                              <PositionKeyframe Time="0.35" RelativeTo="Final" />
-                            </Keyframes>
-                          </Animation>
-                        </Animations>
                       </Repeater>
-                         </Children>
-                       </Scroller>
+                        </Children>
+                      </Panel>
+
+                      <Panel Name="TIP" MaximumSize="[Size]">
+                        <LayoutInput>
+                          <AnchorLayoutInput Left="SIP,0" Top="SIP,1,5"/>
+                        </LayoutInput>
+                        <Children>
+                          <Repeater Source="[ThemeHelper.ShowThirdNewItem]" Name="ThirdItem" DiscardOffscreenVisuals="false" Margins="5,0,0,0" >
+                            <Content>
+                              <me:AddedItem Application="[Application]" Item="[RepeatedItem!lib:Item]" Index="[RepeatedItemIndex]" Size="[Size]" />
+                            </Content>
+                          </Repeater>
+                        </Children>
+                      </Panel>
+
+                      <Panel Name="TheRest" >
+                        <LayoutInput>
+                          <AnchorLayoutInput Left="FIP,0" Top="FIP,1,5" Right="SIP,1,-5"/>
+                        </LayoutInput>
+                        <Children><Scroller Orientation="Horizontal" Name="Scroller" FadeSize="-5" ScrollingData="[ScrollingData]" Visible="true" >
+                            
+                            <Children>
+                              <Repeater Source="[ThemeHelper.ShowRemainingNewItems]" Name="RemainingItems" DiscardOffscreenVisuals="true" Margins="0,4,0,0" >
+                                <Layout>
+                                  <FlowLayout Orientation="Horizontal" AllowWrap="true" Spacing="4,4" />
+                                </Layout>
+                                <Content>
+                                  <me:AddedItem Application="[Application]" Item="[RepeatedItem!lib:Item]" Index="[RepeatedItemIndex]" Size="[Size]" />
+                                </Content>
+                                <Animations>
+                                  <Animation Type="Move">
+                                    <Keyframes>
+                                      <PositionKeyframe Time="0" RelativeTo="Current" Interpolation="EaseIn, 1.0, 0.25" />
+                                      <PositionKeyframe Time="0.35" RelativeTo="Final" />
+                                    </Keyframes>
+                                  </Animation>
+                                </Animations>
+                              </Repeater>
+                            </Children>
+                          </Scroller>
+                        </Children>
+                      </Panel>
+                          
                     </Children>
                   </Panel>
                 
@@ -200,7 +237,7 @@
       <Panel Layout="Anchor">
         <Children>
           
-          <Clip FadeAmount="1" Name="Scroller1" Margins="0,20,0,0">
+          <Clip FadeAmount="1" Name="Scroller1" Margins="0,0,0,0">
             <Children>
               <Text Name="Title" Content="Resume" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Margins="0,-25,0,0" />
               <Text Name="NoRecent" Content="No Resumable Items" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Visible="false" Margins="0,50,0,0"  />
@@ -305,7 +342,7 @@
                     </Children>
                   </Panel>-->
                   
-                  <Scroller Orientation="Horizontal" Margins="5,0,0,0" Name="Scroller" FadeSize="-5" ScrollingData="[ScrollingData]" Visible="true" MaximumSize="500,600" >
+                  <Scroller Orientation="Horizontal" Margins="5,0,0,0" Name="Scroller" FadeSize="-5" ScrollingData="[ScrollingData]" Visible="true" MaximumSize="900,600" >
                     
                     <Children>
                         <Repeater Name="Repeater" >
@@ -387,7 +424,7 @@
               <Clip FadeAmount="1" Name="Scroller1" Margins="0,20,0,0">
                 <Children>
                   
-                  <Scroller Orientation="Horizontal" Margins="5,0,0,0" Name="Scroller" FadeSize="-5" ScrollingData="[ScrollingData]" Visible="true" MaximumSize="500,600" >
+                  <Scroller Orientation="Horizontal" Margins="5,0,0,0" Name="Scroller" FadeSize="-5" ScrollingData="[ScrollingData]" Visible="true" MaximumSize="900,600" >
                     
                     <Children>
                         <Repeater Name="Repeater" >
@@ -426,7 +463,7 @@
       <Color Name="TitleColor" Color="color://is:XC_PopupMenuItem" />
       <Color Name="FocusColor" Color="color://is:XC_PopupMenuTitle" />
       <Font Name="Font" Font="font://is:SmallRALTitleText"/>
-      <Size Name="Size" Size="200,112"/>
+      <Size Name="Size" Size="300,168"/>
     </Properties>
 
     <Locals>
@@ -574,16 +611,16 @@
            
             <Children>
               
-              <Panel MaximumSize="250,25">
+              <Panel MaximumSize="300,30">
                 <LayoutInput>
                   <AnchorLayoutInput Left="ItemThumb,0,1" Bottom="ItemThumb,1" Right="ItemThumb,1,-1"/>
                 </LayoutInput>
                 <Children>
                   <Panel Layout="HorizontalFlow">
                     <Children>
-                      <ft:FancyText AvailableSpaceInt="250" Name="SeasonNo" Visible="false" HasFocus="false" Font="[Font]" Color="240,240,240" AllowMarquee="true"  />
-                      <ft:FancyText AvailableSpaceInt="250" Name="Divider" Content=" |" Visible="false" HasFocus="false" Font="[Font]" Color="240,240,240" AllowMarquee="true"  />
-                      <ft:FancyText AvailableSpaceInt="250" Name="Title" Visible="false" HasFocus="false" Font="[Font]" Color="240,240,240" AllowMarquee="true" />
+                      <ft:FancyText AvailableSpaceInt="300" Name="SeasonNo" Visible="false" HasFocus="false" Font="[Font]" Color="240,240,240" AllowMarquee="true"  />
+                      <ft:FancyText AvailableSpaceInt="300" Name="Divider" Content=" |" Visible="false" HasFocus="false" Font="[Font]" Color="240,240,240" AllowMarquee="true"  />
+                      <ft:FancyText AvailableSpaceInt="300" Name="Title" Visible="false" HasFocus="false" Font="[Font]" Color="240,240,240" AllowMarquee="true" />
                     </Children>
                   </Panel>
                 <Graphic Name="TitleBackFill" ColorFilter="0,155,255" Content="image://vi:SelectedTitleBG" Layout="Fill" Visible="false" Alpha="1" />

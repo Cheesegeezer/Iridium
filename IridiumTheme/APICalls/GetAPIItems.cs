@@ -32,6 +32,8 @@ namespace Iridium
         public static ArrayListDataSet RecommendedSet = new ArrayListDataSet();
         public static ArrayListDataSet SimilarMoviesSet = new ArrayListDataSet();
         public static ArrayListDataSet RemainingRecentlyAddedSet = new ArrayListDataSet();
+        public static ArrayListDataSet SecondAddedSet = new ArrayListDataSet();
+        public static ArrayListDataSet ThirdAddedSet = new ArrayListDataSet();
         public static string BecauseYouWatchedName { get; set; }
         
         //Keep MCML Happy
@@ -197,7 +199,10 @@ namespace Iridium
                 RecentlyAddedSet.Clear();
                 Guid id = Kernel.CurrentUser.Id;
                 Guid folderId = Application.CurrentInstance.CurrentItem.Id;
-                foreach (BaseItemDto dto in APIQuery.GetMostRecentAddedItem(id, folderId).Items)
+                int start = 0;
+                int limit = 1;
+
+                foreach (BaseItemDto dto in APIQuery.GetRecentAddedItem(id, folderId,start, limit).Items)
                 {
 
                     Item item = GetGenericItem(dto);
@@ -220,6 +225,71 @@ namespace Iridium
             return null;
         }
 
+        internal static ArrayListDataSet GetSecondAddedSet()
+        {
+            Logger.ReportInfo("IRIDIUM - Attempting to Get RecentlyAdded Items");
+            try
+            {
+                SecondAddedSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                int start = 1;
+                int limit = 1;
+
+                foreach (BaseItemDto dto in APIQuery.GetRecentAddedItem(id, folderId, start,limit).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    if (item != null)
+                    {
+                        SecondAddedSet.Add(item);
+                    }
+                }
+                if (SecondAddedSet != null)
+                {
+                    return SecondAddedSet;
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Recently Added Items {0}", fuckinShite);
+            }
+            return null;
+        }
+
+        internal static ArrayListDataSet GetThirdAddedSet()
+        {
+            Logger.ReportInfo("IRIDIUM - Attempting to Get RecentlyAdded Items");
+            try
+            {
+                ThirdAddedSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                int start = 2;
+                int limit = 1;
+                foreach (BaseItemDto dto in APIQuery.GetRecentAddedItem(id, folderId, start, limit).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    if (item != null)
+                    {
+                        ThirdAddedSet.Add(item);
+                    }
+                }
+                if (ThirdAddedSet != null)
+                {
+                    return ThirdAddedSet;
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Recently Added Items {0}", fuckinShite);
+            }
+            return null;
+        }
+
         internal static ArrayListDataSet GetRemainingRecentlyAddedSet()
         {
             Logger.ReportInfo("IRIDIUM - Attempting to Get RecentlyAdded Items");
@@ -228,7 +298,9 @@ namespace Iridium
                 RemainingRecentlyAddedSet.Clear();
                 Guid id = Kernel.CurrentUser.Id;
                 Guid folderId = Application.CurrentInstance.CurrentItem.Id;
-                foreach (BaseItemDto dto in APIQuery.GetNext14RecentAddedItems(id, folderId).Items)
+                int start = 3;
+                int limit = 10;
+                foreach (BaseItemDto dto in APIQuery.GetRecentAddedItem(id, folderId, start, limit).Items)
                 {
 
                     Item item = GetGenericItem(dto);

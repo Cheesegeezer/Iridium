@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
+using System.Drawing.Text;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using System.Web.UI;
 using MediaBrowser;
 using MediaBrowser.Library;
 using MediaBrowser.Library.Entities;
@@ -35,6 +38,7 @@ namespace Iridium
         public bool _showOverveiew = new bool();
         private static Image defaultBackdrop;
         private static Image currentBackdrop;
+        private Inset _steppedInset;
         private FolderModel _currentTopParent;
         private FolderModel _currentParent;
         private static string currentPage = "Page";
@@ -43,7 +47,8 @@ namespace Iridium
         {
             OverviewTimer = new Timer();
             setupHelper();
-            _bigImageSize = new Size(200,112);
+            _bigImageSize = new Size(300,168);
+
         }
 
         public IridiumHelper(Item Item)
@@ -313,6 +318,37 @@ namespace Iridium
             {
                 return this._bigImageSize;
             }
+        }
+        
+        public Inset AfterItemInsetCalc
+        {
+            get
+            {
+                Inset _steppedInset1 = new Inset(300, 0, 0, 0);
+                _steppedInset = new Inset(100, 0, 0, 0);
+                int ind = CurrentFolder.SelectedChildIndex;
+                if (ind == 0)
+                {
+                    return _steppedInset;
+                }
+                if (ind == -1)
+                {
+                    _steppedInset1 = new Inset(300, 0, 0, 0);
+                }
+
+                if (ind == -2)
+                {
+                    _steppedInset1 = new Inset(500, 0, 0, 0);
+                }
+
+                return _steppedInset;
+            }
+            
+        }
+
+        public Inset BuildInset(int left, int top, int right, int bottom)
+        {
+            return (new Inset(left, top, right, bottom));
         }
 
         
@@ -1011,9 +1047,19 @@ namespace Iridium
             return GetAPIItems.GetRecommendedSet();
         }
 
-        public ArrayListDataSet ShowNewItems()
+        public ArrayListDataSet ShowFirstNewItem()
         {
             return GetAPIItems.GetRecentlyAddedSet();
+        }
+
+        public ArrayListDataSet ShowSecondNewItem()
+        {
+            return GetAPIItems.GetSecondAddedSet();
+        }
+
+        public ArrayListDataSet ShowThirdNewItem()
+        {
+            return GetAPIItems.GetThirdAddedSet();
         }
 
         public ArrayListDataSet ShowRemainingNewItems()

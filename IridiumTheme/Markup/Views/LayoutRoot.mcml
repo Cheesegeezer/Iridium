@@ -388,18 +388,20 @@
                                        ShowGenres="[ShowGenres]"-->
             </Children>
           </Panel>
-          
-          <me:RALGetters Name="RALGetters" Application="[Application]" ThemeHelper="[ThemeHelper]" Folder="[Folder]">
-            <LayoutInput>
-              <FormLayoutInput Bottom="Parent,1,-20" Horizontal="Fill" Top="Parent,0.2"/>
-            </LayoutInput>
-          </me:RALGetters>
-          
+
           <Graphic Name="RALMenuBG" ColorFilter="0,155,255" Alpha="0.5" Navigation="None" Content="image://vi:RALScrollerBG" >
             <LayoutInput>
               <AnchorLayoutInput Left="Parent,0" Top="Parent,0,80" Right="Parent,1" Bottom="Parent,0.17"/>
             </LayoutInput>
           </Graphic>
+          
+          <me:RALGetters Name="RALGetters" Application="[Application]" ThemeHelper="[ThemeHelper]" Folder="[Folder]">
+            <LayoutInput>
+              <AnchorLayoutInput Bottom="Parent,1" Horizontal="Fill" Top="Parent,0.18"/>
+            </LayoutInput>
+          </me:RALGetters>
+          
+          
               
 
           <Panel Name="ClockDisplay">

@@ -36,7 +36,7 @@
 
     <Rules>
       
-      <Binding Target="[ThemeHelper.CurrentItem]" Source="[Folder.SelectedChild]"></Binding>
+      <Binding Target="[ThemeHelper.CurrentItem]" Source="[Folder.SelectedChild]"></Binding> 
       <Binding Target="[Application.CurrentItem]" Source="[Folder.SelectedChild]"></Binding>
 
       <!-- JIL Command -->
@@ -120,19 +120,19 @@
 
           <me:ThumbScroller Name="Scroller" Application="[Application]" ThemeHelper="[ThemeHelper]" Folder="[Folder]" >
             <LayoutInput>
-              <FormLayoutInput Left="Parent,0,25" Bottom="Parent,1,-10" Right="Parent,1,-25" />
+              <FormLayoutInput Left="Parent,0,25" Top="Parent,0,25" Right="Parent,0.4" Bottom="Parent,1,-25" />
             </LayoutInput>
           </me:ThumbScroller>
 
-          <Graphic Name="ThumbsBG" Content="image://vi:ThumbsBG" Alpha="0.9" >
+          <!--<Graphic Name="ThumbsBG" Content="image://vi:ThumbsBG" Alpha="0.9" >
             <LayoutInput>
               <FormLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,1,-140" Bottom="Parent,1" />
             </LayoutInput>
-          </Graphic>
+          </Graphic>-->
 
           <Panel Layout="HorizontalFlow">
             <LayoutInput>
-              <AnchorLayoutInput Top="ThumbsBG,1,-165" Right="ThumbsBG,1,-8"/>
+              <AnchorLayoutInput Top="Parent,1,-165" Right="Parent,1,-8"/>
             </LayoutInput>
             <Children>
               <Text Name="List_Counter" Content="0" Color="color://is:counterColor" Font="font://is:counterFont" />
@@ -149,10 +149,17 @@
               <in:InfoMarquee Application="[Application]" />
             </Children>
           </Panel>
-
+          
+          <Graphic Content="image://vi:PanelBG" ColorFilter="color://is:XC_RALPanelFilterColor" Alpha="1">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0.4" Right="Parent,1,50" Top="Parent,0.3" Bottom="Parent,1,-150"  />
+            </LayoutInput>
+          </Graphic>
+          
+          <Graphic Name="Overlay" Layout="Fill" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]" Alpha="[ThemeHelper.Config.FolderBackdropOverlayAlpha]" Content="image://vi:BackgroundOverlay" />
           <bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]"/>
-          <bd:Backdrop4 Name="Backdrop"  Application="[Application]" LoadDelay="90" FadeTime="[ThemeHelper.Config.BackdropTransitionTime]" Visible="[ThemeHelper.Config.FolderShowBackdrop]" Image="[Folder.SelectedChild.BackdropImage]" Item="[Folder.SelectedChild]"/>
-
+          <bd:Backdrop4 LoadDelay="280" FadeTime="[ThemeHelper.Config.BackdropTransitionTime]"  Application="[Application]" Name="Backdrop" Visible="[ThemeHelper.Config.FolderShowBackdrop]" Image="[Folder.SelectedChild.BackdropImage]" Item="[Folder.SelectedChild]"/>
+        
         </Children>
       </Panel>
     </Content>
@@ -168,11 +175,12 @@
     </Properties>
     <Locals>
       <ScrollingHandler HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" Name="ScrollingHandler"/>
-      <ScrollingData Name="ScrollingData" LockedPosition="0.3" LockedAlignment="0.3" BeginPadding="0" EndPadding="0" />
+      <ScrollingData Name="ScrollingData" LockedPosition="0.5" LockedAlignment="0.5" BeginPadding="0" EndPadding="0" />
       <ShortcutHandler Name="JumpForward" Shortcut="SkipForward" HandlerStage="Bubbled" Handle="true" />
       <ShortcutHandler Name="JumpBack" Shortcut="SkipBack" HandlerStage="Bubbled" Handle="true"/>
       <Command Name="FocusGained" />
       <Command Name="FocusLost" />
+      <IntRangedValue Name="SelectRepeaterIndex"/>
     </Locals>
     <Rules>
       <Default Target="[ScrollingHandler.ScrollingData]" Value="[ScrollingData]"/>
@@ -204,11 +212,11 @@
     </Rules>
 
     <Content>
-      <Scroller  FadeSize="10" Orientation="Horizontal" ScrollingData="[ScrollingData]">
+      <Scroller  FadeSize="10" Orientation="Vertical" ScrollingData="[ScrollingData]">
         <Children>
-          <Repeater Name="FolderItems" ContentName="ScrollerItem" DiscardOffscreenVisuals="false" Layout="HorizontalFlow" Navigation="RememberFocus, ContainHorizontal" Source="[Folder.Children]">
+          <Repeater Name="FolderItems" ContentName="ScrollerItem" DiscardOffscreenVisuals="false" Layout="VerticalFlow" Navigation="RememberFocus, ContainHorizontal" Source="[Folder.Children]" >
             <Layout>
-              <FlowLayout Orientation="Horizontal" Spacing="0,0" ItemAlignment="Near"/>
+              <FlowLayout Orientation="Vertical" Spacing="75,75" />
             </Layout>
             <Animations>
               <Animation Type="Move">
@@ -224,16 +232,17 @@
     </Content>
 
     <Content Name="ScrollerItem">
-      <me:OptionItem SmallFont="[SmallFont]" Application="[Application]" Item="[RepeatedItem!lib:Item]" ParentFolder="[Folder]" Index="[RepeatedItemIndex]" ThemeHelper="[ThemeHelper]" FocusGained="[FocusGained]" FocusLost="[FocusLost]" />
+      <me:OptionItem SmallFont="[SmallFont]" Application="[Application]" SelectRepeaterIndex="[SelectRepeaterIndex]" Item="[RepeatedItem!lib:Item]" ParentFolder="[Folder]" Index="[RepeatedItemIndex]" ThemeHelper="[ThemeHelper]" FocusGained="[FocusGained]" FocusLost="[FocusLost]" />
     </Content>
   </UI>
 
   <UI Name="OptionItem" BaseUI="ib:ItemButton">
     <Properties>
-      <lib:FolderModel Name="ParentFolder" />
+      <lib:FolderModel Name="ParentFolder" FolderModel="$Required" />
       <lib:Item Name="Item" Item="$Required"/>
       <Index Name="Index" Index="$Required"/>
       <a:Application Name="Application" Application="$Required"/>
+      <IntRangedValue Name="SelectRepeaterIndex" IntRangedValue="$Required"/>
       <cor:Boolean Name="SmallFont" Boolean="false" />
       <Command Name="FocusGained" />
       <Command Name="FocusLost" />
@@ -245,13 +254,26 @@
     </Locals>
 
     <Rules>
+
+      <Condition Source="[ParentFolder.SelectedChildIndex]" ConditionOp="LessThan" SourceValue="[Index.SourceValue]">
+        <Actions>
+          <Set Target="[ItemPanel.Margins]" Value="[ThemeHelper.AfterItemInsetCalc]" />
+        </Actions>
+      </Condition>
+      
+      <!--<Condition Source="[ParentFolder.SelectedChildIndex]" ConditionOp="Equals" SourceValue="-1">
+        <Actions>
+          <Set Target="[ItemPanel.Margins]" Value="0,0,0,0" />
+        </Actions>
+      </Condition>-->
+      
       <Changed Source="[Input.KeyFocus]">
         <Conditions>
           <Equality Source="[Input.KeyFocus]" Value="true"></Equality>
         </Conditions>
         <Actions>
-          <Set Target="[ParentFolder.SelectedChildIndex]" Value="[Index.Value]"/>
           <Set Target="[Application.CurrentItem]" Value="[Item]" />
+          <Set Target="[SelectRepeaterIndex.Value]" Value="[Index.Value]"/>
           <Invoke Target="[FocusGained.Invoke]"></Invoke>
           <Invoke Target="[ItemPanel.AttachAnimation]" animation="animation://anim:TSFocusGained" />
         </Actions>
@@ -289,9 +311,9 @@
     </Rules>
 
     <Content>
-      <Panel Name="ItemPanel">
+      <Panel Name="ItemPanel" Layout="Anchor">
         <LayoutInput>
-          <DockLayoutInput Position="Left" Alignment="Center"/>
+          <DockLayoutInput Position="Left" />
         </LayoutInput>
         <Children>
           <mqt:MarqueeText Name="Title" Content="[Item.Name]" Font="font://is:ThumbTitleFont" Color="color://is:ThumbTitleColor" Visible="false"/>
@@ -300,7 +322,7 @@
               <FlowLayout Orientation="Vertical"/>
             </Layout>
             <Children>
-              <Graphic Name="LogoImage" Margins="50,5,50,0" Content="[Item.LogoImage]" MaintainAspectRatio="true" MaximumSize="0,80" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
+              <Graphic Name="LogoImage" Margins="50,5,50,0" Content="[Item.LogoImage]" MaintainAspectRatio="true" MaximumSize="0,180" Visible="false" CenterPointPercent="0.5,0.5,0.5"/>
               <mqt:MarqueeText Name="SeriesTitle" Content="[Item.Name]" Font="font://is:ThumbTitleFont" Color="color://is:ThumbTitleColor" Visible="false"/>
             </Children>
           </Panel>

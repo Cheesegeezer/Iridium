@@ -65,19 +65,19 @@ namespace Iridium.APICalls
             return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
         }
 
-        internal ItemsResult GetMostRecentAddedItem(Guid userId, Guid folderId)
+        internal ItemsResult GetRecentAddedItem(Guid userId, Guid folderId,int start, int limit)
         {
             string query = string.Format("&ParentId={0}&Filters=IsNotFolder&SortBy=DateCreated&format=Json", folderId); //must include "&format=Json" in order to allow for the items to be read.
-            string queryUrl = string.Format("{0}Items?StartIndex=0&Limit=1&Recursive=true&SortOrder=Descending&UserId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
+            string queryUrl = string.Format("{0}Items?StartIndex={1}&Limit={2}&Recursive=true&SortOrder=Descending&UserId={3}{4}", APIUrl(), start, limit, userId, query); //Query Format taken from Swagger
             return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
         }
 
-        internal ItemsResult GetNext14RecentAddedItems(Guid userId, Guid folderId)
+        /*internal ItemsResult GetNext14RecentAddedItems(Guid userId, Guid folderId)
         {
             string query = string.Format("&ParentId={0}&Filters=IsNotFolder&SortBy=DateCreated&format=Json", folderId); //must include "&format=Json" in order to allow for the items to be read.
             string queryUrl = string.Format("{0}Items?StartIndex=1&Limit=10&Recursive=true&SortOrder=Descending&UserId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
             return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
-        }
+        }*/
 
         public IEnumerable<RecommendationDto> RecommendationDtoQuery(string url)
         {

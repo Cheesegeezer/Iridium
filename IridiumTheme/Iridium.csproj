@@ -261,6 +261,13 @@
     <Content Include="Markup\Views\LayoutDetails.mcml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Markup\Views\XenonRef\LayoutBaseScroller.mcml" />
+    <None Include="Markup\Views\XenonRef\ROCBasicViewItem.mcml" />
+    <None Include="Markup\Views\XenonRef\LayoutThumb.mcml" />
+    <None Include="Markup\Views\XenonRef\LayoutThumbItem.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\Views\XenonRef\LayoutThumbScroller.mcml" />
     <None Include="Markup\Views\XenonRef\OldLayoutCoverflow.mcml">
       <SubType>Designer</SubType>
     </None>
@@ -340,7 +347,9 @@
     <Content Include="Markup\Views\LayoutPoster.mcml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Markup\Views\LayoutThumb.mcml" />
+    <Content Include="Markup\Views\LayoutThumb.mcml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Markup\Controls\Buttons\ChapterButton.mcml">
       <SubType>Designer</SubType>
     </None>

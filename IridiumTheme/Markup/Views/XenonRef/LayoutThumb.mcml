@@ -1,0 +1,849 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+
+      xmlns:a="assembly://MediaBrowser/MediaBrowser"
+      xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
+      xmlns:mp="resx://MediaBrowser/MediaBrowser.Resources/MPAARating"
+
+      xmlns:app="assembly://ROC/ROC"
+      xmlns:s="resx://ROC/ROC.Resources/StylesMerged"
+      xmlns:f="file://Fonts_DoNotEdit.mcml"
+      xmlns:bd="resx://ROC/ROC.Resources/Backdrop"
+      xmlns:anim="resx://ROC/ROC.Resources/Animations"
+      xmlns:dl="resx://ROC/ROC.Resources/DirectorList"
+      xmlns:mil="resx://ROC/ROC.Resources/MediaInfoLine"
+      xmlns:as="resx://ROC/ROC.Resources/AutoScrollText"
+      xmlns:tb="resx://ROC/ROC.Resources/Toolbox"
+      xmlns:il="resx://ROC/ROC.Resources/Images"
+      xmlns:art="resx://ROC/ROC.Resources/Artwork"
+      xmlns:ts="resx://ROC/ROC.Resources/LayoutThumbScroller"
+      xmlns:lay="resx://ROC/ROC.Resources/LayoutBase"
+      xmlns:sr="resx://ROC/ROC.Resources/StarRating"
+      xmlns:gl="resx://ROC/ROC.Resources/GenreList"
+
+      xmlns:me="Me">
+
+	<UI Name="ROCLayoutThumb" BaseUI="lay:LayoutBase">
+
+		<Locals>
+			<!--<FormLayoutInput Name="Scroller_Layout" Left="Parent,0,-100" Right="Parent,1,2000" Top="Parent,0.05"
+			                 Bottom="Parent,0.5" Vertical="Far" Horizontal="Fill" />-->
+			<FormLayoutInput Name="Scroller_Layout"
+			                 Left="Parent,0" Right="Parent,0.24"
+			                 Top="Parent,0.02" Bottom="Parent,0.98"
+			                 Horizontal="Far" Vertical="Fill" />
+
+			<FormLayoutInput Name="InfoPanelLayoutInput" Left="Parent,0.27" Top="Parent,0.1" Right="Parent,0.98"
+			                 Bottom="Parent,0.95" />
+
+			<AnchorLayoutInput Name="TopImageLayoutInput" Top="Parent,0" Right="Parent,1" Bottom="Parent,0.5" />
+			<AnchorLayoutInput Name="TopImageShadowLayoutInput" Left="TopImageClip,0,-20" Top="TopImageClip,0,-20" Right="TopImageClip,1,20" Bottom="TopImageClip,1,20"
+											                   ContributesToHeight="false" ContributesToWidth="false" />
+			<AnchorLayoutInput Name="CenterCenterLayoutInput" Horizontal="Center" Vertical="Center" />
+
+			<AnchorLayoutInput Name="LogoLayoutInput" Right="TopImageContainer,1,-20" Top="TopImageContainer,1,-40" Bottom="TopImageContainer,1,40"
+			                   Left="TopImageContainer,.5"
+			                   Horizontal="Far" Vertical="Center" />
+
+			<FormLayoutInput Name="OverviewPanelLayoutInput" Left="Parent,0" Top="LogoContainer,1,10" Bottom="Parent,1" Right="Parent,0.98" />
+			<FormLayoutInput Name="OverviewPanelLayoutInputWithClearArt" Left="Parent,0" Top="LogoContainer,1,10" Bottom="Parent,1"
+			                 Right="Parent,0.95,-250" />
+
+
+			<app:RemoveTransparentEdgesTransformer Name="BlurImageTransformer" ApplyBlur="true" />
+
+			<Color Name="AttributeColor" Color="color://s:ROC_Attribute" />
+			<Color Name="ValueColor" Color="color://s:ROC_Value" />
+			<Font Name="ValueFont" Font="font://f:ROC_DetailValue" />
+
+			<Font Name="GenreFont" Font="font://f:ROC_Genre" />
+			<Font Name="OverviewFont" Font="font://f:ROC_ItemOverview" />
+			<Font Name="OverviewFocusFont" Font="font://f:ROC_ItemOverviewFocus" />
+			<Color Name="OverviewColor" Color="color://s:ROC_ItemOverview" />
+
+			<!--<AnchorLayoutInput Name="LogoLayoutInput" Left="TopImageClip,0,-20" Top="TopImageClip,1,-50" Bottom="TopImageClip,1,50"
+			                   Right="TopImageClip,.7"
+												 Horizontal="Near" Vertical="Center" />-->
+
+
+
+
+		</Locals>
+
+		<Rules>
+
+			<!--<Default Target="[Input.KeyInteractive]" Value="true" />
+			<Default Target="[Input.KeyFocusOnMouseEnter]" Value="true" />-->
+
+			<!--<Default Target="[TopImageLayoutInput.Left.MaximumPercent]" Value=".3" />-->
+
+
+			<Binding Target="[ThumbInfo.Item]" Source="[Item]" />
+			<Binding Target="[MediaIcons.Item]" Source="[Item]" />
+
+
+			<Condition Source="[TopImage.Visible]" ConditionOp="Equals" SourceValue="true" Target="[TopImageShadow.Visible]" Value="true" />
+			<Condition Source="[TopImage.Visible]" ConditionOp="Equals" SourceValue="true" Target="[TopImageShadow.LayoutInput]" Value="[TopImageShadowLayoutInput]" />
+			<Condition Source="[TopImage.Visible]" ConditionOp="Equals" SourceValue="true" Target="[MediaIcons.Visible]" Value="true" />
+
+			<Changed Source="[Item.PrimaryBackdropImage]" InitialEvaluate="true" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item.PrimaryBackdropImage]" ConditionOp="NotEquals" Value="null" />
+					<!--<Equality Source="[AppUtil.FolderConfig.ShowBackdropThumb]" ConditionOp="Equals" Value="true" />-->
+				</Conditions>
+				<Actions>
+					<Set Target="[TopImage.Content]" Value="[Item.PrimaryBackdropImage]" />
+					<!--<Set Target="[TopImage.Visible]" Value="true" />-->
+				</Actions>
+			</Changed>
+
+			<Changed Source="[Item.Series.PrimaryBackdropImage]" InitialEvaluate="true" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+					<Equality Source="[Item.Series]" ConditionOp="NotEquals" Value="null" />
+					<Equality Source="[Item.Series.PrimaryBackdropImage]" ConditionOp="NotEquals" Value="null" />
+					<!--<Equality Source="[AppUtil.FolderConfig.ShowBackdropThumb]" ConditionOp="Equals" Value="true" />-->
+				</Conditions>
+				<Actions>
+					<Set Target="[TopImage.Content]" Value="[Item.Series.PrimaryBackdropImage]" />
+					<!--<Set Target="[TopImage.Visible]" Value="true" />-->
+				</Actions>
+			</Changed>
+
+			<!--<Changed Source="[Item.PrimaryBackdropImage]" InitialEvaluate="true" ConditionLogicalOp="Or">
+				<Conditions>
+					<Equality Source="[Item.PrimaryBackdropImage]" ConditionOp="Equals" Value="null" />
+					<Equality Source="[AppUtil.FolderConfig.ShowBackdropThumb]" ConditionOp="Equals" Value="false" />
+				</Conditions>
+				<Actions>
+					<Set Target="[TopImage.Content]" Value="null" />
+					-->
+			<!--<Set Target="[TopImage.Visible]" Value="false" />-->
+			<!--
+					<Set Target="[TopImageShadow.Visible]" Value="false" />
+					<Set Target="[MediaIcons.Visible]" Value="false" />
+				</Actions>
+			</Changed>-->
+
+			<Default Target="[TopImage.Content]" Value="null" />
+
+			<Changed Source="[AppUtil.FolderConfig.ShowBackdropThumb]" InitialEvaluate="true" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[AppUtil.FolderConfig.ShowBackdropThumb]" ConditionOp="Equals" Value="false" />
+				</Conditions>
+				<Actions>
+					<Set Target="[TopImageShadow.LayoutInput]" Value="[CenterCenterLayoutInput]" />
+					<Set Target="[TopImageShadow.Visible]" Value="false" />
+					<Set Target="[TopImage.Visible]" Value="false" />
+				</Actions>
+			</Changed>
+
+			<Changed Source="[AppUtil.FolderConfig.ShowBackdropThumb]" InitialEvaluate="true" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[AppUtil.FolderConfig.ShowBackdropThumb]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[TopImage.Content]" ConditionOp="NotEquals" Value="null" />
+				</Conditions>
+				<Actions>
+					<Set Target="[TopImage.Visible]" Value="true" />
+					<Set Target="[TopImageShadow.Visible]" Value="true" />
+					<Set Target="[TopImageShadow.LayoutInput]" Value="[TopImageShadowLayoutInput]" />
+				</Actions>
+			</Changed>
+
+			<Changed Source="[TopImage.Content]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[AppUtil.FolderConfig.ShowBackdropThumb]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[TopImage.Content]" ConditionOp="NotEquals" Value="null" />
+				</Conditions>
+				<Actions>
+					<Set Target="[TopImage.Visible]" Value="true" />
+					<Set Target="[TopImageShadow.Visible]" Value="true" />
+					<Set Target="[TopImageShadow.LayoutInput]" Value="[TopImageShadowLayoutInput]" />
+				</Actions>
+			</Changed>
+
+			<Changed Source="[TopImage.Content]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[TopImage.Content]" ConditionOp="Equals" Value="null" />
+				</Conditions>
+				<Actions>
+					<!--<Set Target="[TopImageShadow.LayoutInput]" Value="[TopImageShadowLayoutInput]" />-->
+					<Set Target="[TopImage.Visible]" Value="false" />
+				</Actions>
+			</Changed>
+
+
+
+			<Condition Source="[Item.HasLogoImage]" ConditionOp="Equals" SourceValue="true" ConditionLogicalOp="And">
+				<!--<Conditions>
+					<Equality Source="[Item.LogoImage]" ConditionOp="NotEquals" Value="null" />
+				</Conditions>-->
+				<Actions>
+					<Set Target="[Logo.Item]" Value="[Item]" ExclusiveApply="true" />
+					<!--<Set Target="[Logo.ForcedImage]" Value="null" ExclusiveApply="true" />-->
+					<Set Target="[Logo.Visible]" Value="true" />
+				</Actions>
+			</Condition>
+
+			<Condition Source="[Item.HasLogoImage]" ConditionOp="Equals" SourceValue="false" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[ParentFolder]" ConditionOp="NotEquals" Value="null" />
+					<Equality Source="[ParentFolder.HasLogoImage]" ConditionOp="Equals" Value="true" />
+					<!--<Equality Source="[ParentFolder.LogoImage]" ConditionOp="NotEquals" Value="null" />-->
+				</Conditions>
+				<Actions>
+					<Set Target="[Logo.Item]" Value="null" ExclusiveApply="true" />
+					<Set Target="[Logo.ForcedImage]" Value="[ParentFolder.LogoImage]" ExclusiveApply="true" />
+
+					<!--Show current item's name, plus parent's logo-->
+
+					<Set Target="[Logo.Visible]" Value="true" />
+				</Actions>
+			</Condition>
+
+			<Condition Source="[Item.HasLogoImage]" ConditionOp="Equals" SourceValue="false" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+					<Equality Source="[Item.PhysicalParent]" ConditionOp="NotEquals" Value="null" />
+					<Equality Source="[Item.PhysicalParent.HasLogoImage]" ConditionOp="Equals" Value="true" />
+					<!--<Equality Source="[Item.PhysicalParent.LogoImage]" ConditionOp="NotEquals" Value="null" />-->
+				</Conditions>
+				<Actions>
+					<Set Target="[Logo.Item]" Value="null" ExclusiveApply="true" />
+					<Set Target="[Logo.ForcedImage]" Value="[Item.PhysicalParent.LogoImage]" ExclusiveApply="true" />
+
+					<!--Show current item's name, plus parent's logo-->
+
+					<Set Target="[Logo.Visible]" Value="true" />
+				</Actions>
+			</Condition>
+
+
+
+
+			<Binding Target="[StudioRepeater.Source]" Source="[Item.StudioItems]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item.ItemTypeString]" ConditionOp="NotEquals" Value="Episode" />
+				</Conditions>
+			</Binding>
+
+
+			<Binding Source="[Item.Overview]" Target="[Summary.Text]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+				</Conditions>
+			</Binding>
+
+			<Binding Target="[MIL.Item]" Source="[Item]" />
+
+
+
+
+
+			<Rule ConditionLogicalOp="And">
+				<Conditions>
+					<IsValid Source="[ClearArt]" />
+					<Equality Source="[Item.HasArtImage]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[ClearArt.Visible]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[ClearArt.Item]" ConditionOp="NotEquals" Value="null" />
+				</Conditions>
+				<Actions>
+					<!--<DebugTrace Message="item {0} has art image and clearart is visible">
+						<Params>
+							<ObjectPath ObjectPath="[Item.Name]" />
+						</Params>
+					</DebugTrace>-->
+
+					<Set Target="[OverviewPanel.LayoutInput]" Value="[OverviewPanelLayoutInputWithClearArt]" />
+				</Actions>
+			</Rule>
+			<Binding Target="[OverviewPanel.LayoutInput]" Source="[OverviewPanelLayoutInput]" />
+
+
+			<!--<Changed Source="[AppUtil.Config.ThumbViewScrollerCurved]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[AppUtil.Config.ThumbViewScrollerCurved]" ConditionOp="Equals" Value="true" />
+				</Conditions>
+
+				<Actions>
+
+					<Invoke Target="[Scroller.ForceRefresh]" />
+
+				</Actions>
+			</Changed>-->
+
+		</Rules>
+
+		<Content>
+			<Panel Layout="Form" Navigation="PreferFocusOrder">
+				<LayoutInput>
+					<FormLayoutInput Horizontal="Fill" Vertical="Fill" />
+				</LayoutInput>
+
+				<Children>
+
+					<ColorFill Content="Transparent" Name="InfoPanel" LayoutInput="[InfoPanelLayoutInput]">
+						<Layout>
+							<AnchorLayout SizeToHorizontalChildren="false" SizeToVerticalChildren="false" />
+						</Layout>
+						<Children>
+
+							<Panel Layout="VerticalFlow" Name="LogoContainer" LayoutInput="[LogoLayoutInput]">
+								<Children>
+									<art:ClearLogo Name="Logo" Item="null" AddShadow="true" AppUtil="[AppUtil]"
+									               Visible="false" MaximumSize="300,90" />
+
+								</Children>
+							</Panel>
+
+							<ColorFill Content="Transparent" Name="TopImageContainer" LayoutInput="[TopImageLayoutInput]" Visible="true"
+												 CenterPointPercent=".5,.5,.5" Rotation="35deg;0,1,0">
+								<Layout>
+									<AnchorLayout SizeToHorizontalChildren="true" SizeToVerticalChildren="true" />
+								</Layout>
+								<Children>
+
+									<Clip Name="TopImageClip" Orientation="Vertical" FadeSize="2" ShowNear="true" ShowFar="true">
+										<Children>
+											<Graphic Name="TopImage" MaintainAspectRatio="true" CenterPointPercent=".5,.5,.5"
+																	Visible="false">
+												<LayoutInput>
+													<AnchorLayoutInput Right="Parent,1" Top="Parent,0" Bottom="Parent,1" />
+												</LayoutInput>
+												<Animations>
+													<Animation Animation="animation://anim:ContentChangeShow.Zoom.Medium" />
+													<Animation Animation="animation://anim:ContentChangeHide.Alpha.Fast" />
+													<Animation Animation="animation://anim:Show.Zoom.Medium" />
+													<Animation Animation="animation://anim:Hide.Alpha.Medium" />
+												</Animations>
+												<Children>
+
+													<tb:MediaCoverIconsOverlay Name="MediaIcons" Item="[Item]" Application="[Application]" Margins="2,2,2,2" />
+
+												</Children>
+											</Graphic>
+										</Children>
+									</Clip>
+
+									<Graphic Name="TopImageShadow" Content="image://il:BlurredDiffuser" MaintainAspectRatio="false" CenterPointPercent=".5,.5,.5" Alpha=".8"
+																	Visible="false">
+										<Animations>
+											<Animation Animation="animation://anim:ContentChangeShow.Zoom.Medium" />
+											<Animation Animation="animation://anim:ContentChangeHide.Alpha.Fast" />
+											<Animation Animation="animation://anim:Show.Zoom.Medium" />
+											<Animation Animation="animation://anim:Hide.Alpha.Medium" />
+										</Animations>
+									</Graphic>
+
+								</Children>
+							</ColorFill>
+
+							<me:ThumbInfo Name="ThumbInfo"		Application="[Application]" Folder="[Folder]" AppUtil="[AppUtil]" Config="[Config]" Item="[Item]" ParentFolder="[ParentFolder]" ShowLogo="false">
+								<LayoutInput>
+									<AnchorLayoutInput Left="Parent,0" Bottom="OverviewPanel,0,-10" Right="TopImageContainer,0,-20" Horizontal="Near" Vertical="Far"
+									                   ContributesToHeight="false" ContributesToWidth="false" />
+								</LayoutInput>
+							</me:ThumbInfo>
+
+							<ColorFill Content="Transparent" Layout="Dock" Name="OverviewPanel">
+								<LayoutInput>
+									<AnchorLayoutInput Left="Parent,0" Top="LogoContainer,1,10" Bottom="Parent,1,-10" />
+								</LayoutInput>
+								<Children>
+
+									<Clip Orientation="Vertical" FadeSize="1" ShowNear="true" ShowFar="true">
+										<LayoutInput>
+											<DockLayoutInput Position="Client" Alignment="Near" />
+										</LayoutInput>
+										<Children>
+											<as:ScrollableText Name="Summary" Font="[OverviewFont]" FocusFont="[OverviewFocusFont]"
+											                   Color="[OverviewColor]"
+											                   FocusColor="[OverviewColor]"
+											                   AutoScrollText="[Application.Config.AutoScrollText]"
+											                   ScrollSpeed="[Application.Config.AutoScrollSpeed]"
+											                   ScrollDelay="[Application.Config.AutoScrollDelay]"
+											                   ContentShowAnimation="animation://anim:ContentChangeShow.Alpha.Fast"
+											                   ContentHideAnimation="animation://anim:ContentChangeHide.Alpha.Fast"
+											                   Margins="0,5,0,10">
+											</as:ScrollableText>
+										</Children>
+									</Clip>
+
+
+									<Panel Name="Studio" MaximumSize="250,55" Layout="Scale">
+										<LayoutInput>
+											<DockLayoutInput Position="Bottom" Alignment="Near" />
+										</LayoutInput>
+										<Children>
+											<Repeater Name="StudioRepeater" Source="[Item.StudioItems]">
+												<Layout>
+													<FlowLayout Orientation="Horizontal" ItemAlignment="Center" Spacing="10,0" />
+												</Layout>
+												<Content>
+													<tb:Studio StudioItem="[RepeatedItem!lib:StudioItemWrapper]" Name="StudioLogo" />
+												</Content>
+											</Repeater>
+										</Children>
+									</Panel>
+
+
+								</Children>
+							</ColorFill>
+						</Children>
+					</ColorFill>
+
+
+					<ColorFill Content="Transparent" Layout="Anchor"																LayoutInput="[Scroller_Layout]"
+>
+						<Children>
+
+							<!--Margins="-4,-6,-2,-6"-->
+							<Graphic Name="FrameBorder" Content="image://il:ListFocusBox" MaintainAspectRatio="false"
+							         ColorFilter="color://s:ROC_Menu_Text_Focus" Alpha="0.8" CenterPointPercent=".5,.5,.5" Scale="-1,1,1"
+											 MouseInteractive="false">
+								<LayoutInput>
+									<FormLayoutInput Top="Focus,0" Bottom="Focus,1" Horizontal="Fill"
+																		ContributesToHeight="false" ContributesToWidth="false" />
+								</LayoutInput>
+								<Animations>
+									<Animation Animation="animation://anim:ScrollerGlideFast" />
+									<Animation Animation="animation://anim:Size.Turbo" />
+									<Animation Animation="animation://anim:Show.Alpha.Medium" />
+									<Animation Animation="animation://anim:Hide.Alpha.Fast" />
+								</Animations>
+							</Graphic>
+
+							<ts:ThumbScroller Name="Scroller"
+																Application="[Application]"
+																Folder="[Folder]"
+					                      SourceList="[Folder.Children]"
+																AppUtil="[AppUtil]"
+																NavCount="[NavCount]"
+																Margins="0,0,5,0"
+																FocusOrder="0">
+
+								<LayoutInput>
+									<FormLayoutInput Horizontal="Fill" Vertical="Fill" />
+								</LayoutInput>
+							</ts:ThumbScroller>
+
+						</Children>
+					</ColorFill>
+
+
+					<mil:MediaInfoLine Name="MIL" Item="[Item]" Application="[Application]" AppUtil="[AppUtil]">
+						<LayoutInput>
+							<FormLayoutInput Horizontal="Far" Vertical="Far" />
+						</LayoutInput>
+					</mil:MediaInfoLine>
+
+					<!-- ClearArt - outside left-hand media info bar to allow right-bottom positioning -->
+					<art:ClearArt Name="ClearArt" Item="[Item]" LayoutInput="[LI_ClearArt]"
+					              AppUtil="[AppUtil]"
+					              MaximumSize="0,200" />
+
+					<!-- Rotated version of coverlay base overlay to darken area behind scroller -->
+					<Graphic Name="BaseOverlay" Content="image://s:ROC_ScrollerBaseOverlayImage" MaintainAspectRatio="false"
+				 SizingPolicy="SizeToConstraint" MouseInteractive="false" Alpha="[Config.BackdropOverlayOpacityAsAlpha]"
+									 CenterPointPercent=".5,.5,.5" Rotation="90deg;0,0,1" Margins="-600,0,0,0">
+						<LayoutInput>
+							<FormLayoutInput Horizontal="Near" Vertical="Fill" ContributesToHeight="false" ContributesToWidth="false" />
+						</LayoutInput>
+					</Graphic>
+
+					<!-- Filter to slightly diffuse backdrop wallpaper -->
+					<Graphic Name="Overlay" Content="image://s:ROC_BackdropOverlayImage" MaintainAspectRatio="false"
+					         SizingPolicy="SizeToConstraint" MouseInteractive="false" Alpha="[Config.BackdropOverlayOpacityAsAlpha]">
+						<LayoutInput>
+							<FormLayoutInput Horizontal="Fill" Vertical="Fill" ContributesToHeight="false" ContributesToWidth="false" />
+						</LayoutInput>
+					</Graphic>
+
+					<bd:RotatingBackdrop Name="Backdrop" Item="[Item]" Folder="[Folder]" Application="[Application]" AppUtil="[AppUtil]" />
+
+				</Children>
+			</Panel>
+		</Content>
+	</UI>
+
+	<UI Name="ThumbInfo">
+		<Properties>
+			<a:Application Name="Application" Application="$Required" />
+			<lib:FolderModel Name="Folder" FolderModel="$Required" />
+			<app:AppUtil Name="AppUtil" />
+			<app:MyConfig Name="Config" MyConfig="$Required" />
+			<lib:FolderModel Name="ParentFolder" FolderModel="null" />
+			<cor:Boolean Name="ShowLogo" Boolean="true" />
+
+			<lib:Item Name="Item" Item="$Required" />
+			<Color Name="AttributeColor" Color="color://s:ROC_Attribute" />
+			<Color Name="ValueColor" Color="color://s:ROC_Value" />
+			<Font Name="ValueFont" Font="font://f:ROC_DetailValue" />
+
+			<Font Name="GenreFont" Font="font://f:ROC_Genre" />
+		</Properties>
+
+		<Locals>
+			<cor:Int32 Name="NumberUnwatched" Int32="0" />
+
+		</Locals>
+
+		<Rules>
+			<Condition Source="[Item.HasLogoImage]" ConditionOp="Equals" SourceValue="true" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[ShowLogo]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[Item.ItemTypeString]" ConditionOp="NotEquals" Value="Season" />
+				</Conditions>
+				<Actions>
+					<Set Target="[Name.Visible]" Value="false" />
+				</Actions>
+			</Condition>
+
+
+
+			<!--<Condition Source="[Item.HasLogoImage]" ConditionOp="Equals" SourceValue="false" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+					<Equality Source="[Item.PhysicalParent]" ConditionOp="NotEquals" Value="null" />
+					<Equality Source="[Item.PhysicalParent.HasLogoImage]" ConditionOp="Equals" Value="true" />
+					-->
+			<!--<Equality Source="[Item.PhysicalParent.LogoImage]" ConditionOp="NotEquals" Value="null" />-->
+			<!--
+				</Conditions>
+				<Actions>
+					<Set Target="[Name.Visible]" Value="true" />
+				</Actions>
+			</Condition>-->
+
+			<!-- Standard ClearLOGO behaviour -->
+			<Binding Target="[Name.Content]" Source="[Item.Name]" />
+			<Binding Target="[Logo.Item]" Source="[Item]" />
+
+			<Condition Source="[Item.HasLogoImage]" ConditionOp="Equals" SourceValue="true" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+					<Equality Source="[ShowLogo]" ConditionOp="Equals" Value="true" />
+				</Conditions>
+				<Actions>
+					<!--<Set Target="[Logo.Item]" Value="[Item]" />-->
+					<!--<Set Target="[Name.Visible]" Value="false" />-->
+					<Set Target="[Logo.Visible]" Value="true" />
+				</Actions>
+			</Condition>
+
+			<Binding Source="[Item.Genres]" Target="[GenreList.SourceData]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+				</Conditions>
+			</Binding>
+
+			<Condition Source="[Item.Genres.Count]" ConditionOp="GreaterThan" SourceValue="0"
+			           Target="[GenreList.Visible]"
+			           Value="true" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+					<IsValid Source="[Item.Genres]" />
+				</Conditions>
+			</Condition>
+
+			<Binding Source="[Item]" Target="[DirectorList.Item]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+				</Conditions>
+			</Binding>
+
+			<Binding Source="[Item.Directors]" Target="[DirectorList.SourceData]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+				</Conditions>
+			</Binding>
+
+			<Condition Source="[Item.Directors.Count]" ConditionOp="GreaterThan" SourceValue="0"
+			           Target="[DirectorList.Visible]"
+			           Value="true" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+					<IsValid Source="[Item.Directors]" />
+				</Conditions>
+			</Condition>
+
+			<!-- For a TV Series, show how many seasons are available -->
+			<Binding Source="[Item!lib:FolderModel.Folder.Children.Count]" Target="[ChildrenCount.Content]"
+			         ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+					<Equality Source="[Item.ItemTypeString]" Value="Series" />
+					<Equality Source="[Item!lib:FolderModel.Folder.Children.Count]" ConditionOp="GreaterThan" Value="1" />
+				</Conditions>
+				<Transformer>
+					<FormatTransformer Format="{0} seasons" />
+				</Transformer>
+				<Actions>
+					<Set Target="[ChildrenCount.Visible]" Value="true" />
+				</Actions>
+			</Binding>
+
+			<Binding Source="[Item!lib:FolderModel.Folder.Children.Count]" Target="[ChildrenCount.Content]"
+			         ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+					<Equality Source="[Item.ItemTypeString]" Value="Series" />
+					<Equality Source="[Item!lib:FolderModel.Folder.Children.Count]" ConditionOp="Equals" Value="1" />
+				</Conditions>
+				<Transformer>
+					<FormatTransformer Format="{0} season" />
+				</Transformer>
+				<Actions>
+					<Set Target="[ChildrenCount.Visible]" Value="true" />
+				</Actions>
+			</Binding>
+
+
+			<Condition Source="[Item.ItemTypeString]" ConditionOp="Equals" SourceValue="Season" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+				</Conditions>
+				<Actions>
+					<Set Target="[ChildrenCount.Content]" Value="[Item!lib:FolderModel.Folder.Children.Count]">
+						<Transformer>
+							<FormatTransformer Format="{0} episodes" />
+						</Transformer>
+					</Set>
+
+					<Set Target="[ChildrenCount.Visible]" Value="true" />
+				</Actions>
+			</Condition>
+
+			<Rule ConditionLogicalOp="Or">
+				<Conditions>
+					<Equality Source="[Item.ItemTypeString]" Value="Series" />
+					<Equality Source="[Item.ItemTypeString]" Value="Season" />
+				</Conditions>
+				<Actions>
+					<Invoke Target="[AppUtil.GetUnwatchedCount]" folder="[Item!lib:FolderModel]"
+					        ResultTarget="[NumberUnwatched]" />
+				</Actions>
+			</Rule>
+
+			<Condition Source="[Item.HasLogoImage]" ConditionOp="Equals" SourceValue="true" Target="[ParentNamePanel.Visible]" Value="false"
+ />
+
+			<Rule ConditionLogicalOp="Or">
+				<Conditions>
+					<Equality Source="[Item.ItemTypeString]" Value="Season" />
+					<Equality Source="[Item.ItemTypeString]" Value="Episode" />
+				</Conditions>
+				<Actions>
+					<Set Target="[ParentNamePanel.Visible]" Value="true" />
+					<Set Target="[ParentLogo.Item]" Value="[Item.Series]" />
+					<Invoke Target="[AppUtil.GetSeriesName]" item="[Item]"
+					        ResultTarget="[ParentName.Content]" />
+				</Actions>
+			</Rule>
+
+			<Binding Target="[ParentName.Visible]" Source="[ParentLogo.Visible]">
+				<Transformer>
+					<BooleanTransformer Inverse="true" />
+				</Transformer>
+			</Binding>
+			<Binding Target="[ParentLogo.Visible]" Source="[Item.Series.HasLogoImage]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+					<Equality Source="[Item.Series]" ConditionOp="NotEquals" Value="null" />
+				</Conditions>
+			</Binding>
+
+			<Binding Target="[UnwatchedCount.Content]" Source="[NumberUnwatched]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[NumberUnwatched]" ConditionOp="GreaterThan" Value="0" />
+				</Conditions>
+				<Transformer>
+					<FormatTransformer Format="{0} unwatched" />
+				</Transformer>
+				<Actions>
+					<Set Target="[UnwatchedCount.Visible]" Value="true" />
+				</Actions>
+			</Binding>
+
+
+			<Rule ConditionLogicalOp="Or">
+				<Conditions>
+					<Equality Source="[ChildrenCount.Visible]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[UnwatchedCount.Visible]" ConditionOp="Equals" Value="true" />
+				</Conditions>
+				<Actions>
+					<Set Target="[ChildrenInfo.Visible]" Value="true" />
+				</Actions>
+			</Rule>
+
+			<Rule ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[ChildrenCount.Visible]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[UnwatchedCount.Visible]" ConditionOp="Equals" Value="true" />
+				</Conditions>
+				<Actions>
+					<Set Target="[ChildrenInfoDivider.Visible]" Value="true" />
+				</Actions>
+			</Rule>
+
+
+			<Condition Source="[Item.ItemTypeString]" ConditionOp="Equals" SourceValue="Series">
+				<Actions>
+					<Set Target="[Status.Content]" Value="[Item.Status]" />
+					<Set Target="[StatusPanel.Visible]" Value="true" />
+				</Actions>
+			</Condition>
+
+
+			<!-- If this item is an episode, show its first aired date in the list -->
+			<Condition Source="[Item.ItemTypeString]" ConditionOp="Equals" SourceValue="Episode">
+				<Actions>
+					<Invoke Target="[AppUtil.FormatFirstAired]" firstAired="[Item.FirstAired]"
+					        ResultTarget="[FirstAiredDate.Content]"
+					        InvokePolicy="Synchronous" />
+					<Set Target="[FirstAiredPanel.Visible]" Value="true" />
+
+					<Invoke Target="[AppUtil.GetLongFormattedSeasonNumber]" episode="[Item]"
+					        ResultTarget="[EpisodeSeasonNumber.Content]" />
+					<Set Target="[EpisodeSeasonNumber.Visible]" Value="true" />
+
+					<!--<Set Target="[EpisodeName.Content]" Value="[Item.Name]" />
+					<Set Target="[EpisodeName.Visible]" Value="true" />
+
+					<Set Target="[LogoOrNamePanel.Visible]" Value="false" />-->
+
+				</Actions>
+			</Condition>
+
+
+			<Binding Source="[Item.MpaaRating]" Target="[MPAARating.Value]" />
+
+
+			<Binding Source="[Item.ImdbRating]" Target="[StarRating.Value]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[Item]" ConditionOp="NotEquals" Value="null" />
+				</Conditions>
+			</Binding>
+
+		</Rules>
+
+		<Content>
+
+			<Panel Name="LogoEtc">
+				<Layout>
+					<DockLayout SizeToChildren="true" />
+				</Layout>
+				<Children>
+
+
+					<Panel Name="ParentNamePanel" Layout="VerticalFlow" Visible="false">
+						<LayoutInput>
+							<DockLayoutInput Position="Top" Alignment="Near" />
+						</LayoutInput>
+						<Children>
+							<art:ClearLogo Name="ParentLogo" Item="null" AppUtil="[AppUtil]" AddShadow="true" Visible="false"
+														 MaximumSize="280,80" />
+
+							<as:MarqueeText Name="ParentName"
+															Content="- not initialised -"
+															Font="font://f:ROC_Title"
+															Color="color://s:ROC_Title"
+															Visible="true">
+							</as:MarqueeText>
+						</Children>
+					</Panel>
+
+					<Panel Name="LogoOrNamePanel">
+						<LayoutInput>
+							<DockLayoutInput Position="Top" Alignment="Near" />
+						</LayoutInput>
+						<Layout>
+							<FlowLayout Orientation="Vertical" Spacing="5,5" StripAlignment="Near" />
+						</Layout>
+						<Children>
+
+							<Panel Name="TitlePanel" Layout="VerticalFlow">
+
+								<Children>
+
+									<art:ClearLogo Name="Logo" Item="[Item]" AppUtil="[AppUtil]" AddShadow="true" Visible="false"
+									               MaximumSize="400,90">
+									</art:ClearLogo>
+
+									<as:MarqueeText Name="Name"
+									                Content="- not initialised -"
+									                Font="font://f:ROC_Title"
+									                Color="color://s:ROC_Title"
+									                Visible="true">
+									</as:MarqueeText>
+								</Children>
+							</Panel>
+
+							<Panel>
+								<Layout>
+									<FlowLayout Orientation="Horizontal" ItemAlignment="Center" Spacing="10,0" />
+								</Layout>
+								<Children>
+
+									<mp:MPAARating Name="MPAARating" Value="[Item.MpaaRating]" MaximumSize="0,55">
+									</mp:MPAARating>
+
+									<sr:FlexiStarRating Name="StarRating" Value="[Item.ImdbRating]"
+																			Visible="[AppUtil.Config.DisplayInfoImdbRating]">
+									</sr:FlexiStarRating>
+
+								</Children>
+							</Panel>
+
+							<gl:GenreList Name="GenreList" Application="[Application]" SourceData="[Item.Genres]"
+														Item="[Item]"
+														Font="[GenreFont]" Color="[ValueColor]" WordWrap="true" Visible="false" />
+
+							<dl:DirectorList Name="DirectorList" Application="[Application]" Item="[Item]" SourceData="[Item.Directors]" />
+
+							<Panel Name="StatusPanel" Layout="HorizontalFlow" Visible="false">
+								<Children>
+									<Text Content="Status" Font="[ValueFont]" Color="[AttributeColor]" Margins="0,0,10,0" />
+									<Text Name="Status" Font="[ValueFont]" Color="[ValueColor]" />
+								</Children>
+							</Panel>
+
+							<Text Name="EpisodeSeasonNumber" Content="" Font="[ValueFont]" Color="[ValueColor]" WordWrap="true"
+										Visible="false" />
+
+							<Panel Name="FirstAiredPanel" Layout="HorizontalFlow" Visible="false">
+								<Children>
+									<Text Content="First aired" Font="[ValueFont]" Color="[AttributeColor]" Margins="0,0,10,0" />
+									<Text Name="FirstAiredDate" Font="[ValueFont]" Color="[ValueColor]" />
+								</Children>
+							</Panel>
+
+							<ColorFill Content="Transparent" Name="ChildrenInfo" Layout="HorizontalFlow" Visible="false">
+								<Children>
+									<Text Name="ChildrenCount" Content="-ChildrenCount-" Font="[ValueFont]" Color="[ValueColor]" Visible="false" />
+									<Text Name="ChildrenInfoDivider" Content="■" Color="color://s:ROC_Divider" Font="Segoe UI, 10"
+												Margins="5,0,5,0" Visible="false" />
+									<Text Name="UnwatchedCount" Content="-UnwatchedCount-" Font="[ValueFont]" Color="[ValueColor]"
+												Visible="false" />
+								</Children>
+							</ColorFill>
+
+							<ColorFill Content="Transparent" Name="SeasonInfo" Layout="HorizontalFlow" Visible="false">
+								<Children>
+									<Text Name="SeasonNumber" Content="" Font="[GenreFont]" Color="[ValueColor]" />
+									<Text Content="■" Color="color://s:ROC_Divider" Font="Segoe UI, 10" Margins="5,0,5,0" />
+									<Text Name="EpisodeCount" Content="" Font="[GenreFont]" Color="[ValueColor]" />
+								</Children>
+							</ColorFill>
+
+						</Children>
+					</Panel>
+
+
+				</Children>
+			</Panel>
+
+
+		</Content>
+	</UI>
+</Mcml>
