@@ -58,7 +58,7 @@
     <Content>
       <Panel Layout="HorizontalFlow" Name="Panel" Visible="true">
         <Children>
-          <Text Name="StandOutLabelText" Color="[FinalLabelStandOutColor]" Font="[FinalLabelStandOutFont]"/>
+          <Text Name="StandOutLabelText" Color="[FinalLabelStandOutColor]" Font="[FinalLabelStandOutFont]" Margins="0,2,0,0"/>
           <Text Name="StandOutValueText" Color="[FinalValueStandOutColor]" Font="[FinalValueStandOutFont]"/>
         </Children>
       </Panel>

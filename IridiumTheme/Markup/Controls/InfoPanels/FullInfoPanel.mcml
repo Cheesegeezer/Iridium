@@ -602,7 +602,7 @@
           <IsValid Source="[Item.PhysicalParent]"/>
         </Conditions>
       </Binding>
-      <Binding Source="[Item.PhysicalParent.ImdbRating]" Target="[StarRating.RTValue]">
+      <Binding Source="[Item.PhysicalParent.CriticRating]" Target="[StarRating.RTValue]">
         <Conditions>
           <IsValid Source="[Item.PhysicalParent]"/>
         </Conditions>

@@ -66,7 +66,7 @@ namespace Iridium
                     CustomResourceManager.AppendFonts("Iridium", Resources.Fonts, Resources.Fonts);
                     CustomResourceManager.AppendStyles("Iridium", Resources.Colors, Resources.Colors);
 
-                    Registration.CheckRegistration(this.Version);
+                    //Registration.CheckRegistration(this.Version);
                     //CustomStrings Editable by user - need to implement
                     kernel.StringData.AddStringData(MyStrings.FromFile(LocalizedStringData.GetFileName("Iridium-")));
 

@@ -80,4 +80,40 @@
     </Content>
   </UI>
 
+	<UI Name="DummyButtonSelector">
+		<Properties>
+			<ICommand Name="Command" ICommand="$Required"/>
+			<Image Name="Image" Image="$Required"/>
+			<cor:Boolean Name="Enabled" Boolean="true" />
+			<Size Name="Size" Size="25,25" />
+			<Color Name="OverlayColor" Color="Transparent"/>
+		</Properties>
+
+		<Locals>
+			<ClickHandler Name="Clicker" Command="[Command]"/>
+			<Image Name="FocusImage" Image="null" />
+			<Image Name="BlankImage" Image="null" />
+		</Locals>
+
+		<Rules>
+			<Binding Source="[Enabled]" Target="[Input.KeyInteractive]" />
+
+			<Condition Source="[Enabled]" ConditionOp="Equals" SourceValue="false" Target="[BoxImage.Alpha]" Value="0.3" />
+
+			<Condition Source="[Input.KeyFocus]" SourceValue="true">
+				<Actions>
+					<Set Target="[BoxImage.Content]" Value="[FocusImage]"/>
+				</Actions>
+			</Condition>
+		</Rules>
+
+		<Content>
+			<Graphic Name="BoxImage" Alpha="1" Content="[BlankImage]" ColorFilter="[OverlayColor]" SizingPolicy="SizeToChildren" Padding="2,2,2,2" MinimumSize="[Size]" >
+				<Children>
+					<Graphic Content="[Image]" Margins="6,6,6,6" MaintainAspectRatio="true" />
+				</Children>
+			</Graphic>
+		</Content>
+	</UI>
+
 </Mcml>

@@ -34,7 +34,7 @@
       <Color Name="XC_NoRALPopupItem" Color="111,184,227"/>
       <Font Name="XF_RALItemTitle" Font="Futurist Fixed-width,10"/>
       <Color Name="XC_RALItemTitle" Color="111,184,227"/>
-      <Color Name="XC_RALPanelFilterColor" Color="111,184,227"/>
+      <Color Name="XC_RALPanelFilterColor" Color="0,155,255"/>
       <cor:Single Name="RALPanelAlpha" Single="0.8"/>
       <Font Name="RALOverviewFont" Font="Segoe UI Semilight, 12"/>
       <Color Name="RALOverviewColor" Color="230,230,230"/>
@@ -90,9 +90,9 @@
       <Color Name="FinalDetailsInfoLabelColor" Color="240,240,240" />
       <Font Name="FinalDetailsInfoValueFont" Font="Segoe UI SemiLight,14" />
       <Color Name="FinalDetailsInfoValueColor" Color="255,255,255" />
-      <Font Name="FinalDetailsStandOutLabelFont" Font="Futurist Fixed-width,12" />
+      <Font Name="FinalDetailsStandOutLabelFont" Font="Futurist Fixed-width,14" />
       <Color Name="FinalDetailsStandOutLabelColor" Color="240,240,240" />
-      <Font Name="FinalDetailsStandOutValueFont" Font="Futurist Fixed-width,12" />
+      <Font Name="FinalDetailsStandOutValueFont" Font="Futurist Fixed-width,16" />
       <Color Name="FinalDetailsStandOutValueColor" Color="0,155,255" />
       <Font Name="FinalDetailsGenresFont" Font="Futurist Fixed-width,14" />
       <Color Name="FinalDetailsGenresColor" Color="240,240,240" />
@@ -101,7 +101,7 @@
   <!--POSTER VIEW-->
       <!--FONTS-->
       <Font Name="PosterTitleFont" Font="InterBold,28" />
-      <Font Name="PosterOverviewFont" Font="InterOne,16" />
+      <Font Name="PosterOverviewFont" Font="Segoe UI SemiLight, 16" />
       <Font Name="PosterTagLineFont" Font="Impact,26, Bold" />
       <Font Name="PosterShadowTagLineFont" Font="Impact,26, Bold" />
       <Font Name="PosterDetailsInfoLabelFont" Font="InterBold,18" />
@@ -109,7 +109,7 @@
       <Font Name="PosterSmallFont" Font="InterBold,20" />
       <!--COLORS-->
       <Color Name="PosterTitleColor" Color="255,255,255" />
-      <Color Name="PosterOverviewTextColor" Color="230,230,230" />
+      <Color Name="PosterOverviewTextColor" Color="240,240,240" />
       <Color Name="PosterOverviewCloudBGColor" Color="0,0,0" />
       <Color Name="PosterTaglineColor" Color="255,255,190" />
       <Color Name="PosterShadowTaglineColor" Color="25,25,25" />
@@ -140,24 +140,26 @@
   <!--FULL DETAILS VIEW-->
       <Font Name="ListScrollerFont" Font="Neutra Text,18"/>
       <Font Name="DetailsParentFolderHeadingFont" Font="InterBold,22" />
-      <Font Name="DetailsOverviewFont" Font="Segoe UI SemiLight, 14"/>
-      <Color Name="DetailsOverviewColor" Color="230,230,230"/>
+      <Font Name="DetailsOverviewFont" Font="Segoe UI SemiLight, 20"/>
+      <Color Name="DetailsOverviewColor" Color="240,240,240"/>
 
   <!--DETAILS QUICKLIST VIEW-->
       <Font Name="XF_DQLFolderTitle" Font="BebasNeue,24" />
       <Color Name="XC_DQLFolderTitleColor" Color="111,184,227"/>
-      <Font Name="XF_DQLUnselected" Font="Segoe UI SemiLight, 24" />
-      <Font Name="XF_DQLSelected" Font="Futurist Fixed-width,20" />
+      <Font Name="XF_DQLUnselected" Font="Segoe UI SemiLight, 20" />
+      <Font Name="XF_DQLSelected" Font="Segoe UI SemiLight,20" />
       <Color Name="XC_DQLUnselected" Color="150,150,150"/>
       <Color Name="XC_DQLHighlighted" Color="0,155,255"/>
       <Color Name="XC_DQLHighlightedBG" Color="230,230,230"/>
       <Color Name="QLDividerColor" Color="111,184,227" />
 
   <!--THUMB VIEW-->
-      <Font Name="ThumbTitleFont" Font="InterBold, 20" />
+      <Font Name="ThumbTitleFont" Font="Xolonium Bold, 20" />
       <Color Name="ThumbTitleColor" Color="255,255,255" />
-      <Font Name="WaveSelected" FontName="InterBold" FontSize="32" />
-      <Font Name="WaveNotSelected" FontName="InterOne" FontSize="24" />
+	  <Font Name="ThumbItemTitleFont" Font="Segoe UI SemiLight, 22, Bold" />
+	  <Color Name="ThumbItemTitleColor" Color="240,240,240" />
+	  <Font Name="ThumbOverviewFont" Font="Segoe UI SemiLight, 16"/>
+	  <Color Name="ThumbOverviewColor" Color="240,240,240"/>
 
   <!--BOTTOM BAR FONTS-->
       <!--FONTS-->

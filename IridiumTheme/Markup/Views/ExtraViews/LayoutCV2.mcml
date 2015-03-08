@@ -448,7 +448,7 @@
         <Actions>
           <Set Target="[Main.Scale]" Value="1.2,1.2,1"/>
           <Set Target="[MainArt.Rotation]" Value="[DefaultRotation]"/>
-          <Set Target="[Mirror.Margins]" Value="-8,-10,0,0" />
+          <Set Target="[Mirror.Margins]" Value="0,-10,0,0" />
           <Set Target="[Mirror.Rotation]" Value="[DefaultRotation]"/>
           <Set Target="[HDIndicator.Rotation]" Value="[DefaultRotation]"/>
           <Set Target="[HDImage.Margins]" Value="0,0,5,5"/>
@@ -567,7 +567,7 @@
 
     <Content>
 
-      <Graphic Name="Main" Content="[BlankImage]" CenterPointPercent="0.5,1,0.5" Rotation="52deg;-0.2,1,0" Margins="25,-15,-120,0" >
+      <Graphic Name="Main" Content="[BlankImage]" CenterPointPercent="0.5,1,0.5" Rotation="52deg;-0.2,1,0" Margins="25,-15,-75,0" >
         <Layout>
           <AnchorLayout SizeToVerticalChildren="true"/>
           <!--<FlowLayout Orientation="Vertical" Spacing="0,-5"/>-->
@@ -678,7 +678,7 @@
                       <AnchorLayoutInput Left="Parent,0,-1" Right="Parent,1,1" Vertical="Fill"/>
                     </LayoutInput>
                     <Children>
-                      <Graphic Name="MainArt" SizingPolicy="SizeToConstraint" MaintainAspectRatio="true" Content="[Item.PreferredImageSmall]" CenterPointPercent="0.5,1,0.5" Rotation="-60deg;0,1,0"  />
+                      <Graphic Name="MainArt" SizingPolicy="SizeToConstraint" MaintainAspectRatio="true" Content="[Item.PreferredImageSmall]" CenterPointPercent="0.5,1,0.5" Rotation="-30deg;0,1,0"  />
                     </Children>
                   </Clip>
                 </Children>
@@ -687,7 +687,7 @@
               <Text Name="BelowLabelPanel" Margins="0,5,0,-3" Alpha="1" Color="color://is:PosterTitleColor"  Font="[TopLabelFont]"
                     Content="[Item.Name]" MaximumLines="2" WordWrap="true" HorizontalAlignment="Near" MinimumSize="0,60"></Text>
 
-              <Clip Name="Mirror" FadeAmount="1" FadeSize="50" NearOffset="0" Padding="5,5,5,5" Orientation="Vertical" ShowFar="false" Margins="30,-4,0,0" Rotation="-55deg;0,1,0" >
+              <Clip Name="Mirror" FadeAmount="1" FadeSize="50" NearOffset="0" Padding="5,5,5,5" Orientation="Vertical" ShowFar="false" Margins="15,-4,0,0" Rotation="-30deg;0,1,0" >
                 <Layout>
                   <FlowLayout Orientation="Vertical" ItemAlignment="Center" />
                 </Layout>

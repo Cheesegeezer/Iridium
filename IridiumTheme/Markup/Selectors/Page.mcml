@@ -705,7 +705,7 @@
                 </Animations>
                 <Children>
 
-                  <Graphic FocusOrder="101" Navigation="ContainHorizontal,PreferFocusOrder,Row" Layout="HorizontalFlow"  MaximumSize="0,80" MinimumSize="0,80" SizingPolicy="SizeToChildren" Padding="0,15,0,13">
+                  <Graphic FocusOrder="101" Navigation="PreferFocusOrder" Layout="HorizontalFlow"  MaximumSize="0,80" MinimumSize="0,80" SizingPolicy="SizeToChildren" Padding="0,15,0,13">
                     <Layout>
                       <FlowLayout Orientation="Horizontal" ItemAlignment="Far"/>
                     </Layout>

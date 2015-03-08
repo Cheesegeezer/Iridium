@@ -5,129 +5,132 @@
       xmlns:a="assembly://MediaBrowser/MediaBrowser"
       xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
       xmlns:s="file://Styles_DoNotEdit.mcml"
-	    xmlns:f="file://Fonts_DoNotEdit.mcml"
+      xmlns:f="file://Fonts_DoNotEdit.mcml"
       xmlns:is="file://Iridium_Styles.mcml"
       xmlns:me="Me">
 
-  <Image Name="Concrete" Source="resx://Iridium/Iridium.Resources/Concrete" />
-  <Image Name="BlueHoneycomb" Source="resx://Iridium/Iridium.Resources/blue_honeycomb" />
-  <Image Name="BlankGraphic" Source="resx://MediaBrowser/MediaBrowser.Resources/BlankGraphic" />
-  <Image Name="rootBG" Source="resx://Iridium/Iridium.Resources/rootBG" />
+	<Image Name="Concrete" Source="resx://Iridium/Iridium.Resources/Concrete" />
+	<Image Name="BlueHoneycomb" Source="resx://Iridium/Iridium.Resources/blue_honeycomb" />
+	<Image Name="BlankGraphic" Source="resx://MediaBrowser/MediaBrowser.Resources/BlankGraphic" />
+	<Image Name="rootBG" Source="resx://Iridium/Iridium.Resources/rootBG" />
 
-  <Image Name="MainVFBG" Source="resx://Iridium/Iridium.Resources/MainVFBG" />
-  <Image Name="RALScrollerBG" Source="resx://Iridium/Iridium.Resources/RALScrollerBG" />
-  <Image Name="PlayButton" Source="resx://Iridium/Iridium.Resources/button_play" />
-  <Image Name="PlayButtonSmall" Source="resx://Iridium/Iridium.Resources/button_playsmall" />
-  <Image Name="MenuTextGlow" Source="resx://Iridium/Iridium.Resources/glowshine" />
-  <Image Name="PanelBG" Source="resx://Iridium/Iridium.Resources/PanelBG" />
-  <Image Name="BackgroundOverlay" Source="resx://Iridium/Iridium.Resources/BGOverlay" />
-  <Image Name="TestBanner" Source="resx://Iridium/Iridium.Resources/testbanner" />
-  <Image Name="FocusFrame" Source="resx://Iridium/Iridium.Resources/focusframe" />
-  <Image Name="SelectedTitleBG" Source="resx://Iridium/Iridium.Resources/SelectedTitleBG"/>
-  <Image Name="GlassBG" Source="resx://Iridium/Iridium.Resources/GlassBG"/>
-  
-  <Image Name="rootBGGlass" Source="resx://Iridium/Iridium.Resources/rootBGGlass" />
-  <Image Name="rootBGglow" Source="resx://Iridium/Iridium.Resources/rootbg_glow" /> 
-  <Image Name="rootBGoverlay" Source="resx://Iridium/Iridium.Resources/rootbgoverlay" />
-  <Image Name="RootDownArrow" Source="resx://Iridium/Iridium.Resources/RootDownArrow" />
-  <Image Name="InfoPanel" Source="resx://Iridium/Iridium.Resources/InfoPanel" />
-  <Image Name="InfoPanelTime" Source="resx://Iridium/Iridium.Resources/InfoPanelTime" />
-  <Image Name="HRALPanel" Source="resx://Iridium/Iridium.Resources/RALSelectorPanel" />
-  <Image Name="RALBG" Source="resx://Iridium/Iridium.Resources/ralBG" />
-  <Image Name="RALBGShadow" Source="resx://Iridium/Iridium.Resources/ralBG_shadow" />
+	<Image Name="MainVFBG" Source="resx://Iridium/Iridium.Resources/MainVFBG" />
+	<Image Name="RALScrollerBG" Source="resx://Iridium/Iridium.Resources/RALScrollerBG" />
+	<Image Name="PlayButton" Source="resx://Iridium/Iridium.Resources/button_play" />
+	<Image Name="PlayButtonSmall" Source="resx://Iridium/Iridium.Resources/button_playsmall" />
+	<Image Name="MenuTextGlow" Source="resx://Iridium/Iridium.Resources/glowshine" />
+	<Image Name="PanelBG" Source="resx://Iridium/Iridium.Resources/PanelBG" />
+	<Image Name="BackgroundOverlay" Source="resx://Iridium/Iridium.Resources/BGOverlay" />
+	<Image Name="TestBanner" Source="resx://Iridium/Iridium.Resources/testbanner" />
+	<Image Name="FocusFrame" Source="resx://Iridium/Iridium.Resources/focusframe" />
+	<Image Name="SelectedTitleBG" Source="resx://Iridium/Iridium.Resources/SelectedTitleBG" />
+	<Image Name="GlassBG" Source="resx://Iridium/Iridium.Resources/GlassBG" />
+	<Image Name="ListViewBG" Source="resx://Iridium/Iridium.Resources/listviewBG" />
+	<Image Name="LogoViewBG1" Source="resx://Iridium/Iridium.Resources/logoviewBG1" />
+	<Image Name="LogoViewBG2" Source="resx://Iridium/Iridium.Resources/logoviewBG2" />
 
-  <Image Name="configfocuson" Source="resx://Iridium/Iridium.Resources/configfocuson" />
-  <Image Name="configfocus" Source="resx://Iridium/Iridium.Resources/configfocus" />
-  <Image Name="IconNowPlay" Source="resx://Iridium/Iridium.Resources/IconNowPlay" />
-  <Image Name="IconNowPlaySmall" Source="resx://Iridium/Iridium.Resources/IconNowPlaySmall" />
-  <Image Name="IconHome" Source="resx://Iridium/Iridium.Resources/IconHome" />
-  <Image Name="IconHomeSmall" Source="resx://Iridium/Iridium.Resources/IconHomeSmall" />
-  <Image Name="Gear" Source="resx://Iridium/Iridium.Resources/Gear" />
-  <Image Name="GearSmall" Source="resx://Iridium/Iridium.Resources/GearSmall" />
-  <Image Name="Lock" Source="resx://Iridium/Iridium.Resources/locked" />
-  <Image Name="Unlock" Source="resx://Iridium/Iridium.Resources/unlock" />
-  <Image Name="IconSearch" Source="resx://Iridium/Iridium.Resources/IconSearch" />
-  <Image Name="IconSearchSmall" Source="resx://Iridium/Iridium.Resources/IconSearchSmall" />
-  <Image Name="GlowLine" Source="resx://Iridium/Iridium.Resources/GlowLine" />
-  <Image Name="Tick" Source="resx://MediaBrowser/MediaBrowser.Resources/Tick"  />
-  <Image Name="BackgroundBlack"  Source="resx://Iridium/Iridium.Resources/BackgroundBlack" />
-  <Image Name="BackgroundDefault" Source="resx://MediaBrowser/MediaBrowser.Resources/BackgroundDefault" />
-  <Image Name="AddIcon" Source="resx://Iridium/Iridium.Resources/AddIcon"/>
-  <Image Name="AddIconSmall" Source="resx://Iridium/Iridium.Resources/AddIconSmall"/>
-  
-  <Image Name="AddShortlistIcon" Source="resx://Iridium/Iridium.Resources/AddShortlistIcon"/>
-  <Image Name="AddShortlistIconSmall" Source="resx://Iridium/Iridium.Resources/AddShortlistIconSmall"/>
-  <Image Name="ShortlistIcon" Source="resx://Iridium/Iridium.Resources/ShortlistIcon"/>
-  <Image Name="ShortlistIconSmall" Source="resx://Iridium/Iridium.Resources/ShortlistIconSmall"/>
+	<Image Name="rootBGGlass" Source="resx://Iridium/Iridium.Resources/rootBGGlass" />
+	<Image Name="rootBGglow" Source="resx://Iridium/Iridium.Resources/rootbg_glow" />
+	<Image Name="rootBGoverlay" Source="resx://Iridium/Iridium.Resources/rootbgoverlay" />
+	<Image Name="RootDownArrow" Source="resx://Iridium/Iridium.Resources/RootDownArrow" />
+	<Image Name="InfoPanel" Source="resx://Iridium/Iridium.Resources/InfoPanel" />
+	<Image Name="InfoPanelTime" Source="resx://Iridium/Iridium.Resources/InfoPanelTime" />
+	<Image Name="HRALPanel" Source="resx://Iridium/Iridium.Resources/RALSelectorPanel" />
+	<Image Name="RALBG" Source="resx://Iridium/Iridium.Resources/ralBG" />
+	<Image Name="RALBGShadow" Source="resx://Iridium/Iridium.Resources/ralBG_shadow" />
 
-  <Image Name="PrevBG"  Source="resx://Iridium/Iridium.Resources/PrevPanel" />
-  <Image Name="NextBG" Source="resx://Iridium/Iridium.Resources/NextPanel" />
+	<Image Name="configfocuson" Source="resx://Iridium/Iridium.Resources/configfocuson" />
+	<Image Name="configfocus" Source="resx://Iridium/Iridium.Resources/configfocus" />
+	<Image Name="IconNowPlay" Source="resx://Iridium/Iridium.Resources/IconNowPlay" />
+	<Image Name="IconNowPlaySmall" Source="resx://Iridium/Iridium.Resources/IconNowPlaySmall" />
+	<Image Name="IconHome" Source="resx://Iridium/Iridium.Resources/IconHome" />
+	<Image Name="IconHomeSmall" Source="resx://Iridium/Iridium.Resources/IconHomeSmall" />
+	<Image Name="Gear" Source="resx://Iridium/Iridium.Resources/Gear" />
+	<Image Name="GearSmall" Source="resx://Iridium/Iridium.Resources/GearSmall" />
+	<Image Name="Lock" Source="resx://Iridium/Iridium.Resources/locked" />
+	<Image Name="Unlock" Source="resx://Iridium/Iridium.Resources/unlock" />
+	<Image Name="IconSearch" Source="resx://Iridium/Iridium.Resources/IconSearch" />
+	<Image Name="IconSearchSmall" Source="resx://Iridium/Iridium.Resources/IconSearchSmall" />
+	<Image Name="GlowLine" Source="resx://Iridium/Iridium.Resources/GlowLine" />
+	<Image Name="Tick" Source="resx://MediaBrowser/MediaBrowser.Resources/Tick" />
+	<Image Name="BackgroundBlack" Source="resx://Iridium/Iridium.Resources/BackgroundBlack" />
+	<Image Name="BackgroundDefault" Source="resx://MediaBrowser/MediaBrowser.Resources/BackgroundDefault" />
+	<Image Name="AddIcon" Source="resx://Iridium/Iridium.Resources/AddIcon" />
+	<Image Name="AddIconSmall" Source="resx://Iridium/Iridium.Resources/AddIconSmall" />
 
-  <Image Name="ThumbsBG" Source="resx://Iridium/Iridium.Resources/ThumbPanelBlack" />
-  <Image Name="BottomBar" Source="resx://Iridium/Iridium.Resources/BottomInfoPane" />
+	<Image Name="AddShortlistIcon" Source="resx://Iridium/Iridium.Resources/AddShortlistIcon" />
+	<Image Name="AddShortlistIconSmall" Source="resx://Iridium/Iridium.Resources/AddShortlistIconSmall" />
+	<Image Name="ShortlistIcon" Source="resx://Iridium/Iridium.Resources/ShortlistIcon" />
+	<Image Name="ShortlistIconSmall" Source="resx://Iridium/Iridium.Resources/ShortlistIconSmall" />
 
-  <!--US RATING IMAGES-->
-  <Image Name="RatedG" Source="resx://Iridium/Iridium.Resources/rated_movie_G" />
-  <Image Name="RatedNC17" Source="resx://Iridium/Iridium.Resources/rated_movie_NC" />
-  <Image Name="RatedPG13" Source="resx://Iridium/Iridium.Resources/rated_movie_pg_13" />
-  <Image Name="RatedPG" Source="resx://Iridium/Iridium.Resources/rated_movie_PG" />
-  <Image Name="RatedR" Source="resx://Iridium/Iridium.Resources/rated_movie_R" />
-  <Image Name="RatedNR" Source="resx://Iridium/Iridium.Resources/rated_movie_NR" />
-  <Image Name="TV-14" Source="resx://Iridium/Iridium.Resources/rated_TV_14" />
-  <Image Name="TV-MA" Source="resx://Iridium/Iridium.Resources/rated_TV_MA" />
-  <Image Name="TV-PG" Source="resx://Iridium/Iridium.Resources/rated_TV_PG" />
-  <Image Name="TV-G" Source="resx://Iridium/Iridium.Resources/rated_TV_G" />
-  <Image Name="TV-Y" Source="resx://Iridium/Iridium.Resources/rated_TV_Y" />
-  <Image Name="TV-Y7" Source="resx://Iridium/Iridium.Resources/rated_TV_Y7" />
-  <Image Name="TV-Y7-FV" Source="resx://Iridium/Iridium.Resources/rated_TV_Y7_FV" />
-  
-  <Image Name="FullRatedG" Source="resx://Iridium/Iridium.Resources/rated_G_full" />
-  <Image Name="FullRatedNC17" Source="resx://Iridium/Iridium.Resources/rated_NC_full" />
-  <Image Name="FullRatedPG13" Source="resx://Iridium/Iridium.Resources/rated_PG_13_full" />
-  <Image Name="FullRatedPG" Source="resx://Iridium/Iridium.Resources/rated_PG_full" />
-  <Image Name="FullRatedR" Source="resx://Iridium/Iridium.Resources/rated_R_full" />
-  <Image Name="FullRatedNR" Source="resx://Iridium/Iridium.Resources/rated_NR_full" />
-  <Image Name="FullTV-14" Source="resx://Iridium/Iridium.Resources/rated_TV_14_full" />
-  <Image Name="FullTV-MA" Source="resx://Iridium/Iridium.Resources/rated_TV_MA_full" />
-  <Image Name="FullTV-PG" Source="resx://Iridium/Iridium.Resources/rated_TV_PG_full" />
-  <Image Name="FullTV-G" Source="resx://Iridium/Iridium.Resources/rated_TV_G_full" />
-  <Image Name="FullTV-Y" Source="resx://Iridium/Iridium.Resources/rated_TV_Y_full" />
-  <Image Name="FullTV-Y7" Source="resx://Iridium/Iridium.Resources/rated_TV_Y7_full" />
-  <Image Name="FullTV-Y7-FV" Source="resx://Iridium/Iridium.Resources/rated_TV_Y7_FV_full" />
-  
-  <!--UK RATING IMAGES-->
-  <Image Name="FullGB-U" Source="resx://Iridium/Iridium.Resources/rated_gb_U_full" />
-  <Image Name="FullGB-PG" Source="resx://Iridium/Iridium.Resources/rated_gb_PG_full" />
-  <Image Name="FullGB-12" Source="resx://Iridium/Iridium.Resources/rated_gb_12_full" />
-  <Image Name="FullGB-12A" Source="resx://Iridium/Iridium.Resources/rated_gb_12A_full" />
-  <Image Name="FullGB-15" Source="resx://Iridium/Iridium.Resources/rated_gb_15_full" />
-  <Image Name="FullGB-18" Source="resx://Iridium/Iridium.Resources/rated_gb_18_full" />
-  <Image Name="GB-U" Source="resx://Iridium/Iridium.Resources/rated_gb_U" />
-  <Image Name="GB-PG" Source="resx://Iridium/Iridium.Resources/rated_gb_PG" />
-  <Image Name="GB-12" Source="resx://Iridium/Iridium.Resources/rated_gb_12" />
-  <Image Name="GB-12A" Source="resx://Iridium/Iridium.Resources/rated_gb_12A" />
-  <Image Name="GB-15" Source="resx://Iridium/Iridium.Resources/rated_gb_15" />
-  <Image Name="GB-18" Source="resx://Iridium/Iridium.Resources/rated_gb_18" />
-  
-  <!--GAMING RATINGS-->
-  <Image Name="ESRB-EC" Source="resx://Iridium/Iridium.Resources/ESRB_EC" />
-  <Image Name="ESRB-E" Source="resx://Iridium/Iridium.Resources/ESRB_E" />
-  <Image Name="ESRB-E10" Source="resx://Iridium/Iridium.Resources/ESRB_E10" />
-  <Image Name="ESRB-T" Source="resx://Iridium/Iridium.Resources/ESRB_T" />
-  <Image Name="ESRB-M" Source="resx://Iridium/Iridium.Resources/ESRB_M" />
-  <Image Name="ESRB-AO" Source="resx://Iridium/Iridium.Resources/ESRB_AO" />
-  <Image Name="ESRB-RP" Source="resx://Iridium/Iridium.Resources/ESRB_RP" />
-  
-  <!--SPEAKER SETUP IMAGES-->
-  <Image Name="TwoSpeaker" Source="resx://Iridium/Iridium.Resources/TwoSpeaker" />
-  <Image Name="ThreeSpeaker" Source="resx://Iridium/Iridium.Resources/ThreeSpeaker" />
-  <Image Name="SixSpeaker" Source="resx://Iridium/Iridium.Resources/SixSpeaker" />
-  <Image Name="SevenSpeaker" Source="resx://Iridium/Iridium.Resources/SevenSpeaker" />
-  <Image Name="FiveSpeaker" Source="resx://Iridium/Iridium.Resources/FiveSpeaker" />
-  <Image Name="FourSpeaker" Source="resx://Iridium/Iridium.Resources/FourSpeaker" />
-  <Image Name="OneSpeaker" Source="resx://Iridium/Iridium.Resources/OneSpeaker" />
+	<Image Name="PrevBG" Source="resx://Iridium/Iridium.Resources/PrevPanel" />
+	<Image Name="NextBG" Source="resx://Iridium/Iridium.Resources/NextPanel" />
 
-  <Image Name="PBBack" Source="resx://Chocolate/Chocolate.Resources/PBBack" NineGrid="14,14,25,21"/>
-  <Image Name="PBFill" Source="resx://Chocolate/Chocolate.Resources/PBFill" NineGrid="6,6,6,6"/>
+	<Image Name="ThumbsBG" Source="resx://Iridium/Iridium.Resources/ThumbPanelBlack" />
+	<Image Name="BottomBar" Source="resx://Iridium/Iridium.Resources/BottomInfoPane" />
+
+	<!--US RATING IMAGES-->
+	<Image Name="RatedG" Source="resx://Iridium/Iridium.Resources/rated_movie_G" />
+	<Image Name="RatedNC17" Source="resx://Iridium/Iridium.Resources/rated_movie_NC" />
+	<Image Name="RatedPG13" Source="resx://Iridium/Iridium.Resources/rated_movie_pg_13" />
+	<Image Name="RatedPG" Source="resx://Iridium/Iridium.Resources/rated_movie_PG" />
+	<Image Name="RatedR" Source="resx://Iridium/Iridium.Resources/rated_movie_R" />
+	<Image Name="RatedNR" Source="resx://Iridium/Iridium.Resources/rated_movie_NR" />
+	<Image Name="TV-14" Source="resx://Iridium/Iridium.Resources/rated_TV_14" />
+	<Image Name="TV-MA" Source="resx://Iridium/Iridium.Resources/rated_TV_MA" />
+	<Image Name="TV-PG" Source="resx://Iridium/Iridium.Resources/rated_TV_PG" />
+	<Image Name="TV-G" Source="resx://Iridium/Iridium.Resources/rated_TV_G" />
+	<Image Name="TV-Y" Source="resx://Iridium/Iridium.Resources/rated_TV_Y" />
+	<Image Name="TV-Y7" Source="resx://Iridium/Iridium.Resources/rated_TV_Y7" />
+	<Image Name="TV-Y7-FV" Source="resx://Iridium/Iridium.Resources/rated_TV_Y7_FV" />
+
+	<Image Name="FullRatedG" Source="resx://Iridium/Iridium.Resources/rated_G_full" />
+	<Image Name="FullRatedNC17" Source="resx://Iridium/Iridium.Resources/rated_NC_full" />
+	<Image Name="FullRatedPG13" Source="resx://Iridium/Iridium.Resources/rated_PG_13_full" />
+	<Image Name="FullRatedPG" Source="resx://Iridium/Iridium.Resources/rated_PG_full" />
+	<Image Name="FullRatedR" Source="resx://Iridium/Iridium.Resources/rated_R_full" />
+	<Image Name="FullRatedNR" Source="resx://Iridium/Iridium.Resources/rated_NR_full" />
+	<Image Name="FullTV-14" Source="resx://Iridium/Iridium.Resources/rated_TV_14_full" />
+	<Image Name="FullTV-MA" Source="resx://Iridium/Iridium.Resources/rated_TV_MA_full" />
+	<Image Name="FullTV-PG" Source="resx://Iridium/Iridium.Resources/rated_TV_PG_full" />
+	<Image Name="FullTV-G" Source="resx://Iridium/Iridium.Resources/rated_TV_G_full" />
+	<Image Name="FullTV-Y" Source="resx://Iridium/Iridium.Resources/rated_TV_Y_full" />
+	<Image Name="FullTV-Y7" Source="resx://Iridium/Iridium.Resources/rated_TV_Y7_full" />
+	<Image Name="FullTV-Y7-FV" Source="resx://Iridium/Iridium.Resources/rated_TV_Y7_FV_full" />
+
+	<!--UK RATING IMAGES-->
+	<Image Name="FullGB-U" Source="resx://Iridium/Iridium.Resources/rated_gb_U_full" />
+	<Image Name="FullGB-PG" Source="resx://Iridium/Iridium.Resources/rated_gb_PG_full" />
+	<Image Name="FullGB-12" Source="resx://Iridium/Iridium.Resources/rated_gb_12_full" />
+	<Image Name="FullGB-12A" Source="resx://Iridium/Iridium.Resources/rated_gb_12A_full" />
+	<Image Name="FullGB-15" Source="resx://Iridium/Iridium.Resources/rated_gb_15_full" />
+	<Image Name="FullGB-18" Source="resx://Iridium/Iridium.Resources/rated_gb_18_full" />
+	<Image Name="GB-U" Source="resx://Iridium/Iridium.Resources/rated_gb_U" />
+	<Image Name="GB-PG" Source="resx://Iridium/Iridium.Resources/rated_gb_PG" />
+	<Image Name="GB-12" Source="resx://Iridium/Iridium.Resources/rated_gb_12" />
+	<Image Name="GB-12A" Source="resx://Iridium/Iridium.Resources/rated_gb_12A" />
+	<Image Name="GB-15" Source="resx://Iridium/Iridium.Resources/rated_gb_15" />
+	<Image Name="GB-18" Source="resx://Iridium/Iridium.Resources/rated_gb_18" />
+
+	<!--GAMING RATINGS-->
+	<Image Name="ESRB-EC" Source="resx://Iridium/Iridium.Resources/ESRB_EC" />
+	<Image Name="ESRB-E" Source="resx://Iridium/Iridium.Resources/ESRB_E" />
+	<Image Name="ESRB-E10" Source="resx://Iridium/Iridium.Resources/ESRB_E10" />
+	<Image Name="ESRB-T" Source="resx://Iridium/Iridium.Resources/ESRB_T" />
+	<Image Name="ESRB-M" Source="resx://Iridium/Iridium.Resources/ESRB_M" />
+	<Image Name="ESRB-AO" Source="resx://Iridium/Iridium.Resources/ESRB_AO" />
+	<Image Name="ESRB-RP" Source="resx://Iridium/Iridium.Resources/ESRB_RP" />
+
+	<!--SPEAKER SETUP IMAGES-->
+	<Image Name="TwoSpeaker" Source="resx://Iridium/Iridium.Resources/TwoSpeaker" />
+	<Image Name="ThreeSpeaker" Source="resx://Iridium/Iridium.Resources/ThreeSpeaker" />
+	<Image Name="SixSpeaker" Source="resx://Iridium/Iridium.Resources/SixSpeaker" />
+	<Image Name="SevenSpeaker" Source="resx://Iridium/Iridium.Resources/SevenSpeaker" />
+	<Image Name="FiveSpeaker" Source="resx://Iridium/Iridium.Resources/FiveSpeaker" />
+	<Image Name="FourSpeaker" Source="resx://Iridium/Iridium.Resources/FourSpeaker" />
+	<Image Name="OneSpeaker" Source="resx://Iridium/Iridium.Resources/OneSpeaker" />
+
+	<Image Name="PBBack" Source="resx://Chocolate/Chocolate.Resources/PBBack" NineGrid="14,14,25,21" />
+	<Image Name="PBFill" Source="resx://Chocolate/Chocolate.Resources/PBFill" NineGrid="6,6,6,6" />
 
 </Mcml>

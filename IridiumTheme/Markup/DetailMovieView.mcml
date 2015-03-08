@@ -381,8 +381,8 @@
             </LayoutInput>
           </Graphic>-->
 
+		  <bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]" />
           <Graphic Name="Overlay" Layout="Fill" Content="image://vi:BackgroundOverlay" Alpha="1"/>
-          <bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]"/>
           <bd:Backdrop4 Name="Backdrop"  Application="[Application]" Image="[Item.BackdropImage]" Item="[Item]"/>
          
         </Children>

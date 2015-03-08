@@ -38,7 +38,7 @@ namespace Iridium
         public bool _showOverveiew = new bool();
         private static Image defaultBackdrop;
         private static Image currentBackdrop;
-        private Inset _steppedInset;
+       
         private FolderModel _currentTopParent;
         private FolderModel _currentParent;
         private static string currentPage = "Page";
@@ -48,6 +48,7 @@ namespace Iridium
             OverviewTimer = new Timer();
             setupHelper();
             _bigImageSize = new Size(300,168);
+            _steppedInset = new Inset(50,1,50,1);
 
         }
 
@@ -319,40 +320,23 @@ namespace Iridium
                 return this._bigImageSize;
             }
         }
-        
-        public Inset AfterItemInsetCalc
+
+        private readonly Inset _steppedInset;
+        public Inset LogoInsetCalc
         {
             get
             {
-                Inset _steppedInset1 = new Inset(300, 0, 0, 0);
-                _steppedInset = new Inset(100, 0, 0, 0);
-                int ind = CurrentFolder.SelectedChildIndex;
-                if (ind == 0)
-                {
-                    return _steppedInset;
-                }
-                if (ind == -1)
-                {
-                    _steppedInset1 = new Inset(300, 0, 0, 0);
-                }
-
-                if (ind == -2)
-                {
-                    _steppedInset1 = new Inset(500, 0, 0, 0);
-                }
-
-                return _steppedInset;
+                return new Inset(this.SteppedInset.Left, SteppedInset.Top, SteppedInset.Right*2, SteppedInset.Bottom);
             }
             
         }
 
-        public Inset BuildInset(int left, int top, int right, int bottom)
+        public Inset SteppedInset
         {
-            return (new Inset(left, top, right, bottom));
+            get { return this._steppedInset; }
         }
 
         
-
         private bool _ralHasFocus;
 
         public bool RALHasFocus

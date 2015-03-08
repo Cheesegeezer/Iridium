@@ -18,6 +18,7 @@
     xmlns:ih="assembly://Iridium/Iridium"
     xmlns:jil="resx://MediaBrowser/MediaBrowser.Resources/JilSelector"
     xmlns:cf2="resx://Iridium/Iridium.Resources/LayoutCV2"
+    xmlns:anim="resx://Iridium/Iridium.Resources/Animations"
     xmlns:me="me" >
 
   <UI Name="IridiumLayoutCoverflow">
@@ -32,11 +33,11 @@
       <Timer Name="InfoTimer" AutoRepeat="false" Interval="400" Enabled="false"/>
       
       <FormLayoutInput Name="ScrollerTop" Bottom="Parent,0.85" Top="Parent, 0.2" Left="Parent,0,15" Right="Parent,1,-15" />
-      <FormLayoutInput Name="ScrollerMiddle" Bottom="Parent,1" Top="Parent, 0.15" Left="Parent,0,-100" Right="Parent,1,500" />
+      <FormLayoutInput Name="ScrollerMiddle" Bottom="Parent,1" Top="Parent, 0.21" Left="Parent,0,-100" Right="Parent,1,500" />
       <FormLayoutInput Name="ScrollerBottom" Bottom="Parent,0.85" Top="Parent, 0.5" Left="Parent,0,15" Right="Parent,1,-15" />
       
       <AnchorLayoutInput Name="StarRatingAnchorLayout" Horizontal="Center" Bottom="Parent,1,-2" />
-      <AnchorLayoutInput Name="NumericRatingAnchorLayout" Right="Parent,1,-350" Bottom="Parent,1,-10" />
+      <AnchorLayoutInput Name="NumericRatingAnchorLayout" Right="Parent,1,-300" Bottom="Parent,1,-10" />
       
 
       <ShortcutHandler Name="Blue" Shortcut="Blue" HandlerStage="Bubbled" Handle="true"/>
@@ -282,9 +283,9 @@
       <Condition Source="[ThemeHelper.Config.FolderShowFlatCoverflow]" ConditionOp="Equals" SourceValue="true" Target="[CVItems.Visible]" Value="false" />
       <Condition Source="[ThemeHelper.Config.FolderShowFlatCoverflow]" ConditionOp="Equals" SourceValue="false" Target="[CVItems.Visible]" Value="true" />
 
-      <Condition Source="[ThemeHelper.Config.FolderFlatCFPosition]" ConditionOp="Equals" SourceValue="Top" Target="[CF2Items.LayoutInput]" Value="[ScrollerTop]" />
+      <!--<Condition Source="[ThemeHelper.Config.FolderFlatCFPosition]" ConditionOp="Equals" SourceValue="Top" Target="[CF2Items.LayoutInput]" Value="[ScrollerTop]" />-->
       <Condition Source="[ThemeHelper.Config.FolderFlatCFPosition]" ConditionOp="Equals" SourceValue="Middle" Target="[CF2Items.LayoutInput]" Value="[ScrollerMiddle]" />
-      <Condition Source="[ThemeHelper.Config.FolderFlatCFPosition]" ConditionOp="Equals" SourceValue="Bottom" Target="[CF2Items.LayoutInput]" Value="[ScrollerBottom]" />
+      <!--<Condition Source="[ThemeHelper.Config.FolderFlatCFPosition]" ConditionOp="Equals" SourceValue="Bottom" Target="[CF2Items.LayoutInput]" Value="[ScrollerBottom]" />-->
 
     </Rules>
     <Content>
@@ -328,15 +329,11 @@
 
           <me:CV2Scroller Name="CVItems" Application="[Application]" Folder="[Folder]" ThemeHelper="[ThemeHelper]">
             <LayoutInput>
-              <AnchorLayoutInput Name="CVPosition" Bottom="Parent,0.92" Top="Parent, 0.42" Left="Parent, 0.1" Right="Parent, 0.9" />
+              <AnchorLayoutInput Name="CVPosition" Bottom="Parent,0.90" Top="Parent, 0.25" Left="Parent, 0.01" Right="Parent, 0.99" />
             </LayoutInput>
           </me:CV2Scroller>
 
-          <cf2:Coverflow2Scroller Name="CF2Items" Application="[Application]" Folder="[Folder]" ThemeHelper="[ThemeHelper]" LayoutInput="[ScrollerBottom]">
-            <!--<LayoutInput>
-              <AnchorLayoutInput Name="CF2Position" Bottom="Parent,0.85" Top="Parent, 0.2" Left="Parent,0,15" Right="Parent,1,-15" />
-            </LayoutInput>-->
-          </cf2:Coverflow2Scroller>
+          <cf2:Coverflow2Scroller Name="CF2Items" Application="[Application]" Folder="[Folder]" ThemeHelper="[ThemeHelper]" LayoutInput="[ScrollerMiddle]" />
 
           <!--BOTTOM BAR LAYOUT-->
           <Panel Name="BottomInfoBar" Layout="Form">
@@ -400,10 +397,10 @@
 
               <Clip Name="BottomBarGraphic" ColorFilter="color://is:BottomBarColorOverlay" >
                 <LayoutInput>
-                  <FormLayoutInput Left="Parent,0" Right="Parent,1" Bottom="Parent,1,5" Horizontal="Fill" />
+                  <FormLayoutInput Left="Parent,0" Right="Parent,1" Bottom="Parent,1" Top="Parent,1,-100" />
                 </LayoutInput>
                 <Children>
-                  <Graphic Name="BottomBar" Content="image://vi:BottomBar" MaximumSize="0,100" MaintainAspectRatio="true" />
+                  <Graphic Name="BottomBar" Content="image://vi:PanelBG" MaximumSize="0,100" MaintainAspectRatio="true" />
                 </Children>
               </Clip>
             </Children>
@@ -420,10 +417,21 @@
           </Panel>
 
           <Graphic Name="GlassBG" Layout="Fill" Content="image://vi:GlassBG" Visible="[ThemeHelper.Config.FolderShowFlatCoverflow]" Alpha="1" ColorFilter="Black"/>
+			<Graphic Name="RootMenuBG" ColorFilter="0,155,255" Alpha="1" Navigation="None" Content="image://vi:MainVFBG">
+				<LayoutInput>
+					<AnchorLayoutInput Left="Parent,0" Top="Parent,0,5" Right="Parent,1" Bottom="Parent,0,75" />
+				</LayoutInput>
+			</Graphic>
 
-          <Graphic Name="Overlay" Layout="Fill" Content="image://vi:BackgroundOverlay" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]" Alpha="[ThemeHelper.Config.FolderBackdropOverlayAlpha]"/>
-          <bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]"/>
-          <bd:Backdrop4 LoadDelay="280" FadeTime="[ThemeHelper.Config.BackdropTransitionTime]"  Application="[Application]" Name="Backdrop" Visible="[ThemeHelper.Config.FolderShowBackdrop]" Image="[Folder.SelectedChild.BackdropImage]" Item="[Folder.SelectedChild]"/>
+			<Graphic Name="ChildBG" Content="image://vi:TestBanner" ColorFilter="color://is:XC_RALPanelFilterColor" Alpha="global://is:RALPanelAlpha">
+				<LayoutInput>
+					<AnchorLayoutInput Left="Parent,0" Top="Parent,0,5" Right="Parent,1" Bottom="Parent,0,75" />
+				</LayoutInput>
+			</Graphic>
+
+			<bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]" />
+			<Graphic Name="Overlay" Layout="Fill" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]" Alpha="[ThemeHelper.Config.FolderBackdropOverlayAlpha]" Content="image://vi:BackgroundOverlay" />
+			<bd:Backdrop4 LoadDelay="280" FadeTime="[ThemeHelper.Config.BackdropTransitionTime]" Application="[Application]" Name="Backdrop" Visible="[ThemeHelper.Config.FolderShowBackdrop]" Image="[Folder.SelectedChild.BackdropImage]" Item="[Folder.SelectedChild]" />
 
           
         </Children>
@@ -432,455 +440,476 @@
   </UI>
 
 
-  <UI Name="CV2Scroller">
-    <Properties>
-      <a:Application Name="Application" Application="$Required"/>
-      <lib:FolderModel Name="Folder" FolderModel="$Required"/>
-      <ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
-    </Properties>
+	<UI Name="CV2Scroller">
+		<Properties>
+			<a:Application Name="Application" Application="$Required"/>
+			<lib:FolderModel Name="Folder" FolderModel="$Required"/>
+			<ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required"></ih:IridiumHelper>
+		</Properties>
 
-    <Locals>
-      <ScrollingHandler HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="false" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" Name="ScrollingHandler"/>
-      <ScrollingData Name="SD" LockedAlignment="0.0" LockedPosition="0.0"/>
-      <IntRangedValue Name="SelectRepeaterIndex"/>
+		<Locals>
+			<ScrollingHandler HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" Name="ScrollingHandler"/>
+			<ScrollingData Name="SD" LockedAlignment="0.47" LockedPosition="0.47" />
+			<IntRangedValue Name="SelectRepeaterIndex"/>
 
-      <!-- PageUp/PageDown Jumps -->
-      <ShortcutHandler Name="JumpForward" Shortcut="SkipForward" HandlerStage="Bubbled" Handle="true"/>
-      <ShortcutHandler Name="JumpBack"    Shortcut="SkipBack"    HandlerStage="Bubbled" Handle="true"/>
+			<!--ScaleLayout Name="MyLayout" AllowScaleUp="true" /-->
+			<FlowLayout Name="RepeaterLayout" Orientation="Horizontal" Repeat="WhenTooBig"  />
+			<IntRangedValue Name="NavCount" Value="0" />
 
-      <!-- Repeater Layout -->
-      <FlowLayout Name="CoverLayout" Orientation="Horizontal" AllowWrap="true" Repeat="WhenTooBig" />
-      <IntRangedValue Name="NavCount" Value="0" />
+			<ShortcutHandler Name="JumpForward" Shortcut="SkipForward" HandlerStage="Bubbled" Handle="true" />
+			<ShortcutHandler Name="JumpBack" Shortcut="SkipBack" HandlerStage="Bubbled" Handle="true"/>
 
-      <cor:Int32 Name="NormalKeyRepeat" Int32="20"/>
-      <!-- This must be less than anim delay -->
-      <cor:Int32 Name="FastKeyRepeat" Int32="10"/>
-      <cor:Int32 Name="AnimDelay" Int32="30" />
-      <!-- This must be greater than NormalKeyRepeat-->
-      <cor:Int32 Name="SpeedUpDelay" Int32="2"/>
-      
-      <cor:Int32 Name="backFocus" Int32="[Folder.SelectedChildIndex]" />
-    </Locals>
+			<cor:Int32 Name="NormalKeyRepeat" Int32="20"/>
+			<!-- This must be less than anim delay -->
+			<cor:Int32 Name="FastKeyRepeat" Int32="10"/>
+			<cor:Int32 Name="AnimDelay" Int32="30" />
+			<!-- This must be greater than NormalKeyRepeat-->
+			<cor:Int32 Name="SpeedUpDelay" Int32="2"/>
+		</Locals>
 
-    <Rules>
-      <Rule>
-        <Conditions>
-          <Modified Source="[JumpForward.Invoked]"/>
-        </Conditions>
-        <Actions>
-          <Invoke Target="[SD.PageDown]"/>
-        </Actions>
-      </Rule>
+		<Rules>
+			<Rule>
+				<Conditions>
+					<Modified Source="[JumpForward.Invoked]"/>
+				</Conditions>
+				<Actions>
+					<Invoke Target="[SD.PageDown]"/>
+				</Actions>
+			</Rule>
 
-      <Rule>
-        <Conditions>
-          <Modified Source="[JumpBack.Invoked]"/>
-        </Conditions>
-        <Actions>
-          <Invoke Target="[SD.PageUp]"/>
-        </Actions>
-      </Rule>
+			<Rule>
+				<Conditions>
+					<Modified Source="[JumpBack.Invoked]"/>
+				</Conditions>
+				<Actions>
+					<Invoke Target="[SD.PageUp]"/>
+				</Actions>
+			</Rule>
 
-      <Changed Source="[Folder.JILShift]">
-        <Actions>
-          <Invoke Target="[SD.Scroll]"  amount="[Folder.JILShift]"/>
-        </Actions>
-      </Changed>
+			<Changed Source="[Folder.JILShift]">
+				<Actions>
+					<Invoke Target="[SD.Scroll]"  amount="[Folder.JILShift]"/>
+				</Actions>
+			</Changed>
 
-      <Changed Source="[Application]" InitialEvaluate="true">
-        <Actions>
-          <Invoke Target="[Application.FixRepeatRate]" scroller="[Scroller]" val="[NormalKeyRepeat]" />
-        </Actions>
-      </Changed>
+			<Changed Source="[Application]" InitialEvaluate="true">
+				<Actions>
+					<Invoke Target="[Application.FixRepeatRate]" scroller="[Scroller]" val="[NormalKeyRepeat]" />
+				</Actions>
+			</Changed>
 
-      <Changed Source="[NavCount.Value]">
-        <Conditions>
-          <Equality Source="[NavCount.Value]" ConditionOp="Equals" Value="[SpeedUpDelay]"/>
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Application.FixRepeatRate]" scroller="[Scroller]" val="[FastKeyRepeat]" />
-        </Actions>
-      </Changed>
+			<Changed Source="[NavCount.Value]">
+				<Conditions>
+					<Equality Source="[NavCount.Value]" ConditionOp="Equals" Value="[SpeedUpDelay]"/>
+				</Conditions>
+				<Actions>
+					<Invoke Target="[Application.FixRepeatRate]" scroller="[Scroller]" val="[FastKeyRepeat]" />
+				</Actions>
+			</Changed>
 
-      <Changed Source="[NavCount.Value]">
-        <Conditions>
-          <Equality Source="[NavCount.Value]" ConditionOp="Equals" Value="0"/>
-        </Conditions>
-        <Actions>
-          <Invoke Target="[Application.FixRepeatRate]" scroller="[Scroller]" val="[NormalKeyRepeat]" />
-        </Actions>
-      </Changed>
+			<Changed Source="[NavCount.Value]">
+				<Conditions>
+					<Equality Source="[NavCount.Value]" ConditionOp="Equals" Value="0"/>
+				</Conditions>
+				<Actions>
+					<Invoke Target="[Application.FixRepeatRate]" scroller="[Scroller]" val="[NormalKeyRepeat]" />
+				</Actions>
+			</Changed>
 
-      <Default Target="[ScrollingHandler.ScrollingData]" Value="[SD]"/>
-      <Default Target="[SD.Repeater]" Value="[CoverRepeater]"/>
-      <Binding Source="[CoverLayout]" Target="[CoverRepeater.Layout]"/>
+			<Default Target="[ScrollingHandler.ScrollingData]" Value="[SD]"/>
+			<Default Target="[SD.Repeater]" Value="[CoverRepeater]"/>
+			<Binding Source="[RepeaterLayout]" Target="[CoverRepeater.Layout]"/>
 
-      <!-- Update cover repeater on items change. -->
-      <Changed Source="[Folder.Children]">
-        <Actions>
-          <Set Target="[CoverRepeater.Source]" Value="[Folder.Children]" />
-          <Set  Target="[Folder.SelectedChildIndex]" Value="-1"/>
-        </Actions>
-      </Changed>
+			<!-- Update cover repeater on items change. -->
+			<Changed Source="[Folder.Children]">
+				<Actions>
+					<Set Target="[CoverRepeater.Source]" Value="[Folder.Children]" />
+					<Set  Target="[Folder.SelectedChildIndex]" Value="-1"/>
+				</Actions>
+			</Changed>
 
-      <Rule ConditionLogicalOp="And">
-        <Conditions>
-          <Modified Source="[Application]" InitialEvaluate="true"/>
-          <Equality Source="[Application.NavigatingForward]" Value="true"/>
-          <Equality Source="[Folder.Children.Count]" ConditionOp="GreaterThan" Value="0" />
-        </Conditions>
-        <Actions>
-          <Invoke Target="[CoverRepeater.NavigateIntoIndex]"  index="[Folder.FirstUnwatchedIndex]"/>
-        </Actions>
-      </Rule>
-    </Rules>
+			<Rule ConditionLogicalOp="And">
+				<Conditions>
+					<Modified Source="[Application]" InitialEvaluate="true"/>
+					<Equality Source="[Application.NavigatingForward]" Value="true"/>
+					<Equality Source="[Folder.Children.Count]" ConditionOp="GreaterThan" Value="0" />
+				</Conditions>
+				<Actions>
+					<Invoke Target="[CoverRepeater.NavigateIntoIndex]"  index="[Folder.FirstUnwatchedIndex]"/>
+				</Actions>
+			</Rule>
+		</Rules>
 
-    <Content>
-      <Scroller Orientation="Horizontal" Name="Scroller" Navigation="RememberFocus,ContainHorizontal" ScrollingData="[SD]"
-                CenterPointPercent="0.0,0.5,1.0" Rotation="-40deg;0,1,0.25">
-        <Children>
-          <Repeater Source="[Folder.Children]" Name="CoverRepeater" DiscardOffscreenVisuals="false" Layout="[CoverLayout]" >
-            <Animations>
-              <Animation Type="Move">
-                <Keyframes>
-                  <PositionKeyframe Time="0" RelativeTo="Current" Interpolation="EaseIn, 1.0, 0.25"/>
-                  <PositionKeyframe Time="0.65" RelativeTo="Final"/>
-                </Keyframes>
-              </Animation>
-            </Animations>
-            <Content>
-              <me:CoverFlowItem
-                    Application="[Application]"
-                    ParentItem="[Folder]"
-                    ItemIndex="[RepeatedItemIndex]"
-                    Item="[RepeatedItem!lib:Item]"
-                    SelectRepeaterIndex="[SelectRepeaterIndex]"
-                    ImageSize="[Folder.ActualThumbSize]"
-                    AnimDelay="[AnimDelay]" NavCount="[NavCount]"
-                    UnwatchedCountFont="font://f:CV_UnwatchedCountFont"
-                    ShowLabels="[Folder.DisplayPrefs.ShowLabels]"
-                    TopLabelFont="font://f:CV_PosterTopLabelFont"
-                    ThemeHelper="[ThemeHelper]"/>
-            </Content>
-          </Repeater>
-        </Children>
-      </Scroller>
-    </Content>
-  </UI>
+		<Content>
+			<!-- Coverflow Scroller -->
+			<Scroller Orientation="Horizontal" Name="Scroller" Navigation="RememberFocus,ContainHorizontal" ScrollingData="[SD]" FadeSize="5" >
+				<Children>
+					<Repeater Name="CoverRepeater" Source="[Folder.Children]" Layout="[RepeaterLayout]" DiscardOffscreenVisuals="false">
+						<Animations>
+							<Animation Type="Move">
+								<Keyframes>
+									<PositionKeyframe Time="0" RelativeTo="Current" Interpolation="EaseIn, 1.0, 0.25"/>
+									<PositionKeyframe Time="0.65" RelativeTo="Final"/>
+								</Keyframes>
+							</Animation>
+						</Animations>
+						<Content>
+							<me:CoverflowItem
+								  Application="[Application]"
+								  ParentItem="[Folder]"
+								  ThemeHelper="[ThemeHelper]"
+								  ItemIndex="[RepeatedItemIndex]"
+								  Item="[RepeatedItem!lib:Item]"
+								  SelectRepeaterIndex="[SelectRepeaterIndex]"
+								  ImageSize="[Folder.ActualThumbSize]"
+								  AnimDelay="[AnimDelay]" NavCount="[NavCount]"
+								  UnwatchedCountFont="font://is:UnwatchedCountFont"
+								  ShowLabels="[Folder.DisplayPrefs.ShowLabels]"
+								  TopLabelFont="font://is:CV_PosterTopLabelFont" />
+						</Content>
+					</Repeater>
+				</Children>
+			</Scroller>
+		</Content>
+	</UI>
 
-  <UI Name="CoverFlowItem" BaseUI="ib:ItemButton">
-    <Properties>
-      <lib:SizeRef Name="ImageSize" SizeRef="$Required"/>
-      <lib:Item Name="Item" Item="$Required" />
-      <Image Name="FolderImage" Image="image://i:Folder"/>
-      <Image Name="BlankImage" Image="null"/>
-      <BooleanChoice Name="ShowLabels" BooleanChoice="$Required" />
-      <Image Name="Image" />
-      <cor:Int32 Name="AnimDelay" Int32="1000" />
-      <lib:FolderModel Name="ParentItem" FolderModel="$Required"/>
-      <Index Name="ItemIndex" Index="$Required"/>
-      <Rotation Name="RRotate" Rotation="0deg;0,1,0"/>
-      <Rotation Name="LRotate" Rotation="0deg;0,1,0"/>
-      <IntRangedValue Name="SelectRepeaterIndex" IntRangedValue="$Required"/>
-      <IntRangedValue Name="NavCount" IntRangedValue="$Required" />
-      <Font Name="UnwatchedCountFont" Font="$Required"/>
-      <Font Name="TopLabelFont" Font="$Required"/>
-      <Vector3 Name="WatchedFocusedScale" Vector3=".75,.75,.75"/>
-      <Vector3 Name="WatchedUnfocusedScale" Vector3="1,1,1"/>
-      <cor:String Name="CurrentImagePath" String="" />
-    </Properties>
+	<UI Name="CoverflowItem" BaseUI="ib:ItemButton">
+		<Properties>
+			<lib:SizeRef Name="ImageSize" SizeRef="$Required"/>
+			<Image Name="FocusImage" Image="image://i:ZoomPane"/>
+			<Image Name="FolderImage" Image="image://i:Folder"/>
+			<Image Name="BlankImage" Image="null"/>
+			<BooleanChoice Name="ShowLabels" BooleanChoice="$Required" />
+			<Image Name="Image" />
+			<cor:Int32 Name="AnimDelay" Int32="1000" />
+			<lib:FolderModel Name="ParentItem" FolderModel="$Required"/>
+			<Index Name="ItemIndex" Index="$Required"/>
+			<Rotation Name="RRotate" Rotation="-40deg;0,1,0"/>
+			<Rotation Name="LRotate" Rotation="40deg;0,1,0"/>
+			<IntRangedValue Name="SelectRepeaterIndex" IntRangedValue="$Required"/>
+			<IntRangedValue Name="NavCount" IntRangedValue="$Required" />
+			<Font Name="UnwatchedCountFont" Font="$Required"/>
+			<Font Name="TopLabelFont" Font="$Required"/>
+		</Properties>
 
-    <Locals>
-      <Timer Name="AnimTimer" Interval="[AnimDelay]" Enabled="false" AutoRepeat="false"/>
-      <BooleanChoice Name="InFocus" Value="false" />
-      <AnchorLayoutInput Name="WatchedUnfocusedLayout" Right="Parent,1" Left="Parent,1,-50" Bottom="Parent,1" Top="Parent,1,-50"/>
-      <AnchorLayoutInput Name="WatchedFocusedLayout" Right="Parent,1" Left="Parent,1,-35" Bottom="Parent,1" Top="Parent,1,-35"/>
-    </Locals>
+		<Locals>
+			<Timer Name="AnimTimer" Interval="[AnimDelay]" Enabled="false" AutoRepeat="false"/>
+			<BooleanChoice Name="InFocus" Value="false" />
+			<Rotation Name="DefaultRotation" Rotation="0deg;0,0,0" />
+			<Command Name="ApplyRotation" />
+		</Locals>
 
-    <Rules>
+		<Rules>
 
-      <!-- Set the UI to be mouse and keyboard interactive. -->
-      <Default Target="[Input.KeyInteractive]" Value="true"/>
-      <Default Target="[Input.MakeTopmostOnFocus]" Value="true"/>
+			<!-- Set the UI to be mouse and keyboard interactive. -->
+			<Default Target="[Input.KeyInteractive]" Value="true"/>
+			<Default Target="[Input.MakeTopmostOnFocus]" Value="true"/>
+			<Default Target="[Label.Visible]" Value="true">
+				<Conditions>
+					<Equality Source="[Item.HasPreferredImage]" ConditionOp="Equals" Value="false" />
+					<!--<Equality Source="[ShowLabels.Value]" ConditionOp="Equals" Value="false" />-->
+				</Conditions>
+			</Default>
 
-      <!-- DON'T ALLOW BANNERS, AND IF THEY ARE SET TO BE USED FROM ANOTHER THEME, SET TO FALSE-->
-      <Changed Source="[ParentItem.DisplayPrefs.UseBanner.Value]" InitialEvaluate="true"   >
-        <Conditions>
-          <Equality Source="[ParentItem.DisplayPrefs.UseBanner.Value]" ConditionOp="Equals" Value="true" />
-        </Conditions>
-        <Actions>
-          <Set Target="[ParentItem.DisplayPrefs.UseBanner.Value]" Value= "false"/>
-        </Actions>
-      </Changed>
 
-      <!--Condition Source="[Application.Config.HideFocusFrame]" ConditionOp="Equals" SourceValue="true" Target="[Border.Visible]" Value="false" /-->
+			<Binding Source="[Item.PreferredImageSmall]" Target="[MainArt.Content]" />
+			<Binding Source="[Item.PreferredImageSmall]" Target="[MirrorArt.Content]" />
+			<Binding Source="[ImageSize.Value]" Target="[Item.PreferredImageSmallSize]" />
 
-      <Binding Source="[ImageSize.Value]" Target="[Item.PreferredImageSmallSize]" />
-      <Binding Source="[ImageSize.Value]" Target="[IndicatorPanel.MaximumSize]" />
-      <Binding Source="[ImageSize.Value]" Target="[IndicatorPanel.MinimumSize]" />
-      <Binding Source="[ImageSize.Value]" Target="[BelowLabelPanel.MaximumSize]" />
+			<Binding Source="[ImageSize.Value]" Target="[IndicatorPanel.MaximumSize]" />
+			<Binding Source="[ImageSize.Value]" Target="[IndicatorPanel.MinimumSize]" />
+			<Binding Source="[ImageSize.Value]" Target="[MirrorContstraintPanel.MaximumSize]" />
+			<Binding Source="[ImageSize.Value]" Target="[MirrorContstraintPanel.MinimumSize]" />
+			<Binding Source="[ImageSize.Value]" Target="[BelowLabelPanel.MaximumSize]" />
+			<Binding Source="[ParentItem.DisplayPrefs.UseBanner.Value]" Target="[Item.PreferBanner]" />
 
-      <!-- Selected state, true if item last had focus -->
-      <Condition Source="[ParentItem.SelectedChildIndex]" ConditionOp="Equals" SourceValue="[ItemIndex.SourceValue]">
-        <Actions>
-          <Set Target="[IndicatorPanel.ColorFilter]" Value="White" />
-          <Set Target="[IndicatorPanel.Alpha]" Value="1" />
-          <Set Target="[UnwatchedIndicator.Scale]" Value="[WatchedFocusedScale]" />
-          <Set Target="[TickIndicatorPanel.Scale]" Value="[WatchedFocusedScale]" />
-          <Set Target="[TickIndicatorPanel.Scale]" Value="[WatchedFocusedScale]" />
-        </Actions>
-      </Condition>
+			<!-- Selected state, true if item last had focus -->
+			<Condition Source="[ParentItem.SelectedChildIndex]" ConditionOp="Equals" SourceValue="[ItemIndex.SourceValue]">
+				<Actions>
+					<Set Target="[IndicatorPanel.ColorFilter]" Value="White" />
+					<Set Target="[IndicatorPanel.Alpha]" Value="1" />
+				</Actions>
+			</Condition>
 
-      <Condition Source="[InFocus.Value]" SourceValue="true">
-        <Actions>
-          <Set Target="[MainArt.Alpha]" Value="1"/>
-          <Set Target="[MainArt.Content]" Value="[Item.PreferredImage]"/>
-        </Actions>
-      </Condition>
+			<Condition Source="[ParentItem.SelectedChildIndex]" ConditionOp="NotEquals" SourceValue="[ItemIndex.SourceValue]">
+				<Actions>
+					<Invoke Target="[AnimTimer.Stop]" />
+					<Set Target="[NavCount.Value]" Value="[NavCount.Value]" ExclusiveApply="false">
+						<Transformer>
+							<MathTransformer Add="1"/>
+						</Transformer>
+					</Set>
+				</Actions>
+			</Condition>
 
-      <Changed Source="[Item.PreferredImage]">
-        <Conditions>
-          <Equality  Source="[InFocus.Value]" Value="true"/>
-        </Conditions>
-        <Actions>
-          <Set Target="[MainArt.Content]" Value="[Item.PreferredImage]"/>
-        </Actions>
+			<Changed Source="[Input.KeyFocus]" >
+				<Conditions>
+					<Equality Source="[Input.KeyFocus]" Value="true" />
+				</Conditions>
+				<Actions>
+					<Set Target="[Mirror.Visible]" Value="true"/>
+					<Invoke Target="[Main.AttachAnimation]" animation="animation://anim:CVFocusGained" />
+					<Set Target="[ParentItem.SelectedChildIndex]" Value="[ItemIndex.SourceValue]"/>
+					<Set Target="[SelectRepeaterIndex.Value]" Value="[ItemIndex.Value]"/>
+					<Invoke Target="[AnimTimer.Start]" />
+				</Actions>
+			</Changed>
 
-      </Changed>
-      <Binding Target="[MainArt.MaintainAspectRatio]" Source="[Item.SmallImageIsDistorted]">
-        <Transformer>
-          <BooleanTransformer Inverse="true"/>
-        </Transformer>
-      </Binding>
-      <Condition Source="[InFocus.Value]" SourceValue="false">
-        <Actions>
-          <Set Target="[MainArt.Content]" Value="[Item.PreferredImageSmall]"/>
-        </Actions>
-      </Condition>
+			<Changed Source="[AnimTimer.Tick]">
+				<Actions>
+					<Set Target="[InFocus.Value]" Value="true"/>
+					<Set Target="[NavCount.Value]" Value="0" ExclusiveApply="false"/>
+					<Set Target="[MainArt.Content]" Value="[Item.PreferredImage]" />
+				</Actions>
+			</Changed>
 
-      <Condition Source="[ParentItem.SelectedChildIndex]" ConditionOp="NotEquals" SourceValue="[ItemIndex.SourceValue]">
-        <Actions>
-          <Invoke Target="[AnimTimer.Stop]" />
-          <Set Target="[NavCount.Value]" Value="[NavCount.Value]" ExclusiveApply="false">
-            <Transformer>
-              <MathTransformer Add="1"/>
-            </Transformer>
-          </Set>
-        </Actions>
-      </Condition>
+			<Condition Source="[Input.KeyFocus]" ConditionOp="Equals" SourceValue="false">
+				<Actions>
+					<Set Target="[MainArt.Content]" Value="[Item.PreferredImage]" />
+					<Set Target="[Mirror.Visible]" Value="false"/>
+					<Invoke Target="[Main.AttachAnimation]" animation="animation://anim:CVFocusLost" />
+				</Actions>
+			</Condition>
 
-      <Changed Source="[Input.KeyFocus]" >
-        <Conditions>
-          <Equality Source="[Input.KeyFocus]" Value="true" />
-        </Conditions>
-        <Actions>
-          <Set Target="[Main.Scale]" Value="1.2,1.2,1"/>
-          <Set Target="[ParentItem.SelectedChildIndex]" Value="[ItemIndex.SourceValue]"/>
-          <Set Target="[SelectRepeaterIndex.Value]" Value="[ItemIndex.Value]"/>
-          <Invoke Target="[AnimTimer.Start]" />
-        </Actions>
-      </Changed>
+			<Condition Source="[Application.Config.DimUnselectedPosters]" ConditionOp="Equals" SourceValue="false" Target="[IndicatorPanel.ColorFilter]" Value="White" />
+			<Condition Source="[Application.Config.DimUnselectedPosters]" ConditionOp="Equals" SourceValue="false" Target="[IndicatorPanel.Alpha]" Value="1" />
 
-      <Changed Source="[AnimTimer.Tick]">
-        <Actions>
-          <Set Target="[InFocus.Value]" Value="true"/>
-          <Set Target="[NavCount.Value]" Value="0" ExclusiveApply="false"/>
-        </Actions>
-      </Changed>
+			<!-- Set proper rotation. -->
+			<Changed Source="[ParentItem.SelectedChildIndex]" ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[ParentItem.SelectedChildIndex]" ConditionOp="Equals" Value="[ItemIndex.SourceValue]" />
+				</Conditions>
+				<Actions>
+					<Set Target="[DefaultRotation]" Value="0deg;0,1,0" />
+					<Set Target="[Main.Rotation]" Value="0deg;0,1,0" />
+				</Actions>
+			</Changed>
 
-      <Condition Source="[SelectRepeaterIndex.Value]" ConditionOp="LessThanOrEquals" SourceValue="[ItemIndex.Value]" Target="[Main.Alpha]" Value="1" />
-      <Condition Source="[SelectRepeaterIndex.Value]" ConditionOp="GreaterThan" SourceValue="[ItemIndex.Value]" Target="[Main.Alpha]" Value="0" />
 
-      <!-- Focus and non-focused states. -->
-      <Condition Source="[Input.KeyFocus]" ConditionOp="Equals" SourceValue="false">
-        <Actions>
-          <Set Target="[MainArt.Content]" Value="[Item.PreferredImage]" />
-          <Set Target="[Main.Scale]" Value="1,1,1"/>
-        </Actions>
-      </Condition>
+			<Rule ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[SelectRepeaterIndex.Value]" ConditionOp="LessThan" Value="[ItemIndex.Value]" />
+				</Conditions>
+				<Actions>
+					<Set Target="[Main.Rotation]" Value="[LRotate]" />
+				</Actions>
+			</Rule>
 
-      <Condition Source="[Application.Config.DimUnselectedPosters]" ConditionOp="Equals" SourceValue="false" Target="[IndicatorPanel.ColorFilter]" Value="White" />
-      <Condition Source="[Application.Config.DimUnselectedPosters]" ConditionOp="Equals" SourceValue="false" Target="[IndicatorPanel.Alpha]" Value="1" />
+			<Rule ConditionLogicalOp="And">
+				<Conditions>
+					<Equality Source="[SelectRepeaterIndex.Value]" ConditionOp="GreaterThan" Value="[ItemIndex.Value]" />
+				</Conditions>
+				<Actions>
+					<Set Target="[Main.Rotation]" Value="[RRotate]" />
+				</Actions>
+			</Rule>
+			<!--Poster (un)Watched/HD/Count/New Icons-->
+			<!--Poster (un)Watched/HD/Count/New Icons-->
+			<Binding Source="[Item.IsHD]" Target="[HDIndicator.Visible]"  ConditionLogicalOp="And"  >
+				<Conditions>
+					<Equality Source="[Application.Config.ShowHDIndicatorOnPosters]" Value="true" />
+				</Conditions>
+			</Binding>
+			<Condition Source="[Item.HDType]" ConditionOp="Equals" SourceValue="720" Target="[HDImage.Content]" Value="image://i:HDLogo720" />
+			<Condition Source="[Item.HDType]" ConditionOp="Equals" SourceValue="1080" Target="[HDImage.Content]" Value="image://i:HDLogo1080" />
 
-      <Binding Source="[ShowLabels.Value]" Target="[BelowLabelPanel.Visible]" />
+			<Binding Source="[Item.HaveWatched]" Target="[TickPanel.Visible]" />
+			<Binding Source="[Item.UnwatchedCountString]" Target="[UnwatchedCount.Content]" />
+			<Binding Source="[Item.ShowUnwatched]" Target="[UnwatchedIndicator.Visible]" />
+			<Binding Source="[Item.IsMissing]" Target="[MissingIndicator.Visible]" />
+			<Binding Source="[Item.IsFuture]" Target="[FutureIndicator.Visible]" />
 
-      <Binding Source="[Item.Name]" Target="[BelowLabelPanel.Content]" />
+			<Changed Source="[Application.Config.ShowWatchedTickOnFolders]" InitialEvaluate="true">
+				<Conditions>
+					<Equality Source="[Item.IsPlayable]" Value="false" />
+				</Conditions>
+				<Actions>
+					<Set Target="[TickIndicatorPanel.Visible]" Value="[Application.Config.ShowWatchedTickOnFolders]" />
+				</Actions>
+			</Changed>
 
-      <!--Poster (un)Watched/HD/Count/New Icons-->
-      <Binding Source="[Item.IsHD]" Target="[HDIndicator.Visible]"  ConditionLogicalOp="And"  >
-        <Conditions>
-          <Equality Source="[Application.Config.ShowHDIndicatorOnPosters]" Value="true" />
-        </Conditions>
-      </Binding>
-      <Condition Source="[Item.HDType]" ConditionOp="Equals" SourceValue="720" Target="[HDImage.Content]" Value="image://i:HDLogo720" />
-      <Condition Source="[Item.HDType]" ConditionOp="Equals" SourceValue="1080" Target="[HDImage.Content]" Value="image://i:HDLogo1080" />
-      <Binding Source="[Item.HaveWatched]" Target="[TickPanel.Visible]" />
-      <Binding Source="[Item.UnwatchedCountString]" Target="[UnwatchedCount.Content]" />
-      <Binding Source="[Item.ShowUnwatched]" Target="[UnwatchedIndicator.Visible]" />
-      <Binding Source="[Item.IsMissing]" Target="[MissingIndicator.Visible]" />
-      <Binding Source="[Item.IsFuture]" Target="[FutureIndicator.Visible]" />
+			<Changed Source="[Application.Config.ShowWatchTickInPosterView]" InitialEvaluate="true">
+				<Conditions>
+					<Equality Source="[Item.IsPlayable]" Value="true" />
+				</Conditions>
+				<Actions>
+					<Set Target="[TickIndicatorPanel.Visible]" Value="[Application.Config.ShowWatchTickInPosterView]" />
+				</Actions>
+			</Changed>
 
-      <Changed Source="[Application.Config.ShowWatchedTickOnFolders]" InitialEvaluate="true">
-        <Conditions>
-          <Equality Source="[Item.IsPlayable]" Value="false" />
-        </Conditions>
-        <Actions>
-          <Set Target="[TickIndicatorPanel.Visible]" Value="[Application.Config.ShowWatchedTickOnFolders]" />
-        </Actions>
-      </Changed>
+			<Changed Source="[Item.ShowUnwatched]">
+				<Actions>
+					<Set Target="[UnwatchedCount.Content]" Value="[Item.UnwatchedCountString]" />
+				</Actions>
+			</Changed>
 
-      <Changed Source="[Application.Config.ShowWatchTickInPosterView]" InitialEvaluate="true">
-        <Conditions>
-          <Equality Source="[Item.IsPlayable]" Value="true" />
-        </Conditions>
-        <Actions>
-          <Set Target="[TickIndicatorPanel.Visible]" Value="[Application.Config.ShowWatchTickInPosterView]" />
-        </Actions>
-      </Changed>
+			<Binding Target="[MainArt.MaintainAspectRatio]" Source="[Item.SmallImageIsDistorted]">
+				<Transformer>
+					<BooleanTransformer Inverse="true"/>
+				</Transformer>
+			</Binding>
 
-      <Changed Source="[Item.ShowUnwatched]">
-        <Actions>
-          <Set Target="[UnwatchedCount.Content]" Value="[Item.UnwatchedCountString]" />
-        </Actions>
-      </Changed>
-    </Rules>
+			<Binding Source="[ShowLabels.Value]" Target="[BelowLabelPanel.Visible]" />
+			<Binding Source="[Item.Name]" Target="[BelowLabelPanel.Content]" />
+			<Binding Target="[Mirror.NearOffset]" Source="[ImageSize.Value.Height]">
+				<Transformer>
+					<MathTransformer DivideInt="2"/>
+				</Transformer>
+			</Binding>
+			<Binding Target="[Mirror.FadeSize]" Source="[ImageSize.Value.Height]">
+				<Transformer>
+					<MathTransformer DivideInt="4"/>
+				</Transformer>
+			</Binding>
+			<Binding Target="[Main.Margins.Bottom]" Source="[ImageSize.Value.Height]">
+				<Transformer>
+					<MathTransformer DivideInt="-2"/>
+				</Transformer>
+			</Binding>
+			<Condition Source="[Item.ParentalAllowed]" ConditionOp="Equals" SourceValue="false" Target="[PCLock.Visible]" Value="true" />
+		</Rules>
 
-    <Content>
+		<Content>
+			<Graphic Name="Main" Content="[BlankImage]" CenterPointPercent="0.5,0.5,0.5" Margins="-30,0,-30,0" >
+				<!--Rotation="40deg;0.13,1,0"-->
+				<Layout>
+					<AnchorLayout SizeToVerticalChildren="true"/>
+				</Layout>
+				<Children>
+					<!-- Focus Outline-->
+					<Graphic Name="FocusBg" Content="[BlankImage]" Padding="5,5,5,5" SizingPolicy="SizeToChildren" Layout="VerticalFlow" >
+						<Children>
+							<Panel Name="IndicatorPanel" CenterPointPercent="0.5,0.5,0.5" Padding="0,0,0,0" MaximumSize="[ImageSize.Value]" MinimumSize="[ImageSize.Value]" ColorFilter="150,150,150" >
+								<Layout>
+									<AnchorLayout SizeToHorizontalChildren="false" SizeToVerticalChildren="false"/>
+								</Layout>
+								<Children>
+									<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Alpha="0.8" Name="TickIndicatorPanel" Visible="[Application.Config.ShowWatchTickInPosterView]" MaximumSize="42,42" Margins="5,5,0,0">
+										<LayoutInput>
+											<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+										</LayoutInput>
+										<Children>
+											<Panel Name="TickPanel" Layout="Center">
+												<Children>
+													<Graphic Content="image://i:Watched"  MaximumSize="40,40"  />
+												</Children>
+											</Panel>
+										</Children>
+									</Panel>
 
-      <Graphic Name="Main" Content="[BlankImage]" CenterPointPercent="0.5,1,0.5" Rotation="40deg;0,1,0.25" Margins="-30,0,-30,0">
-        <Layout>
-          <AnchorLayout SizeToVerticalChildren="true"/>
-          <!--<FlowLayout Orientation="Vertical" Spacing="0,-5"/>-->
-        </Layout>
-        <Children>
-          <!-- Focus Outline-->
-          <Graphic Name="FocusBg" Content="[BlankImage]" Padding="5,5,5,5" SizingPolicy="SizeToChildren" Layout="VerticalFlow">
-            <Children>
+									<Panel  Margins="2,2,0,0" Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Name="UnwatchedIndicator" MaximumSize="42,42" >
+										<LayoutInput>
+											<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+										</LayoutInput>
+										<Children>
+											<Text Name="UnwatchedCount" Content="" Color="color://s:FontColorLight" Font="[UnwatchedCountFont]" Margins="0,0,0,0"></Text>
+											<Graphic Visible="global://s:ShowWatchedMarkerBackgrounds" Content="image://i:GreenCircle"  MinimumSize="40,40" MaximumSize="40,40" MaintainAspectRatio="true" Layout="Center" ></Graphic>
+										</Children>
+									</Panel>
 
-              <Panel Name="IndicatorPanel" Padding="0,0,0,0" MaximumSize="[ImageSize.Value]" MinimumSize="[ImageSize.Value]" ColorFilter="150,150,150" >
-                <Layout>
-                  <AnchorLayout SizeToHorizontalChildren="false" SizeToVerticalChildren="false"/>
-                </Layout>
-                <Children>
+									<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="HDIndicator" >
+										<LayoutInput>
+											<AnchorLayoutInput Horizontal="Far" Vertical="Far"/>
+										</LayoutInput>
+										<Children>
+											<Graphic Name="HDImage" Content="image://i:HDLogo" Margins="0,0,5,5" MaximumSize="48,35" MaintainAspectRatio="true">
+												<LayoutInput>
+													<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+												</LayoutInput>
+											</Graphic>
+										</Children>
+									</Panel>
 
-                  <!--<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Alpha="0.8" Name="TickIndicatorPanel" Visible="[Item.HaveWatched]" MaximumSize="32,32"  >
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Near" Vertical="Near" />
-                    </LayoutInput>
-                    <Children>
-                      <Panel Name="TickPanel" Layout="Center">
-                        <Children>
-                          <Graphic Content="image://i:TickPoster"  MaximumSize="30,30"  />
-                          <Graphic Content="image://i:TickPosterBase" ColorFilter="color://is:XC_WatchedBG" MaximumSize="30,30" Visible="global://s:ShowWatchedMarkerBackgrounds"  />
-                        </Children>
-                      </Panel>
-                    </Children>
-                  </Panel>-->
-                  <Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Alpha="0.8" Name="TickIndicatorPanel" Visible="[Application.Config.ShowWatchTickInPosterView]" MaximumSize="42,42" Margins="5,5,0,0">
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                    </LayoutInput>
-                    <Children>
-                      <Panel Name="TickPanel" Layout="Center">
-                        <Children>
-                          <Graphic Content="image://i:Watched"  MaximumSize="40,40"  />
-                        </Children>
-                      </Panel>
-                    </Children>
-                  </Panel>
+									<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="MissingIndicator">
+										<LayoutInput>
+											<AnchorLayoutInput Horizontal="Far" Vertical="Near"/>
+										</LayoutInput>
+										<Children>
+											<Graphic Name="MissingImage" Content="image://i:MissingBanner" Margins="0,0,0,0" MaximumSize="75,75" MaintainAspectRatio="true">
+												<LayoutInput>
+													<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+												</LayoutInput>
+											</Graphic>
+										</Children>
+									</Panel>
+									<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="FutureIndicator">
+										<LayoutInput>
+											<AnchorLayoutInput Horizontal="Far" Vertical="Near"/>
+										</LayoutInput>
+										<Children>
+											<Graphic Name="FutureImage" Content="image://i:FutureBanner" Margins="0,0,0,0" MaximumSize="75,75" MaintainAspectRatio="true">
+												<LayoutInput>
+													<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+												</LayoutInput>
+											</Graphic>
+										</Children>
+									</Panel>
 
-                  <Panel  Margins="2,2,0,0" Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Name="UnwatchedIndicator" MaximumSize="42,42" >
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                    </LayoutInput>
-                    <Children>
-                      <Text Name="UnwatchedCount" Content="" Color="color://s:FontColorLight" Font="[UnwatchedCountFont]" Margins="0,0,0,0"></Text>
-                      <Graphic Visible="global://s:ShowWatchedMarkerBackgrounds" Content="image://i:GreenCircle"  MinimumSize="40,40" MaximumSize="40,40" MaintainAspectRatio="true" Layout="Center" ></Graphic>
-                    </Children>
-                  </Panel>
-                  
-                  <Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="HDIndicator" >
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Far" Vertical="Far"/>
-                    </LayoutInput>
-                    <Children>
-                      <Graphic Name="HDImage" Content="image://i:HDLogo" Margins="0,0,5,5" MaximumSize="48,35" MaintainAspectRatio="true">
-                        <LayoutInput>
-                          <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                        </LayoutInput>
-                      </Graphic>
-                    </Children>
-                  </Panel>
-                  <Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="MissingIndicator">
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Far" Vertical="Near"/>
-                    </LayoutInput>
-                    <Children>
-                      <Graphic Name="MissingImage" Content="image://i:MissingBanner" Margins="0,0,0,0" MaximumSize="75,75" MaintainAspectRatio="true">
-                        <LayoutInput>
-                          <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                        </LayoutInput>
-                      </Graphic>
-                    </Children>
-                  </Panel>
-                  <Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="FutureIndicator">
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Far" Vertical="Near"/>
-                    </LayoutInput>
-                    <Children>
-                      <Graphic Name="FutureImage" Content="image://i:FutureBanner" Margins="0,0,0,0" MaximumSize="75,75" MaintainAspectRatio="true">
-                        <LayoutInput>
-                          <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                        </LayoutInput>
-                      </Graphic>
-                    </Children>
-                  </Panel>
-                  <Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="PCLock">
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Near" Vertical="Far"/>
-                    </LayoutInput>
-                    <Children>
-                      <Graphic Name="PCLockImage" Content="image://i:Lock" Margins="0,0,5,5" MaximumSize="30,30" MaintainAspectRatio="true">
-                        <LayoutInput>
-                          <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                        </LayoutInput>
-                      </Graphic>
-                    </Children>
-                  </Panel>
-                  <Graphic Name="RemoteContentImage" Content="resx://MediaBrowser/MediaBrowser.Resources/IconRemote" Margins="0,0,5,5" Alpha=".75" MaximumSize="30,30" MaintainAspectRatio="true" Visible="false">
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Far" Vertical="Far"/>
-                    </LayoutInput>
-                  </Graphic>
+									<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="PCLock" >
+										<LayoutInput>
+											<AnchorLayoutInput Horizontal="Near" Vertical="Far"/>
+										</LayoutInput>
+										<Children>
+											<Graphic Name="PCLockImage" Content="image://i:Lock" Margins="0,0,5,5" MaximumSize="30,30" MaintainAspectRatio="true">
+												<LayoutInput>
+													<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+												</LayoutInput>
+											</Graphic>
+										</Children>
+									</Panel>
 
-                  <Clip Orientation="Horizontal" FadeSize="1" >
-                    <LayoutInput>
-                      <AnchorLayoutInput Left="Parent,0,-1" Right="Parent,1,1" Vertical="Fill"/>
-                    </LayoutInput>
-                    <Children>
-                      <Graphic Name="MainArt" SizingPolicy="SizeToConstraint" MaintainAspectRatio="true" Content="[Item.PreferredImageSmall]" />
-                    </Children>
-                  </Clip>
-                </Children>
-              </Panel>
+									<Graphic Name="MainArt" SizingPolicy="SizeToConstraint" MaintainAspectRatio="true" Content="[Item.PreferredImage]"  >
+										<!--Rotation="70deg;0,1,0"-->
+										<Children>
+											<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Center">
+												<LayoutInput>
+													<AnchorLayoutInput Horizontal="Fill" Vertical="Fill"/>
+												</LayoutInput>
+												<Children>
+													<Text Alpha="1" Name="Label" Visible="false" Color="color://s:FontColorLight" Content="[Item.Name]"  WordWrap="true" Margins="5,5,5,5"  HorizontalAlignment="Center">
+													</Text>
+												</Children>
+											</Panel>
+										</Children>
+									</Graphic>
+								</Children>
+							</Panel>
 
-              <Text Name="BelowLabelPanel" Margins="0,5,0,-3" Alpha="1" Color="color://is:PosterTitleColor"  Font="[TopLabelFont]"
-                    Content="[Item.Name]" MaximumLines="2" WordWrap="true" HorizontalAlignment="Near" MinimumSize="0,60"></Text>
-            </Children>
-          </Graphic>
-        </Children>
+							<Text Name="BelowLabelPanel" Margins="0,5,0,-3" Alpha="1" Color="color://s:FontColorLight"  Font="[TopLabelFont]" Content="[Item.Name]" WordWrap="false" HorizontalAlignment="Near"></Text>
+						</Children>
+					</Graphic>
 
-        <Animations>
+					<!-- Mirror Effect-->
+					<Clip Name="Mirror" FadeAmount="1" FadeSize="50" NearOffset="0" Padding="5,5,5,5" Orientation="Vertical" ShowFar="false" Margins="0,-10,0,0" Rotation="15deg;0,1,0">
+						<Layout>
+							<FlowLayout Orientation="Vertical" ItemAlignment="Center" />
+						</Layout>
+						<LayoutInput>
+							<AnchorLayoutInput Top="FocusBg, 1, -5" />
+						</LayoutInput>
+						<Children>
+							<Panel Name="MirrorContstraintPanel" ColorFilter="color://s:MirrorFilter" Alpha="global://s:MirrorAlpha" CenterPointPercent="0.5,0.5,0.5" Rotation="180deg;1,0,0">
+								<Layout>
+									<AnchorLayout SizeToHorizontalChildren="false" SizeToVerticalChildren="false"/>
+								</Layout>
+								<Children>
+									<Graphic Name="MirrorArt" SizingPolicy="SizeToConstraint" MaintainAspectRatio="true" >
+									</Graphic>
+								</Children>
+							</Panel>
+						</Children>
+					</Clip>
+				</Children>
+
+				<!--Animations>
           <Animation Type="Scale" CenterPointPercent="0.5,0.5,0.5">
             <Keyframes>
               <ScaleKeyframe Time="0" RelativeTo="Current" Interpolation="Log"/>
               <ScaleKeyframe Time="0.35" RelativeTo="Final"/>
             </Keyframes>
           </Animation>
-        </Animations>
-      </Graphic>
-
-
-    </Content>
-  </UI>
+        </Animations-->
+			</Graphic>
+		</Content>
+	</UI>
 </Mcml>

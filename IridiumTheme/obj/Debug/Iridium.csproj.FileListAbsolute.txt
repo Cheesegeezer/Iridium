@@ -14,3 +14,11 @@ D:\Users\engineer\Documents\Visual Studio 2012\Projects\GitRepos\Iridium\Iridium
 D:\Users\engineer\Documents\Visual Studio 2012\Projects\GitRepos\Iridium\IridiumTheme\obj\Debug\Iridium.csproj.GenerateResource.Cache
 D:\Users\engineer\Documents\Visual Studio 2012\Projects\GitRepos\Iridium\IridiumTheme\obj\Debug\Iridium.dll
 D:\Users\engineer\Documents\Visual Studio 2012\Projects\GitRepos\Iridium\IridiumTheme\obj\Debug\Iridium.pdb
+D:\Git Repositories\Iridium\IridiumTheme\bin\Debug\Iridium.dll
+D:\Git Repositories\Iridium\IridiumTheme\bin\Debug\Iridium.pdb
+D:\Git Repositories\Iridium\IridiumTheme\bin\Debug\MediaBrowser.Model.dll
+D:\Git Repositories\Iridium\IridiumTheme\obj\Debug\Iridium.csprojResolveAssemblyReference.cache
+D:\Git Repositories\Iridium\IridiumTheme\obj\Debug\Iridium.Resources.resources
+D:\Git Repositories\Iridium\IridiumTheme\obj\Debug\Iridium.csproj.GenerateResource.Cache
+D:\Git Repositories\Iridium\IridiumTheme\obj\Debug\Iridium.dll
+D:\Git Repositories\Iridium\IridiumTheme\obj\Debug\Iridium.pdb

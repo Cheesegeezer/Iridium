@@ -41,17 +41,6 @@
     </Locals>
 
     <Rules>
-      <!-- Set Folder Config Context -->
-      <!-- IMPORTANT: There are timing issues using Folder.ActualThumbSize when the folder's display prefs haven't been loaded
-                            yet.  So call LoadDisplayPrefs early and synchronously to ensure that all is initialized properly. 
-      <Rule>
-        <Actions>
-          <Invoke Target="[ThemeHelper.GetFolderPrefsId]" folder="[Folder.PhysicalParent]" ResultTarget="[ThemeHelper.Config.ParentFolderId]" InvokePolicy="Synchronous" ExclusiveApply="false" />
-          <Invoke Target="[ThemeHelper.GetFolderPrefsId]" folder="[Folder]" ResultTarget="[ThemeHelper.Config.FolderId]" InvokePolicy="Synchronous" ExclusiveApply="false" />
-          <Invoke Target="[ThemeHelper.LoadDisplayPrefs]" folder="[Folder]" InvokePolicy="Synchronous" />
-        </Actions>
-      </Rule>
-      <Binding Source="[Folder]" Target="[ThemeHelper.CurrentParent]" />-->
 
       <Binding Target="[ThemeHelper.CurrentItem]" Source="[Folder.SelectedChild]" />
       <Binding Target="[Application.CurrentItem]" Source="[Folder.SelectedChild]" />
@@ -244,7 +233,7 @@
           <!--Post Scroller-->
           <Panel Name="PosterScroller" FocusOrder="1" Rotation="0deg;0,0,0" CenterPointPercent="0.5,0.5,0.5" >
             <LayoutInput>
-              <FormLayoutInput Left="Parent,0,280" Right="Parent,1,-15" Top="Parent,0,25" Bottom="Parent,1,-125" />
+              <FormLayoutInput Left="Parent,0,345" Right="Parent,1,-15" Top="Parent,0,100" Bottom="Parent,1,-10" />
             </LayoutInput>
             <Children>
               <me:PosterScroller Name="MyItems" Application="[Application]" Folder="[Folder]" TopLabelFont="font://is:PosterSmallFont" LabelFont="font://is:PosterSmallFont" UnwatchedCountFont="font://is:UnwatchedCountFont"/>
@@ -296,25 +285,36 @@
             </Children>
           </Clip>
 
-          <Panel Name="MiniInfoPanel" Layout="VerticalFlow">
+          <Panel Name="MiniInfoPanel" Layout="Anchor">
             <LayoutInput>
-              <AnchorLayoutInput Horizontal="Center" Left="ItemInfoPanel,0" Bottom="Parent,1,-25" />
+              <AnchorLayoutInput Left="ItemInfoPanel,0" Bottom="ChildBG,1,-5" />
             </LayoutInput>
             <Children>
 
-              <lv:BBarLabelValue Name="TVStatus" MaximumSize="0,55" Layout="Center" />
+				<Panel Name="Status" >
+					<LayoutInput>
+						<AnchorLayoutInput Horizontal="Center" />
+					</LayoutInput>
+					<Children>
+						<lv:BBarLabelValue Name="TVStatus" MaximumSize="0,55" />
+					</Children>
+				</Panel>
 
-              <Panel Name="MPAAStar" Layout="HorizontalFlow" Margins="0,0,0,10" >
-                <Layout>
-                  <FlowLayout StripAlignment="Center"/>
-                </Layout>
+                <Panel Name="MPAAStar" Layout="HorizontalFlow" Margins="-10,0,0,10" >
+					<LayoutInput>
+					<AnchorLayoutInput Top="Status,1,10" />
+					</LayoutInput>
                 <Children>
-                  <sr:StarRating MaximumSize="0,40" Name="StarRating" Margins="0,0,15,0"  ThemeHelper="[ThemeHelper]"/>
-                  <mpaa:MPAARating MaximumSize="45,35" Name="mpaa" Visible="true" />
-                </Children>
+				  <mpaa:MPAARating MaximumSize="65,45" Name="mpaa" Visible="true" Margins="0,0,15,0" />
+                  <sr:StarRating MaximumSize="0,40" Name="StarRating" ThemeHelper="[ThemeHelper]" Margins="0,2,0,0" />
+				</Children>
               </Panel>
 
-              <mip:MediaInfoPanel Name="MediaInfoPanel" Item="[Item]" MaximumSize="0,35" Layout="Center"/>
+				<mip:MediaInfoPanel Name="MediaInfoPanel" Item="[Item]" MaximumSize="0,42" >
+					<LayoutInput>
+					<AnchorLayoutInput Top="MPAAStar,1,5" />
+					</LayoutInput>
+				</mip:MediaInfoPanel>
 
 
               <!--<Clip Name="BottomBarGraphic" ColorFilter="color://is:BottomBarColorOverlay" >

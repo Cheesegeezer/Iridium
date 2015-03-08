@@ -131,6 +131,9 @@
     <Content Include="Images\Icons\rottentomatoes.png" />
     <Content Include="Images\Icons\ShortlistIcon.png" />
     <Content Include="Images\Icons\ShortlistIconSmall.png" />
+    <Content Include="Images\listviewBG.png" />
+    <Content Include="Images\logoviewBG1.png" />
+    <Content Include="Images\logoviewBG2.png" />
     <Content Include="Images\PanelBG.png" />
     <Content Include="Images\RootImages\glowshine.png" />
     <Content Include="Images\RootImages\MenuTextGlow.png" />
@@ -443,7 +446,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "C:\ProgramData\MediaBrowser-Classic\Plugins" /y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetPath)" "C:\ProgramData\MediaBrowser-Classic\Plugins" /y
+</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
