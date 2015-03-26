@@ -460,6 +460,7 @@
       
       <Condition Source="[Input.KeyFocus]" ConditionOp="Equals" SourceValue="false">
         <Actions>
+		  <Set Target="[BelowLabelPanel.Visible]" Value="false" />
           <Set Target="[MainArt.Content]" Value="[Item.PreferredImage]" />
           <Set Target="[Main.Scale]" Value="1,1,1"/>
         </Actions>
@@ -573,17 +574,36 @@
           <!--<FlowLayout Orientation="Vertical" Spacing="0,-5"/>-->
         </Layout>
         <Children>
-          <!-- Focus Outline-->
-          <Graphic Name="FocusBg" Content="[BlankImage]" Padding="5,5,5,5" SizingPolicy="SizeToChildren" Layout="VerticalFlow">
-            <Children>
 
-              <Panel Name="IndicatorPanel" Padding="0,0,0,0" MaximumSize="[ImageSize.Value]" MinimumSize="[ImageSize.Value]" ColorFilter="150,150,150" >
-                <Layout>
-                  <AnchorLayout SizeToHorizontalChildren="false" SizeToVerticalChildren="false"/>
-                </Layout>
-                <Children>
+			<ColorFill Name="BoxItem" Content="Transparent" Alpha="1" Padding="0,0,0,0" >
+				<Layout>
+					<AnchorLayout SizeToHorizontalChildren="true" SizeToVerticalChildren="true"/>
+				</Layout>
 
-                  <!--<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Alpha="0.8" Name="TickIndicatorPanel" Visible="[Item.HaveWatched]" MaximumSize="32,32"  >
+				<Children>
+
+					<ColorFill Content="Transparent" >
+						<LayoutInput>
+							<AnchorLayoutInput Horizontal="Center" ContributesToWidth="true"/>
+						</LayoutInput>
+						<Layout>
+							<FlowLayout Orientation="Vertical" ItemAlignment="Center"/>
+						</Layout>
+						<Children>
+							<Text Name="BelowLabelPanel" Margins="0,-25,0,0" Alpha="1" Color="color://is:PosterTitleColor"  Font="[TopLabelFont]"
+									Content="[Item.Name]" WordWrap="false" Visible="[ShowLabels.Value]"/>
+
+							<!-- Focus Outline-->
+							<Graphic Name="FocusBg" Content="[BlankImage]" Padding="5,5,5,5" SizingPolicy="SizeToChildren" Layout="VerticalFlow">
+								<Children>
+
+									<Panel Name="IndicatorPanel" Padding="0,0,0,0" MaximumSize="[ImageSize.Value]" MinimumSize="[ImageSize.Value]" ColorFilter="150,150,150" >
+										<Layout>
+											<AnchorLayout SizeToHorizontalChildren="false" SizeToVerticalChildren="false"/>
+										</Layout>
+										<Children>
+
+											<!--<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Alpha="0.8" Name="TickIndicatorPanel" Visible="[Item.HaveWatched]" MaximumSize="32,32"  >
                     <LayoutInput>
                       <AnchorLayoutInput Horizontal="Near" Vertical="Near" />
                     </LayoutInput>
@@ -596,121 +616,123 @@
                       </Panel>
                     </Children>
                   </Panel>-->
-                  <Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Alpha="0.8" Name="TickIndicatorPanel" Visible="[Application.Config.ShowWatchTickInPosterView]" MaximumSize="42,42" Margins="5,5,0,0">
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                    </LayoutInput>
-                    <Children>
-                      <Panel Name="TickPanel" Layout="Center">
-                        <Children>
-                          <Graphic Content="image://i:Watched"  MaximumSize="40,40"  />
-                        </Children>
-                      </Panel>
-                    </Children>
-                  </Panel>
+											<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Alpha="0.8" Name="TickIndicatorPanel" Visible="[Application.Config.ShowWatchTickInPosterView]" MaximumSize="42,42" Margins="5,5,0,0">
+												<LayoutInput>
+													<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+												</LayoutInput>
+												<Children>
+													<Panel Name="TickPanel" Layout="Center">
+														<Children>
+															<Graphic Content="image://i:Watched"  MaximumSize="40,40"  />
+														</Children>
+													</Panel>
+												</Children>
+											</Panel>
 
-                  <Panel  Margins="2,2,0,0" Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Name="UnwatchedIndicator" MaximumSize="42,42" >
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                    </LayoutInput>
-                    <Children>
-                      <Text Name="UnwatchedCount" Content="" Color="color://s:FontColorLight" Font="[UnwatchedCountFont]" Margins="0,0,0,0"></Text>
-                      <Graphic Visible="global://s:ShowWatchedMarkerBackgrounds" Content="image://i:GreenCircle"  MinimumSize="40,40" MaximumSize="40,40" MaintainAspectRatio="true" Layout="Center" ></Graphic>
-                    </Children>
-                  </Panel>
+											<Panel  Margins="2,2,0,0" Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Name="UnwatchedIndicator" MaximumSize="42,42" >
+												<LayoutInput>
+													<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+												</LayoutInput>
+												<Children>
+													<Text Name="UnwatchedCount" Content="" Color="color://s:FontColorLight" Font="[UnwatchedCountFont]" Margins="0,0,0,0"></Text>
+													<Graphic Visible="global://s:ShowWatchedMarkerBackgrounds" Content="image://i:GreenCircle"  MinimumSize="40,40" MaximumSize="40,40" MaintainAspectRatio="true" Layout="Center" ></Graphic>
+												</Children>
+											</Panel>
 
-                  <Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="HDIndicator" CenterPointPercent="0.5,1,0.5" Rotation="52deg;0,1,0" >
-                    <LayoutInput>
-                      <AnchorLayoutInput Right="Parent,1,-50" Vertical="Far"/>
-                    </LayoutInput>
-                    <Children>
-                      <Graphic Name="HDImage" Content="image://i:HDLogo" Margins="0,0,5,5" MaximumSize="48,35" MaintainAspectRatio="true">
-                        <LayoutInput>
-                          <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                        </LayoutInput>
-                      </Graphic>
-                    </Children>
-                  </Panel>
-                  <Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="MissingIndicator">
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Far" Vertical="Near"/>
-                    </LayoutInput>
-                    <Children>
-                      <Graphic Name="MissingImage" Content="image://i:MissingBanner" Margins="0,0,0,0" MaximumSize="75,75" MaintainAspectRatio="true">
-                        <LayoutInput>
-                          <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                        </LayoutInput>
-                      </Graphic>
-                    </Children>
-                  </Panel>
-                  <Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="FutureIndicator">
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Far" Vertical="Near"/>
-                    </LayoutInput>
-                    <Children>
-                      <Graphic Name="FutureImage" Content="image://i:FutureBanner" Margins="0,0,0,0" MaximumSize="75,75" MaintainAspectRatio="true">
-                        <LayoutInput>
-                          <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                        </LayoutInput>
-                      </Graphic>
-                    </Children>
-                  </Panel>
-                  <Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="PCLock">
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Near" Vertical="Far"/>
-                    </LayoutInput>
-                    <Children>
-                      <Graphic Name="PCLockImage" Content="image://i:Lock" Margins="0,0,5,5" MaximumSize="30,30" MaintainAspectRatio="true">
-                        <LayoutInput>
-                          <AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
-                        </LayoutInput>
-                      </Graphic>
-                    </Children>
-                  </Panel>
-                  <Graphic Name="RemoteContentImage" Content="resx://MediaBrowser/MediaBrowser.Resources/IconRemote" Margins="0,0,5,5" Alpha=".75" MaximumSize="30,30" MaintainAspectRatio="true" Visible="false">
-                    <LayoutInput>
-                      <AnchorLayoutInput Horizontal="Far" Vertical="Far"/>
-                    </LayoutInput>
-                  </Graphic>
+											<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="HDIndicator" CenterPointPercent="0.5,1,0.5" Rotation="52deg;0,1,0" >
+												<LayoutInput>
+													<AnchorLayoutInput Right="Parent,1,-50" Vertical="Far"/>
+												</LayoutInput>
+												<Children>
+													<Graphic Name="HDImage" Content="image://i:HDLogo" Margins="0,0,5,5" MaximumSize="48,35" MaintainAspectRatio="true">
+														<LayoutInput>
+															<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+														</LayoutInput>
+													</Graphic>
+												</Children>
+											</Panel>
+											<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="MissingIndicator">
+												<LayoutInput>
+													<AnchorLayoutInput Horizontal="Far" Vertical="Near"/>
+												</LayoutInput>
+												<Children>
+													<Graphic Name="MissingImage" Content="image://i:MissingBanner" Margins="0,0,0,0" MaximumSize="75,75" MaintainAspectRatio="true">
+														<LayoutInput>
+															<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+														</LayoutInput>
+													</Graphic>
+												</Children>
+											</Panel>
+											<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="FutureIndicator">
+												<LayoutInput>
+													<AnchorLayoutInput Horizontal="Far" Vertical="Near"/>
+												</LayoutInput>
+												<Children>
+													<Graphic Name="FutureImage" Content="image://i:FutureBanner" Margins="0,0,0,0" MaximumSize="75,75" MaintainAspectRatio="true">
+														<LayoutInput>
+															<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+														</LayoutInput>
+													</Graphic>
+												</Children>
+											</Panel>
+											<Panel  Scale="1,1,1" Padding="0,0,0,0" Layout="Anchor" Visible="false" Name="PCLock">
+												<LayoutInput>
+													<AnchorLayoutInput Horizontal="Near" Vertical="Far"/>
+												</LayoutInput>
+												<Children>
+													<Graphic Name="PCLockImage" Content="image://i:Lock" Margins="0,0,5,5" MaximumSize="30,30" MaintainAspectRatio="true">
+														<LayoutInput>
+															<AnchorLayoutInput Horizontal="Near" Vertical="Near"/>
+														</LayoutInput>
+													</Graphic>
+												</Children>
+											</Panel>
+											<Graphic Name="RemoteContentImage" Content="resx://MediaBrowser/MediaBrowser.Resources/IconRemote" Margins="0,0,5,5" Alpha=".75" MaximumSize="30,30" MaintainAspectRatio="true" Visible="false">
+												<LayoutInput>
+													<AnchorLayoutInput Horizontal="Far" Vertical="Far"/>
+												</LayoutInput>
+											</Graphic>
 
-                  <Clip Orientation="Horizontal" FadeSize="1" >
-                    <LayoutInput>
-                      <AnchorLayoutInput Left="Parent,0,-1" Right="Parent,1,1" Vertical="Fill"/>
-                    </LayoutInput>
-                    <Children>
-                      <Graphic Name="MainArt" SizingPolicy="SizeToConstraint" MaintainAspectRatio="true" Content="[Item.PreferredImageSmall]" CenterPointPercent="0.5,1,0.5" Rotation="-30deg;0,1,0"  />
-                    </Children>
-                  </Clip>
-                </Children>
-              </Panel>
+											<Clip Orientation="Horizontal" FadeSize="1" >
+												<LayoutInput>
+													<AnchorLayoutInput Left="Parent,0,-1" Right="Parent,1,1" Vertical="Fill"/>
+												</LayoutInput>
+												<Children>
+													<Graphic Name="MainArt" SizingPolicy="SizeToConstraint" MaintainAspectRatio="true" Content="[Item.PreferredImageSmall]" CenterPointPercent="0.5,1,0.5" Rotation="-30deg;0,1,0"  />
+												</Children>
+											</Clip>
+										</Children>
+									</Panel>
 
-              <Text Name="BelowLabelPanel" Margins="0,5,0,-3" Alpha="1" Color="color://is:PosterTitleColor"  Font="[TopLabelFont]"
-                    Content="[Item.Name]" MaximumLines="2" WordWrap="true" HorizontalAlignment="Near" MinimumSize="0,60"></Text>
+									<Clip Name="Mirror" FadeAmount="1" FadeSize="50" NearOffset="0" Padding="5,5,5,5" Orientation="Vertical" ShowFar="false" Margins="15,-4,0,0" Rotation="-30deg;0,1,0" >
+										<Layout>
+											<FlowLayout Orientation="Vertical" ItemAlignment="Center" />
+										</Layout>
+										<LayoutInput>
+											<AnchorLayoutInput Top="Parent, 1, -2" />
+										</LayoutInput>
+										<Children>
+											<Panel Name="MirrorContstraintPanel" ColorFilter="color://s:MirrorFilter" Alpha="global://s:MirrorAlpha" CenterPointPercent="0.5,0.5,0.5" Rotation="180deg;1,0,0">
+												<Layout>
+													<AnchorLayout SizeToHorizontalChildren="false" SizeToVerticalChildren="false"/>
+												</Layout>
+												<Children>
+													<Graphic Name="MirrorArt"  MaintainAspectRatio="true" >
+													</Graphic>
+												</Children>
+											</Panel>
+										</Children>
+									</Clip>
 
-              <Clip Name="Mirror" FadeAmount="1" FadeSize="50" NearOffset="0" Padding="5,5,5,5" Orientation="Vertical" ShowFar="false" Margins="15,-4,0,0" Rotation="-30deg;0,1,0" >
-                <Layout>
-                  <FlowLayout Orientation="Vertical" ItemAlignment="Center" />
-                </Layout>
-                <LayoutInput>
-                  <AnchorLayoutInput Top="Parent, 1, -2" />
-                </LayoutInput>
-                <Children>
-                  <Panel Name="MirrorContstraintPanel" ColorFilter="color://s:MirrorFilter" Alpha="global://s:MirrorAlpha" CenterPointPercent="0.5,0.5,0.5" Rotation="180deg;1,0,0">
-                    <Layout>
-                      <AnchorLayout SizeToHorizontalChildren="false" SizeToVerticalChildren="false"/>
-                    </Layout>
-                    <Children>
-                      <Graphic Name="MirrorArt"  MaintainAspectRatio="true" >
-                      </Graphic>
-                    </Children>
-                  </Panel>
-                </Children>
-              </Clip>
-            </Children>
 
-            
-            
-          </Graphic>
+								</Children>
+							</Graphic>
+						</Children>
+					</ColorFill>
+				</Children>
+			</ColorFill>
+
+			
 
           <!-- Mirror Effect-->
           

@@ -15,7 +15,7 @@ namespace Iridium
     [Serializable]
     public class MyStrings : LocalizedStringData
     {
-        const string VERSION = "1.000"; //this is used to see if we have changed and need to re-save
+        const string VERSION = "1.001"; //this is used to see if we have changed and need to re-save
 
         // MCML: [Application.LocalStrings.#StringName!cor:String] 
 
@@ -145,7 +145,7 @@ namespace Iridium
         public string ShowBackdropOverlayLabel = "Show Backdrop Overlay";
         public string DetailsThumbAlphaLabel = "Thumb Art Alpha";
         public string ShowDetailsQuickListLabel = "Show QuickList View";
-        public string ShowFlatCoverflowLabel = "Show Flat Coverflow View";
+        public string ShowFlatCoverflowLabel = "Coverflow 2 View";
         public string FlatCFPositionLabel = "Flat Coverflow Position";
         public string VerticalScrollLabel = "Vertical Scroll";
         public string UseBannersLabel = "Use Banners";

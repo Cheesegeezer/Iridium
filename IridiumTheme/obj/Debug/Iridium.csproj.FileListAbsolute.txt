@@ -22,3 +22,4 @@ D:\Git Repositories\Iridium\IridiumTheme\obj\Debug\Iridium.Resources.resources
 D:\Git Repositories\Iridium\IridiumTheme\obj\Debug\Iridium.csproj.GenerateResource.Cache
 D:\Git Repositories\Iridium\IridiumTheme\obj\Debug\Iridium.dll
 D:\Git Repositories\Iridium\IridiumTheme\obj\Debug\Iridium.pdb
+D:\Git Repositories\Iridium\IridiumTheme\bin\Debug\MediaBrowser.dll

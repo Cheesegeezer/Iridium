@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using MediaBrowser.Library;
 using MediaBrowser.Library.Logging;
 using Microsoft.MediaCenter;
@@ -132,22 +133,38 @@ namespace Iridium
 
         public void NoShortlistMessage()
         {
-            string text = string.Format("You have NO items in Your Shortlist");
-            Application.CurrentInstance.MessageBox(text, true, 0);
+            string text = "You have NO items in Your Shortlist";
+            
+            CustomMessage.Instance.MessageBox(text);
+            //Application.CurrentInstance.MessageBox(text, true, 0);
         }
 
         public void ClearShortlist()
         {
             MediaCenterEnvironment mediaCenterEnvironment = AddInHost.Current.MediaCenterEnvironment;
-            const string text = "Are you sure you want clear your Shortlist?";
+            string text = "SHORTLIST: Are you sure you want clear your Shortlist?";
             const string caption = "SHORTLIST";
 
-            if (mediaCenterEnvironment.Dialog(text, caption, DialogButtons.Cancel | DialogButtons.Ok, 0, true) ==
+            //CustomMessage.Instance.YesNoBox(text);
+
+            if (CustomMessage.Instance.YesNoBox(text) == "Y")
+            {
+                _shortlist.Clear();
+                Thread.Sleep(1000);
+                CustomMessage.Instance.MessageBox("Your Shortlist has been Emptied");
+            }
+            else if (CustomMessage.Instance.YesNoBox(text) == "N")
+            {
+                
+            }
+
+
+            /*if (mediaCenterEnvironment.Dialog(text, caption, DialogButtons.Cancel | DialogButtons.Ok, 0, true) ==
                 DialogResult.Ok)
             {
                 _shortlist.Clear();
                 Application.CurrentInstance.MessageBox("Shortlist has been Emptied", true, 0);
-            }
+            }*/
         }
     }
 }

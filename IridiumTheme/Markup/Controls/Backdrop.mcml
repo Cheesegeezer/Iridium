@@ -267,7 +267,7 @@
             </Children>
           </Clip>
 
-          <Graphic Name="ThemeBackground" Content="image://xi:BlueHoneycomb" MaintainAspectRatio="true" SizingPolicy="SizeToConstraint" Visible="false">
+          <Graphic Name="ThemeBackground" Content="image://xi:HomeBG" MaintainAspectRatio="true" SizingPolicy="SizeToConstraint" Visible="false">
             <LayoutInput>
               <FormLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0" Bottom="Parent,1" />
             </LayoutInput>

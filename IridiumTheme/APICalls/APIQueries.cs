@@ -40,7 +40,7 @@ namespace Iridium.APICalls
         public ItemsResult AcclaimedAPIQuery(Guid userId, Guid folderId)
         {
             string query = string.Format("&ParentId={0}&format=Json",folderId); //must include "&format=Json" in order to allow for the items to be read.
-            string queryUrl = string.Format("{0}Items?MinCriticRating=80&Recursive=true&UsereId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
+            string queryUrl = string.Format("{0}Items?MinCriticRating=80&Limit=10&Recursive=true&UsereId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
             return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
         }
         

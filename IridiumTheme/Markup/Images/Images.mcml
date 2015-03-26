@@ -10,7 +10,7 @@
       xmlns:me="Me">
 
 	<Image Name="Concrete" Source="resx://Iridium/Iridium.Resources/Concrete" />
-	<Image Name="BlueHoneycomb" Source="resx://Iridium/Iridium.Resources/blue_honeycomb" />
+	<Image Name="HomeBG" Source="resx://Iridium/Iridium.Resources/HomeBG" />
 	<Image Name="BlankGraphic" Source="resx://MediaBrowser/MediaBrowser.Resources/BlankGraphic" />
 	<Image Name="rootBG" Source="resx://Iridium/Iridium.Resources/rootBG" />
 

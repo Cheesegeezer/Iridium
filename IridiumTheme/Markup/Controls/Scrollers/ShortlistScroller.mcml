@@ -103,7 +103,7 @@
             
             <dob:OptionButton Name="CloseShortlistButton" Label="[Application.LocalStrings.#CloseBtnStr!cor:String]" Command="[CloseShortlist]" >
               <LayoutInput>
-                <AnchorLayoutInput Left="Parent,1,-200" Top="Parent,0.7"/>
+                <AnchorLayoutInput Right="ClearShortlistButton,0,-20" Top="Parent,0.7"/>
               </LayoutInput>
             </dob:OptionButton>
             
@@ -113,7 +113,7 @@
               </LayoutInput>
             </dob:OptionButton>
 
-            <Graphic Content="image://vi:RALBG" ColorFilter="color://is:XC_RALPanelFilterColor" MinimumSize="0,250" MaximumSize="0,500" Alpha="1">
+            <Graphic Content="image://vi:PanelBG" ColorFilter="color://is:XC_RALPanelFilterColor" MinimumSize="0,250" MaximumSize="0,500" Alpha="1">
               <LayoutInput>
                 <AnchorLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0.2" Bottom="Parent,0.8"  />
               </LayoutInput>

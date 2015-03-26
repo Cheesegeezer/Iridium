@@ -66,10 +66,11 @@
     <Reference Include="MediaBrowser, Version=3.0.207.0, Culture=neutral, PublicKeyToken=59fc04479785fd64, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\assembly\GAC_MSIL\MediaBrowser\3.0.207.0__59fc04479785fd64\MediaBrowser.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="MediaBrowser.Model, Version=3.0.5502.25341, Culture=neutral, PublicKeyToken=6cde51960597a7f9, processorArchitecture=MSIL">
+    <Reference Include="MediaBrowser.Model, Version=3.0.5560.34387, Culture=neutral, PublicKeyToken=6cde51960597a7f9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MediaBrowser.Common.3.0.546\lib\net35\MediaBrowser.Model.dll</HintPath>
+      <HintPath>..\packages\MediaBrowser.Common.3.0.598\lib\net35\MediaBrowser.Model.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.MediaCenter" />
     <Reference Include="Microsoft.MediaCenter.UI" />
@@ -88,6 +89,7 @@
     <Compile Include="Actors\ActorInfo.cs" />
     <Compile Include="APICalls\XNewsItem.cs" />
     <Compile Include="ConfigData.cs" />
+    <Compile Include="CustomMessage.cs" />
     <Compile Include="CustomStyles.cs" />
     <Compile Include="Fonts\FontManager.cs" />
     <Compile Include="APICalls\GetAPIItems.cs" />
@@ -113,7 +115,6 @@
     <Content Include="Development Log.txt" />
     <Content Include="Images\ActorBackdrop.jpg" />
     <Content Include="Images\BGOverlay.png" />
-    <Content Include="Images\BottomInfoPane.png" />
     <Content Include="Images\focusframe.png" />
     <Content Include="Images\GlassBG .png" />
     <Content Include="Images\Icons\AddIcon.png" />
@@ -136,19 +137,14 @@
     <Content Include="Images\logoviewBG2.png" />
     <Content Include="Images\PanelBG.png" />
     <Content Include="Images\RootImages\glowshine.png" />
-    <Content Include="Images\RootImages\MenuTextGlow.png" />
-    <Content Include="Images\RootImages\MenuTextGlow2.png" />
-    <Content Include="Images\RootImages\blue-honeycomb.jpg" />
     <Content Include="Images\RootImages\button_play.png" />
     <Content Include="Images\RootImages\button_playsmall.png" />
     <Content Include="Images\RootImages\MainVFBG.png" />
-    <Content Include="Images\RootImages\PrevPanel.png" />
-    <Content Include="Images\RootImages\NextPanel.png" />
     <Content Include="Images\RootImages\DetailsInfoPanel.png" />
     <Content Include="Images\RootImages\RALScrollerBG.png" />
     <Content Include="Images\RootImages\SelectedTitleBG.png" />
+    <Content Include="Images\RootImages\HomeBG.jpg" />
     <Content Include="Images\testbanner.png" />
-    <Content Include="Images\textglow.png" />
     <Content Include="Sounds\Clicker.wav" />
     <Content Include="Sounds\shutter.wav" />
     <None Include="Fonts\BebasNeue.ttf" />
@@ -203,7 +199,6 @@
     <Content Include="Images\Ratings\US\rated_tv_y.png" />
     <Content Include="Images\Ratings\US\rated_tv_y7.png" />
     <Content Include="Images\Ratings\US\rated_tv_y7_fv.png" />
-    <Content Include="Images\ThumbPanelBlack.png" />
     <None Include="Markup\Animations.mcml">
       <SubType>Designer</SubType>
     </None>
@@ -227,6 +222,9 @@
     </None>
     <None Include="Markup\Controls\InfoPanels\BottomInfoBar.mcml" />
     <None Include="Markup\Controls\MBPosterViewItem.mcml" />
+    <None Include="Markup\Controls\CustomMessage.mcml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Markup\Controls\ProgressBar.mcml" />
     <None Include="Markup\Controls\Scrollers\ActorScroller.mcml">
       <SubType>Designer</SubType>
@@ -264,26 +262,15 @@
     <Content Include="Markup\Views\LayoutDetails.mcml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Markup\Views\XenonRef\LayoutBaseScroller.mcml" />
-    <None Include="Markup\Views\XenonRef\ROCBasicViewItem.mcml" />
-    <None Include="Markup\Views\XenonRef\LayoutThumb.mcml" />
-    <None Include="Markup\Views\XenonRef\LayoutThumbItem.mcml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Markup\Views\XenonRef\LayoutThumbScroller.mcml" />
-    <None Include="Markup\Views\XenonRef\OldLayoutCoverflow.mcml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Markup\Views\XenonRef\Copy of LayoutRoot.mcml">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Markup\Views\ExtraViews\LayoutBannerView.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Views\ExtraViews\LayoutDetailsBannerList.mcml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Markup\Views\XenonRef\XenonLayoutDetails.mcml" />
+    <None Include="Markup\Views\LayoutRoot - Copy.mcml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Markup\Views\LayoutRoot.mcml">
       <SubType>Designer</SubType>
     </None>

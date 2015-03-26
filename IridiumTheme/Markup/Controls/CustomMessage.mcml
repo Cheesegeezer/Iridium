@@ -1,0 +1,210 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:a="assembly://MediaBrowser/MediaBrowser"
+      xmlns:ih="assembly://Iridium/Iridium"
+      xmlns:vi="resx://Iridium/Iridium.Resources/Images"
+      xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
+	  xmlns:is="file://Iridium_Styles.mcml"
+      xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
+      xmlns:ib="resx://MediaBrowser/MediaBrowser.Resources/ImageButton"
+      xmlns:sb="resx://MediaBrowser/MediaBrowser.Resources/SimpleButton"
+      xmlns:vm="resx://MediaBrowser/MediaBrowser.Resources/ViewMenu"
+      xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
+      xmlns:anim="resx://MediaBrowser/MediaBrowser.Resources/Animations"
+      xmlns:me="Me">
+
+  <UI Name="MessageBoxBase">
+
+    <Properties>
+      <cor:String Name="Msg" String="$Required" />
+      <ih:CustomMessage Name="CustomMessage" />
+    </Properties>
+
+    <Locals>
+      <Command Name="Close"/>
+      <ShortcutHandler Name="BackHandler"  Handle="true" Shortcut="Back" HandlerStage="Bubbled"/>
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <PlaySound Sound="sound://sounds:Focus" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[Close.Invoked]"/>
+          <Modified Source="[BackHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[CustomMessage.Instance.ShowMessage]" Value="false" />
+        </Actions>
+      </Rule>
+    </Rules>
+  </UI>
+
+  <UI Name="MessageBox" BaseUI="me:MessageBoxBase" >
+
+    <Locals>
+      <Command Name="OK"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[OK.Invoked]">
+        <Actions>
+          <Set Target="[CustomMessage.Instance.MessageResponse]" Value="OK" />
+          <Set Target="[CustomMessage.Instance.ShowMessage]" Value="false" />
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Graphic Name="Main" Content="image://vi:PanelBG" SizingPolicy="SizeToChildren" Padding="2,0,0,0" Navigation="ContainAll,Group">
+        <Children>
+          <Graphic Content="image://vi:PanelBG"  SizingPolicy="SizeToChildren" MaintainAspectRatio="false" Padding="20,20,20,20" >
+            <Layout>
+              <FlowLayout Orientation="Vertical" ItemAlignment="Center"/>
+            </Layout>
+            <Children>
+              <Text Content="IRIDIUM:"
+                    Color="color://is:MessageTextColor"
+                    Font="font://is:MessageTextFont"
+              />
+              <Text Name="Message"
+                    HorizontalAlignment="Center"
+                    Content="[Msg]"
+                    Color="color://is:MessageTextColor"
+                    Font="font://is:MessageTextFont"
+                    WordWrap="true"
+                    MaximumSize="800,0"/>
+              <sb:SimpleButton Text="OK" Command="[OK]" Margins="0,10,0,0" Size="200,75" Visible="true" Color="color://is:MessageTextColor" Font="font://is:MessageTextFont"/>
+            </Children>
+          </Graphic>
+        </Children>
+      </Graphic>
+    </Content>
+
+  </UI>
+
+	<UI Name="InfoBox" BaseUI="me:MessageBoxBase" >
+
+		<Content>
+			<Graphic Name="Main" Content="image://vi:PanelBG" SizingPolicy="SizeToChildren" Padding="2,0,0,0" Navigation="ContainAll,Group">
+				<Children>
+					<Graphic Content="image://vi:PanelBG"  SizingPolicy="SizeToChildren" MaintainAspectRatio="false" Padding="20,20,20,20" >
+						<Layout>
+							<FlowLayout Orientation="Vertical" ItemAlignment="Center"/>
+						</Layout>
+						<Children>
+							<Text Content="IRIDIUM:"
+								  Color="color://is:MessageTextColor"
+								  Font="font://is:MessageTextFont"
+              />
+							<Text Name="Message"
+								  HorizontalAlignment="Center"
+								  Content="[Msg]"
+								  Color="color://is:MessageTextColor"
+								  Font="font://is:MessageTextFont"
+								  WordWrap="true"
+								  MaximumSize="750,0"/>
+							</Children>
+					</Graphic>
+				</Children>
+			</Graphic>
+		</Content>
+
+	</UI>
+  
+  <UI Name="ProgressBox" BaseUI="me:MessageBoxBase" >
+    <Properties>
+      <Image Name="Image" Image="image://vi:PBFill"/>
+    </Properties>
+
+    <Rules>
+      <Binding  Source="[Msg]" Target="[Message.Content]" />
+    </Rules>
+
+    <Content>
+      <Graphic Name="Main" Content="image://vi:PanelBG" SizingPolicy="SizeToChildren" Padding="2,0,0,0" Navigation="ContainAll,Group">
+        <Children>
+          <Graphic Content="image://vi:PanelBG"  SizingPolicy="SizeToChildren"
+                   MaintainAspectRatio="false" Padding="20,20,20,20" >
+            <Layout>
+              <FlowLayout Orientation="Horizontal" ItemAlignment="Near" Spacing="15,0"/>
+            </Layout>
+            <Children>
+              <Graphic Content="[Image]" MaximumSize="40,0" MaintainAspectRatio="true" >
+                <Animations>
+                  <Animation CenterPointPercent=".5,.5,.5" Loop="-1">
+                  <Keyframes>
+                    <RotateKeyframe Time="0.0" Value="0deg;0,0,0" Interpolation="Linear" RelativeTo="Current" />
+                    <RotateKeyframe Time="1.0" Value="360deg;0,0,0" RelativeTo="Current" />
+                  </Keyframes>
+                  </Animation>
+                </Animations>
+              </Graphic>
+              <Text Name="Message"
+                    Content="[Msg]"
+                    Color="color://is:MessageTextColor"
+                    Font="font://is:MessageTextFont"
+                    WordWrap="true"
+                    MaximumSize="600,0"/>
+            </Children>
+          </Graphic>
+        </Children>
+      </Graphic>
+    </Content>
+
+  </UI>
+  
+  <UI Name="YesNoBox" BaseUI="me:MessageBoxBase" >
+
+    <Locals>
+      <Command Name="Yes"/>
+      <Command Name="No"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[Yes.Invoked]">
+        <Actions>
+          <Set Target="[CustomMessage.Instance.MessageResponse]" Value="Y" />
+          <Set Target="[CustomMessage.Instance.ShowMessage]" Value="false" />
+        </Actions>
+      </Changed>
+      <Changed Source="[No.Invoked]">
+        <Actions>
+          <Set Target="[CustomMessage.Instance.MessageResponse]" Value="N" />
+          <Set Target="[CustomMessage.Instance.ShowMessage]" Value="false" />
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Graphic Name="Main" Content="image://vi:PanelBG" SizingPolicy="SizeToChildren" Padding="2,0,0,0" Navigation="ContainAll,Group">
+        <Children>
+          <Graphic Content="image://vi:PanelBG"  SizingPolicy="SizeToChildren"
+                   MaintainAspectRatio="false" Padding="20,20,20,20" >
+            <Layout>
+              <FlowLayout Orientation="Vertical" ItemAlignment="Center"/>
+            </Layout>
+            <Children>
+              <Text Name="Message"
+                    Content="[Msg]"
+                    Color="color://is:MessageTextColor"
+                    Font="font://is:MessageTextFont" 
+					WordWrap="true"
+				    MaximumSize="600,500"/>
+              <Panel Layout="HorizontalFlow"  >
+                <Children>
+                  <sb:SimpleButton Text="Yes" Command="[Yes]" Margins="0,10,0,0" Size="240,75" Visible="true" Color="color://is:MessageTextColor" Font="font://is:MessageTextFont"/>
+                  <sb:SimpleButton Text="No" Command="[No]" Margins="10,10,0,0" Size="240,75" Visible="true" Color="color://is:MessageTextColor" Font="font://is:MessageTextFont"/>
+                </Children>
+              </Panel>
+            </Children>
+          </Graphic>
+        </Children>
+      </Graphic>
+    </Content>
+
+  </UI>
+</Mcml>

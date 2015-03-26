@@ -211,26 +211,6 @@ namespace Iridium {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap blue_honeycomb {
-            get {
-                object obj = ResourceManager.GetObject("blue_honeycomb", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap BottomInfoPane {
-            get {
-                object obj = ResourceManager.GetObject("BottomInfoPane", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] BusyIndicator {
@@ -325,6 +305,16 @@ namespace Iridium {
         internal static byte[] CoverflowScroller {
             get {
                 object obj = ResourceManager.GetObject("CoverflowScroller", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] CustomMessage {
+            get {
+                object obj = ResourceManager.GetObject("CustomMessage", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -585,6 +575,16 @@ namespace Iridium {
         internal static System.Drawing.Bitmap glowshine {
             get {
                 object obj = ResourceManager.GetObject("glowshine", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HomeBG {
+            get {
+                object obj = ResourceManager.GetObject("HomeBG", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -962,16 +962,6 @@ namespace Iridium {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MenuTextGlow {
-            get {
-                object obj = ResourceManager.GetObject("MenuTextGlow", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap minus {
             get {
                 object obj = ResourceManager.GetObject("minus", resourceCulture);
@@ -1005,16 +995,6 @@ namespace Iridium {
         internal static System.Drawing.Bitmap NextItem {
             get {
                 object obj = ResourceManager.GetObject("NextItem", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap NextPanel {
-            get {
-                object obj = ResourceManager.GetObject("NextPanel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1155,16 +1135,6 @@ namespace Iridium {
         internal static System.Drawing.Bitmap PrevItem {
             get {
                 object obj = ResourceManager.GetObject("PrevItem", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PrevPanel {
-            get {
-                object obj = ResourceManager.GetObject("PrevPanel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1761,29 +1731,9 @@ namespace Iridium {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap textglow {
-            get {
-                object obj = ResourceManager.GetObject("textglow", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap ThreeSpeaker {
             get {
                 object obj = ResourceManager.GetObject("ThreeSpeaker", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ThumbPanelBlack {
-            get {
-                object obj = ResourceManager.GetObject("ThumbPanelBlack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

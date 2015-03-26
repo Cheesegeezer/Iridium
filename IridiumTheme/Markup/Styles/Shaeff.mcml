@@ -106,7 +106,7 @@
       <Font Name="PosterShadowTagLineFont" Font="Impact,26, Bold" />
       <Font Name="PosterDetailsInfoLabelFont" Font="InterBold,18" />
       <Font Name="PosterDetailsInfoValueFont" Font="InterOne,18" />
-      <Font Name="PosterSmallFont" Font="InterBold,20" />
+      <Font Name="PosterSmallFont" Font="Segoe UI SemiLight, 14" />
       <!--COLORS-->
       <Color Name="PosterTitleColor" Color="255,255,255" />
       <Color Name="PosterOverviewTextColor" Color="240,240,240" />
@@ -118,7 +118,7 @@
       <Color Name="StarsColor" Color="0,155,255" />
 
   <!--COVERFLOW VIEW-->
-  <Font Name="CV_PosterTopLabelFont" Font="InterBold, 20" />
+  <Font Name="CV_PosterTopLabelFont" Font="Segoe UI SemiLight, 14" />
 
   <!--THUMBSTRIP VIEW-->
       <!--FONTS-->
@@ -154,7 +154,7 @@
       <Color Name="QLDividerColor" Color="111,184,227" />
 
   <!--THUMB VIEW-->
-      <Font Name="ThumbTitleFont" Font="Xolonium Bold, 20" />
+      <Font Name="ThumbTitleFont" Font="Xolonium Bold, 18" />
       <Color Name="ThumbTitleColor" Color="255,255,255" />
 	  <Font Name="ThumbItemTitleFont" Font="Segoe UI SemiLight, 22, Bold" />
 	  <Color Name="ThumbItemTitleColor" Color="240,240,240" />
@@ -200,6 +200,10 @@
       <Color Name="counterColor" Color="0,155,255" />
       <Color Name="totalCounterColor" Color="0,155,255" />
       <Color Name="XC_WatchedBG" Color="82,181,75" />
+	
+	<!-- MESSAGE BOX -->
+	<Font Name="MessageTextFont" Font="Segoe UI Semilight, 30, Bold" />
+	<Color Name="MessageTextColor" Color="240,240,240" />
 
   <!--CONFIG UI POPUP PANELS-->
       <!-- Color and opacity of the "glow" fade used at the edges of the UI panels -->

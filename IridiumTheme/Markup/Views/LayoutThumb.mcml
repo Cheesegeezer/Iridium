@@ -108,7 +108,7 @@
 			<Binding Target="[Overlay.Alpha]" Source="[ThemeHelper.Config.FolderBackdropOverlayAlpha]" />
 
 			<!--  STAR RATINGS  -->
-			<Binding Source="[Folder.SelectedChild.ImdbRating]" Target="[StarRating.Value]" />
+			
 			<Binding Source="[Folder.SelectedChild.ImdbRating]" Target="[StarRating.ImdbValue]" />
 			<Binding Source="[Folder.SelectedChild.CriticRating]" Target="[StarRating.RTValue]" />
 			<Binding Source="[Folder.SelectedChild.RottenTomatoImage]" Target="[StarRating.RTImage]" />
@@ -433,7 +433,7 @@
 					<Set Target="[ComputeNormalizedIndex.SubtractInt]" Value="[SelectRepeaterIndex.Value]" />
 					<Set Target="[ComputeShit.MultiplyInt]" Value="[Index.Value]" Transformer="[ComputeNormalizedIndex]" />
 				    <Set Target="[Margins.Left]" Value="[PosChangeIndex]" Transformer="[ComputeShit]"/>
-				    <Set Target="[ItemPanel.Margins]" Value="[Margins]" />
+				    <Set Target="[ItemPanel.Margins]" Value="[Margins]"  />
 				</Actions>
 			</Changed>
 			

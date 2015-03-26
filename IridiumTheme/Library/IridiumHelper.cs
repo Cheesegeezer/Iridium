@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Drawing.Text;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Web.UI;
+using System.Web.Configuration;
 using MediaBrowser;
 using MediaBrowser.Library;
 using MediaBrowser.Library.Entities;
@@ -16,19 +11,14 @@ using MediaBrowser.Library.Localization;
 using MediaBrowser.Library.Logging;
 using MediaBrowser.Library.Persistance;
 using MediaBrowser.Library.Threading;
-using MediaBrowser.Model.Querying;
 using Microsoft.MediaCenter;
 using Microsoft.MediaCenter.Hosting;
 using Microsoft.MediaCenter.UI;
-using Iridium.APICalls;
 using Application = MediaBrowser.Application;
+using Version = System.Version;
 
 namespace Iridium
 {
-    using System.Collections;
-
-    using MediaBrowser.Model.News;
-
     public class IridiumHelper : ModelItem
     {
 
@@ -60,7 +50,7 @@ namespace Iridium
         }
 
 
-        public MediaBrowser.Library.Item CurrentItem
+        public Item CurrentItem
         {
             get { return this._currentItem; }
             set
@@ -168,10 +158,10 @@ namespace Iridium
         {
             get
             {
-                if (Plugin.config == null)
-                    Plugin.config = new MyConfig();
+                if (Plugin.Config == null)
+                    Plugin.Config = new MyConfig();
 
-                return Plugin.config;
+                return Plugin.Config;
             }
         }
 
@@ -1105,7 +1095,8 @@ namespace Iridium
         #region Actor Bio Page and Collection Scroller
 
         public static ArrayListDataSet ActorCollection = new ArrayListDataSet();
-        
+        private PluginStatus _pluginStatus;
+
 
         public ActorItemWrapper GetActor(Item item, int index)
         {
@@ -1160,11 +1151,11 @@ namespace Iridium
         {
             Async.Queue("Person navigation", () =>
             {
-                var query = new ItemQuery
+                MediaBrowser.Model.Querying.ItemQuery query = new MediaBrowser.Model.Querying.ItemQuery 
                 {
                     UserId = Kernel.CurrentUser.Id.ToString(),
                     Fields = MB3ApiRepository.StandardFields,
-                    Person = name,
+                    //Person = name,
                     PersonTypes = personTypes,
                     Recursive = true
                 };

@@ -289,9 +289,6 @@
   <data name="InterOne" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>fonts\interone.ttf;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ThumbPanelBlack" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\thumbpanelblack.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="PBBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\progressbar\pbback.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -433,9 +430,6 @@
   <data name="rated_tv_y7_fv" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\ratings\us\rated_tv_y7_fv.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BottomInfoPane" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\bottominfopane.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="BebasNeue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>fonts\bebasneue.ttf;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -544,12 +538,6 @@
   <data name="PrevItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\icons\previtem.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="NextPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\nextpanel.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PrevPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\prevpanel.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="AddIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\icons\addicon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -579,9 +567,6 @@
   </data>
   <data name="Shaeff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>markup\styles\shaeff.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="blue_honeycomb" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\blue-honeycomb.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="button_play" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\rootimages\button_play.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -616,9 +601,6 @@
   <data name="UpcomingTVLayoutScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>markup\controls\homepage\upcomingtvlayoutscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="MenuTextGlow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\rootimages\menutextglow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="PanelBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\panelbg.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -627,9 +609,6 @@
   </data>
   <data name="testbanner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\testbanner.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="textglow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\textglow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="glowshine" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\rootimages\glowshine.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -666,5 +645,11 @@
   </data>
   <data name="logoviewBG2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\logoviewbg2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HomeBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\rootimages\homebg.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CustomMessage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\custommessage.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

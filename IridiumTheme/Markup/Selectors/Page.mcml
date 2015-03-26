@@ -16,6 +16,7 @@
       xmlns:dcm="resx://Iridium/Iridium.Resources/DefaultContextMenu"
       xmlns:cmb="resx://Iridium/Iridium.Resources/CommandButton"
       xmlns:slp="resx://Iridium/Iridium.Resources/ShortlistScroller"
+	  xmlns:cmsg="resx://Iridium/Iridium.Resources/CustomMessage"
       xmlns:ih="assembly://Iridium/Iridium"
       xmlns:me="Me">
 
@@ -27,6 +28,7 @@
       <FormLayoutInput Name="FullScreen" Bottom="Parent,1" Left="Parent,0" Right="Parent,1" Top="Parent,0"/>
       <ih:MyShortlist Name="MyShortlist" />
       <ih:IridiumHelper Name="Helper" />
+	  <ih:CustomMessage Name="CustomMessage" />
     </Properties>
 
     <Locals>
@@ -105,6 +107,7 @@
       <ShortcutHandler Name="SearchShortcut" Handle="true" HandlerStage="Bubbled" Shortcut="Yellow"/>
       <KeyHandler Name="SearchKey" Handle="true" HandlerStage="Bubbled" Key="S" Modifiers="Control"/>
       <ShortcutHandler Name="BackHandler" Handle="false" Shortcut="Back" HandlerStage="Bubbled"/>
+		<Timer Name="MsgDelay" AutoRepeat="false" Interval="150" Enabled="false"/>
       
       <TypingHandler Name="TypingHandler" HandlerStage="Bubbled" TypingPolicy="TripleTap"  >
         <EditableText>
@@ -466,6 +469,34 @@
         </Actions>
       </Changed>-->
 
+		<Binding Source="[CustomMessage.Instance.MessageText]" Target="[MessageBox.Msg]" />
+		<Binding Source="[CustomMessage.Instance.MessageUI]" Target="[MessageBox.Source]" />
+
+		<Changed Source="[CustomMessage.Instance.ShowMessage]" >
+			<Conditions>
+				<Equality Source="[CustomMessage.Instance.ShowMessage]" ConditionOp="Equals" Value="true" />
+			</Conditions>
+			<Actions>
+				<Invoke Target="[MsgDelay.Start]" />
+				<Set Target="[MouseBlocker.Visible]" Value="true" />
+				<Set Target="[MessageBox.Visible]" Value="true" />
+			</Actions>
+		</Changed>
+		<Changed Source="[MsgDelay.Tick]" >
+			<Actions>
+				<Invoke Target="[MessageBox.NavigateInto]" />
+			</Actions>
+		</Changed>
+		<Changed Source="[CustomMessage.Instance.ShowMessage]">
+			<Conditions>
+				<Equality Source="[CustomMessage.Instance.ShowMessage]" ConditionOp="Equals" Value="false" />
+			</Conditions>
+			<Actions>
+				<Set Target="[MessageBox.Visible]" Value="false" />
+				<Set Target="[MouseBlocker.Visible]" Value="false" />
+			</Actions>
+		</Changed>
+
       <!--CONFIG PANEL ICONS FOCUS/FOCUSLOST ACTIONS-->
       <Changed Source="[UserFocus.Invoked]">
         <Actions>
@@ -599,6 +630,16 @@
           <Invoke Target="[PreSelectedItem.RefreshMetadata]"/>
         </Actions>
       </Rule>
+
+		<!--<Rule>
+			<Conditions>
+				<Equality Source="[ThemeHelper.RegCheck]" ConditionOp="Equals" Value="Expired" />
+			</Conditions>
+			<Actions>
+				<Set Target="[ExpiredMessage.Visible]" Value="true" />
+			</Actions>
+		</Rule>-->
+		
     </Rules>
 
     <Content>
@@ -608,12 +649,52 @@
           <Text Name="IsStopped" ></Text>
           <Text Name="IsPaused" ></Text>
 
-          <NowPlaying ShowFullMetadata="Never" SnapToDefaultPosition="true" Visible="false" Name="NowPlay">
+          <NowPlaying ShowFullMetadata="Never" SnapToDefaultPosition="true" Visible="false" Name="NowPlay" >
             <LayoutInput>
               <FormLayoutInput Left="Parent,0" Top="Parent,1"/>
             </LayoutInput>
           </NowPlaying>
 
+			<!--<Graphic Name="ExpiredMessage" Content="image://vi:PanelBG" Alpha="1" Navigation="ContainAll" Visible="true">
+				<LayoutInput>
+					<FormLayoutInput Left="Parent,0" Top="Parent,0.15" Right="Parent,1" Bottom="Parent,0.85"/>
+				</LayoutInput>
+				<Children>
+
+					<Panel>
+						<Layout>
+							<FlowLayout Orientation="Vertical" StripAlignment="Center" Spacing="15,15"/>
+						</Layout>
+						<Children>
+							<Text Content="IRIDIUM HAS EXPIRED" Font="font://is:MessageTextFont" Color="color://is:MessageTextColor" HorizontalAlignment="Center" />
+							<Text Content="Please purchase from MBC Plugin Catalogue" WordWrap="true" Font="font://is:MessageTextFont" Color="color://is:MessageTextColor" HorizontalAlignment="Center" />
+							
+						</Children>
+					</Panel>
+				</Children>
+			</Graphic>-->
+
+			<!--MessageBox-->
+			<cmsg:MessageBox Name="MessageBox" Msg="Testing" Visible="false" Margins="0,0,50,50" >
+				<LayoutInput>
+					<FormLayoutInput Vertical="Center" Horizontal="Center" />
+				</LayoutInput>
+				<Animations>
+					<Animation Type="Show" >
+						<Keyframes>
+							<AlphaKeyframe Time="0.0" Value="0" />
+							<AlphaKeyframe Time=".7" Value="1" Interpolation="EaseOut" />
+						</Keyframes>
+					</Animation>
+					<Animation Type="Hide" >
+						<Keyframes>
+							<AlphaKeyframe Time="0.0" Value="1" />
+							<AlphaKeyframe Time="0.2" Value="0" Interpolation="SCurve" />
+						</Keyframes>
+					</Animation>
+				</Animations>
+			</cmsg:MessageBox>
+			
           <Clip Layout="Form" Padding="[Application.Config.OverScanPadding]" Scale="[Application.Config.OverScanScaling]" CenterPointPercent="0.5,0.5,0.5">
             <Animations>
               <Animation Animation="animation://an:PageHide" />
@@ -766,6 +847,7 @@
                   </Graphic>
                 </Children>
               </Panel>
+
 
               <pda:PageDetailAreaIridium ThemeHelper="[Helper]" Name="ViewPanel" Folder="[Folder]" Application="[Application]" LayoutInput="[FullScreen]"/>
 

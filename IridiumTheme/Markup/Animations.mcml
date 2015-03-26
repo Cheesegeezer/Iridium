@@ -8,6 +8,13 @@
       <PositionKeyframe Time="0.4" Value="0,-5,0" Interpolation="SCurve,0.5"/>
     </Keyframes>
   </Animation>
+	
+	<Animation Name="LogoShift" Type="Move">
+		<Keyframes>
+			<PositionKeyframe Time="0" RelativeTo="Current" Interpolation="EaseIn, 1.0, 0.25" />
+			<PositionKeyframe Time="0.2" RelativeTo="Final" />
+		</Keyframes>
+	</Animation>
 
   <Animation Name="CVFocusLost" CenterPointPercent="0.5,0.5,0.5" >
     <Keyframes>

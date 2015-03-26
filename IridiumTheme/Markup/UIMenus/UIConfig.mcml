@@ -645,7 +645,7 @@ xmlns:me="Me">
       <Condition Source="[Folder.DisplayPrefs.ViewTypeString]" ConditionOp="Equals" SourceValue="Poster" Target="[CFPosition.Visible]" Value="false" />
       <Condition Source="[Folder.DisplayPrefs.ViewTypeString]" ConditionOp="Equals" SourceValue="Thumb" Target="[CFPosition.Visible]" Value="false" />
       <Condition Source="[Folder.DisplayPrefs.ViewTypeString]" ConditionOp="Equals" SourceValue="ThumbStrip" Target="[CFPosition.Visible]" Value="false" />
-      <Condition Source="[Folder.DisplayPrefs.ViewTypeString]" ConditionOp="Equals" SourceValue="CoverFlow" Target="[CFPosition.Visible]" Value="true" />
+      <Condition Source="[Folder.DisplayPrefs.ViewTypeString]" ConditionOp="Equals" SourceValue="CoverFlow" Target="[CFPosition.Visible]" Value="false" />
       <Condition Source="[Folder.DisplayPrefs.ViewTypeString]" ConditionOp="Equals" SourceValue="Detail" Target="[CFPosition.Visible]" Value="false" />
 
 
@@ -709,7 +709,7 @@ xmlns:me="Me">
               </ui:GlowBottom>
 
               <!-- Main Menu -->
-              <Text Content="[Application.LocalStrings.#OptionsLabel!cor:String]" Color="color://is:XC_PopupMenuTitle" Font="font://is:XF_PopupMenuTitle">
+              <Text Name="OptionsTitle" Content="[Application.LocalStrings.#OptionsLabel!cor:String]" Color="color://is:XC_PopupMenuTitle" Font="font://is:XF_PopupMenuTitle">
                 <LayoutInput>
                   <AnchorLayoutInput Left="MainTitleBG,0" Right="MainTitleBG,1" Top="MainTitleBG,0" Bottom="MainTitleBG,1" Vertical="Center" Horizontal="Center" />
                 </LayoutInput>

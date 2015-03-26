@@ -274,9 +274,9 @@
                 </Children>
               </Clip>
 
-              <st:ScrollableText Name="Summary" Font="font://is:PosterOverviewFont" Color="color://is:PosterOverviewTextColor">
+              <st:ScrollableText Name="Summary" Font="font://is:PosterOverviewFont" Color="color://is:PosterOverviewTextColor" MaximumSize="0,350">
                 <LayoutInput>
-                  <AnchorLayoutInput Left="Parent,0" Top="Parent,0" Right="Parent,1" />
+                  <AnchorLayoutInput Left="Parent,0" Top="Parent,0" Right="Parent,1"  />
                 </LayoutInput>
               </st:ScrollableText>
 
@@ -1010,7 +1010,7 @@
                           <AnchorLayoutInput Horizontal="Fill" Vertical="Fill"/>
                         </LayoutInput>
                         <Children>
-                          <Text Alpha="1" Name="Label" Visible="false" Color="color://s:FontColorLight" Font="[LabelFont]"
+                          <Text Alpha="1" Name="Label" Visible="false" Color="color://is:PosterTitleColor" Font="[LabelFont]"
 														Content="[Item.Name]"  WordWrap="true" Margins="5,5,5,5"  HorizontalAlignment="Center">
 
                           </Text>

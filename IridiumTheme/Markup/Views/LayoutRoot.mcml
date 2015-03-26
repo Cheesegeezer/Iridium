@@ -20,6 +20,7 @@
       xmlns:gp="resx://Iridium/Iridium.Resources/GenresLayoutScroller"
       xmlns:ris="resx://Iridium/Iridium.Resources/ResumeLayoutScroller"
       xmlns:home="resx://Iridium/Iridium.Resources/HomePage"
+	  xmlns:cmsg="resx://Iridium/Iridium.Resources/CustomMessage"
       xmlns:me="Me">
 
 
@@ -28,6 +29,7 @@
       <a:Application Name="Application" Application="$Required"/>
       <lib:FolderModel Name="Folder" FolderModel="$Required"/>
       <ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
+	  <ih:CustomMessage Name="CustomMessage" />
     </Properties>
 
     <Locals>
@@ -76,6 +78,7 @@
       <Command Name="VFLostFocus"/>
       <cor:Int32 Name="VFBackFocus" Int32="[Folder.SelectedChildIndex]" />
       <cor:Int32 Name="RALScrollerBackFocus" Int32="[Folder.SelectedChildIndex]" />
+		<Timer Name="MsgDelay" AutoRepeat="false" Interval="150" Enabled="false"/>
       
     </Locals>
     
@@ -162,7 +165,36 @@
       </Binding> -->
       
       <Condition Source="[Folder.SelectedChild.ParentalAllowed]" ConditionOp="Equals" SourceValue="false" Target="[PCLock.Visible]" Value="true" />
-      
+
+		<!--<Binding Source="[CustomMessage.Instance.MessageText]" Target="[MessageBox.Msg]" />
+		<Binding Source="[CustomMessage.Instance.MessageUI]" Target="[MessageBox.Source]" />
+		
+		<Changed Source="[CustomMessage.Instance.ShowMessage]" >
+        <Conditions>
+          <Equality Source="[CustomMessage.Instance.ShowMessage]" ConditionOp="Equals" Value="true" />
+        </Conditions>
+        <Actions>
+          <Invoke Target="[MsgDelay.Start]" />
+          <Set Target="[MouseBlocker.Visible]" Value="true" />
+          <Set Target="[MessageBox.Visible]" Value="true" />
+        </Actions>
+      </Changed>
+      <Changed Source="[MsgDelay.Tick]" >
+        <Actions>
+          <Invoke Target="[MessageBox.NavigateInto]" />
+        </Actions>
+      </Changed>
+      <Changed Source="[CustomMessage.Instance.ShowMessage]">
+        <Conditions>
+          <Equality Source="[CustomMessage.Instance.ShowMessage]" ConditionOp="Equals" Value="false" />
+        </Conditions>
+        <Actions>
+          <Set Target="[MessageBox.Visible]" Value="false" />
+          <Set Target="[MouseBlocker.Visible]" Value="false" />
+          <Invoke Target="[RootScroller.NavigateInto]" />
+        </Actions>
+      </Changed>-->
+		
       <Rule>
         <Conditions>
           <Equality Source="[Application.NavigatingForward]" Value="false"/>
@@ -189,7 +221,7 @@
       
       <Changed Source="[Refresh.Invoked]">
         <Actions>
-          <Invoke Target="[SelectedItem.RecentItemsChanged]"/>
+          <Invoke Target="[Folder.RecentItemsChanged]"/>
         </Actions>
       </Changed>
       
@@ -272,7 +304,10 @@
         </Actions>
       </Changed>
       
-      <Changed Source="[ShowHome.Invoked]">
+      <Changed Source="[Folder.SelectedChild]" >
+		  <Conditions>
+			  <Modified Source="[ShowHome.Invoked]"/>
+		  </Conditions>
         <Actions>
           <Set Target="[RALGetters.Tab]" Value="Home"></Set>
         </Actions>
@@ -343,7 +378,29 @@
               <FormLayoutInput Right="Parent,1,-5" Top="Parent,0.35"/>
             </LayoutInput>
           </Text>-->
-          
+
+			<!--MessageBox-->
+			<!--<cmsg:MessageBox Name="MessageBox" Msg="Testing" Visible="false" Margins="0,0,50,50" >
+				<LayoutInput>
+					<FormLayoutInput Vertical="Center" Horizontal="Center" />
+				</LayoutInput>
+				<Animations>
+					<Animation Type="Show" >
+						<Keyframes>
+							<AlphaKeyframe Time="0.0" Value="0" />
+							<AlphaKeyframe Time=".7" Value="1" Interpolation="EaseOut" />
+						</Keyframes>
+					</Animation>
+					<Animation Type="Hide" >
+						<Keyframes>
+							<AlphaKeyframe Time="0.0" Value="1" />
+							<AlphaKeyframe Time="0.2" Value="0" Interpolation="SCurve" />
+						</Keyframes>
+					</Animation>
+				</Animations>
+			</cmsg:MessageBox>-->
+			
+			
           <Clip Layout="Form" Padding="[Application.Config.OverScanPadding]" Scale="[Application.Config.OverScanScaling]" CenterPointPercent="0.5,0.5,0.5">
             <Children>
               <!--  VF Items Scrolling Panel -->
@@ -478,6 +535,7 @@
                 </Children>
               </Panel>
               
+				<Panel Name="MouseBlocker" MouseInteractive="true" Layout="Fill" Visible="false" />
               <ColorFill Name="Overlay" Layout="Fill" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]" Alpha="[ThemeHelper.Config.FolderBackdropOverlayAlpha]" Content="Black" />
               <bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]"/>
               <bd:Backdrop4 Name="Backdrop" Application="[Application]" LoadDelay="100" FadeTime="0.3" Visible="false" Image="[Folder.BackdropImage]" Item="[Folder]"/>

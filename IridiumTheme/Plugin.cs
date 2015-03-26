@@ -16,7 +16,7 @@ namespace Iridium
         static readonly Guid IridiumGuid = new Guid("2F6788A1-12DC-4E6B-8553-14CD479BC042");
         private FontManager _fontManager;
         public static List<string> AvailableStyles = new List<string>();
-        public static MyConfig config = null;
+        public static MyConfig Config = null;
         public static List <string>ExtraViewsList = new List<string>();
         public Plugin()
         {
@@ -30,8 +30,8 @@ namespace Iridium
                      MyConfig.InitDisplayPrefs();
                      CustomStyles.InitStyles();
 
-                    if (config == null)
-                        config = new MyConfig();
+                    if (Config == null)
+                        Config = new MyConfig();
                 }
             }
         }
@@ -52,21 +52,21 @@ namespace Iridium
                 bool isMC = AppDomain.CurrentDomain.FriendlyName.Contains("ehExtHost");
                 if (isMC)
                 {
-                    if (config == null)
-                        config = new MyConfig();
+                    if (Config == null)
+                        Config = new MyConfig();
                     //_actorInfo = new ActorInfo();
                     //_actorInfo.Init();
 
                     //If you want to add any context menus they need to be inside this logic as well.
                     kernel.AddConfigPanel("Iridium Options", "resx://Iridium/Iridium.Resources/ConfigPanel#ConfigPanel",
-                        config);
+                        Config);
                     //Check the current active style applied
-                    config.CheckActiveStyle();
+                    Config.CheckActiveStyle();
                     //Append styles with custom fonts
                     CustomResourceManager.AppendFonts("Iridium", Resources.Fonts, Resources.Fonts);
                     CustomResourceManager.AppendStyles("Iridium", Resources.Colors, Resources.Colors);
 
-                    //Registration.CheckRegistration(this.Version);
+                    Registration.CheckRegistration(this.Version);
                     //CustomStrings Editable by user - need to implement
                     kernel.StringData.AddStringData(MyStrings.FromFile(LocalizedStringData.GetFileName("Iridium-")));
 
@@ -98,7 +98,7 @@ namespace Iridium
         public override string Description
         {
             //provide a longer description of your theme - this will display when the user selects the theme in the plug-in section
-            get { return "A Basic Theme with rich content, perfect for XBox Extenders"; }
+            get { return "Stunning Visuals, Rich Content with plenty of extra views, Iridium Delivers!"; }
         }
 
         
