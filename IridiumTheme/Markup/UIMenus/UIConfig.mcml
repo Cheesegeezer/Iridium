@@ -862,7 +862,7 @@ xmlns:me="Me">
 
               <Panel Name="ViewMenuSubPanel" Layout="VerticalFlow" Navigation="Column,ContainAll,RememberFocus">
                 <LayoutInput>
-                  <AnchorLayoutInput Left="Parent,0,20" Top="Parent,0,60" />
+                  <AnchorLayoutInput Left="Parent,0,5" Top="Parent,0,60" />
                 </LayoutInput>
                 <Children>
                   <me:RadioGroup Model="[Folder.DisplayPrefs.ViewType]" Margins="0,0,0,20" />
@@ -881,13 +881,13 @@ xmlns:me="Me">
               <!-- Background Fill -->
               <ui:PanelPopupTitle Name="ViewTitleBG">
                 <LayoutInput>
-                  <AnchorLayoutInput Left="Parent,0" Right="ViewMenuSubPanel,1,30" Top="Parent,0" Bottom="Parent,0,40"/>
+                  <AnchorLayoutInput Left="Parent,0" Right="ViewMenuSubPanel,1,60" Top="Parent,0" Bottom="Parent,0,40"/>
                 </LayoutInput>
               </ui:PanelPopupTitle>
 
               <ui:PanelPopupList Name="ViewBG">
                 <LayoutInput>
-                  <AnchorLayoutInput Left="Parent,0" Right="ViewMenuSubPanel,1,30" Top="Parent,0,40" Bottom="ViewMenuSubPanel,1,20"/>
+                  <AnchorLayoutInput Left="Parent,0" Right="ViewMenuSubPanel,1,60" Top="Parent,0,40" Bottom="ViewMenuSubPanel,1,20"/>
                 </LayoutInput>
               </ui:PanelPopupList>
             </Children>

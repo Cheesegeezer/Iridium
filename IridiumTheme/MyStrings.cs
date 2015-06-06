@@ -15,7 +15,7 @@ namespace Iridium
     [Serializable]
     public class MyStrings : LocalizedStringData
     {
-        const string VERSION = "1.001"; //this is used to see if we have changed and need to re-save
+        const string VERSION = "1.025"; //this is used to see if we have changed and need to re-save
 
         // MCML: [Application.LocalStrings.#StringName!cor:String] 
 
