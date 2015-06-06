@@ -210,7 +210,7 @@
     <None Include="Markup\Controls\Buttons\ItemButton.mcml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Markup\Controls\Buttons\RALOptionButton.mcml" />
+    <None Include="Markup\Controls\Buttons\HomeOptionButton.mcml" />
     <None Include="Markup\Controls\Buttons\SpecialsButton.mcml">
       <SubType>Designer</SubType>
     </None>

@@ -9,7 +9,7 @@
       xmlns:me="Me"
       >
 
-  <UI Name="OptionButton">
+  <UI Name="HomeOptionButton">
     <Properties>
       <ICommand Name="Command" ICommand="$Required"/>
       <cor:String Name="Label" String=""></cor:String>
@@ -32,13 +32,12 @@
       <Condition Source="[Input.KeyFocus]" SourceValue="true">
         <Actions>
           <Set Target="[Text.Color]" Value="color://is:RALOptionButtonHighLight"/>
-          <Set Target="[Text.BackColor]" Value="color://is:RALOptionButtonHighLightBG"/>
+		  <Set Target="[Underline.Visible]" Value="true"/>
         </Actions>
       </Condition>
 
       <Condition Source="[Input.KeyFocus]" SourceValue="false">
         <Actions>
-          <Set Target="[Text.BackColor]" Value="Transparent"/>
           <Set Target="[Text.Color]" Value="color://is:XC_RALOption"/>
         </Actions>
       </Condition>
@@ -48,9 +47,17 @@
     <Content>
       <Graphic Name="BoxImage" SizingPolicy="SizeToChildren">
         <Children>
-          <Panel Layout="HorizontalFlow" >
+          <Panel Layout="Anchor" >
             <Children>
-              <Text Name="Text" Content="[Label]" Font="font://is:XF_RALOption" Color="color://is:XC_RALOption"></Text>
+              <Text Name="Text" Content="[Label]" Font="font://is:XF_RALItemTitle" Color="color://is:XC_RALItemTitle"></Text>
+				<Clip FadeAmount=".7" FadeSize="35" Layout="Form">
+					<LayoutInput>
+						<FormLayoutInput Top="Text,1" Left="Text,0" Right="Text,1" Bottom="Text,1,2"/>
+					</LayoutInput>
+					<Children>
+						<ColorFill Name="Underline" Visible="false" Content="color://is:XC_RALItemTitle" Layout="Fill" />
+					</Children>
+				</Clip>
             </Children>
           </Panel>
         </Children>

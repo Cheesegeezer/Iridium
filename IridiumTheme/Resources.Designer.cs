@@ -592,6 +592,16 @@ namespace Iridium {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] HomeOptionButton {
+            get {
+                object obj = ResourceManager.GetObject("HomeOptionButton", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] HomePage {
             get {
                 object obj = ResourceManager.GetObject("HomePage", resourceCulture);
@@ -1165,16 +1175,6 @@ namespace Iridium {
         internal static byte[] RALLayoutScroller {
             get {
                 object obj = ResourceManager.GetObject("RALLayoutScroller", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] RALOptionButton {
-            get {
-                object obj = ResourceManager.GetObject("RALOptionButton", resourceCulture);
                 return ((byte[])(obj));
             }
         }

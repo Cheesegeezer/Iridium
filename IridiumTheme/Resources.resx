@@ -436,9 +436,6 @@
   <data name="impact" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>fonts\impact.ttf;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="RALOptionButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>markup\controls\buttons\raloptionbutton.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="shutter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sounds\shutter.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -651,5 +648,8 @@
   </data>
   <data name="CustomMessage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>markup\controls\custommessage.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="HomeOptionButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\buttons\homeoptionbutton.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

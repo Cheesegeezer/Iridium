@@ -13,6 +13,7 @@
       xmlns:imb="resx://Iridium/Iridium.Resources/ImageButton"
       xmlns:vsb="resx://Iridium/Iridium.Resources/SimpleButton"
       xmlns:ft="resx://Iridium/Iridium.Resources/FancyText"
+	  xmlns:hob="resx://Iridium/Iridium.Resources/HomeOptionButton"
       xmlns:ih="assembly://Iridium/Iridium"
       xmlns:me="Me" >
   
@@ -96,6 +97,7 @@
       <Size Name="Size" Size="0,168"/>
     </Properties>
     <Locals>
+	  <Command Name="Dummy"/>
       <cor:Int32 Name="Startup" />
       <lib:Item Name="SelectedItem" Item="[Folder.SelectedChild]" /> 
       <ScrollingHandler Name="ScrollingHandler"  HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" />
@@ -120,7 +122,8 @@
 
           <Clip FadeAmount="1" Name="Scroller1" Margins="0,0,0,0" Navigation="PreferFocusOrder">
             <Children>
-              <Text Name="Title" Content="Recently Added" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Margins="0,-25,0,0" />
+              <!--<Text Name="Title" Content="Recently Added" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Margins="0,-25,0,0" /> -->
+			  <hob:HomeOptionButton Name="Title" Label="Recently Added" Command="[Dummy]" Margins="0,-25,0,0" FocusOrder="1"/>
               <Text Name="NoRecent" Content="No Recommendations" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Visible="false" Margins="0,50,0,0" />
 
               
@@ -129,7 +132,7 @@
                       
                       <Panel Name="FIP">
                         <Children>
-                          <Repeater Source="[ThemeHelper.ShowFirstNewItem]" Name="FirstItems" DiscardOffscreenVisuals="false"  FocusOrder="0">
+                          <Repeater Source="[ThemeHelper.ShowFirstNewItem]" Name="FirstItems" DiscardOffscreenVisuals="false"  >
                             <Content>
                               <me:AddedItem Application="[Application]" Item="[RepeatedItem!lib:Item]" Index="[RepeatedItemIndex]" Size="[ThemeHelper.GetBigImageSize]" />
                             </Content>
@@ -212,6 +215,7 @@
 
     </Properties>
     <Locals>
+		<Command Name="Dummy" />
       <cor:Int32 Name="Startup" />
       <lib:Item Name="SelectedItem" Item="[Folder.SelectedChild]" />
       <ScrollingHandler Name="ScrollingHandler"  HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" />
@@ -237,13 +241,13 @@
       <Panel Layout="Anchor">
         <Children>
           
-          <Clip FadeAmount="1" Name="Scroller1" Margins="0,0,0,0">
+          <Clip FadeAmount="1" Name="Scroller1" Margins="0,0,0,0" Navigation="PreferFocusOrder">
             <Children>
-              <Text Name="Title" Content="Resume" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Margins="0,-25,0,0" />
+				<hob:HomeOptionButton Name="Title" Label="Resume" Command="[Dummy]" Margins="0,-25,0,0" FocusOrder="1"/>
               <Text Name="NoRecent" Content="No Resumable Items" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Visible="false" Margins="0,50,0,0"  />
               <Scroller Orientation="Vertical" Margins="5,0,0,0" Name="Scroller" FadeSize="-5" ScrollingData="[ScrollingData]" Visible="true" MaximumSize="300,800" >
                 <Children>
-                  <Repeater Name="Repeater" MaximumSize="300,800" >
+                  <Repeater Name="Repeater" MaximumSize="300,800" FocusOrder="100" >
                     <Layout>
                       <FlowLayout Orientation="Vertical" Spacing="15,15" AllowWrap="true" />
                     </Layout>
@@ -278,6 +282,7 @@
       
     </Properties>
     <Locals>
+		<Command Name="Dummy"/>
       <cor:Int32 Name="Startup" />
       <lib:Item Name="SelectedItem" Item="[Folder.SelectedChild]" />
       <ScrollingHandler Name="ScrollingHandler"  HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" />
@@ -299,7 +304,7 @@
 
     <Content>
 
-      <Panel Layout="VerticalFlow" Margins="20,-25,0,0">
+      <Panel Layout="VerticalFlow" Margins="20,-25,0,0" Navigation="PreferFocusOrder">
             <Children>
 
               <Panel Layout="Anchor">
@@ -320,7 +325,8 @@
                       <FlowLayout Orientation="Vertical" />
                     </Layout>
                     <Children>
-                      <Text Name="Watched" Content="Because you Watched:" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Margins="0,0,0,5" />
+						<hob:HomeOptionButton Name="Watched" Label="Because You Watched:" Command="[Dummy]" Margins="0,0,0,5" FocusOrder="1"/>
+                      <!--<Text Name="Watched" Content="Because you Watched:" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Margins="0,0,0,5" /> -->
                       <Text Name="Why" Content="[ThemeHelper.RecommendedReason]" Color="White" Font="font://is:XF_RALItemTitle" Margins="0,0,0,10"  />
                     </Children>
                   </Panel>
@@ -380,6 +386,7 @@
       
     </Properties>
     <Locals>
+		<Command Name="Dummy"/>
       <cor:Int32 Name="Startup" />
       <lib:Item Name="SelectedItem" Item="[Folder.SelectedChild]" />
       <ScrollingHandler Name="ScrollingHandler"  HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" />
@@ -400,7 +407,7 @@
 
     <Content>
 
-      <Panel Layout="VerticalFlow" Margins="0,0,0,0">
+      <Panel Layout="VerticalFlow" Margins="0,0,0,0" Navigation="PreferFocusOrder">
             <Children>
 
               <Panel Layout="Anchor">
@@ -413,7 +420,7 @@
                 <Children>
                   <Panel>
                     <Children>
-                      <Text Name="Title" Content="Critically Acclaimed" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Margins="0,-25,0,0" />
+						<hob:HomeOptionButton Name="Title" Label="Critically Acclaimed" Command="[Dummy]" Margins="0,-25,0,0" FocusOrder="1"/>
                       <Text Name="NoRecent" Content="No Critically Acclaimed Items" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" Visible="false" Margins="0,50,0,0"  />
                     </Children>
                   </Panel>

@@ -13,7 +13,6 @@
       xmlns:nus="resx://Iridium/Iridium.Resources/NextUpLayoutScroller"
       xmlns:utv="resx://Iridium/Iridium.Resources/UpcomingTVLayoutScroller"
       xmlns:rip="resx://Iridium/Iridium.Resources/RALLayoutScroller"
-      xmlns:rob="resx://Iridium/Iridium.Resources/RALOptionButton"
       xmlns:imb="resx://Iridium/Iridium.Resources/ImageButton"
       xmlns:ns="resx://Iridium/Iridium.Resources/NewsScroller"
       xmlns:as="resx://Iridium/Iridium.Resources/AcclaimedScroller"
