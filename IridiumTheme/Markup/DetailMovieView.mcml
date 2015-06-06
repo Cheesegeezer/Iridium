@@ -542,6 +542,22 @@
           <Set Target="[QuickPlayButton.Visible]" Value="false"/>
         </Actions>
       </Rule>
+
+		<Rule>
+			<Conditions>
+				<Equality Source="[ThemeHelper.Config.EnableQuickPlay]" ConditionOp="Equals" Value="false" />
+			</Conditions>
+			<Actions>
+				<Set Target="[QuickPlayButton.Visible]" Value="false"/>
+			</Actions>
+		</Rule>
+
+		<Changed Source="[ThemeHelper.Config.EnableQuickPlay]" >
+			<Actions>
+				<Set Target="[QuickPlayButton.Visible]" Value="[ThemeHelper.Config.EnableQuickPlay]" />
+			</Actions>
+		</Changed>
+		
       
       <Rule>
         <Conditions >

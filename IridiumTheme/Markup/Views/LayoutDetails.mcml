@@ -989,7 +989,7 @@
 							<FormLayoutInput Left="Parent,0" Bottom="Parent,1" />
 						</LayoutInput>
 						<Children>
-							<me:DummyNavScroller Name="DummyNav" Application="[Application]" ThemeHelper="[ThemeHelper]" DummyFocus="[DummyHasFocus]" Command="[HideOverview]" />
+							<me:DummyNavScroller Name="DummyNav" Application="[Application]" Item="[Folder.SelectedChild]" ThemeHelper="[ThemeHelper]" DummyFocus="[DummyHasFocus]" Command="[HideOverview]" />
 						</Children>
 					</Panel>
 
@@ -1496,6 +1496,7 @@
 			<ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
 			<BooleanChoice Name="DummyFocus" BooleanChoice="$Required" />
 			<ICommand Name="Command" ICommand="$Required"/>
+			<lib:Item Name="Item" Item="$Required" />
 			
 		</Properties>
 

@@ -28,7 +28,7 @@ namespace Iridium
             set
             {
                 this.title = value;
-                base.FirePropertyChanged("Title");
+                base.FirePropertyChanged("NewsTitle");
             }
         }
 
@@ -41,6 +41,7 @@ namespace Iridium
             set
             {
                 this.id = value;
+                FirePropertyChanged("NewsId");
             }
         }
 
@@ -53,6 +54,7 @@ namespace Iridium
             set
             {
                 this.description = value;
+                FirePropertyChanged("NewsDesc");
             }
         }
 
@@ -65,6 +67,7 @@ namespace Iridium
             set
             {
                 this.date = value;
+                FirePropertyChanged("NewsDate");
             }
         }
 

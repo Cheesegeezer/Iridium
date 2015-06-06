@@ -524,7 +524,7 @@
           
           <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
             <LayoutInput>
-              <FormLayoutInput Right="Parent,1,-5" Bottom="Parent,1,75"/>
+              <FormLayoutInput Right="Parent,1,0" Bottom="Parent,1,75"/>
             </LayoutInput>
           </Graphic>
 
@@ -796,7 +796,7 @@
 
           <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
             <LayoutInput>
-              <FormLayoutInput Right="Parent,1,100" Bottom="Parent,1,90"/>
+				<FormLayoutInput Right="Parent,1,15" Bottom="Parent,1,90"/>
             </LayoutInput>
           </Graphic>
           
@@ -882,7 +882,7 @@
           </Text>
           <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
             <LayoutInput>
-              <FormLayoutInput Right="Parent,1,100" Bottom="Parent,1,90"/>
+				<FormLayoutInput Right="Parent,1,15" Bottom="Parent,1,90"/>
             </LayoutInput>
           </Graphic>
           <Graphic Content="image://vi:PanelBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
@@ -995,7 +995,7 @@
           </Text>
           <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
             <LayoutInput>
-              <FormLayoutInput Right="Parent,1,100" Bottom="Parent,1,90"/>
+				<FormLayoutInput Right="Parent,1,15" Bottom="Parent,1,90"/>
             </LayoutInput>
           </Graphic>
           <Graphic Content="image://vi:PanelBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
@@ -1104,7 +1104,7 @@
           </Text>
           <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
             <LayoutInput>
-              <FormLayoutInput Right="Parent,1,100" Bottom="Parent,1,90"/>
+				<FormLayoutInput Right="Parent,1,15" Bottom="Parent,1,90"/>
             </LayoutInput>
           </Graphic>
           <Graphic Content="image://vi:PanelBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">
@@ -1216,7 +1216,7 @@
           </Text>
           <Graphic Name="ClearArtImage" MaximumSize="0,100" MaintainAspectRatio="true" >
             <LayoutInput>
-              <FormLayoutInput Right="Parent,1,100" Bottom="Parent,1,90"/>
+				<FormLayoutInput Right="Parent,1,15" Bottom="Parent,1,90"/>
             </LayoutInput>
           </Graphic>
           <Graphic Content="image://vi:PanelBG" ColorFilter="color://xs:XC_RALPanelFilterColor" Alpha="global://xs:RALPanelAlpha">

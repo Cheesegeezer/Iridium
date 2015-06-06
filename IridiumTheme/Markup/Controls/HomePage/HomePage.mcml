@@ -93,7 +93,7 @@
       <a:Application Name="Application" Application="$Required"/>
       <Color Name="TitleColor" Color="color://is:XC_PopupMenuTitle" />
       <Font Name="Font" Font="font://is:XF_PopupMenuTitle"/>
-      <Size Name="Size" Size="310,172"/>
+      <Size Name="Size" Size="0,168"/>
     </Properties>
     <Locals>
       <cor:Int32 Name="Startup" />

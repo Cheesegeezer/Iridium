@@ -37,7 +37,7 @@
       <ScrollingHandler Name="ScrollingHandler" HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" />
       <ScrollingData Name="ScrollingData" LockedAlignment="0.05" LockedPosition="0.05" />
 
-      <FormLayoutInput Name="ScrollerHorizontalLayoutInput" Left="Parent,0,35" Top="Parent,0,10" Right="Parent,1" Horizontal="Fill" />
+      <FormLayoutInput Name="ScrollerHorizontalLayoutInput" Left="Parent,0,35" Top="Parent,0,10" Right="Parent,0.85" Horizontal="Fill" />
       <FlowLayout Name="HorizontalFlowLayout" Orientation="Horizontal" AllowWrap="true" RepeatGap="100,0" Spacing="50,50" ItemAlignment="Near" />
       <FormLayoutInput Name="RootHorizontalLayoutInput" Left="Parent,0" Right="Parent,1" />
       <FormLayoutInput Name="MBInfoHorizontalLayout" Top="Parent,0.95" Right="Parent,1,50" />
@@ -304,12 +304,9 @@
         </Actions>
       </Changed>
       
-      <Changed Source="[Folder.SelectedChild]" >
-		  <Conditions>
-			  <Modified Source="[ShowHome.Invoked]"/>
-		  </Conditions>
+      <Changed Source="[ShowHome.Invoked]" >
         <Actions>
-          <Set Target="[RALGetters.Tab]" Value="Home"></Set>
+          <Set Target="[RALGetters.Tab]" Value="Home"></Set> 
         </Actions>
       </Changed>
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web.Configuration;
 using MediaBrowser;
 using MediaBrowser.Library;
@@ -11,10 +12,12 @@ using MediaBrowser.Library.Localization;
 using MediaBrowser.Library.Logging;
 using MediaBrowser.Library.Persistance;
 using MediaBrowser.Library.Threading;
+using MediaBrowser.Model.Querying;
 using Microsoft.MediaCenter;
 using Microsoft.MediaCenter.Hosting;
 using Microsoft.MediaCenter.UI;
 using Application = MediaBrowser.Application;
+using Timer = Microsoft.MediaCenter.UI.Timer;
 using Version = System.Version;
 
 namespace Iridium
@@ -1092,6 +1095,12 @@ namespace Iridium
             return pluginUpdateString;
         }
 
+        public string PluginStatus()
+        {
+            Thread.Sleep(7500);
+            return Registration.Status;
+        }
+
         #region Actor Bio Page and Collection Scroller
 
         public static ArrayListDataSet ActorCollection = new ArrayListDataSet();
@@ -1140,30 +1149,35 @@ namespace Iridium
 
         private void NavigateToActor(Item item)
         {
-            var person = item.BaseItem as Person;
+            Person person = item.BaseItem as Person;
             if (person != null)
             {
-                GetCollectionItems(person.Name, new[] {"Actor"});
+                GetCollectionItems(person.Name, new[] {"Actor"}, person.Id.ToString());
+                Logger.ReportInfo("*******************    NAVIGATE TO ACTOR NAME ================= {0}", person.Name);
+                Logger.ReportInfo("*******************    NAVIGATE TO ACTOR ID ================= {0}", person.Id);
             }
         }
 
-        private static void GetCollectionItems(string name, string[] personTypes)
+        private static void GetCollectionItems(string name, string[] personTypes, string id)
         {
+            
             Async.Queue("Person navigation", () =>
             {
-                MediaBrowser.Model.Querying.ItemQuery query = new MediaBrowser.Model.Querying.ItemQuery 
+                ItemQuery query = new ItemQuery 
                 {
                     UserId = Kernel.CurrentUser.Id.ToString(),
                     Fields = MB3ApiRepository.StandardFields,
-                    //Person = name,
+                    PersonIds = new [] {id},
                     PersonTypes = personTypes,
                     Recursive = true
                 };
+                Logger.ReportInfo("PERSONIDS =======------/////////  ========== {0}", query.PersonIds.ToString());
                 Person person = Kernel.Instance.MB3ApiRepository.RetrievePerson(name) ?? new Person();
                 var index = new SearchResultFolder(Kernel.Instance.MB3ApiRepository.RetrieveItems(query).ToList())
                 {
                     Name = person.Name,
-                    Overview = person.Overview
+                    Overview = person.Overview,
+                    
                 };
                 foreach (BaseItem collectionItem in index.Children)
                 {
@@ -1172,8 +1186,7 @@ namespace Iridium
                         return;
                     }
                     Item item = GetActorCollectionItem(collectionItem);
-                    Logger.ReportInfo("*************ACTOR COLLECTION ************** ITEM ADDED = {0}",
-                        collectionItem.Name);
+                    Logger.ReportInfo("*************ACTOR COLLECTION ************** ITEM ADDED = {0}", collectionItem.Name);
                     ActorCollection.Add(item);
                 }
 
@@ -1210,6 +1223,16 @@ namespace Iridium
             kernel.RootFolder.AddVirtualChild(weatherFolder);
         }
 
+        public void OpenNewsPage()
+        {
+            ArrayListDataSet news = GetAPIItems.NewsItemsList();
+            var properties = new Dictionary<string, object>
+            {
+                {"Application", Application.CurrentInstance},
+                {"NewsItem", news}
+            };
+            Application.CurrentInstance.OpenMCMLPage("resx://Iridium/Iridium.Resources/NewsScroller#NewsScroller", properties);
+        }
 
     }
 }

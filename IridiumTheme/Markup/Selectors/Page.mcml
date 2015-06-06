@@ -497,6 +497,9 @@
 			</Actions>
 		</Changed>
 
+		<Condition Source="[Helper.PluginStatus]" ConditionOp="Equals" SourceValue="Trial" Target="[ExpiredOverlay.Visible]" Value="true" />
+
+
       <!--CONFIG PANEL ICONS FOCUS/FOCUSLOST ACTIONS-->
       <Changed Source="[UserFocus.Invoked]">
         <Actions>
@@ -674,6 +677,26 @@
 				</Children>
 			</Graphic>-->
 
+			<Graphic Name ="ExpiredOverlay" Alpha="1" Navigation="None" Content="image://vi:HomeBG" Visible="false" >
+				<LayoutInput>
+					<FormLayoutInput Top="Parent,0.10" Bottom="Parent,1" Right="Parent,1" Left="Parent,0"/>
+				</LayoutInput>
+				<Children>
+					<Panel Name="textpanel" >
+						<Layout>
+							<FlowLayout Orientation="Vertical" StripAlignment="Center" ItemAlignment="Center" Spacing="50,50"/>
+						</Layout>
+						<LayoutInput>
+							<FormLayoutInput Left="Parent,0,100" />
+						</LayoutInput>
+						<Children>
+							<Text Content="IRIDIUM HAS EXPIRED" Font="Xolonium,30,bold" Color="White" Margins="0,50,0,0" />
+							<Text Content="Please purchase a license from EMBY Classic Plugin Catalogue on the Server" Font="Xolonium,20,bold" Color="White" Margins="0,0,0,0" />
+						</Children>
+					</Panel>
+				</Children>
+			</Graphic>
+			
 			<!--MessageBox-->
 			<cmsg:MessageBox Name="MessageBox" Msg="Testing" Visible="false" Margins="0,0,50,50" >
 				<LayoutInput>

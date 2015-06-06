@@ -68,9 +68,9 @@
       <HintPath>C:\Windows\assembly\GAC_MSIL\MediaBrowser\3.0.207.0__59fc04479785fd64\MediaBrowser.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MediaBrowser.Model, Version=3.0.5560.34387, Culture=neutral, PublicKeyToken=6cde51960597a7f9, processorArchitecture=MSIL">
+    <Reference Include="MediaBrowser.Model, Version=3.0.5597.0, Culture=neutral, PublicKeyToken=6cde51960597a7f9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MediaBrowser.Common.3.0.598\lib\net35\MediaBrowser.Model.dll</HintPath>
+      <HintPath>..\packages\MediaBrowser.Common.3.0.622\lib\net35\MediaBrowser.Model.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.MediaCenter" />
     <Reference Include="Microsoft.MediaCenter.UI" />
@@ -207,7 +207,9 @@
     </None>
     <None Include="Markup\Controls\BusyIndicator.mcml" />
     <None Include="Markup\Controls\Buttons\DetailsOptionButton.mcml" />
-    <None Include="Markup\Controls\Buttons\ItemButton.mcml" />
+    <None Include="Markup\Controls\Buttons\ItemButton.mcml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Markup\Controls\Buttons\RALOptionButton.mcml" />
     <None Include="Markup\Controls\Buttons\SpecialsButton.mcml">
       <SubType>Designer</SubType>
@@ -262,6 +264,7 @@
     <Content Include="Markup\Views\LayoutDetails.mcml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Markup\Views\ExtraViews\2 Scrollers LayoutDetails.mcml" />
     <None Include="Markup\Views\ExtraViews\LayoutBannerView.mcml">
       <SubType>Designer</SubType>
     </None>

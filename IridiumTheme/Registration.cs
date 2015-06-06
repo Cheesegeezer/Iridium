@@ -13,10 +13,11 @@ namespace Iridium
     {
         public Registration()
         {
-
+            //Keep that darn MCML Happy!!!!!
         }
 
         const string FeatureName = "Iridium";
+        public static string Status;
 
         private static DateTime _expirationDate;
         private static bool _isReg;
@@ -45,9 +46,10 @@ namespace Iridium
 
                 if (!_isReg && _expirationDate > DateTime.Now)
                 {
-                    Thread.Sleep(10000);
+                    Thread.Sleep(5000);
                     
-                    _pluginStatus = PluginStatus.Trial;
+                    _pluginStatus = global::PluginStatus.Trial;
+                    Status = "Trial";
 
                     if (Application.CurrentInstance.CurrentTheme.Name == "Iridium")
                     {
@@ -60,16 +62,18 @@ namespace Iridium
                 }
                 else if (_isReg)
                 {
-                    _pluginStatus = PluginStatus.Registered;
+                    _pluginStatus = global::PluginStatus.Registered;
+                    Status = "Registered";
                 }
                 else
                 {
-                    Thread.Sleep(10000);
-                    _pluginStatus = PluginStatus.Expired;
+                    Thread.Sleep(5000);
+                    _pluginStatus = global::PluginStatus.Expired;
+                    Status = "Expired"; 
                     if (Application.CurrentInstance.CurrentTheme.Name == "Iridium")
                     {
-                        string text = string.Format("IRIDIUM HAS EXPIRED - Expiration Date is {0} {1}Please purchase from Server Plugin Catalogue ",_expirationDate.ToShortDateString(), Environment.NewLine);
-                        CustomMessage.Instance.MessageBox(text);
+                        //string text = string.Format("IRIDIUM HAS EXPIRED - Expiration Date is {0} {1}Please purchase from Server Plugin Catalogue ",_expirationDate.ToShortDateString(), Environment.NewLine);
+                        //CustomMessage.Instance.MessageBox(text);
                         //CustomMessage.MessageBox(text, true, 0);
                         //Application.CurrentInstance.MessageBox(text, true, 0);
                     }
@@ -78,6 +82,7 @@ namespace Iridium
                 Logger.ReportInfo(string.Format("++++++++++++++ IRIDIUM +++++++++++++++++ Registration Status: {0} [{1}] +++++++++++++++++", _pluginStatus, _expirationDate.ToShortDateString()));
 
                 Application.CurrentInstance.SetThemeStatus(FeatureName, _pluginStatus.ToString());
+                
             });
         }
 

@@ -46,7 +46,7 @@
     <Content>
       <Panel>
         <Children>
-          <Scroller Name="AutoText" Orientation="Horizontal"  ScrollingData="[ScrollingData]" >
+          <Scroller Name="AutoText" Orientation="Horizontal"  ScrollingData="[ScrollingData]" Navigation="None" >
             <LayoutInput>
               <FormLayoutInput Vertical="Far" />
             </LayoutInput>
