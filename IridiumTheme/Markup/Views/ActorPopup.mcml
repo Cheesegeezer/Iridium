@@ -116,6 +116,15 @@
       <Panel Layout="Form">
         <Children>
 
+			<Panel Name="DummyPanel">
+				<LayoutInput>
+					<FormLayoutInput Left="Parent,0" Top="Parent,0" />
+				</LayoutInput>
+				<Children>
+					<me:DummyNavScroller Name="DummyNav" Application="[Application]" Item="[Item]" ThemeHelper="[ThemeHelper]" />
+				</Children>
+			</Panel>
+
           <Panel Name="ActorCollection" Layout="Anchor" Navigation="RememberFocus">
             <LayoutInput>
               <AnchorLayoutInput Left="Parent,0,125" Right="Parent,1,-125" Bottom="Parent,1,-15" />
@@ -219,4 +228,57 @@
       </Panel>
     </Content>
   </UI>
+
+	<UI Name="DummyNavScroller">
+
+		<Properties>
+			<a:Application Name="Application" Application="$Required" />
+			<ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
+			<BooleanChoice Name="DummyFocus" />
+			<lib:Item Name="Item" Item="$Required" />
+
+		</Properties>
+
+		<Locals>
+			<!-- DETAILS SCROLLING DATA  -->
+			<ScrollingHandler HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" Name="DetailsSH" />
+			<ScrollingData Name="DetailsSD" />
+
+			<FlowLayout Name="Layout" Orientation="Vertical" AllowWrap="true" RepeatGap="75,0" Spacing="5,5" />
+
+			<cor:Int32 Name="InfoTimer" Int32="1000" />
+			<IntRangedValue Name="NavCount" Value="0" />
+		</Locals>
+
+		<Rules>
+
+			<Binding Source="[Input.DeepKeyFocus]" Target="[DummyFocus.Value]" />
+			<!-- Set the UI to be mouse and keyboard interactive. -->
+			<Default Target="[Input.KeyInteractive]" Value="true" />
+
+
+			<!-- DETAILS Give ScrollingData to ScrollingHandler. -->
+			<Binding Target="[DetailsSH.ScrollingData]" Source="[DetailsSD]" />
+			<!--<Default Target="[DetailsSD.Repeater]" Value="[ListRepeater]" />
+			<Binding Source="[Layout]" Target="[ListRepeater.Layout]" />-->
+		</Rules>
+
+
+		<Content>
+			<Panel Layout="Form">
+				<Children>
+					<!-- List Repeater -->
+					<Scroller Orientation="Vertical" Name="DummyScroller" ScrollingData="[DetailsSD]" FadeSize="15">
+						<LayoutInput>
+							<AnchorLayoutInput Name="ListPosition" Bottom="Parent,1" Left="Parent,0" />
+						</LayoutInput>
+						<Children>
+							<Text Content="1" Color="Transparent" />
+						</Children>
+					</Scroller>
+
+				</Children>
+			</Panel>
+		</Content>
+	</UI>
 </Mcml>

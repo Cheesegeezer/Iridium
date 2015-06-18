@@ -95,9 +95,11 @@
     <Compile Include="APICalls\GetAPIItems.cs" />
     <Compile Include="APICalls\APIQueries.cs" />
     <Compile Include="Library\Cache.cs" />
+    <Compile Include="Library\HomeNavigationHelper.cs" />
     <Compile Include="Library\HomePage.cs" />
     <Compile Include="Library\IridiumHelper.cs" />
     <Compile Include="Library\DetailsItem.cs" />
+    <Compile Include="Library\WholeSeriesFolderModel.cs" />
     <Compile Include="MyConfig.cs" />
     <Compile Include="MyShortlist.cs" />
     <Compile Include="MyStrings.cs" />
@@ -148,6 +150,7 @@
     <Content Include="Sounds\Clicker.wav" />
     <Content Include="Sounds\shutter.wav" />
     <None Include="Fonts\BebasNeue.ttf" />
+    <None Include="Fonts\FUTRFW.TTF" />
     <None Include="Fonts\impact.ttf" />
     <None Include="Fonts\InterBold.ttf" />
     <None Include="Fonts\InterOne.ttf" />
@@ -199,10 +202,15 @@
     <Content Include="Images\Ratings\US\rated_tv_y.png" />
     <Content Include="Images\Ratings\US\rated_tv_y7.png" />
     <Content Include="Images\Ratings\US\rated_tv_y7_fv.png" />
+    <None Include="Fonts\XOLONIUM-BOLD.TTF" />
+    <None Include="Fonts\XOLONIUM-REGULAR.TTF" />
     <None Include="Markup\Animations.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\ContentSelectors.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\Controls\Backdrop.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Controls\BusyIndicator.mcml" />
@@ -211,15 +219,27 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Controls\Buttons\HomeOptionButton.mcml" />
+    <None Include="Markup\Controls\Buttons\ListButton2.mcml" />
     <None Include="Markup\Controls\Buttons\SpecialsButton.mcml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Markup\Controls\Buttons\BannerButton.mcml" />
+    <None Include="Markup\Controls\Buttons\TextButton.mcml" />
     <None Include="Markup\Controls\FocusSelector.mcml" />
+    <None Include="Markup\Controls\HomePage\GenreMov.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\Controls\HomePage\HomePage.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\Controls\HomePage\YearMov.mcml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Markup\Controls\HomePage\RecentlyAddedLayout.mcml" />
     <None Include="Markup\Controls\HomePage\ResumeLayoutScroller.mcml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Markup\Controls\HomePage\HomePage.mcml">
+    <None Include="Markup\Controls\HomePage\HomePage - New.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Controls\InfoPanels\BottomInfoBar.mcml" />
@@ -238,6 +258,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Controls\HomePage\NewsScroller.mcml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Markup\Controls\Scrollers\SeasonsScroller.mcml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Markup\Controls\Scrollers\ShortlistScroller.mcml" />
@@ -265,6 +288,9 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Markup\Views\ExtraViews\2 Scrollers LayoutDetails.mcml" />
+    <Content Include="Markup\Views\ExtraViews\TVShowsLayout.mcml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Markup\Views\ExtraViews\LayoutBannerView.mcml">
       <SubType>Designer</SubType>
     </None>
@@ -415,7 +441,9 @@
     <None Include="Markup\Controls\Scrollers\2PosterScroller.mcml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Markup\Controls\Backdrop.mcml" />
+    <None Include="Markup\Controls\Backdrop-Orig.mcml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Markup\Controls\LabelValue.mcml">
       <SubType>Designer</SubType>
     </None>

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using MediaBrowser.Library.Localization;
-using MediaBrowser.Library.Plugins;
-using MediaBrowser.Library.Logging;
+using Iridium.Fonts;
+using Iridium.Library;
 using MediaBrowser.Library;
+using MediaBrowser.Library.Localization;
+using MediaBrowser.Library.Logging;
+using MediaBrowser.Library.Plugins;
 using MediaBrowser.Library.Util;
 using MediaBrowser.Util;
-using Iridium.Fonts;
 
 namespace Iridium
 {
@@ -16,7 +16,7 @@ namespace Iridium
         static readonly Guid IridiumGuid = new Guid("2F6788A1-12DC-4E6B-8553-14CD479BC042");
         private FontManager _fontManager;
         public static List<string> AvailableStyles = new List<string>();
-        public static MyConfig Config = null;
+        public static MyConfig Config;
         public static List <string>ExtraViewsList = new List<string>();
         public Plugin()
         {
@@ -66,9 +66,10 @@ namespace Iridium
                     CustomResourceManager.AppendFonts("Iridium", Resources.Fonts, Resources.Fonts);
                     CustomResourceManager.AppendStyles("Iridium", Resources.Colors, Resources.Colors);
 
-                    Registration.CheckRegistration(this.Version);
+                    Registration.CheckRegistration(Version);
                     //CustomStrings Editable by user - need to implement
                     kernel.StringData.AddStringData(MyStrings.FromFile(LocalizedStringData.GetFileName("Iridium-")));
+                    ItemFactory.Instance.AddFactory(WholeSeriesFolderModel.IsOne, typeof(WholeSeriesFolderModel));
 
                 }
                 else

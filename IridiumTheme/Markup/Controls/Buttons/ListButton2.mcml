@@ -1,0 +1,229 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:a="assembly://MediaBrowser/MediaBrowser"
+      xmlns:me="Me"
+      xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
+      xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
+      xmlns:ib="resx://Iridium/Iridium.Resources/ItemButton"
+      xmlns:uf="file://Plugins\Chocolate\Chocolate_Fonts.mcml"
+      xmlns:uc="resx://Chocolate/Chocolate.Resources/Colors"
+      xmlns:fon="file://Fonts_DoNotEdit.mcml"
+      xmlns:sty="file://Styles_DoNotEdit.mcml"
+	  xmlns:ih="assembly://Iridium/Iridium"
+  >
+ 
+  <UI Name="ListButton" BaseUI="ib:ItemButton">
+
+    <Properties>
+      <cor:String Name="Text" String="" />
+      <Index Name="Index" Index="$Required"/>
+      <Font Name="Font" Font="$Required"/>
+      <lib:FolderModel Name="Folder" FolderModel="$Required" />
+      <cor:Boolean Name="TrapLeft" Boolean="false" />
+		<ih:IridiumHelper Name="ThemeHelper" />
+      <Command Name="ExitLeft" />
+		
+    </Properties>
+
+    <Locals>
+		<Color Name="Color" />
+      <Image Name="Tick" Image="image://i:Tick"/>
+      <Image Name="Lock" Image="image://i:Lock"/>
+
+      <KeyHandler Name="LeftKey" Key="Left" Handle="[TrapLeft]" Command="[ExitLeft]" HandlerStage="Direct" />
+      
+    </Locals>
+
+    <Rules>
+      
+      <Default Target="[Input.MakeTopmostOnFocus]" Value="true"/>
+
+		<Changed Source="[ThemeHelper.Config.WatchedColorStyle]">
+			<Actions>
+				<Set Target="[ItemName.Color]" Value="[Color]" />
+			</Actions>
+		</Changed>
+		
+		<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Green" Target="[Color]" Value="Green"/>
+		<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="DarkGreen" Target="[Color]" Value="DarkGreen"/>
+		<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Blue" Target="[Color]" Value="Blue"/>
+		<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="DarkBlue" Target="[Color]" Value="DarkBlue"/>
+		<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="RoyalBlue" Target="[Color]" Value="RoyalBlue"/>
+		<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Red" Target="[Color]" Value="Red"/>
+		<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="OrangeRed" Target="[Color]" Value="OrangeRed"/>
+		<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Orange" Target="[Color]" Value="Orange"/>
+		<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Yellow" Target="[Color]" Value="Yellow"/>
+		<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="YellowGreen" Target="[Color]" Value="YellowGreen"/>
+		<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Pink" Target="[Color]" Value="Pink"/>
+		
+      <Binding Target="[ItemName.Content]"       Source="[Item.LongName]" >
+        <Conditions>
+          <IsValid Source="[Item.PhysicalParent]"/>
+          <Equality Source="[Item.PhysicalParent.ItemTypeString]" Value="Season" ConditionOp="NotEquals" />
+        </Conditions>
+      </Binding>
+      <Binding Target="[ItemName.Content]"       Source="[Item.Name]"/>
+
+      <Changed Source="[Item.HaveWatched]">
+        <Conditions>
+          <Equality Source="[Item.HaveWatched]" ConditionOp="Equals" Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[ItemName.Color]" Value="[Color]" />
+        </Actions>
+      </Changed>
+
+      <Rule>
+        <Conditions>
+          <Equality Source="[Item.HaveWatched]" ConditionOp="Equals" Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[ItemName.Color]" Value="[Color]" />
+        </Actions>
+      </Rule>
+
+		<Binding Source="[Item.IsFavorite]" Target="[FavIndicator.Visible]" />
+     
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Equality Source="[Item.IsMissing]" ConditionOp="Equals" Value="true" />
+          <Equality Source="[Item.IsFuture]" ConditionOp="Equals" Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[ItemName.Alpha]" Value=".65" />
+          <Set Target="[ItemBanner.Alpha]" Value=".65" />
+        </Actions>
+      </Rule>
+     
+      
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Conditions>
+          <Equality Source="[Folder.DisplayPrefs.UseBanner.Value]" Value="false" ConditionOp="Equals"></Equality>
+        </Conditions>
+        <Actions>
+          <Set Target="[ItemColor.Content]" Value="80,3,117,200"></Set>
+          <!--<PlaySound Sound="sound://sd:Focus" />-->
+          <!--<Set Target="[SelectedIndex.Value]" Value="[Index.Value]"/>-->
+          <Set Target="[Folder.SelectedChildIndex]" Value="[Index.SourceValue]"/>
+          <Set Target="[Application.CurrentItem]" Value="[Item]"/>
+          <Set Target="[ThemeHelper.CurrentItem]" Value="[Item]"/>
+          <Set Target="[ItemBanner.Visible]" Value="false" />
+          <Set Target="[ItemColor.MaximumSize]" Value="400,28" />
+          <Set Target="[ItemName.Margins]" Value="10,-5,10,0"></Set>
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Conditions>
+          <Equality Source="[Folder.DisplayPrefs.UseBanner.Value]" Value="true" ConditionOp="Equals"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[ItemColor.Content]" Value="80,3,117,200"/>
+          <!--<PlaySound Sound="sound://sd:Focus" />-->
+          <Set Target="[Folder.SelectedChildIndex]" Value="[Index.SourceValue]"/>
+          <Set Target="[Application.CurrentItem]" Value="[Item]"/>
+          <!--<Set Target="[SelectedIndex.Value]" Value="[Index.Value]"/>-->
+          <Set Target="[ItemBanner.Visible]" Value="true" />
+          <Set Target="[ItemBanner.Alpha]" Value="1" />
+          <Set Target="[ItemBanner.Scale]" Value="1.05,1.05,1" />
+          <Set Target="[ItemBanner.ColorFilter]" Value="255,255,255" />
+          <Set Target="[ItemColor.MaximumSize]" Value="400,85" />
+          <Set Target="[ItemName.Margins]" Value="10,0,10,0"/>
+          <Set Target="[ItemColor.Padding]" Value="0,0,0,0"/>          
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Input.KeyFocus]" SourceValue="false">
+        <Conditions>
+          <Equality Source="[Folder.DisplayPrefs.UseBanner.Value]" Value="true" ConditionOp="Equals"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[ItemBanner.Scale]" Value="1,1,1" />
+          <Set Target="[ItemBanner.Padding]" Value="-5,0,0,-5" />
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Folder.DisplayPrefs.UseBanner.Value]" SourceValue="true">
+        <Actions>
+          <Set Target="[ItemColor.MaximumSize]" Value="400,85" />
+          <Set Target="[ItemName.Alpha]" Value="0" />
+        </Actions>
+      </Condition>
+      <Condition Source="[Folder.DisplayPrefs.UseBanner.Value]" SourceValue="false">
+        <Actions>
+          <Set Target="[ItemColor.MaximumSize]" Value="400,28" />
+        </Actions>
+      </Condition>
+      
+      
+      <Binding Target="[ItemBanner.Content]" Source="[Item.BannerImage]"/>
+
+    </Rules>
+
+    <Content>
+
+      <ColorFill Name="ItemColor" Layout="Fill" MinimumSize="200,28" Content="Transparent" Padding="0,0,0,-5">
+
+        <Children>
+
+          <!--Indicators-->
+          <Panel Layout="Form">
+            <Children>
+              
+              <Panel  Margins="2,2,0,0" Scale="1,1,1" Padding="0,0,0,0" Layout="Center" Alpha=".90" MaximumSize="20,20" >
+                <LayoutInput>
+                  <FormLayoutInput Right="Parent,1, -28" Top="Parent,0,2"/>
+                </LayoutInput>
+                <Children>
+                  <Graphic Name="FavIndicator" Content="image://i:Heart" Visible="[Item.IsFavorite]" MaintainAspectRatio="true" />
+                </Children>
+              </Panel>
+            </Children>
+          </Panel>
+
+
+          <Panel Layout="Form">
+            <Children>
+              <Graphic Name="ItemBanner" ColorFilter="70,70,70" Visible="[Folder.DisplayPrefs.UseBanner.Value]" Content="[Item.BannerImage]" Alpha="1" MaximumSize="410,85">
+                <LayoutInput>
+                  <FormLayoutInput Left="Parent,0" Top="Parent,0" Right="Parent,1"/>
+                </LayoutInput>
+                <Animations>
+                  <Animation Type="Scale" CenterPointPercent="0.5,0.5,0.5">
+                    <Keyframes>
+                      <ScaleKeyframe Time="0" RelativeTo="Current" Interpolation="Log"/>
+                      <ScaleKeyframe Time=".55" RelativeTo="Final"/>
+                    </Keyframes>
+                  </Animation>
+                </Animations>                
+              </Graphic>
+
+            </Children>
+          </Panel>
+
+
+          <Panel>
+            <LayoutInput>
+              <AnchorLayoutInput Top="Parent,0" Bottom="Parent,1" Right="Parent,1" Left="Parent,0" Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <Panel Layout="Form">
+                <Children>
+                  <Text Name="ItemName" HorizontalAlignment="Near" MaximumLines="1" WordWrap="false" Font="Segoe UI SemiLight,18" Margins="10,-3,10,0" Color="220,220,220" Content="[Item.Name]">
+					  <LayoutInput>
+						  <FormLayoutInput Left="Parent,0"/>
+					  </LayoutInput>
+				  </Text>
+                </Children>
+              </Panel>
+            </Children>
+          </Panel>
+
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+  </UI>
+
+</Mcml>

@@ -183,7 +183,7 @@
 				<Actions>
 				  <Set Target="[Banner.Visible]" Value="true" />
 				  <Set Target="[Title.Visible]" Value="false" />
-          <Set Target="[FocusFrame.LayoutInput]" Value="[BannerGlowLayoutInput]" />
+                  <Set Target="[FocusFrame.LayoutInput]" Value="[BannerGlowLayoutInput]" />
 				</Actions>
 			  </Rule>
 			<Rule>
@@ -209,12 +209,12 @@
 				<Actions>
 					<Set Target="[Banner.Visible]" Value="true" />
 					<Set Target="[Title.Visible]" Value="false" />
-          <Set Target="[FocusFrame.LayoutInput]" Value="[BannerGlowLayoutInput]" />
+                    <Set Target="[FocusFrame.LayoutInput]" Value="[BannerGlowLayoutInput]" />
 				</Actions>
 			</Rule>
 			  <Default Target="[Banner.Visible]" Value="false"/>
 			  <Default Target="[Title.Visible]" Value="true"/>
-        <Default Target="[FocusFrame.LayoutInput]" Value="[TextGlowLayoutInput]" />
+              <Default Target="[FocusFrame.LayoutInput]" Value="[TextGlowLayoutInput]" />
 
 			<!-- Watched Toggle Commands -->
 			<Rule ConditionLogicalOp="Or">
@@ -261,7 +261,7 @@
 					<Set Target="[Title.Color]" Value="white"/>
 					<Set Target="[Banner.MaximumSize]" Value="800,0" />
 					<Set Target="[TickPanel.Margins]" Value="2,15,0,-5" />
-          <Set Target="[FocusFrame.Visible]" Value="true" />
+                    <Set Target="[FocusFrame.Visible]" Value="true" />
 					<!--<Set Target="[UnwatchedIndicator.Margins]" Value="2,10,0,-5" />-->
 					<Set Target="[ParentItem.SelectedChildIndex]" Value="[Index.SourceValue]"/>
 					<Invoke Target="[AnimTimer.Start]" />
@@ -315,6 +315,7 @@
 
 			<Changed Source="[Clicker.Invoked]">
 				<Actions>
+					<Set Target="[ThemeHelper.SeriesId]" Value="[Item.Id]" />
 					<!--PlaySound Sound="sound://sounds:Miniselect" /-->
 					<Invoke Target="[Application.Navigate]" item="[Item]"/>
 				</Actions>
@@ -368,7 +369,6 @@
                     <Text Name="Title" Margins="10,0,20,5" Font="font://is:BottomBarTitleFont" Color="color://is:BottomBarTitleColor" Visible="false"/>
                 </Children>
               </Panel>
-
               <Graphic Name="FocusFrame" Visible="false" Content="image://vi:FocusFrame" ColorFilter="0,155,255" LayoutInput="[BannerGlowLayoutInput]"  />
                 
 

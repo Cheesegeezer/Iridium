@@ -2,7 +2,7 @@
 using System.IO;
 using MediaBrowser.Library.Localization;
 using MediaBrowser.Library.Logging;
-using MediaBrowser.Library.Persistance; 
+using MediaBrowser.Library.Persistance;
 
 //***************************************************************************************************
 //  This class is used to extend the string data used by MB.  It is localizable.
@@ -15,7 +15,7 @@ namespace Iridium
     [Serializable]
     public class MyStrings : LocalizedStringData
     {
-        const string VERSION = "1.025"; //this is used to see if we have changed and need to re-save
+        const string VERSION = "1.029"; //this is used to see if we have changed and need to re-save
 
         // MCML: [Application.LocalStrings.#StringName!cor:String] 
 
@@ -101,20 +101,24 @@ namespace Iridium
         public string MainConfigHeader = "<---------------------MAIN MBC CONFIG LABELS--------------------->";
         public string ThemeStyleLabel = "Theme Style *";
         public string ThemeStyleLabelDesc = "Choose A Color Scheme that best suits your mood - REQUIRES RESTART";
+        public string UseTVShowViewLabel = "Use TV Show View *";
+        public string UseTVShowViewLabelDesc = "Uses a single combined view of Seasons and Episodes after entring a TV Show - RESTART REQUIRED";
         public string BackdropTransLabel = "Backdrop Transition Time";
         public string BackdropTransLabelDesc = "Alter the time it takes for Backdrops to change";
         public string BackdropAlphaLabel = "Backdrop Overlay Alpha";
-        public string BackdropAlphaLabelDesc = " Set How Dark the Backdrop Overlay is on your collection views";
+        public string BackdropAlphaLabelDesc = " Set How Dark the Backdrop Overlay is on your View Styles";
         public string EnableNPVLabel = "Enable NPV Backdrop";
         public string EnableNPVLabelDesc = "Allow Video Backdrop to play in the background";
         public string Enable24hrLabel = "Enable 24hr Time *";
         public string Enable24hrLabelDesc = "Toggle 12/24hr Time Format - REQUIRES RESTART";
         public string EnableQuickPlayLabel = "Enable QuickPlay Button";
         public string EnableQuickPlayLabelDesc = "Ideal when MB Intros is installed, it allows you to skip all Intros and go straight to the Movie.";
-        public string GameDetailPosterLayoutLabel = "Game Poster Layout";
-        public string GameDetailPosterLayoutLabelDesc = "Will reposition the Game Poster Image on Details Page,depending if you use Thumbs or Poster images";
-        public string CustomDetailPosterLayoutLabel = "Custom Poster Layout";
-        public string CustomDetailPosterLayoutLabelDesc = "Will reposition the Poster Image on the Details Page,depending if you use Custom images or not";
+        public string ListWatchedColorLabel = "List (Un)Watched Color *";
+        public string ListWatchedColorLabelDesc = "Change the color of watched items when viewing text in List views - RESTART REQUIRED";
+        //public string GameDetailPosterLayoutLabel = "Game Poster Layout";
+        //public string GameDetailPosterLayoutLabelDesc = "Will reposition the Game Poster Image on Details Page,depending if you use Thumbs or Poster images";
+        //public string CustomDetailPosterLayoutLabel = "Custom Poster Layout";
+        //public string CustomDetailPosterLayoutLabelDesc = "Will reposition the Poster Image on the Details Page,depending if you use Custom images or not";
 
         //UI CONFIG MENU
         public string UserUIHeader = "<---------------------USER UI CONFIG LABELS--------------------->";
@@ -156,6 +160,7 @@ namespace Iridium
         public string MainArtItemListLabel = "Main Poster Type";
         public string ShowDiscImageLabel = "Show Disc Image";
         
+        
         public string ConfigRestartMessage = "Changes require a restart";
 
         public string IndexOfCountFormat = "{0} of {1}";
@@ -178,7 +183,7 @@ namespace Iridium
                 string backupFile = Path.Combine(Path.GetDirectoryName(file),
                                                        Path.GetFileNameWithoutExtension(file) +
                                                             "_" +
-                                                            now.Year.ToString() +
+                                                            now.Year +
                                                             now.Month.ToString("D2") +
                                                             now.Day.ToString("D2") +
                                                             now.Hour.ToString("D2") +

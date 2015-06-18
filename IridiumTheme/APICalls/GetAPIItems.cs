@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Iridium.APICalls;
@@ -19,27 +20,39 @@ namespace Iridium
     {
         //Instantiate the APIQueries Class
         private static readonly APIQueries APIQuery = new APIQueries();
+        
         public static ArrayListDataSet ResumeSet = new ArrayListDataSet();
-        public static ArrayListDataSet GenresSet = new ArrayListDataSet();
-        public static ArrayListDataSet RecentlyAddedSet = new ArrayListDataSet();
-        public static ArrayListDataSet RecentlyWatchedSet = new ArrayListDataSet();
-        public static ArrayListDataSet RecentlyUnwatchedSet = new ArrayListDataSet();
+        public static List<BaseItem> GenresSet = new List<BaseItem>();
+
         public static ArrayListDataSet NextUpSet = new ArrayListDataSet();
+        public static ArrayListDataSet SeriesNextUp = new ArrayListDataSet();
         public static ArrayListDataSet UpComingTVSet = new ArrayListDataSet();
         public static ArrayListDataSet AcclaimedMoviesSet = new ArrayListDataSet();
+
         public static ArrayListDataSet RecommendedSet = new ArrayListDataSet();
+        public static string BecauseYouWatchedName { get; set; }
+
         public static ArrayListDataSet SimilarMoviesSet = new ArrayListDataSet();
-        public static ArrayListDataSet RemainingRecentlyAddedSet = new ArrayListDataSet();
+
+        public static ArrayListDataSet FirstAddedItem = new ArrayListDataSet();
+        public static ArrayListDataSet RemainingAddedItems = new ArrayListDataSet();
         public static ArrayListDataSet SecondAddedSet = new ArrayListDataSet();
         public static ArrayListDataSet ThirdAddedSet = new ArrayListDataSet();
-        public static string BecauseYouWatchedName { get; set; }
-        
-        //Keep MCML Happy
-        public GetAPIItems()
-        {
-        }
 
-        //
+        public static ArrayListDataSet RecentlyWatchedSet = new ArrayListDataSet();
+        public static ArrayListDataSet RemainingWatchedSet = new ArrayListDataSet();
+        public static ArrayListDataSet SecondWatchedSet = new ArrayListDataSet();
+        public static ArrayListDataSet ThirdWatchedSet = new ArrayListDataSet();
+
+        public static ArrayListDataSet RecentlyUnwatchedSet = new ArrayListDataSet();
+        public static ArrayListDataSet RemainingUnwatchedSet = new ArrayListDataSet();
+        public static ArrayListDataSet SecondUnwatchedSet = new ArrayListDataSet();
+        public static ArrayListDataSet ThirdUnwatchedSet = new ArrayListDataSet();
+
+        public static ArrayListDataSet GenreSLSet = new ArrayListDataSet();
+        public static ArrayListDataSet SpotlightAddedItemSet = new ArrayListDataSet();
+        public static ArrayListDataSet YearAddedSet = new ArrayListDataSet();
+
         internal static ArrayListDataSet GetNextUpSet()
         {
             NextUpSet.Clear();
@@ -56,11 +69,30 @@ namespace Iridium
             return NextUpSet;
         }
 
+        internal static ArrayListDataSet GetSeriesNextUp()
+        {
+            SeriesNextUp.Clear();
+            //GUID taken from MBC Kernel
+            Guid id = Kernel.CurrentUser.Id;
+            Guid seriesId = IridiumHelper.SeriesId;
+            
+
+            //Enumerate thru the list Items in the API call(add the UserId to allow for custom filtering)
+            //
+            foreach (BaseItemDto dto in APIQuery.SeriesNextUpAPIQuery(id,seriesId).Items)
+            {
+                Item item = GetGenericTVItem(dto);
+                SeriesNextUp.Add(item);
+            }
+            Logger.ReportInfo("=========== IRIDIUM SERIES ID = {0}", seriesId);
+            return SeriesNextUp;
+        }
+
         internal static ArrayListDataSet GetUpcomingItemsSet()
         {
             UpComingTVSet.Clear();
             Guid id = Kernel.CurrentUser.Id;
-            
+
             string str = string.Empty;
             foreach (BaseItemDto dto in APIQuery.UpComingAPIQuery(id).Items)
             {
@@ -89,16 +121,17 @@ namespace Iridium
             }
             return episodeItem;
         }
-        
+
         internal static ArrayListDataSet GetAcclaimedSet()
         {
             AcclaimedMoviesSet.Clear();
-            Logger.ReportInfo("IRIDIUM - Attempting to Get Critically Acclaimed Movies");
             try
             {
+                //limit is set to 10
                 //GUID taken from MBC Kernel
                 Guid id = Kernel.CurrentUser.Id;
                 Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                
 
 
                 //Enumerate thru the list Items in the API call(add the UserId to allow for custom filtering)
@@ -108,7 +141,7 @@ namespace Iridium
                     Item item = GetGenericItem(dto);
                     AcclaimedMoviesSet.Add(item);
                 }
-                
+
             }
             catch (Exception fuckinShite)
             {
@@ -117,21 +150,18 @@ namespace Iridium
             return AcclaimedMoviesSet;
         }
 
-        
-
-        internal static ArrayListDataSet GetGenresSet()
+        internal static List<BaseItem> GetGenresSet()
         {
-            Logger.ReportInfo("IRIDIUM - Attempting to Get Genres Set");
             try
             {
                 Guid id = Kernel.CurrentUser.Id;
                 Guid folderId = Application.CurrentInstance.CurrentItem.Id;
                 foreach (BaseItemDto dto in APIQuery.GenresAPIQuery(id, folderId).Items)
                 {
-                    Item item = GetGenericItem(dto);
+                    BaseItem item = GetGenreItem(dto);
                     GenresSet.Add(item);
                 }
-                
+
             }
             catch (Exception fuckinShite)
             {
@@ -139,22 +169,45 @@ namespace Iridium
             }
             return GenresSet;
         }
+        private static BaseItem GetGenreItem(BaseItemDto dto)
+        {
+            //Retrieves the item based on the items guid
+            BaseItem baseItem = Kernel.Instance.MB3ApiRepository.RetrieveItem(new Guid(dto.Id));
+            //If the call to the api returns empty, catch it here.
+
+            if (baseItem == null)
+            {
+                return null;
+            }
+            return baseItem;
+
+        }
 
         internal static ArrayListDataSet GetSimilarMoviesSet()
         {
-            Logger.ReportInfo("IRIDIUM - Attempting to Get Similar Movies");
             SimilarMoviesSet.Clear();
             try
             {
-                
                 Guid id = Kernel.CurrentUser.Id;
-                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
-                foreach (BaseItemDto dto in APIQuery.SimilarAPIQuery(id, folderId).Items)
+                Item currItem = Application.CurrentInstance.CurrentItem;
+                if (currItem.ItemTypeString != "Episode")
                 {
-                    Item item = GetGenericItem(dto);
-                    SimilarMoviesSet.Add(item);
+                    foreach (BaseItemDto dto in APIQuery.SimilarAPIQuery(id, currItem.Id).Items)
+                    {
+                        Item item = GetGenericItem(dto);
+                        SimilarMoviesSet.Add(item);
+                    }
                 }
-                
+                else if (currItem.ItemTypeString == "Episode")
+                {
+                    foreach (BaseItemDto dto in APIQuery.SimilarTVAPIQuery(id, currItem.PhysicalParent.PhysicalParent.Id).Items)
+                    {
+                        Item item = GetGenericItem(dto);
+                        SimilarMoviesSet.Add(item);
+                    }
+                }
+                else return null;
+
             }
             catch (Exception fuckinShite)
             {
@@ -165,7 +218,6 @@ namespace Iridium
 
         internal static ArrayListDataSet GetResumeSet()
         {
-            Logger.ReportInfo("IRIDIUM - Attempting to Get Resumable Items");
             try
             {
                 ResumeSet.Clear();
@@ -180,7 +232,7 @@ namespace Iridium
                         ResumeSet.Add(item);
                     }
                 }
-                
+
             }
             catch (Exception fuckinShite)
             {
@@ -189,32 +241,87 @@ namespace Iridium
             return ResumeSet;
         }
 
-        internal static ArrayListDataSet GetRecentlyAddedSet()
+        internal static List<Item> GetRecentItems()
         {
-            Logger.ReportInfo("IRIDIUM - Attempting to Get RecentlyAdded Items");
+            return new List<Item>(Application.CurrentInstance.CurrentFolderModel.QuickListItems);
+        }
+
+        internal static ArrayListDataSet GetAppRAL()
+        {
             try
             {
-                RecentlyAddedSet.Clear();
+                FirstAddedItem.Clear();
+                SecondAddedSet.Clear();
+                ThirdAddedSet.Clear();
+                RemainingAddedItems.Clear();
+                List<Item> ralList = GetRecentItems();
+                Logger.ReportInfo("");
+
+                if (ralList != null)
+                {
+                    Item firstItem = ralList[0];
+                    if (firstItem != null)
+                    {
+                        FirstAddedItem.Add(firstItem);
+                        Logger.ReportInfo("*---------***-- First newest Item = {0}", firstItem.Name);
+                    }
+                    Item secItem = ralList[1];
+                    if (secItem != null)
+                    {
+                        SecondAddedSet.Add(secItem);
+                        Logger.ReportInfo("*---------***-- Second newest Item = {0}", secItem.Name);
+                    }
+                    Item thirdItem = ralList[2];
+                    if (thirdItem != null)
+                    {
+                        ThirdAddedSet.Add(thirdItem);
+                        Logger.ReportInfo("*---------***-- Third newest Item = {0}", thirdItem.Name);
+                    }
+                    if (FirstAddedItem != null && SecondAddedSet != null && ThirdAddedSet != null)
+                    {
+                        ralList.RemoveAt(0);
+                        ralList.RemoveAt(1);
+                        ralList.RemoveAt(2);
+                        foreach (var item in ralList)
+                        {
+                            RemainingAddedItems.Add(item);
+                        }
+                    }
+
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Recently Added Items {0}", fuckinShite);
+            }
+            return null;
+        }
+
+        internal static ArrayListDataSet GetRecentlyAddedSet()
+        {
+            try
+            {
+                FirstAddedItem.Clear();
                 Guid id = Kernel.CurrentUser.Id;
                 Guid folderId = Application.CurrentInstance.CurrentItem.Id;
                 int start = 0;
                 int limit = 1;
 
-                foreach (BaseItemDto dto in APIQuery.GetRecentAddedItem(id, folderId,start, limit).Items)
+                foreach (BaseItemDto dto in APIQuery.GetRecentAddedItem(id, folderId, start, limit).Items)
                 {
 
                     Item item = GetGenericItem(dto);
-                    bool showNewItems = item.ShowNewestItems;
                     if (item != null)
                     {
-                        RecentlyAddedSet.Add(item);
+                        FirstAddedItem.Add(item);
                     }
                 }
-                if (RecentlyAddedSet != null)
+                if (FirstAddedItem != null)
                 {
-                    return RecentlyAddedSet;
+                    return FirstAddedItem;
                 }
-                
+
             }
             catch (Exception fuckinShite)
             {
@@ -225,7 +332,6 @@ namespace Iridium
 
         internal static ArrayListDataSet GetSecondAddedSet()
         {
-            Logger.ReportInfo("IRIDIUM - Attempting to Get RecentlyAdded Items");
             try
             {
                 SecondAddedSet.Clear();
@@ -234,7 +340,7 @@ namespace Iridium
                 int start = 1;
                 int limit = 1;
 
-                foreach (BaseItemDto dto in APIQuery.GetRecentAddedItem(id, folderId, start,limit).Items)
+                foreach (BaseItemDto dto in APIQuery.GetRecentAddedItem(id, folderId, start, limit).Items)
                 {
 
                     Item item = GetGenericItem(dto);
@@ -258,7 +364,6 @@ namespace Iridium
 
         internal static ArrayListDataSet GetThirdAddedSet()
         {
-            Logger.ReportInfo("IRIDIUM - Attempting to Get RecentlyAdded Items");
             try
             {
                 ThirdAddedSet.Clear();
@@ -290,10 +395,9 @@ namespace Iridium
 
         internal static ArrayListDataSet GetRemainingRecentlyAddedSet()
         {
-            Logger.ReportInfo("IRIDIUM - Attempting to Get RecentlyAdded Items");
             try
             {
-                RemainingRecentlyAddedSet.Clear();
+                RemainingAddedItems.Clear();
                 Guid id = Kernel.CurrentUser.Id;
                 Guid folderId = Application.CurrentInstance.CurrentItem.Id;
                 int start = 3;
@@ -304,22 +408,21 @@ namespace Iridium
                     Item item = GetGenericItem(dto);
                     if (item != null)
                     {
-                        RemainingRecentlyAddedSet.Add(item);
+                        RemainingAddedItems.Add(item);
                     }
                 }
-                
+
             }
             catch (Exception fuckinShite)
             {
                 Logger.ReportError("IRIDIUM - Error Retrieving Recently Added Items", fuckinShite);
             }
-            return RemainingRecentlyAddedSet;
+            return RemainingAddedItems;
         }
 
         internal static ArrayListDataSet GetRecommendedSet()
         {
             RecommendationDto rdto = null;
-            Logger.ReportInfo("IRIDIUM - Attempting to Get Recommended Items for this folder");
             try
             {
                 RecommendedSet.Clear();
@@ -350,7 +453,7 @@ namespace Iridium
                 //Random rand = new Random();
                 //int r = rand.Next(RecommendedSet.Count);
                 //return RecommendedSet[r] as ArrayListDataSet;
-                
+
             }
             catch (Exception fuckinShite)
             {
@@ -376,14 +479,14 @@ namespace Iridium
                 return item;
             }
             return item;
-            
+
         }
 
         public static ActorInfo GetPersonDtoStream(Item item)
         {
             Logger.ReportInfo("Iridium - Getting Actor info for {0}", item.Name);
 
-            string apiUrl = Kernel.ApiClient.DashboardUrl.Split(new[] { "dashboard" }, StringSplitOptions.None)[0];
+            string apiUrl = Kernel.ApiClient.DashboardUrl.Split(new[] {"dashboard"}, StringSplitOptions.None)[0];
             //Use the standard API Prefix
             string queryUrl = string.Format("{0}Persons/{1}", apiUrl, Uri.EscapeUriString(item.Name));
             //Query Format taken from Swagger
@@ -428,7 +531,7 @@ namespace Iridium
         {
             Logger.ReportInfo("Iridium - Getting News From MB Blog");
 
-            string apiUrl = Kernel.ApiClient.DashboardUrl.Split(new[] { "dashboard" }, StringSplitOptions.None)[0];
+            string apiUrl = Kernel.ApiClient.DashboardUrl.Split(new[] {"dashboard"}, StringSplitOptions.None)[0];
             string queryUrl = string.Format("{0}/News/Product?Limit=10", apiUrl);
 
             QueryResult<NewsItem> nItem;
@@ -460,7 +563,7 @@ namespace Iridium
                 Id = nItem.Guid,
                 Title = nItem.Title,
                 Description = nItem.Description,
-                Date = nItem.Date,
+                Date = nItem.Date
 
             };
             //Logger.ReportInfo("++++++++++++++++++++MBNews: ", newsItem.Title);
@@ -469,11 +572,257 @@ namespace Iridium
             return newsItem;
         }
 
+        internal static ArrayListDataSet GetFirstWatchedSet()
+        {
+            try
+            {
+                RecentlyWatchedSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                int start = 0;
+                int limit = 1;
+
+                foreach (BaseItemDto dto in APIQuery.GetRecentWatchedItem(id, folderId, start, limit).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    bool showNewItems = item.ShowNewestItems;
+                    if (item != null)
+                    {
+                        RecentlyWatchedSet.Add(item);
+                    }
+                }
+                if (RecentlyWatchedSet != null)
+                {
+                    return RecentlyWatchedSet;
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Recently Added Items {0}", fuckinShite);
+            }
+            return null;
+        }
+
+        internal static ArrayListDataSet GetSecondWatchedSet()
+        {
+            try
+            {
+                SecondWatchedSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                int start = 1;
+                int limit = 1;
+
+                foreach (BaseItemDto dto in APIQuery.GetRecentWatchedItem(id, folderId, start, limit).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    if (item != null)
+                    {
+                        SecondWatchedSet.Add(item);
+                    }
+                }
+                if (SecondWatchedSet != null)
+                {
+                    return SecondWatchedSet;
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Recently Added Items {0}", fuckinShite);
+            }
+            return null;
+        }
+
+        internal static ArrayListDataSet GetThirdWatchedSet()
+        {
+            try
+            {
+                ThirdWatchedSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                int start = 2;
+                int limit = 1;
+                foreach (BaseItemDto dto in APIQuery.GetRecentWatchedItem(id, folderId, start, limit).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    if (item != null)
+                    {
+                        ThirdWatchedSet.Add(item);
+                    }
+                }
+                if (ThirdWatchedSet != null)
+                {
+                    return ThirdWatchedSet;
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Recently Added Items {0}", fuckinShite);
+            }
+            return null;
+        }
+
+        internal static ArrayListDataSet GetRemainingWatchedSet()
+        {
+            try
+            {
+                RemainingWatchedSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                int start = 3;
+                int limit = 10;
+                foreach (BaseItemDto dto in APIQuery.GetRecentWatchedItem(id, folderId, start, limit).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    if (item != null)
+                    {
+                        RemainingWatchedSet.Add(item);
+                    }
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Recently Added Items", fuckinShite);
+            }
+            return RemainingWatchedSet;
+        }
+
+        internal static ArrayListDataSet GetFirstUnwatchedSet()
+        {
+            try
+            {
+                RecentlyUnwatchedSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                int start = 0;
+                int limit = 1;
+
+                foreach (BaseItemDto dto in APIQuery.GetRecentUnwatchedItem(id, folderId, start, limit).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    bool showNewItems = item.ShowNewestItems;
+                    if (item != null)
+                    {
+                        RecentlyUnwatchedSet.Add(item);
+                    }
+                }
+                if (RecentlyUnwatchedSet != null)
+                {
+                    return RecentlyUnwatchedSet;
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Unwatched Items {0}", fuckinShite);
+            }
+            return null;
+        }
+
+        internal static ArrayListDataSet GetSecondUnwatchedSet()
+        {
+            try
+            {
+                SecondUnwatchedSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                int start = 1;
+                int limit = 1;
+
+                foreach (BaseItemDto dto in APIQuery.GetRecentUnwatchedItem(id, folderId, start, limit).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    if (item != null)
+                    {
+                        SecondUnwatchedSet.Add(item);
+                    }
+                }
+                if (SecondUnwatchedSet != null)
+                {
+                    return SecondUnwatchedSet;
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Unwatched Items {0}", fuckinShite);
+            }
+            return null;
+        }
+
+        internal static ArrayListDataSet GetThirdUnwatchedSet()
+        {
+            try
+            {
+                ThirdUnwatchedSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                int start = 2;
+                int limit = 1;
+                foreach (BaseItemDto dto in APIQuery.GetRecentUnwatchedItem(id, folderId, start, limit).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    if (item != null)
+                    {
+                        ThirdUnwatchedSet.Add(item);
+                    }
+                }
+                if (ThirdUnwatchedSet != null)
+                {
+                    return ThirdUnwatchedSet;
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Unwatched Items {0}", fuckinShite);
+            }
+            return null;
+        }
+
+        internal static ArrayListDataSet GetRemainingUnwatchedSet()
+        {
+            try
+            {
+                RemainingUnwatchedSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                int start = 3;
+                int limit = 10;
+                foreach (BaseItemDto dto in APIQuery.GetRecentUnwatchedItem(id, folderId, start, limit).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    if (item != null)
+                    {
+                        RemainingUnwatchedSet.Add(item);
+                    }
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Unwatched Items", fuckinShite);
+            }
+            return RemainingUnwatchedSet;
+        }
+
         public static bool IsMBIntrosInstalled()
         {
             Logger.ReportInfo("Iridium - Getting List of Plugins installed");
             //Use the standard API Prefix
-            string apiUrl = Kernel.ApiClient.DashboardUrl.Split(new[] { "dashboard" }, StringSplitOptions.None)[0];
+            string apiUrl = Kernel.ApiClient.DashboardUrl.Split(new[] {"dashboard"}, StringSplitOptions.None)[0];
             //Query Format taken from Swagger
             string queryUrl = string.Format("{0}Plugins", apiUrl);
             //get the Json Stream
@@ -491,6 +840,84 @@ namespace Iridium
 
             }
             return false;
+        }
+
+        internal static ArrayListDataSet GetSpotlightAddedItem()
+        {
+            try
+            {
+                SpotlightAddedItemSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+                int start = 0;
+                int limit = 10;
+
+                foreach (BaseItemDto dto in APIQuery.GetRecentUnwatchedItem(id, folderId, start, limit).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    if (item != null)
+                    {
+                        SpotlightAddedItemSet.Add(item);
+                    }
+                }
+                if (SpotlightAddedItemSet != null)
+                { 
+                    List<ArrayListDataSet> shuffled = ShuffleList(SpotlightAddedItemSet);
+                    return shuffled.First();
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Spotlight Item {0}", fuckinShite);
+            }
+            return null;
+        }
+
+        internal static ArrayListDataSet GetYearAddedSet()
+        {
+            try
+            {
+                YearAddedSet.Clear();
+                Guid id = Kernel.CurrentUser.Id;
+                Guid folderId = Application.CurrentInstance.CurrentItem.Id;
+
+                foreach (BaseItemDto dto in APIQuery.YearAPIQuery(id, folderId).Items)
+                {
+
+                    Item item = GetGenericItem(dto);
+                    if (item != null)
+                    {
+                        YearAddedSet.Add(item);
+                    }
+                }
+                if (YearAddedSet != null)
+                {
+                    return YearAddedSet;
+                }
+
+            }
+            catch (Exception fuckinShite)
+            {
+                Logger.ReportError("IRIDIUM - Error Retrieving Year Set Items {0}", fuckinShite);
+            }
+            return null;
+        }
+
+        private static List<ArrayListDataSet> ShuffleList(ArrayListDataSet arrList)
+        {
+            ArrayListDataSet randomList = new ArrayListDataSet();
+
+            Random r = new Random();
+            for (int cnt = 0; cnt < arrList.Count; cnt++)
+            {
+                object tmp = arrList[cnt];
+                int idx = r.Next(arrList.Count - cnt) + cnt;
+                arrList[cnt] = arrList[idx];
+                arrList[idx] = tmp;
+            }
+            return new List<ArrayListDataSet> {arrList};
         }
     }
 }

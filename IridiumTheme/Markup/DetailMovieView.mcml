@@ -249,7 +249,7 @@
         </Actions>
       </Rule>
 
-      <Rule>
+	  <Rule>
         <Actions>
           <Invoke Target="[MediaPlaying.Start]" />
         </Actions>
@@ -381,7 +381,7 @@
             </LayoutInput>
           </Graphic>-->
 
-		  <bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]" />
+		  <!--<bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]" />-->
           <Graphic Name="Overlay" Layout="Fill" Content="image://vi:BackgroundOverlay" Alpha="1"/>
           <bd:Backdrop4 Name="Backdrop"  Application="[Application]" Image="[Item.BackdropImage]" Item="[Item]"/>
          
@@ -639,17 +639,26 @@
 
       <Condition Source="[Input.KeyFocus]" SourceValue="true" Target="[Label.Color]" Value="color://is:DetailSelOptionColor">
         <Actions>
-          <Set Target="[Label.Font]" Value="[OptionSelected]"></Set>
-          <Set Target="[TextGlow.Visible]" Value="true" />
+			<Set Target="[Label.Font]" Value="[OptionSelected]" />
+            <Set Target="[TextGlow.Visible]" Value="true" />
+			<Set Target="[Label.Margins]" Value="0,-6,0,0" />
         </Actions>
       </Condition>
+
+		<Condition Source="[Input.KeyFocus]" SourceValue="false">
+			<Actions>
+				<Set Target="[Label.Margins]" Value="0,0,0,0" />
+			</Actions>
+		</Condition>
+		
+		
     </Rules>
     <Content>
       <Panel>
         <Children>
           <Text Name="Label" Content="[Description]" Font="[OptionNotSelected]" Color="color://is:DetailOptionColor"  Padding="0,-14,0,0" >
             <Children>
-              <Graphic Name="TextGlow" ColorFilter="White" MaintainAspectRatio="true" Content="image://vi:MenuTextGlow" Alpha="0.8" Visible="false" SizingPolicy="SizeToContent"/>
+              <Graphic Name="TextGlow" ColorFilter="White" MaintainAspectRatio="true" Content="image://vi:MenuTextGlow" Alpha="0.8" Visible="false" SizingPolicy="SizeToConstraint" Margins="0,6,0,0"/>
             </Children>
           </Text>
         </Children>

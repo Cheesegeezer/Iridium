@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 using MediaBrowser.Library.Configuration;
@@ -11,14 +10,14 @@ namespace Iridium.Fonts
     {
         private readonly string _fontFilePath = Path.Combine(ApplicationPaths.AppPluginPath, @"Iridium\TTFFonts");
         //When changing these dont forget to change the resource file down below.
-        private const string Font1 = "SegeoWP.TTF";
-        private const string Font2 = "SegeoWP-Black.TTF";
+        private const string Font1 = "FUTRFW.TTF";
+        private const string Font2 = "Xolonium-Bold.TTF";
         private const string Font3 = "SegeoWP-Light.TTF";
         private const string Font4 = "Urban Elegance.TTF";
         private const string Font5 = "InterOne.TTF";
         private const string Font6 = "InterBold.TTF";
         private const string Font7 = "impact.TTF";
-        private const string Font8 = "BebasNeue.TTF";
+        private const string Font8 = "BebasNeue.TTF"; 
 
         private bool AreFontsAccessible()
         {
@@ -56,9 +55,9 @@ namespace Iridium.Fonts
         public PrivateFontCollection FontCollection()
         {
             Logger.ReportInfo("Check if default fonts are installed...");
-            if (!this.AreFontsAccessible())
+            if (!AreFontsAccessible())
             {
-                this.InstallFonts();
+                InstallFonts();
             }
             PrivateFontCollection fonts = new PrivateFontCollection();
             fonts.AddFontFile(Path.Combine(_fontFilePath, Font1));
@@ -84,7 +83,7 @@ namespace Iridium.Fonts
                 string fontInstall = Path.Combine(path, Font1);
                 if (!File.Exists(fontInstall))
                 {
-                    using (Stream stream = new MemoryStream(Resources.SegoeWP))
+                    using (Stream stream = new MemoryStream(Resources.FUTRFW))
                     {
                         Logger.ReportInfo("Extracting resource... ");
                         ExtractResource(fontInstall, stream);
@@ -93,7 +92,7 @@ namespace Iridium.Fonts
                 fontInstall = Path.Combine(path, Font2);
                 if (!File.Exists(fontInstall))
                 {
-                    using (Stream fontStream = new MemoryStream(Resources.SegoeWP_Black))
+                    using (Stream fontStream = new MemoryStream(Resources.XOLONIUM_BOLD))
                     {
                         Logger.ReportInfo("Extracting resource... ");
                         ExtractResource(fontInstall, fontStream);

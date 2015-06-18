@@ -138,6 +138,61 @@
         </Actions>
       </Rule>
 
+		<Changed Source="[ThemeHelper.Config.EnableTVShowView]" >
+			<Conditions>
+				<Equality Source="[ThemeHelper.Config.EnableTVShowView]" ConditionOp="Equals" Value="true" />
+				<Equality Source="[Folder.ItemTypeString]" ConditionOp="Equals" Value="Series" />
+			</Conditions>
+			<Actions>
+				<Set Target="[DetailsView.Source]" Value="[ThemeHelper.LayoutSeries]" />
+				<Set Target="[PosterView.Source]" Value="[ThemeHelper.LayoutSeries]" />
+				<Set Target="[CoverFlow.Source]" Value="[ThemeHelper.LayoutSeries]" />
+				<Set Target="[ThumbView.Source]" Value="[ThemeHelper.LayoutSeries]" />
+				<Set Target="[ThumbStripView.Source]" Value="[ThemeHelper.LayoutSeries]" />
+			</Actions>
+		</Changed>
+
+		<Changed Source="[ThemeHelper.Config.EnableTVShowView]" >
+			<Conditions>
+				<Equality Source="[ThemeHelper.Config.EnableTVShowView]" ConditionOp="Equals" Value="false" />
+				<Equality Source="[Folder.ItemTypeString]" ConditionOp="Equals" Value="Season" />
+			</Conditions>
+			<Actions>
+				<Set Target="[DetailsView.Source]" Value="[ThemeHelper.LayoutDetails]" />
+				<Set Target="[PosterView.Source]" Value="[ThemeHelper.LayoutPoster]" />
+				<Set Target="[CoverFlow.Source]" Value="[ThemeHelper.LayoutCoverflow]" />
+				<Set Target="[ThumbView.Source]" Value="[ThemeHelper.LayoutThumb]" />
+				<Set Target="[ThumbStripView.Source]" Value="[ThemeHelper.LayoutThumbstrip]" />
+			</Actions>
+		</Changed>
+		
+		<!--Specialized Series View-->
+		<Condition Source="[Folder.ItemTypeString]" ConditionOp="Equals" SourceValue="Series" Target="[DetailsView.Source]" Value="[ThemeHelper.LayoutSeries]" >
+			<Conditions>
+				<Equality Source="[ThemeHelper.Config.EnableTVShowView]" Value="true" />
+			</Conditions>
+		</Condition>
+		<Condition Source="[Folder.ItemTypeString]" SourceValue="Series" Target="[PosterView.Source]" Value="[ThemeHelper.LayoutSeries]" >
+			<Conditions>
+				<Equality Source="[ThemeHelper.Config.EnableTVShowView]" Value="true" />
+			</Conditions>
+		</Condition>
+		<Condition Source="[Folder.ItemTypeString]" SourceValue="Series" Target="[CoverFlow.Source]" Value="[ThemeHelper.LayoutSeries]" >
+			<Conditions>
+				<Equality Source="[ThemeHelper.Config.EnableTVShowView]" Value="true" />
+			</Conditions>
+		</Condition>
+		<Condition Source="[Folder.ItemTypeString]" SourceValue="Series" Target="[ThumbView.Source]" Value="[ThemeHelper.LayoutSeries]" >
+			<Conditions>
+				<Equality Source="[ThemeHelper.Config.EnableTVShowView]" Value="true" />
+			</Conditions>
+		</Condition>
+		<Condition Source="[Folder.ItemTypeString]" SourceValue="Series" Target="[ThumbStripView.Source]" Value="[ThemeHelper.LayoutSeries]" >
+			<Conditions>
+				<Equality Source="[ThemeHelper.Config.EnableTVShowView]" Value="true" />
+			</Conditions>
+		</Condition>
+
       <Condition Source="[Input.DeepKeyFocus]" SourceValue="false" ConditionOp="Equals">
         <Actions>
           <Set Target="[MainPanel.Alpha]" Value="0.2" />

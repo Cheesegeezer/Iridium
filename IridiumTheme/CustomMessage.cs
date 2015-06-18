@@ -25,37 +25,34 @@ namespace Iridium
             }
             
         }
-        public CustomMessage()
-        {
-        }
 
         private string _messageUI = "resx://Iridium/Iridium.Resources/CustomMessage#MessageBox";
         public string MessageResponse { get; set; }
         private string _messageText = "";
-        private bool _showMessage = false;
+        private bool _showMessage;
         
 
         public string MessageBox(string msg)
         {
-            return this.MessageBox(msg, true, 0, null);
+            return MessageBox(msg, true, 0, null);
         }
         public string MessageBox(string msg, bool modal, int timeout)
         {
-            return this.MessageBox(msg, modal, timeout, null);
+            return MessageBox(msg, modal, timeout, null);
         }
 
         private string MessageBox(string msg, bool modal, int timeout, string ui)
         {
             Action action;
-            this.MessageUI = !string.IsNullOrEmpty(ui) ? ui : "resx://Iridium/Iridium.Resources/CustomMessage#MessageBox";
-            this.MessageResponse = "";
-            this.MessageText = msg;
-            this.ShowMessage = true;
+            MessageUI = !string.IsNullOrEmpty(ui) ? ui : "resx://Iridium/Iridium.Resources/CustomMessage#MessageBox";
+            MessageResponse = "";
+            MessageText = msg;
+            ShowMessage = true;
             if (timeout > 0)
             {
                 if (modal)
                 {
-                    this.WaitForMessage(timeout);
+                    WaitForMessage(timeout);
                 }
                 else
                 {
@@ -66,24 +63,24 @@ namespace Iridium
                     Async.Queue("Iri Mes", action);
                 }
             }
-            return this.MessageResponse;
+            return MessageResponse;
         }
 
         public string MessageUI
         {
             get
             {
-                return this._messageUI;
+                return _messageUI;
             }
             set
             {
                 DeferredHandler method = null;
-                if (this._messageUI != value)
+                if (_messageUI != value)
                 {
-                    this._messageUI = value;
+                    _messageUI = value;
                     if (method == null)
                     {
-                        method = _ => base.FirePropertyChanged("MessageUI");
+                        method = _ => FirePropertyChanged("MessageUI");
                     }
                     Application.DeferredInvoke(method);
                 }
@@ -94,17 +91,17 @@ namespace Iridium
         {
             get
             {
-                return this._messageText;
+                return _messageText;
             }
             set
             {
                 DeferredHandler method = null;
-                if (this._messageText != value)
+                if (_messageText != value)
                 {
-                    this._messageText = value;
+                    _messageText = value;
                     if (method == null)
                     {
-                        method = _ => base.FirePropertyChanged("MessageText");
+                        method = _ => FirePropertyChanged("MessageText");
                     }
                     Application.DeferredInvoke(method);
                 }
@@ -115,17 +112,17 @@ namespace Iridium
         {
             get
             {
-                return this._showMessage;
+                return _showMessage;
             }
             set
             {
                 DeferredHandler method = null;
-                if (this._showMessage != value)
+                if (_showMessage != value)
                 {
-                    this._showMessage = value;
+                    _showMessage = value;
                     if (method == null)
                     {
-                        method = _ => base.FirePropertyChanged("ShowMessage");
+                        method = _ => FirePropertyChanged("ShowMessage");
                     }
                     Application.DeferredInvoke(method);
                 }
@@ -135,11 +132,11 @@ namespace Iridium
         protected void WaitForMessage(int timeout)
         {
             DateTime now = DateTime.Now;
-            while (this._showMessage && ((DateTime.Now - now).TotalMilliseconds < timeout))
+            while (_showMessage && ((DateTime.Now - now).TotalMilliseconds < timeout))
             {
                 Thread.Sleep(250);
             }
-            this.ShowMessage = false;
+            ShowMessage = false;
         }
 
         //Add Custom MBInfo Messages

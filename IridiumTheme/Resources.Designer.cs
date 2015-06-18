@@ -183,6 +183,16 @@ namespace Iridium {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] BannerButton {
+            get {
+                object obj = ResourceManager.GetObject("BannerButton", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] BasicPosterScroller {
             get {
                 object obj = ResourceManager.GetObject("BasicPosterScroller", resourceCulture);
@@ -520,6 +530,16 @@ namespace Iridium {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] FUTRFW {
+            get {
+                object obj = ResourceManager.GetObject("FUTRFW", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Gear {
@@ -536,6 +556,16 @@ namespace Iridium {
             get {
                 object obj = ResourceManager.GetObject("GearSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] GenreMov {
+            get {
+                object obj = ResourceManager.GetObject("GenreMov", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -885,6 +915,16 @@ namespace Iridium {
         internal static byte[] ListButton {
             get {
                 object obj = ResourceManager.GetObject("ListButton", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ListButton2 {
+            get {
+                object obj = ResourceManager.GetObject("ListButton2", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1552,6 +1592,16 @@ namespace Iridium {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] SeasonsScroller {
+            get {
+                object obj = ResourceManager.GetObject("SeasonsScroller", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] SegoeWP {
             get {
                 object obj = ResourceManager.GetObject("SegoeWP", resourceCulture);
@@ -1729,6 +1779,16 @@ namespace Iridium {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] TextButton {
+            get {
+                object obj = ResourceManager.GetObject("TextButton", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap ThreeSpeaker {
@@ -1745,6 +1805,16 @@ namespace Iridium {
             get {
                 object obj = ResourceManager.GetObject("time", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] TVShowsLayout {
+            get {
+                object obj = ResourceManager.GetObject("TVShowsLayout", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -1829,12 +1899,42 @@ namespace Iridium {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] XOLONIUM_BOLD {
+            get {
+                object obj = ResourceManager.GetObject("XOLONIUM_BOLD", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] XOLONIUM_REGULAR {
+            get {
+                object obj = ResourceManager.GetObject("XOLONIUM_REGULAR", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap year {
             get {
                 object obj = ResourceManager.GetObject("year", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] YearMov {
+            get {
+                object obj = ResourceManager.GetObject("YearMov", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

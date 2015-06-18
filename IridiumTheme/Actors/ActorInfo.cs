@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using MediaBrowser.Library;
-using MediaBrowser.Library.Logging;
 using Microsoft.MediaCenter.UI;
 
 namespace Iridium
@@ -11,10 +10,6 @@ namespace Iridium
     {
 
         //Keep MCML Happy :)
-        public ActorInfo()
-        {
-            
-        }
 
         public ActorItemWrapper Item { get; set; }
         private static Item _actorItem;
@@ -208,11 +203,11 @@ namespace Iridium
         {
             get
             {
-                return this._credits;
+                return _credits;
             }
             set
             {
-                this._credits = value;
+                _credits = value;
             }
         }
 

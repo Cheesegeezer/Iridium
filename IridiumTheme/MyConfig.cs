@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.MediaCenter.UI;
-using MediaBrowser.Library.Logging;
 using MediaBrowser.Library.Configuration;
-using Microsoft.MediaCenter.Hosting;
+using MediaBrowser.Library.Logging;
 using Microsoft.MediaCenter;
+using Microsoft.MediaCenter.Hosting;
+using Microsoft.MediaCenter.UI;
 
 namespace Iridium
 {
@@ -16,7 +16,7 @@ namespace Iridium
     //******************************************************************************************************************
     public class MyConfig : ModelItem
     {
-        private FolderConfigData folderData = null;
+        private FolderConfigData folderData;
         private bool isValid;
         private ConfigData _data;
         public static Choice AvailableStyles = new Choice();
@@ -64,7 +64,7 @@ namespace Iridium
 
         public MyConfig()
         {
-            isValid = this.Load();
+            isValid = Load();
             //CheckActiveFonts();
             //CheckActiveColors();
             CheckActiveStyle();
@@ -143,35 +143,49 @@ namespace Iridium
         {
             lock (this)
             {
-                this._data.Save();
+                _data.Save();
             }
         }
 
         public bool EnableVideoBackdrop
         {
-            get { return this._data.enableVideoBackdrop; }
+            get { return _data.enableVideoBackdrop; }
             set
             {
-                if (this._data.enableVideoBackdrop != value)
+                if (_data.enableVideoBackdrop != value)
                 {
-                    this._data.enableVideoBackdrop = value;
+                    _data.enableVideoBackdrop = value;
                     FirePropertyChanged("EnableVideoBackdrop");
-                    this.Save();
+                    Save();
+                }
+            }
+        }
+
+        public bool EnableTVShowView
+        {
+            get { return _data.UseTVShowView; }
+            set
+            {
+                if (_data.UseTVShowView != value)
+                {
+                    _data.UseTVShowView = value;
+                    FirePropertyChanged("UseTVShowView");
+                    Save();
                 }
             }
         }
 
         public Single BackdropTransitionTime
         {
-            get { return this._data.BackdropTransitionTime; }
+            get { return _data.BackdropTransitionTime; }
             set
             {
 
-                if (this._data.BackdropTransitionTime != value)
+                if (_data.BackdropTransitionTime != value)
                 {
-                    this._data.BackdropTransitionTime = (float)Math.Round(value, 1, MidpointRounding.ToEven);
+                    _data.BackdropTransitionTime = (float)Math.Round(value, 1, MidpointRounding.ToEven);
                     FirePropertyChanged("BackdropTrnsitionTime");
-                    this.Save();
+                    Save();
                 }
             }
         }
@@ -193,28 +207,28 @@ namespace Iridium
 
         public bool Enable24hrTime
         {
-            get { return this._data.enable24hrTime; }
+            get { return _data.enable24hrTime; }
             set
             {
-                if (this._data.enable24hrTime != value)
+                if (_data.enable24hrTime != value)
                 {
-                    this._data.enable24hrTime = value;
+                    _data.enable24hrTime = value;
                     FirePropertyChanged("enable24hrTime");
-                    this.Save();
+                    Save();
                 }
             }
         }
 
         public bool EnableQuickPlay
         {
-            get { return this._data.enableQuickPlay; }
+            get { return _data.enableQuickPlay; }
             set
             {
-                if (this._data.enableQuickPlay != value)
+                if (_data.enableQuickPlay != value)
                 {
-                    this._data.enableQuickPlay = value;
+                    _data.enableQuickPlay = value;
                     FirePropertyChanged("enableQuickPlay");
-                    this.Save();
+                    Save();
                 }
             }
         }
@@ -241,6 +255,28 @@ namespace Iridium
             }
         }
 
+        public string WatchedColorStyle
+        {
+            get
+            {
+                string color = "Green";
+
+                if (_data != null)
+                    color = _data.WatchedColorStyle;
+
+                return color;
+            }
+            set
+            {
+                if ((_data != null) && (_data.WatchedColorStyle != value))
+                {
+                    _data.WatchedColorStyle = value;
+                    Save();
+                    FirePropertyChanged("WatchedColorStyle");
+                }
+            }
+        }
+        
         public string CustomDetailPosterLayout
         {
             get
@@ -296,7 +332,7 @@ namespace Iridium
             get
             {
                 AvailableStyles.Options = Plugin.AvailableStyles;
-                AvailableStyles.Chosen = this._data.Style;
+                AvailableStyles.Chosen = _data.Style;
                 return AvailableStyles;
             }
         }
@@ -313,12 +349,12 @@ namespace Iridium
         {
             set
             {
-                if ((string)this._data.Style != value)
+                if ((string)_data.Style != value)
                 {
-                    this._data.Style = value;
+                    _data.Style = value;
                     AvailableStyles.Chosen = value;
-                    this.Save();
-                    base.FirePropertyChanged("GetAvailableStyles");
+                    Save();
+                    FirePropertyChanged("GetAvailableStyles");
                 }
             }
         }
@@ -330,15 +366,15 @@ namespace Iridium
         {
             get
             {
-                return this._data.askToQuit;
+                return _data.askToQuit;
             }
             set
             {
-                if (this._data.askToQuit != value)
+                if (_data.askToQuit != value)
                 {
-                    this._data.askToQuit = value;
-                    this.Save();
-                    base.FirePropertyChanged("AskToQuit");
+                    _data.askToQuit = value;
+                    Save();
+                    FirePropertyChanged("AskToQuit");
                 }
             }
         }
@@ -352,15 +388,15 @@ namespace Iridium
         {
             get
             {
-                return this.folderId;
+                return folderId;
             }
             set
             {
                 if (folderId != value)
                 {
-                    this.folderId = value;
+                    folderId = value;
 
-                    if ((this.folderId == Guid.Empty) || !LoadFolder())
+                    if ((folderId == Guid.Empty) || !LoadFolder())
                     {
                         folderData = null;
                     }
@@ -372,12 +408,12 @@ namespace Iridium
         {
             get
             {
-                return this.parentFolderId;
+                return parentFolderId;
             }
             set
             {
-                if (this.parentFolderId != value)
-                    this.parentFolderId = value;
+                if (parentFolderId != value)
+                    parentFolderId = value;
             }
         }
 
@@ -490,7 +526,8 @@ namespace Iridium
             }
         }
 
-        public bool FolderShowFullMPAAIcons
+       
+       public bool FolderShowFullMPAAIcons
         {
             get
             {
@@ -961,7 +998,7 @@ namespace Iridium
             if ((folderData != null) && (folderData.FolderId != Guid.Empty.ToString()))
             {
                 lock (this)
-                    this.folderData.Save();
+                    folderData.Save();
             }
         }
 
@@ -969,11 +1006,11 @@ namespace Iridium
         {
             if (folderId != Guid.Empty)
             {
-                string folderFilePath = Path.Combine(displayFolderPath, "Iridium_" + folderId.ToString() + ".xml");
+                string folderFilePath = Path.Combine(displayFolderPath, "Iridium_" + folderId + ".xml");
 
                 if (!File.Exists(folderFilePath) && (parentFolderId != Guid.Empty))
                 {
-                    string parentFolderFilePath = Path.Combine(displayFolderPath, "Iridium_" + parentFolderId.ToString() + ".xml");
+                    string parentFolderFilePath = Path.Combine(displayFolderPath, "Iridium_" + parentFolderId + ".xml");
 
                     if (File.Exists(parentFolderFilePath))
                     {
@@ -990,16 +1027,16 @@ namespace Iridium
 
                 try
                 {
-                    this.folderData = FolderConfigData.FromFile(folderId, folderFilePath);
+                    folderData = FolderConfigData.FromFile(folderId, folderFilePath);
 
-                    if (this.folderData.WrapItemList == "True")
+                    if (folderData.WrapItemList == "True")
                     {
-                        this.folderData.WrapItemList = "When Too Big";
+                        folderData.WrapItemList = "When Too Big";
                         SaveFolder();
                     }
-                    else if (this.folderData.WrapItemList == "False")
+                    else if (folderData.WrapItemList == "False")
                     {
-                        this.folderData.WrapItemList = "Never";
+                        folderData.WrapItemList = "Never";
                         SaveFolder();
                     }
 
@@ -1010,15 +1047,12 @@ namespace Iridium
                     if (!Directory.Exists(_configFilePath))
                         Directory.CreateDirectory(_configFolderPath);
 
-                    this.folderData = new FolderConfigData(folderId, folderFilePath);
+                    folderData = new FolderConfigData(folderId, folderFilePath);
                     SaveFolder();
                     return true;
                 }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         #endregion

@@ -10,7 +10,7 @@ namespace Iridium
     public class CustomStyles : ModelItem
     {
         //private ConfigData data; 
-        static bool isValid = false;
+        static bool isValid;
 
         public const string STYLE_RANDOM = "[Random]";
 
@@ -202,7 +202,7 @@ namespace Iridium
                         string      backupFile = Path.Combine (Path.GetDirectoryName (styleFile),
                                                                Path.GetFileNameWithoutExtension (styleFile) +
                                                                     "_" +
-                                                                    now.Year.ToString () +
+                                                                    now.Year +
                                                                     now.Month.ToString ("D2") +
                                                                     now.Day.ToString ("D2") +
                                                                     now.Hour.ToString ("D2") +

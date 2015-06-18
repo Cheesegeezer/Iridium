@@ -30,9 +30,9 @@
       <!--RAL & NEXTUP PANEL FONTS AND COLORS -->
       <Font Name="XF_RALPopupItem" Font="Futurist Fixed-width,16"/>
       <Color Name="XC_RALPopupItem" Color="111,184,227"/>
-      <Font Name="XF_NoRALPopupItem" Font="InterBold,16"/>
+      <Font Name="XF_NoRALPopupItem" Font="Futurist Fixed-width,10"/>
       <Color Name="XC_NoRALPopupItem" Color="111,184,227"/>
-      <Font Name="XF_RALItemTitle" Font="Futurist Fixed-width,10"/>
+      <Font Name="XF_RALItemTitle" Font="Futurist Fixed-width,14"/>
       <Color Name="XC_RALItemTitle" Color="111,184,227"/>
       <Color Name="XC_RALPanelFilterColor" Color="0,155,255"/>
       <cor:Single Name="RALPanelAlpha" Single="0.8"/>
@@ -144,7 +144,7 @@
       <Color Name="DetailsOverviewColor" Color="240,240,240"/>
 
   <!--DETAILS QUICKLIST VIEW-->
-      <Font Name="XF_DQLFolderTitle" Font="BebasNeue,24" />
+      <Font Name="XF_DQLFolderTitle" Font="Xolonium Bold,16" />
       <Color Name="XC_DQLFolderTitleColor" Color="111,184,227"/>
       <Font Name="XF_DQLUnselected" Font="Segoe UI SemiLight, 20" />
       <Font Name="XF_DQLSelected" Font="Segoe UI SemiLight,20" />
@@ -154,7 +154,7 @@
       <Color Name="QLDividerColor" Color="111,184,227" />
 
   <!--THUMB VIEW-->
-      <Font Name="ThumbTitleFont" Font="Xolonium Bold, 18" />
+      <Font Name="ThumbTitleFont" Font="Xolonium Bold, 16" />
       <Color Name="ThumbTitleColor" Color="255,255,255" />
 	  <Font Name="ThumbItemTitleFont" Font="Segoe UI SemiLight, 22, Bold" />
 	  <Color Name="ThumbItemTitleColor" Color="240,240,240" />

@@ -652,4 +652,34 @@
   <data name="HomeOptionButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>markup\controls\buttons\homeoptionbutton.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="FUTRFW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>fonts\futrfw.ttf;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="XOLONIUM_BOLD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>fonts\xolonium-bold.ttf;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="XOLONIUM_REGULAR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>fonts\xolonium-regular.ttf;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="YearMov" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\homepage\yearmov.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GenreMov" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\homepage\genremov.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TVShowsLayout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\views\extraviews\tvshowslayout.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SeasonsScroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\scrollers\seasonsscroller.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ListButton2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\buttons\listbutton2.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TextButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\buttons\textbutton.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BannerButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls\buttons\bannerbutton.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

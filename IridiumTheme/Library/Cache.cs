@@ -9,22 +9,22 @@ namespace Iridium
 
         public List<Item> GetCacheItems(string key)
         {
-            if (this._cache.ContainsKey(key))
+            if (_cache.ContainsKey(key))
             {
-                return this._cache[key];
+                return _cache[key];
             }
             return null;
         }
 
         public void PersistCacheItems(string key, List<Item> items)
         {
-            if (!this._cache.ContainsKey(key))
+            if (!_cache.ContainsKey(key))
             {
-                this._cache.Add(key, items);
+                _cache.Add(key, items);
             }
             else
             {
-                this._cache[key] = items;
+                _cache[key] = items;
             }
         }
     }

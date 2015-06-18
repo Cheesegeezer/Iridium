@@ -2,7 +2,6 @@
 using System.Threading;
 using MediaBrowser;
 using MediaBrowser.Library.Logging;
-using MediaBrowser.Library.Plugins;
 using MediaBrowser.Library.Registration;
 using MediaBrowser.Library.Threading;
 using Version = System.Version;
@@ -11,11 +10,6 @@ namespace Iridium
 {
     public class Registration
     {
-        public Registration()
-        {
-            //Keep that darn MCML Happy!!!!!
-        }
-
         const string FeatureName = "Iridium";
         public static string Status;
 
@@ -48,7 +42,7 @@ namespace Iridium
                 {
                     Thread.Sleep(5000);
                     
-                    _pluginStatus = global::PluginStatus.Trial;
+                    _pluginStatus = PluginStatus.Trial;
                     Status = "Trial";
 
                     if (Application.CurrentInstance.CurrentTheme.Name == "Iridium")
@@ -62,17 +56,17 @@ namespace Iridium
                 }
                 else if (_isReg)
                 {
-                    _pluginStatus = global::PluginStatus.Registered;
+                    _pluginStatus = PluginStatus.Registered;
                     Status = "Registered";
                 }
                 else
                 {
                     Thread.Sleep(5000);
-                    _pluginStatus = global::PluginStatus.Expired;
+                    _pluginStatus = PluginStatus.Expired;
                     Status = "Expired"; 
                     if (Application.CurrentInstance.CurrentTheme.Name == "Iridium")
                     {
-                        //string text = string.Format("IRIDIUM HAS EXPIRED - Expiration Date is {0} {1}Please purchase from Server Plugin Catalogue ",_expirationDate.ToShortDateString(), Environment.NewLine);
+                        string text = string.Format("IRIDIUM HAS EXPIRED - Expiration Date is {0} {1}Please purchase from Server Plugin Catalogue ",_expirationDate.ToShortDateString(), Environment.NewLine);
                         //CustomMessage.Instance.MessageBox(text);
                         //CustomMessage.MessageBox(text, true, 0);
                         //Application.CurrentInstance.MessageBox(text, true, 0);

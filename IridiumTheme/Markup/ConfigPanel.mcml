@@ -14,6 +14,7 @@
       <a:Application Name="Application" Application="$Required"/>
       <EditableText Name="FocusItem" />
       <ih:IridiumHelper Name="Helper" />
+	
     </Properties>
     <Locals>
 
@@ -44,6 +45,22 @@
           <cor:String String="Custom" />
         </Options>
       </Choice>
+
+		<Choice Name="ListWatchedColor">
+			<Options>
+				<cor:String String="Green" />
+				<cor:String String="DarkGreen" />
+				<cor:String String="Blue" />
+				<cor:String String="DarkBlue" />
+				<cor:String String="RoyalBlue" />
+				<cor:String String="Red" />
+				<cor:String String="OrangeRed" />
+				<cor:String String="Orange" />
+				<cor:String String="Yellow" />
+				<cor:String String="YellowGreen" />
+				<cor:String String="Pink" />
+			</Options>
+		</Choice>
       
       <Inset Name="CMargin" Inset="25,0,0,0" />
 
@@ -53,11 +70,13 @@
       <BooleanChoice Name="EnableVideoBackdrop" Value="[Helper.Config.EnableVideoBackdrop]" />
       <BooleanChoice Name="Enable24HRTime" Value="[Helper.Config.Enable24hrTime]" />
       <BooleanChoice Name="EnableQuickPlay" Value="[Helper.Config.EnableQuickPlay]" />
+	  <BooleanChoice Name="EnableTVShowView" Value="[Helper.Config.EnableTVShowView]" />
 
     </Locals>
     <Rules>
       <Binding Source="[Helper.Config.InstalledStyles.Chosen!cor:String]" Target="[Helper.Config.ThemeStyle]" />
       <Binding Source="[Helper.Config.BackdropTransitionTime]" Target="[TransitionTime.Value]" />
+		<Binding Source="[ListWatchedColor.Chosen!cor:String]" Target="[Helper.Config.WatchedColorStyle]" />
       <Binding Source="[GameDetailPosterLayout.Chosen!cor:String]" Target="[Helper.Config.GameDetailPosterLayout]" />
       <Binding Source="[CustomDetailPosterLayout.Chosen!cor:String]" Target="[Helper.Config.CustomDetailPosterLayout]" />
       <!--<Binding Source="[Helper.Config.BackdropOverlayAlpha]" Target="[BackdropAlpha.Value]" />-->
@@ -69,11 +88,11 @@
         </Actions>
       </Changed>
 
-      <!--<Changed Source="[BackdropAlpha.Value]">
+      <Changed Source="[ListWatchedColor.ChosenIndex!cor:String]">
         <Actions>
-          <Set Target="[Helper.Config.BackdropOverlayAlpha]" Value="[BackdropAlpha.Value]" />
+          <Set Target="[Helper.Config.WatchedColorStyle]" Value="[ListWatchedColor.Chosen!cor:String]" />
         </Actions>
-      </Changed>-->
+      </Changed>
 
       <!--Changed Source="[EnableNPVCB.Checked.Value]">
         <Actions>
@@ -104,6 +123,12 @@
           <Set Target="[Helper.Config.EnableQuickPlay]" Value="[EnableQuickPlayCB.Checked.Value]" />
         </Actions>
       </Changed>
+		
+		<Changed Source="[EnableTVShowViewCB.Checked.Value]">
+			<Actions>
+				<Set Target="[Helper.Config.EnableTVShowView]" Value="[EnableTVShowViewCB.Checked.Value]" />
+			</Actions>
+		</Changed>
 
       <!--<Changed Source="[EnableRALWrapCB.Checked.Value]">
         <Actions>
@@ -117,10 +142,12 @@
         <Children>
           <st:SpinnerText Name="ThemeCustomStyleSpinner" Model="[Helper.Config.InstalledStyles]" FocusItem="[FocusItem]" Label="[Application.LocalStrings.#ThemeStyleLabel!cor:String]" Color="color://s:FontColorMedium" Font="font://f:CP_ConfigItemFont" ValueFont="font://f:CP_ConfigItemFont" Margins="[CMargin]" DefaultString="[Helper.Config.ThemeStyle]" />
           <ss:SimpleSpinner Name="TransTime" Label="[Application.LocalStrings.#BackdropTransLabel!cor:String]" Color="color://s:FontColorMedium" Model="[TransitionTime]" FocusItem="[FocusItem]"  Font="font://f:CP_ConfigItemFont" ValueFont="font://f:CP_ConfigItemFont"  Margins="[CMargin]"  />
-          <st:SpinnerText Name="GamePosterPosition" Model="[GameDetailPosterLayout]" FocusItem="[FocusItem]" Label="[Application.LocalStrings.#GameDetailPosterLayoutLabel!cor:String]" Color="color://s:FontColorMedium" Font="font://f:CP_ConfigItemFont" ValueFont="font://f:CP_ConfigItemFont"  Margins="[CMargin]" DefaultString="[Helper.Config.GameDetailPosterLayout]" />
+			<st:SpinnerText Name="ListWatchedColorSpinner" Model="[ListWatchedColor]" FocusItem="[FocusItem]" Label="[Application.LocalStrings.#ListWatchedColorLabel!cor:String]" Color="color://s:FontColorMedium" Font="font://f:CP_ConfigItemFont" ValueFont="font://f:CP_ConfigItemFont" Margins="[CMargin]" DefaultString="[Helper.Config.WatchedColorStyle]" />
+			<st:SpinnerText Name="GamePosterPosition" Model="[GameDetailPosterLayout]" FocusItem="[FocusItem]" Label="[Application.LocalStrings.#GameDetailPosterLayoutLabel!cor:String]" Color="color://s:FontColorMedium" Font="font://f:CP_ConfigItemFont" ValueFont="font://f:CP_ConfigItemFont"  Margins="[CMargin]" DefaultString="[Helper.Config.GameDetailPosterLayout]" />
           <st:SpinnerText Name="CustomPosterPosition" Model="[CustomDetailPosterLayout]" FocusItem="[FocusItem]" Label="[Application.LocalStrings.#CustomDetailPosterLayoutLabel!cor:String]" Color="color://s:FontColorMedium" Font="font://f:CP_ConfigItemFont" ValueFont="font://f:CP_ConfigItemFont"  Margins="[CMargin]" DefaultString="[Helper.Config.CustomDetailPosterLayout]" />
           <!--<ss:SimpleSpinner Name="BDAlpha" Label="[Application.LocalStrings.#BackdropAlphaLabel!cor:String]" Color="color://s:FontColorMedium" Model="[BackdropAlpha]" FocusItem="[FocusItem]"  Font="font://f:CP_ConfigItemFont" ValueFont="font://f:CP_ConfigItemFont"  Margins="[CMargin]"  />-->
-          <cb:CheckBox Name="EnableVideoBackdropCB" Label="[Application.LocalStrings.#EnableNPVLabel!cor:String]" Checked="[EnableVideoBackdrop]" FocusItem="[FocusItem]" Font="font://f:CP_ConfigItemFont" Margins="[CMargin]" />
+   		  <cb:CheckBox Name="EnableTVShowViewCB" Label="[Application.LocalStrings.#UseTVShowViewLabel!cor:String]" Checked="[EnableTVShowView]" FocusItem="[FocusItem]" Font="font://f:CP_ConfigItemFont" Margins="[CMargin]" />
+		  <cb:CheckBox Name="EnableVideoBackdropCB" Label="[Application.LocalStrings.#EnableNPVLabel!cor:String]" Checked="[EnableVideoBackdrop]" FocusItem="[FocusItem]" Font="font://f:CP_ConfigItemFont" Margins="[CMargin]" />
           <cb:CheckBox Name="Enable24HRTimeCB" Label="[Application.LocalStrings.#Enable24hrLabel!cor:String]" Checked="[Enable24HRTime]" FocusItem="[FocusItem]" Font="font://f:CP_ConfigItemFont" Margins="[CMargin]" />
           <cb:CheckBox Name="EnableQuickPlayCB" Label="[Application.LocalStrings.#EnableQuickPlayLabel!cor:String]" Checked="[EnableQuickPlay]" FocusItem="[FocusItem]" Font="font://f:CP_ConfigItemFont" Margins="[CMargin]" />
         </Children>

@@ -1,0 +1,731 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+    xmlns:cor="assembly://MSCorLib/System"
+    xmlns:a="assembly://MediaBrowser/MediaBrowser"
+    xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
+    xmlns:ib="resx://Iridium/Iridium.Resources/ItemButton"
+    xmlns:is="file://Iridium_Styles.mcml"
+    xmlns:s="file://Styles_DoNotEdit.mcml"
+	  xmlns:f="file://Fonts_DoNotEdit.mcml"
+    xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
+    xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
+    xmlns:xi="resx://Iridium/Iridium.Resources/Images"
+	  xmlns:bd="resx://Iridium/Iridium.Resources/Backdrop"
+	  xmlns:mpaa="resx://MediaBrowser/MediaBrowser.Resources/MPAARating"
+    xmlns:mip="resx://MediaBrowser/MediaBrowser.Resources/MediaInfoPanel"
+    xmlns:sr="resx://Iridium/Iridium.Resources/StarRating"
+    xmlns:lv="resx://Iridium/Iridium.Resources/LabelValue"
+    xmlns:st="resx://Iridium/Iridium.Resources/AutoScrollableText"
+    xmlns:anim="resx://Iridium/Iridium.Resources/Animations"
+	  xmlns:ls="resx://Iridium/Iridium.Resources/SeasonsScroller"
+	  xmlns:vs="resx://MediaBrowser/MediaBrowser.Resources/StudioImages"
+    xmlns:ih="assembly://Iridium/Iridium"
+    xmlns:me="me" >
+
+  <UI Name="TVShowsLayout">
+	  <Properties>
+		  <a:Application Name="Application" Application="$Required"/>
+		  <ih:WholeSeriesFolderModel Name="Folder" WholeSeriesFolderModel="$Required"/>
+		  <ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required"/>
+		  
+	  </Properties>
+
+	  <Locals>
+		  <lib:FolderModel Name="SelectedSeason"  />
+		  <Timer AutoRepeat="false" Enabled="true" Interval="3000" Name="NaviTime" />
+		  <Environment Name="Environment"/>
+		  <a:Clock Name="Clock"/>
+	  </Locals>
+
+	  <Rules>
+
+		  <Rule>
+			  <Conditions>
+				  <Equality Source="[Application.NavigatingForward]" ConditionOp="Equals" Value="false" />
+			  </Conditions>
+			  <Actions>
+				  <Set Target="[ThemeHelper.SeriesId]" Value="[Folder.Id]" />
+				  <Invoke Target="[SeasonItems.NavigateInto]"/>
+			  </Actions>
+		  </Rule>
+
+		  <!-- Folder Pref Backdrop -->
+		  <Binding Source="[Folder.BackdropImage]" Target="[Backdrop.Image]">
+			  <Conditions>
+				  <Equality Source="[ThemeHelper.Config.FolderShowBackdrop]" ConditionOp="Equals" Value="true" />
+			  </Conditions>
+		  </Binding>
+		  <Binding Source="[Folder]" Target="[Backdrop.Item]">
+			  <Conditions>
+				  <Equality Source="[ThemeHelper.Config.FolderShowBackdrop]" ConditionOp="Equals" Value="true" />
+			  </Conditions>
+		  </Binding>
+
+		  <!-- Backdrop Overlay-->
+		  <Binding Target="[Overlay.Visible]"   Source="[ThemeHelper.Config.FolderShowBackdropOverlay]">
+			  <Conditions>
+				  <Equality Source="[ThemeHelper.Config.FolderShowBackdropOverlay]" ConditionOp="Equals" Value="true" />
+			  </Conditions>
+		  </Binding>
+
+		  <Binding Target="[ThemeHelper.CurrentItem]" Source="[SelectedSeason.SelectedChild]"></Binding>
+
+		  <!--<Binding Target="[Application.CurrentItem]" Source="[Folder.SelectedChild]"></Binding>-->
+
+		  <Binding Source="[Folder]" Target="[SeasonItems.Folder]" />
+		  <Binding Target="[Title.Text]"       Source="[Folder.Name]"/>
+		  <Binding Target="[Year.Content]"       Source="[Folder.SelectedChild.ProductionYearString]"/>
+		  <!--<Binding Target="[MPAARating.Value]" Source="[Folder.MpaaRating]"></Binding>
+		  <Binding Target="[StarRating.Value]" Source="[Folder.ImdbRating]"></Binding>
+		  <Binding Target="[Runtime.Content]" Source="[Folder.RunningTimeString]"></Binding>
+		  <Binding Target="[Airtime.Content]" Source="[Folder.AirTime]"></Binding>
+		  <Binding Target="[AirDay.Content]" Source="[Folder.AirDay]"></Binding>-->
+		  <Binding Target="[LogoImage.Content]" Source="[Folder.LogoImage]">
+			  <Conditions>
+				  <Equality Source="[Folder.HasLogoImage]" ConditionOp="Equals" Value="true" />
+			  </Conditions>
+		  </Binding>
+
+		  <Binding Source="[Folder.SelectedChild.Name]" Target="[SeasonNo.Content]" >
+			  <Transformer>
+				  <FormatTransformer ToUpper="true"/>
+			  </Transformer>
+		  </Binding>
+		  <Binding Source="[Folder.MediaCount]" Target="[EpisodeCount.Content]" >
+			  <Transformer>
+				  <FormatTransformer Format="{0} EPISODES"/>
+			  </Transformer>
+		  </Binding>
+
+		  <Binding Source="[Folder.SelectedChild.UnwatchedCountString]" Target="[UnwatchedCount.Content]" >
+			  <Conditions>
+				  <Equality Source="[Folder.UnwatchedCountString]" ConditionOp="NotEquals" Value="0" />
+			  </Conditions>
+		  </Binding>
+          <Default Target="[UnwatchedCount.Content]" Value="0" />
+		  
+		  <Binding Target="[StudioRepeater.Source]"    Source="[Folder.StudioItems]" />
+
+		  <Changed Source="[Folder.FilterUnwatched]" >
+			  <Actions>
+				  <Invoke Target="[Folder.UnwatchedChanged]" />
+			  </Actions>
+		  </Changed>
+
+		  <Rule>
+			  <Conditions>
+				  <Equality Source="[Folder.HasLogoImage]" ConditionOp="Equals" Value="true" />
+			  </Conditions>
+			  <Actions>
+				  <Set Target="[LogoImage.Visible]" Value="true" />
+				  <Set Target="[Title.Visible]" Value="false" />
+			  </Actions>
+		  </Rule>
+		  <Default Target="[LogoImage.Visible]" Value="false"/>
+		  <Default Target="[Title.Visible]" Value="true"/>
+
+		  <!--<Default Target="[Status.Content]" Value="ENDED" >
+			  <Conditions>
+				  <Equality Source="[Folder.Status]" Value="Ended" />
+			  </Conditions>
+		  </Default>
+
+		  <Default Target="[Status.Content]" Value="CONTINUING" >
+			  <Conditions>
+				  <Equality Source="[Folder.Status]" Value="Continuing" />
+			  </Conditions>
+		  </Default>-->
+
+		  <Changed Source="[NaviTime.Tick]" ConditionLogicalOp="And">
+			  <Conditions>
+				  <Equality Source="[Input.DeepKeyFocus]" Value="false"/>
+				  <Equality Source="[ThemeHelper.IsMenuOpen]" ConditionOp="Equals" Value="false"/>
+				  <Equality Source="[ThemeHelper.ButtonPanelHasFocus]" Value="false"/>
+			  </Conditions>
+			  <Actions>
+				  <Invoke Target="[SeasonItems.NavigateInto]"/>
+			  </Actions>
+		  </Changed>
+
+		  <Binding Source="[ThemeHelper.CurrentItem]" Target="[EpisodePanel.Item]" />
+		  
+	  </Rules>
+
+	  <Content>
+		  <Panel Layout="Form">
+			  <Children>
+
+				  <Panel Name="MainPanel" Layout="Form" >
+					  <Children>
+
+						  <Panel Name="NamePanel" Layout="VerticalFlow" >
+							  <LayoutInput>
+								  <FormLayoutInput Top="Parent,0,70" Horizontal="Far"/>
+							  </LayoutInput>
+							  <Children>
+								  <Panel Name="TitlePanel" >
+									  <Children>
+										  <st:ScrollableText Name="Title" Margins="0,2,0,-3" Text="[Folder.Name]" Font="Segoe UI Light, 32, bold" Color="color://s:TitleColor" />
+										  <Graphic Name="LogoImage" Margins="0,5,0,8" Content="[Folder.LogoImage]" MinimumSize="0,80" MaximumSize="0,80" MaintainAspectRatio="true" Visible="false"/>
+									  </Children>
+								  </Panel>
+
+								  <Panel Name="InfoPanel" Layout="HorizontalFlow" Margins="5,0,0,0" Visible="false">
+									  <Children>
+										  <sr:StarRating Margins="0,6,10,0" MaximumSize="0,20" Name="StarRating" ></sr:StarRating>
+										  <Text Name="AirDay" Font="Segoe UI Light, 16, bold" Color="WhiteSmoke" Margins="0,0,10,0" />
+										  <Text Name="Airtime" Font="Segoe UI Light, 16, bold" Color="WhiteSmoke" Margins="0,0,10,0" />
+										  <Text Name="Runtime" Font="Segoe UI Light, 16, bold" Color="WhiteSmoke" Margins="0,0,10,0" />
+										  <mpaa:MPAARating Name="MPAARating" MaximumSize="0,21" Margins="0,6,12,0" />
+										  <Graphic Name="HDType" Margins="0,7,0,0" Content="image://i:Icon1080" MaximumSize="0,20" MaintainAspectRatio="true" Visible="false"/>
+										  <Graphic Name="Status" Margins="0,7,0,0" MaximumSize="0,20" MaintainAspectRatio="true"/>
+									  </Children>
+
+								  </Panel>
+
+							  </Children>
+						  </Panel>
+
+						  <Panel Name="NextUpPanel" >
+							  <LayoutInput>
+								  <AnchorLayoutInput Left="Parent,0,5" Right="Parent,0.4" Top="Parent,0.25" Bottom="Parent,0.5" />
+							  </LayoutInput>
+							  <Children>
+								  <me:NextUpLayout Name="NextUpItem" Application="[Application]" ThemeHelper="[ThemeHelper]" Folder="[Folder]"  />
+							  </Children>
+						  </Panel>
+						  
+						  <!-- Season Scroller -->
+						  <Panel Name="Seasons" Layout="VerticalFlow" Margins="20,0,0,0">
+							  <LayoutInput>
+								  <AnchorLayoutInput Left="Parent,0,10" Right="Parent,0.7" Top="NextUpPanel,1,-10" Bottom="Parent, 1" />
+							  </LayoutInput>
+							  <Children>
+								  <Panel Name="SeasonsInfo" Layout="HorizontalFlow">
+									  <Children>
+										  <!--<Text Name="Season" Content="Season " Font="Segoe UI Light, 14" Color="WhiteSmoke" />-->
+										  <Text Name="SeasonNo" Font="Futurist Fixed-width, 10" Color="WhiteSmoke" Margins="15,0,0,0" />
+										  <Text Name="Divider" Content="  |  " Font="Futurist Fixed-width, 12" Color="WhiteSmoke" />
+										  <Text Name="EpisodeCount" Font="Futurist Fixed-width, 10" Color="WhiteSmoke" />
+										  <Text Name="Divider2" Content="  |  " Font="Futurist Fixed-width,12" Color="WhiteSmoke" />
+										  <Text Name="Year" Font="Futurist Fixed-width, 10" Color="WhiteSmoke" />
+									  </Children>
+								  </Panel>
+
+								  <ls:SeasonsScroller Name="SeasonItems" Application="[Application]" Folder="[Folder]" ThemeHelper="[ThemeHelper]" Margins="0,20,0,0" >
+									  
+								  </ls:SeasonsScroller>
+							  </Children>
+						  </Panel>
+
+						  <Panel Name="EpisodesInfo" Layout="HorizontalFlow">
+							  <LayoutInput>
+								  <AnchorLayoutInput Left="Parent,0.10" Bottom="OverviewBG, 1,-10" />
+							  </LayoutInput>
+							  <Children>
+								  <Text Name="Episodes" Content="UNWATCHED EPISODES " Font="Futurist Fixed-width, 12" Color="WhiteSmoke" />
+								  <Text Name="UnwatchedCount" Font="Futurist Fixed-width, 13" Color="0,155,255" Margins="0,-1,0,0" />
+							  </Children>
+						  </Panel>
+						  
+
+						  <!--Current Episode Info-->
+						  <me:InfoPanel Name="EpisodePanel"  Item="[ThemeHelper.CurrentItem]" Application="[Application]" Helper="[ThemeHelper]" >
+							  <LayoutInput>
+								  <AnchorLayoutInput Right="Parent,1,-20" Top="Parent,0.25" />
+							  </LayoutInput>
+						  </me:InfoPanel>
+
+						  <Panel Name="Studios" Layout="HorizontalFlow" Padding="0,0,0,0" Margins="0,20,40,-80" Alpha=".6">
+							  <LayoutInput>
+								  <FormLayoutInput Bottom="EpisodePanel, 0" Horizontal="Far"/>
+							  </LayoutInput>
+							  <Layout>
+								  <FlowLayout ItemAlignment="Center" Orientation="Vertical"/>
+							  </Layout>
+							  <Children>
+								  <Panel Name="Studio" MaximumSize="0,55" Layout="Scale" >
+									  <Children>
+										  <Repeater Name="StudioRepeater" Source="[Folder.StudioItems]">
+											  <Layout>
+												  <FlowLayout Orientation="Horizontal" ItemAlignment="Center" Spacing="10,10" />
+											  </Layout>
+											  <Content>
+												  <vs:Studio StudioItem="[RepeatedItem!lib:StudioItemWrapper]" Name="StudioLogo"/>
+											  </Content>
+										  </Repeater>
+									  </Children>
+								  </Panel>
+
+							  </Children>
+						  </Panel>
+
+						  <Graphic Name="OverviewBG" Content="image://xi:PanelBG" ColorFilter="color://is:XC_RALPanelFilterColor" Alpha="1" Navigation="None">
+							  <LayoutInput>
+								  <AnchorLayoutInput Left="Parent,0,-25" Right="NextUpPanel,1,50" Top="NextUpPanel,0,-25" Bottom="Parent,1,-25" />
+							  </LayoutInput>
+						  </Graphic>
+
+						  <Graphic Name="EpisodeBG" Content="image://xi:PanelBG" ColorFilter="color://is:XC_RALPanelFilterColor" Alpha="1" Navigation="None">
+							  <LayoutInput>
+								  <AnchorLayoutInput Left="Parent,1,-375" Right="Parent,1,50" Top="NextUpPanel,0,-25" Bottom="Parent,1,-25" />
+							  </LayoutInput>
+						  </Graphic>
+						  
+						  
+					  </Children>
+				  </Panel>
+
+				  <Graphic Name="RootMenuBG" ColorFilter="0,155,255" Alpha="1" Navigation="None" Content="image://xi:MainVFBG" >
+					  <LayoutInput>
+						  <AnchorLayoutInput Left="Parent,0" Top="Parent,0,5" Right="Parent,1" Bottom="Parent,0,70"/>
+					  </LayoutInput>
+				  </Graphic>
+
+				  <!--<bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]" />-->
+				  <Graphic Name="Overlay" Layout="Fill" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]" Alpha="[ThemeHelper.Config.FolderBackdropOverlayAlpha]" Content="image://xi:BackgroundOverlay" />
+				  <bd:Backdrop4 LoadDelay="280" FadeTime="[ThemeHelper.Config.BackdropTransitionTime]" Application="[Application]" Name="Backdrop" Visible="[ThemeHelper.Config.FolderShowBackdrop]" Image="[Folder.SelectedChild.BackdropImage]" Item="[Folder.SelectedChild]" />
+			  </Children>
+		  </Panel>
+
+	  </Content>
+
+  </UI>
+
+  <UI Name="InfoPanel">
+	  <Properties>
+		  <lib:Item Name="Item" Item="$Required"></lib:Item>
+		  <a:Application Name="Application" Application="$Required"/>
+		  <ih:IridiumHelper Name="Helper" IridiumHelper="$Required"/>
+	  </Properties>
+	  <Locals>
+		  <Environment Name="Environment"/>
+		  <ih:IridiumHelper Name="ThemeHelper" CurrentItem="[Item]"/>
+	  </Locals>
+
+	  <Rules>
+		  <Binding Target="[PosterImage.Content]" Source="[Item.PrimaryImage]">
+			  <Conditions>
+				  <Equality Source="[Item.ItemTypeString]" ConditionOp="Equals" Value="Episode" />
+			  </Conditions>
+		  </Binding>
+		  
+		  <Rule>
+			  <Conditions>
+				  <Equality Source="[PosterImage.Visible]" Value="true"/>
+				  <Equality Source="[Application.Config.ShowHDIndicatorOnPosters]" Value="true"/>
+				  <Equality Source="[Item.IsHD]" Value="true"/>
+			  </Conditions>
+			  <Actions>
+				  <Set Target="[HDIndicator.Visible]" Value="true"/>
+			  </Actions>
+		  </Rule>
+		  <Binding Source="[Item.IsMissing]" Target="[MissingImage.Visible]" />
+		  <Binding Source="[Item.IsFuture]" Target="[FutureImage.Visible]" />
+		  <Binding Source="[Item.IsOffline]" Target="[OfflineImage.Visible]" />
+		  <Binding Source="[Item.IsExternalDisc]" Target="[ExternalImage.Visible]" />
+		  
+		  <Binding Source="[Item.Name]" Target="[Title.Text]" />
+		  <Binding Source="[Item.Overview]" Target="[Summary.Text]" />
+		  <Binding Target="[TxtRuntime.Content]"   Source="[Item.RunningTimeString]"/>
+		  <Binding Target="[MPAARating.Value]" Source="[Item.MpaaRating]"></Binding>
+		  <Binding Target="[StarRating.Value]" Source="[Item.ImdbRating]"></Binding>
+		  <Binding Target="[CriticScore.Content]" Source="[Item.CriticRatingString]" />
+		  <Binding Target="[RTIcon.Content]" Source="[Item.RottenTomatoImage]" />
+		  <Binding Target="[Airtime.Content]" Source="[Item.AirTime]"></Binding>
+		  <Binding Target="[AirDay.Content]" Source="[Item.AirDay]"></Binding>
+
+		  <!--<Default Target="[Status.Content]" Value="ENDED" >
+			  <Conditions>
+				  <Equality Source="[Item.PhysicalParent.Status]" Value="Ended" />
+			  </Conditions>
+		  </Default>
+
+		  <Default Target="[Status.Content]" Value="CONTINUING" >
+			  <Conditions>
+				  <Equality Source="[Item.PhysicalParent.PhysicalParent.Status]" Value="Continuing" />
+			  </Conditions>
+		  </Default>-->
+
+		  <Condition Source="[Item.ItemTypeString]" ConditionOp="Equals" SourceValue="Season" Target="[Summary.Visible]" Value="false" />
+		  <Condition Source="[Item.ItemTypeString]" ConditionOp="Equals" SourceValue="Series" Target="[Summary.Visible]" Value="false" />
+		  <Condition Source="[Item.ItemTypeString]" ConditionOp="Equals" SourceValue="Episode" Target="[Summary.Visible]" Value="true" />
+		  
+		  <!--<Rule>
+			  <Conditions>
+				  <Equality Source="[Item.HDType]" ConditionOp="Equals" Value="1080" />
+			  </Conditions>
+			  <Actions>
+				  <Set Target="[HDType.Visible]" Value="true" />
+				  <Set Target="[HDType.Content]" Value="image://i:Icon1080" />
+			  </Actions>
+		  </Rule>
+		  <Rule>
+			  <Conditions>
+				  <Equality Source="[Item.HDType]" ConditionOp="Equals" Value="720" />
+			  </Conditions>
+			  <Actions>
+				  <Set Target="[HDType.Visible]" Value="true" />
+				  <Set Target="[HDType.Content]" Value="image://i:Icon720" />
+			  </Actions>
+		  </Rule>-->
+		  
+		  <Binding Source="[Item.FirstAired]" Target="[TxtAired.Content]" >
+			  <Conditions>
+				  <Equality Source="[Item.ItemTypeString]" Value="Episode" />
+			  </Conditions>
+			  <Actions>
+				  <Set Target="[TxtAired.Visible]" Value="true" />
+			  </Actions>
+		  </Binding>
+		  <!--<Binding Source="[Item.ProductionYearString]" Target="[TxtAired.Content]" >
+			  <Conditions>
+				  <Equality Source="[Item.ItemTypeString]" ConditionOp="NotEquals" Value="Episode" />
+			  </Conditions>
+		  </Binding>
+		  <Binding Source="[Item.DirectorString]" Target="[TxtDirectedBy.Content]" />
+
+		  <Condition Source="[Item.DirectorString]" SourceValue="" Target="[TxtDirectedLbl.Visible]" Value="false" >
+			  <Actions>
+				  <Set Target="[DirectorLblSpacer.Visible]" Value="false" />
+			  </Actions>
+		  </Condition>
+
+		  <Condition Source="[Item.DirectorString]" ConditionOp="NotEquals" SourceValue="" Target="[TxtDirectedLbl.Visible]" Value="true" >
+			  <Actions>
+				  <Set Target="[DirectorLblSpacer.Visible]" Value="true" />
+			  </Actions>
+		  </Condition>
+
+		  <Binding Source="[Item.SubTitle]" Target="[SubTitle.Content]" />
+		  <Binding Source="[Item.HasSubTitle]" Target="[DirectedSpacer.Visible]" />
+		  <Condition Source="[Item.HDType]" ConditionOp="Equals" SourceValue="720" Target="[HDImage.Content]" Value="image://i:Icon720" />
+		  <Condition Source="[Item.HDType]" ConditionOp="Equals" SourceValue="1080" Target="[HDImage.Content]" Value="image://i:Icon1080" />-->
+
+		  <Binding Target="[EndTime.Content]" Source="[Item.EndTimeString]" >
+			  <Conditions>
+				  <!--<Equality Source="[Helper.Config.ShowListEndTime]" Value="true" />-->
+				  <Equality Source="[Item.EndTimeString]" ConditionOp="NotEquals" Value="" />
+			  </Conditions>
+			  <Actions>
+				  <Set Target="[EndTime.Visible]" Value="true" />
+			  </Actions>
+		  </Binding>
+
+	  </Rules>
+
+	  <Content>
+		  <Panel Layout="VerticalFlow" >
+			  <LayoutInput>
+				  <AnchorLayoutInput Horizontal="Far" Top="Parent,0.25"/>
+			  </LayoutInput>
+			  <Children>
+
+
+				  <Panel Name="PosterPanel" MaximumSize="300,650" Margins="0,0,10,0" Layout="Anchor" >
+					  <Children>
+
+						  <Panel  MaximumSize="48,35" Padding="0,0,0,0" Visible="false" Name="HDIndicator">
+							  <LayoutInput>
+								  <FormLayoutInput Right="PosterImage,1" Bottom="PosterImage,1"/>
+							  </LayoutInput>
+							  <Children>
+								  <Graphic Name="HDImage" Content="image://i:HDLogo" Margins="0,0,5,5" MaximumSize="35,0" MaintainAspectRatio="true" />
+							  </Children>
+						  </Panel>
+
+						  <Graphic Name="ExternalImage" Visible="false" Content="image://i:ExternalBanner"  MaximumSize="100,100" MaintainAspectRatio="true">
+							  <LayoutInput>
+								  <AnchorLayoutInput Horizontal="Far" Top="PosterImage,0"/>
+							  </LayoutInput>
+						  </Graphic>
+						  <Graphic Name="OfflineImage" Visible="false" Content="image://i:OfflineBanner"  MaximumSize="100,100" MaintainAspectRatio="true">
+							  <LayoutInput>
+								  <AnchorLayoutInput Horizontal="Far" Top="PosterImage,0"/>
+							  </LayoutInput>
+						  </Graphic>
+						  <Graphic Name="MissingImage" Visible="false" Content="image://i:MissingBanner"  MaximumSize="100,100" MaintainAspectRatio="true">
+							  <LayoutInput>
+								  <AnchorLayoutInput Horizontal="Far" Top="PosterImage,0"/>
+							  </LayoutInput>
+						  </Graphic>
+						  <Graphic Name="FutureImage" Visible="false" Content="image://i:FutureBanner"  MaximumSize="100,100" MaintainAspectRatio="true">
+							  <LayoutInput>
+								  <FormLayoutInput Horizontal="Far" Top="PosterImage,0"/>
+							  </LayoutInput>
+						  </Graphic>
+						  <Graphic Name="PosterImage" Content="[Item.PrimaryImage]" MaintainAspectRatio="true" >
+							  <LayoutInput>
+								  <FormLayoutInput Horizontal="Far" Top="Parent,0" />
+							  </LayoutInput>
+						  </Graphic>
+					  </Children>
+				  </Panel>
+
+
+				  <Panel Name="TitlePanel" >
+					  <LayoutInput>
+						  <FormLayoutInput Top="PosterPanel,1,10" Left="PosterPanel,0,5" Right="PosterPanel,1,-5" />
+					  </LayoutInput>
+					  <Children>
+						  <st:ScrollableText Name="Title" Margins="0,5,0,5" Text="[Item.Name]" Font="Segoe UI Light, 20, bold" Color="WhiteSmoke" MaximumSize="275,0"  />
+					  </Children>
+				  </Panel>
+
+				  <Panel Name="RatingPanel" Layout="HorizontalFlow" Margins="0,0,0,0">
+					  <LayoutInput>
+						  <FormLayoutInput Top="TitlePanel,1,5" Left="PosterPanel,0,5" Right="PosterPanel,1,-5" />
+					  </LayoutInput>
+					  <Children>
+						  <sr:StarRating Margins="0,6,10,0" MaximumSize="0,20" Name="StarRating" ></sr:StarRating>
+						  <Graphic Name="RTIcon" Margins="0,6,10,0" MaintainAspectRatio="true" MaximumSize="0,20" />
+						  <Text Name="CriticScore" Font="Segoe UI Light,12, bold" Color="WhiteSmoke" Margins="2,2,10,0" />
+						  
+						  <Text Name="TxtRuntime" Font="Segoe UI Light,14, Bold" Color="WhiteSmoke" Margins="0,0,10,0"/>
+						  <Text Name="EndTime" Font="Segoe UI Light,14, Bold" Color="WhiteSmoke" Content="" Visible="false"/>
+						  <Text Name="AirDay" Font="Segoe UI Light,14" Color="WhiteSmoke" Margins="0,0,10,0" />
+						  <Text Name="Airtime" Font="Segoe UI Light,14" Color="WhiteSmoke" Margins="0,0,10,0" />
+						  
+						  <!--<Graphic Name="HDType" Margins="0,7,0,0" Content="image://i:Icon1080" MaximumSize="0,20" MaintainAspectRatio="true" Visible="false"/>-->
+						  <Text Name="Status" Font="Xolonium Bold, 12" Color="WhiteSmoke" Margins="0,0,10,0" />
+					  </Children>
+				  </Panel>
+
+				  <Panel Name="OverviewPanel" Margins="0,10,0,0" >
+					  <LayoutInput>
+						  <FormLayoutInput Top="RatingPanel,1,5" Left="PosterPanel,0,5" Right="PosterPanel,1,-5" />
+					  </LayoutInput>
+					  <Children>
+						  <st:ScrollableText Name="Summary" Text="[Item.Overview]" Font="Segoe Media Center Light, 14" Color="WhiteSmoke" MaximumSize="275,200" />
+					  </Children>
+				  </Panel>
+
+				  <Text Name="TxtAired" Font="Segoe UI Light,14, Bold" Color="WhiteSmoke" Margins="0,10,0,0" Visible="false"/>
+				  
+				  <mpaa:MPAARating Name="MPAARating" MaximumSize="0,45" Margins="0,5,0,0" >
+					  <LayoutInput>
+						  <FormLayoutInput Right="PosterPanel,1,-35" Bottom="Parent,1,-35" />
+					  </LayoutInput>
+				  </mpaa:MPAARating>
+			  </Children>
+		  </Panel>
+
+						  <!--<Panel Name="DetailPanel" Margins="0,0,0,-10">
+							  <LayoutInput>
+								  <FormLayoutInput Horizontal="Near" Vertical="Far"/>
+							  </LayoutInput>
+							  <Layout>
+								  <FlowLayout Orientation="Horizontal" Spacing="2,0" />
+							  </Layout>
+							  <Children>
+								  <Text Name="TxtDirectedLbl" Font="Segoe Media Center Light, 12, Bold" Color="WhiteSmoke" Content="Director"/>
+								  <Text Name="DirectorLblSpacer" Font="Segoe Media Center Light, 12, Bold" Color="WhiteSmoke" Content=": " Visible="false"/>
+								  <Text Name="TxtDirectedBy" Font="Segoe Media Center Light, 14, Bold" Color="WhiteSmoke"/>
+								  <Text Name="DirectedSpacer" Content=" ● " Font="Segoe Media Center Light, 10, Bold" Color="WhiteSmoke" Alpha="0.6" Visible="false"  />
+								  <Text Name="SubTitle" Color="WhiteSmoke"  Font="Segoe Media Center Light, 16, Bold" WordWrap="false" />
+								  <Text Name="RunEndSpacer" Content=" ● " Font="Segoe Media Center Light, 10, Bold" Color="WhiteSmoke" Alpha="0.6" Visible="false"  />
+								  <Text Name="EndTime" Font="Segoe Media Center Light, 16, Bold" Color="WhiteSmoke" Content="" Visible="false"/>
+							  </Children>
+						  </Panel>-->
+
+						  
+
+				  <!--<Clip Orientation="Vertical" FadeSize="150" ShowNear="true" ShowFar="false">
+					  <LayoutInput>
+						  <AnchorLayoutInput Horizontal="Far" Vertical="Far"/>
+					  </LayoutInput>
+					  <Children>
+						  <ColorFill Name="InfoBg" Content="10,10,10" Alpha=".85"/>
+						 
+					  </Children>
+				  </Clip>-->
+	  </Content>
+  </UI>
+
+	<UI Name="NextUpLayout">
+		<Properties>
+			<lib:FolderModel Name="Folder" FolderModel="$Required"/>
+			<ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
+			<a:Application Name="Application" Application="$Required"/>
+			<Color Name="TitleColor" Color="color://is:XC_PopupMenuTitle" />
+			<Font Name="Font" Font="font://is:XF_PopupMenuTitle"/>
+			<Size Name="Size" Size="300,168"/>
+		</Properties>
+		<Locals>
+			<cor:Int32 Name="Startup" />
+			<lib:Item Name="SelectedItem" Item="[Folder.SelectedChild]" />
+			<ScrollingHandler Name="ScrollingHandler"  HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" />
+			<ScrollingData Name="ScrollingData" />
+			<FlowLayout Name="HorizontalFlowLayout" Orientation="Horizontal" AllowWrap="true" RepeatGap="50,0" Spacing="50,50" ItemAlignment="Center" />
+		</Locals>
+		<Rules>
+
+
+			<!-- Default Values-->
+			<Default Target="[ScrollingHandler.ScrollingData]" Value="[ScrollingData]" />
+			<Default Target="[ScrollingData.Repeater]" Value="[Repeater]" />
+
+			<!-- RECENT ITEMS MODEL-->
+			<Binding Target="[Repeater.Source]" Source="[ThemeHelper.GetSeriesNextUp]"  />
+			
+		</Rules>
+
+		<Content>
+
+			<Panel Layout="VerticalFlow" Margins="0,0,0,0" >
+				<Children>
+
+					<Clip FadeAmount="1" Name="Scroller1" Margins="0,0,0,0">
+						<Children>
+
+							<Scroller Orientation="Horizontal" Margins="0,0,0,0" Name="Scroller" FadeSize="-5" ScrollingData="[ScrollingData]" Visible="true" >
+
+								<Children>
+									<Repeater Name="Repeater" >
+										<Layout>
+											<FlowLayout  Orientation="Vertical" Spacing="5,5" AllowWrap="true" />
+										</Layout>
+										<Content>
+											<me:NextUpItem Application="[Application]" Item="[RepeatedItem!lib:Item]" Index="[RepeatedItemIndex]" />
+										</Content>
+										<Animations>
+											<Animation Type="Move">
+												<Keyframes>
+													<PositionKeyframe Time="0" RelativeTo="Current" Interpolation="EaseIn, 1.0, 0.25"/>
+													<PositionKeyframe Time="0.35" RelativeTo="Final"/>
+												</Keyframes>
+											</Animation>
+										</Animations>
+									</Repeater>
+								</Children>
+							</Scroller>
+						</Children>
+					</Clip>
+				</Children>
+			</Panel>
+		</Content>
+	</UI>
+
+	<UI Name="NextUpItem">
+		<Properties>
+			<a:Application Name="Application" Application="$Required" />
+			<ih:IridiumHelper Name="ThemeHelper" />
+			<lib:Item Name="Item" Item="$Required" />
+			<Index Name="Index" Index="$Required"/>
+			<Color Name="TitleColor" Color="color://is:XC_PopupMenuItem" />
+			<Color Name="FocusColor" Color="color://is:XC_PopupMenuTitle" />
+			<Font Name="Font" Font="font://is:XF_PopupMenuTitle"/>
+		</Properties>
+
+		<Locals>
+			<ClickHandler Name="Clicker"/>
+			<Command Name="PlayCommand"/>
+		</Locals>
+
+
+		<Rules>
+			<Changed Source="[PlayCommand.Invoked]">
+				<Actions>
+					<Invoke Target="[Application.Play]" item="[Item]"/>
+				</Actions>
+			</Changed>
+
+			<!--Title-->
+			<Binding Target="[Title.Content]"     Source="[Item.Name]"/>
+			<Binding Target="[SeasonNo.Content]"  Source="[Item.SeasonNumber]" />
+			<!--<Binding Target="[EpisodeNo.Content]"  Source="[Item.EpisodeNumber]" />
+			<Binding Target="[Summary.Text]"     Source="[Item.Overview]"/>-->
+
+			<!--PREFER THUMBS then BACKDROPS and fall back to POSTERS-->
+			<!--USE THUMB IMAGE-->
+			<Binding Source="[Item.PreferredImage]" Target="[ItemThumb.Content]" />
+
+			<Changed Source="[Input.KeyFocus]" >
+				<Conditions>
+					<Equality Source="[Input.KeyFocus]" Value="true" />
+				</Conditions>
+				<Actions>
+					<Set Target="[Application.CurrentItem]" Value="[Item]" />
+					<Set Target="[ItemThumb.Scale]" Value="1.1,1.1,1.1" />
+					<Set Target="[ItemThumb.ColorFilter]" Value="White" />
+					<!--<Set Target="[Logo.Scale]" Value="0.65,0.65,0.65" />
+          <Set Target="[Title.Visible]" Value="true" />
+          <Set Target="[Summary.Visible]" Value="true" />
+          <Set Target="[PlayButtonImage.Visible]" Value="true" />
+          <Set Target="[SeasonNo.Visible]" Value="true" />
+          <Set Target="[ProdYear.Visible]" Value="true" />-->
+
+				</Actions>
+			</Changed>
+
+			<Changed Source="[Clicker.Invoked]">
+				<Actions>
+					<!--PlaySound Sound="sound://sounds:Miniselect" /-->
+					<Invoke Target="[Application.Navigate]" item="[Item]"/>
+				</Actions>
+			</Changed>
+		</Rules>
+
+		<Content>
+
+			<Panel Layout="Anchor" Name="Bg" Navigation="RememberFocus">
+				<Children>
+
+					<Panel Name="ItemInfo" Layout="Anchor" >
+						<Layout>
+							<FlowLayout Orientation="Horizontal" />
+						</Layout>
+						<Children>
+
+							<Panel  Name="TitlePanel" Margins="15,10,0,0">
+								<Layout>
+									<FlowLayout Orientation="Vertical" Spacing="5,5"/>
+								</Layout>
+								<Children>
+
+									<Text Name="NextUpTitle" Content="NEXT UP" Color="color://is:XC_RALItemTitle" Font="Futurist Fixed-width,16" Margins="0,0,0,10" >
+										
+									</Text>
+									<Panel Name="SeasonInfo" Layout="HorizontalFlow">
+										<Children>
+											<Text Content="Season " Color="WhiteSmoke" Font="Segoe UI SemiLight,16,Bold" />
+											<Text Name="SeasonNo" Color="WhiteSmoke" Font="Segoe UI SemiLight,16,Bold" Visible="true" Margins="0,0,10,0" />
+											<!--<Text Content="Episode " Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" />
+													<Text Name="EpisodeNo" Color="color://is:XC_RALItemTitle" Font="font://is:XF_RALItemTitle" />-->
+										</Children>
+									</Panel>
+
+									<Text Name="Title" Color="WhiteSmoke" Font="Segoe UI SemiLight,16,Bold" WordWrap="true" MaximumSize="200,0" MaximumLines="3" >
+										<LayoutInput>
+											<AnchorLayoutInput Left="SeasonInfo,0" Top="SeasonInfo,1,50"/>
+										</LayoutInput>
+									</Text>
+								</Children>
+							</Panel>
+
+							<Graphic Name="ItemThumb" MaximumSize="250,141" Scale="1,1,1" ColorFilter="100,100,100" MaintainAspectRatio="false" Margins="50,0,0,0" >
+								<Animations>
+									<Animation Loop="0" CenterPointPercent="0.5,0.5,1.0" Type="Scale">
+										<Keyframes>
+											<ScaleKeyframe Time="0.00" RelativeTo="Current" Interpolation="Log" />
+											<ScaleKeyframe Time="0.4" RelativeTo="Final"/>
+										</Keyframes>
+									</Animation>
+								</Animations>
+							</Graphic>
+
+
+						</Children>
+					</Panel>
+
+					<Graphic Name="PanelBG" Content="image://xi:GlowLine" Alpha="1" ColorFilter="White" Navigation="None" Visible="true" >
+						<LayoutInput>
+							<AnchorLayoutInput Left="ItemInfo,0,-20" Top="ItemInfo,1,10" Right="ItemInfo,1,40" Bottom="ItemInfo,1,15"/>
+						</LayoutInput>
+					</Graphic>
+
+				</Children>
+			</Panel>
+
+		</Content>
+	</UI>
+</Mcml>

@@ -6,7 +6,7 @@ namespace Iridium.Actors
     public class ActorCreditItem : ModelItem
     {
         private string _character;
-        private bool _have = false;
+        private bool _have;
         private static string _id;
         private Item _item;
         private string _release = "";
@@ -16,12 +16,12 @@ namespace Iridium.Actors
         {
             get
             {
-                return this._character;
+                return _character;
             }
             set
             {
-                this._character = value;
-                base.FirePropertyChanged("Character");
+                _character = value;
+                FirePropertyChanged("Character");
             }
         }
 
@@ -29,12 +29,12 @@ namespace Iridium.Actors
         {
             get
             {
-                return this._have;
+                return _have;
             }
             set
             {
-                this._have = value;
-                base.FirePropertyChanged("Have");
+                _have = value;
+                FirePropertyChanged("Have");
             }
         }
 
@@ -51,16 +51,16 @@ namespace Iridium.Actors
             }
         }
 
-        public MediaBrowser.Library.Item Item
+        public Item Item
         {
             get
             {
-                return this._item;
+                return _item;
             }
             set
             {
-                this._item = value;
-                base.FirePropertyChanged("Item");
+                _item = value;
+                FirePropertyChanged("Item");
             }
         }
 
@@ -68,12 +68,12 @@ namespace Iridium.Actors
         {
             get
             {
-                return this._release;
+                return _release;
             }
             set
             {
-                this._release = value;
-                base.FirePropertyChanged("Release");
+                _release = value;
+                FirePropertyChanged("Release");
             }
         }
 
@@ -81,12 +81,12 @@ namespace Iridium.Actors
         {
             get
             {
-                return this._title;
+                return _title;
             }
             set
             {
-                this._title = value;
-                base.FirePropertyChanged("Title");
+                _title = value;
+                FirePropertyChanged("Title");
             }
         }
     }

@@ -405,7 +405,7 @@
                 </Children>
               </Panel>
 
-              <Panel MaximumSize="650,175">
+              <Panel MaximumSize="575,175">
                 <LayoutInput>
                   <FormLayoutInput Top="Parent,0,-5" Left="Parent,0.3" />
                 </LayoutInput>
@@ -1175,6 +1175,22 @@
           <Set Target="[NoSimilar.Visible]" Value="true" />
         </Actions>
       </Rule>-->
+		<Rule>
+			<Conditions>
+				<Equality Source="[Item.ItemTypeString]" ConditionOp="Equals" Value="Episode" />
+			</Conditions>
+			<Actions>
+				<Set Target="[SimilarMovieTitle.Content]" Value="SIMILAR TV SHOWS" />
+			</Actions>
+		</Rule>
+		<Rule>
+			<Conditions>
+				<Equality Source="[Item.ItemTypeString]" ConditionOp="NotEquals" Value="Episode" />
+			</Conditions>
+			<Actions>
+				<Set Target="[SimilarMovieTitle.Content]" Value="SIMILAR MOVIES" />
+			</Actions>
+		</Rule>
     </Rules>
 
     <Content>
@@ -1209,7 +1225,7 @@
               <AnchorLayoutInput Left="Parent,150" Top="Parent,0,-100" />
             </LayoutInput>
           </Text>-->
-          <Text Name="SimilarMovieTitle" Content="Similar Movies" Color="color://xs:XC_RALPopupItem" Font="font://xs:XF_RALPopupItem" >
+          <Text Name="SimilarMovieTitle" Color="color://xs:XC_RALPopupItem" Font="font://xs:XF_RALPopupItem" >
             <LayoutInput>
               <AnchorLayoutInput Left="Parent,0" Top="Parent,0,-135" />
             </LayoutInput>

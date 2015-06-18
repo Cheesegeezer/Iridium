@@ -50,6 +50,7 @@
 
 		<Locals>
 			<lib:Item Name="SelectedItem" Item="[Folder.SelectedChild]" />
+			<lib:Item Name="CurrentItem" Item="null" />
 			<IntRangedValue Name="SelectRepeaterIndex" />
 			<Timer Name="InfoTimer" AutoRepeat="false" Interval="400" Enabled="false" />
 			<BooleanChoice Name="HasFocus" Value="false" />
@@ -989,7 +990,12 @@
 							<FormLayoutInput Left="Parent,0" Bottom="Parent,1" />
 						</LayoutInput>
 						<Children>
-							<me:DummyNavScroller Name="DummyNav" Application="[Application]" Item="[Folder.SelectedChild]" ThemeHelper="[ThemeHelper]" DummyFocus="[DummyHasFocus]" Command="[HideOverview]" />
+							<me:DummyNavScroller Name="DummyNav" 
+												 Application="[Application]" 
+												 Folder="[Folder]"
+												 ThemeHelper="[ThemeHelper]" 
+												 DummyFocus="[DummyHasFocus]" 
+												 Command="[HideOverview]" />
 						</Children>
 					</Panel>
 
@@ -1350,7 +1356,6 @@
 					</Graphic>
 
 
-					<bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]" />
 					<Graphic Name="Overlay" Layout="Fill" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]" Alpha="[ThemeHelper.Config.FolderBackdropOverlayAlpha]" Content="image://vi:BackgroundOverlay" />
 					<bd:Backdrop4 LoadDelay="280" FadeTime="[ThemeHelper.Config.BackdropTransitionTime]" Application="[Application]" Name="Backdrop" Visible="[ThemeHelper.Config.FolderShowBackdrop]" Image="[Folder.SelectedChild.BackdropImage]" Item="[Folder.SelectedChild]" />
 
@@ -1496,11 +1501,12 @@
 			<ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required" />
 			<BooleanChoice Name="DummyFocus" BooleanChoice="$Required" />
 			<ICommand Name="Command" ICommand="$Required"/>
-			<lib:Item Name="Item" Item="$Required" />
-			
+			<lib:Item Name="Item" Item="null" />
+			<lib:FolderModel Name="Folder" FolderModel="$Required" />
 		</Properties>
 
 		<Locals>
+			 <lib:Item Name="SelectedItem" Item="[Folder.SelectedChild]" />
 			<KeyHandler Key="Right" Name="HideOverview" Handle="false" HandlerStage="Bubbled" Command="[Command]"/>
 			<!-- DETAILS SCROLLING DATA  -->
 			<ScrollingHandler HandleDirectionalKeys="true" HandleHomeEndKeys="true" HandleMouseWheel="true" HandlePageCommands="true" HandlePageKeys="true" HandlerStage="Bubbled" Name="DetailsSH" />
@@ -1510,6 +1516,7 @@
 
 			<cor:Int32 Name="InfoTimer" Int32="1000" />
 			<IntRangedValue Name="NavCount" Value="0" />
+			<ClickHandler Name="Clicker" />
 		</Locals>
 
 		<Rules>
@@ -1523,6 +1530,8 @@
 			<Binding Target="[DetailsSH.ScrollingData]" Source="[DetailsSD]" />
 			<!--<Default Target="[DetailsSD.Repeater]" Value="[ListRepeater]" />
 			<Binding Source="[Layout]" Target="[ListRepeater.Layout]" />-->
+		
+		    
 		</Rules>
 
 
@@ -1530,12 +1539,15 @@
 			<Panel Layout="Form">
 				<Children>
 					<!-- List Repeater -->
-					<Scroller Orientation="Vertical" Name="DummyScroller" ScrollingData="[DetailsSD]" Navigation="ContainAll" FadeSize="15">
+					<Scroller Orientation="Vertical" Name="DummyScroller" ScrollingData="[DetailsSD]" Navigation="ContainVertical" FadeSize="15">
 						<LayoutInput>
 							<AnchorLayoutInput Name="ListPosition" Bottom="Parent,1" Left="Parent,0" />
 						</LayoutInput>
 						<Children>
-							<Text Content="1" Color="Transparent" />
+							<me:DummyItem Application="[Application]"
+									      ParentItem="[Folder]"
+										  ThemeHelper="[ThemeHelper]"
+									      Item="[SelectedItem]" />
 						</Children>
 					</Scroller>
 
@@ -1559,6 +1571,7 @@
 		</Properties>
 
 		<Locals>
+			<Color Name="Color" />
 			<ClickHandler Name="Clicker" />
 			<Timer Name="AnimTimer" Interval="[InfoTimer]" Enabled="false" AutoRepeat="false" />
 			<BooleanChoice Name="InFocus" Value="false" />
@@ -1618,6 +1631,8 @@
 					</Set>
 				</Actions>
 			</Condition>
+			
+			<Binding Source="[Item.MpaaRating]" Target="[mpaa.Value]"></Binding>
 
 			<Binding Target="[Title.Content]" Source="[Item.Name]" />
 
@@ -1632,12 +1647,12 @@
 						</Transformer>
 					</Set>
 					<Set Target="[Title.Font]" Value="font://is:XF_DQLSelected" />
-					<Set Target="[Title.Color]" Value="color://is:XC_DQLHighlighted" />
 					<Set Target="[Title.Margins]" Value="60,0,0,0" />
 					<!--<Set Target="[TickPanel.Margins]" Value="2,15,0,-5" />
-          <Set Target="[UnwatchedIndicator.Margins]" Value="2,10,0,-5" />-->
+                    <Set Target="[UnwatchedIndicator.Margins]" Value="2,10,0,-5" />-->
 					<Set Target="[ParentItem.SelectedChildIndex]" Value="[Index.SourceValue]" />
 					<Invoke Target="[AnimTimer.Start]" />
+					<Set Target="[ThemeHelper.DummyItem]" Value="[Item]" />
 				</Actions>
 			</Changed>
 
@@ -1662,6 +1677,45 @@
 
 				</Actions>
 			</Condition>
+
+			<Changed Source="[Item.HaveWatched]">
+				<Conditions>
+					<Equality Source="[Item.HaveWatched]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[Application.Config.ListViewWatchedColorMcml]" ConditionOp="NotEquals" Value="Transparent" />
+				</Conditions>
+				<Actions>
+					<Set Target="[Title.Color]" Value="[Color]" />
+				</Actions>
+			</Changed>
+
+			<Rule>
+				<Conditions>
+					<Equality Source="[Item.HaveWatched]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[Application.Config.ListViewWatchedColorMcml]" ConditionOp="NotEquals" Value="Transparent" />
+				</Conditions>
+				<Actions>
+					<Set Target="[Title.Color]" Value="[Color]" />
+				</Actions>
+			</Rule>
+
+			<Changed Source="[ThemeHelper.Config.WatchedColorStyle]">
+				<Actions>
+					<Set Target="[Title.Color]" Value="[Color]" />
+				</Actions>
+			</Changed>
+
+			<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Green" Target="[Color]" Value="Green"/>
+			<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="DarkGreen" Target="[Color]" Value="DarkGreen"/>
+			<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Blue" Target="[Color]" Value="Blue"/>
+			<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="DarkBlue" Target="[Color]" Value="DarkBlue"/>
+			<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="RoyalBlue" Target="[Color]" Value="RoyalBlue"/>
+			<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Red" Target="[Color]" Value="Red"/>
+			<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="OrangeRed" Target="[Color]" Value="OrangeRed"/>
+			<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Orange" Target="[Color]" Value="Orange"/>
+			<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Yellow" Target="[Color]" Value="Yellow"/>
+			<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="YellowGreen" Target="[Color]" Value="YellowGreen"/>
+			<Condition Source="[ThemeHelper.Config.WatchedColorStyle]" ConditionOp ="Equals" SourceValue="Pink" Target="[Color]" Value="Pink"/>
+
 
 			<!--<Binding Source="[Item.ShowUnwatched]" Target="[UnwatchedIndicator.Visible]" />
       <Binding Source="[Item.UnwatchedCountString]" Target="[UnwatchedCount.Content]" />
@@ -1692,10 +1746,30 @@
 
 			<Changed Source="[Clicker.Invoked]">
 				<Actions>
-					<!--PlaySound Sound="sound://sounds:Miniselect" /-->
+					<Set Target="[ThemeHelper.SeriesId]" Value="[Item.Id]" />
 					<Invoke Target="[Application.Navigate]" item="[Item]" />
 				</Actions>
 			</Changed>
+
+			<!--<Changed Source="[Clicker.Invoked]">
+				<Conditions>
+					<Equality Source="[ThemeHelper.Config.EnableTVShowView]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[Item.ItemTypeString]" ConditionOp="NotEquals" Value="Series" />
+				</Conditions>
+				<Actions>
+					<Invoke Target="[Application.Navigate]" item="[Item]" />
+				</Actions>
+			</Changed>
+
+			<Changed Source="[Clicker.Invoked]">
+				<Conditions>
+					<Equality Source="[ThemeHelper.Config.EnableTVShowView]" ConditionOp="Equals" Value="true" />
+					<Equality Source="[Item.ItemTypeString]" ConditionOp="Equals" Value="Series" />
+				</Conditions>
+				<Actions>
+					<Invoke Target="[ThemeHelper.OpenTVShowsView]" item="[Item]" />	
+				</Actions>
+			</Changed>-->
 		</Rules>
 
 		<Content>
@@ -1742,16 +1816,45 @@
 						</LayoutInput>
 						<Children>
 
-							<Text Name="Title" WordWrap="false" Font="font://is:XF_DQLUnselected" Margins="15,0,20,0">
+							<Text Name="Title" WordWrap="false" Font="font://is:XF_DQLUnselected" Color="color://is:XC_DQLHighlighted" Margins="15,0,20,0">
 								<LayoutInput>
-									<AnchorLayoutInput Left="Parent,0,20" Top="Parent,0,10" />
+									<AnchorLayoutInput Left="Parent,0,20" Top="Parent,0,15" />
 								</LayoutInput>
 							</Text>
+							
+							<mpaa:MPAARating Margins="0,7,0,0" MaximumSize="0,40" Name="mpaa" >
+								<LayoutInput>
+									<AnchorLayoutInput Right="Parent,1" Top="Parent,0,10" />
+								</LayoutInput>
+							</mpaa:MPAARating>
 
 
 						</Children>
 					</Clip>
 
+				</Children>
+			</Panel>
+		</Content>
+	</UI>
+
+	<UI Name="DummyItem" BaseUI="ib:ItemButton">
+		<Properties>
+			<a:Application Name="Application" Application="$Required" />
+			<ih:IridiumHelper Name="ThemeHelper" />
+			<lib:FolderModel Name="ParentItem" FolderModel="$Required" />
+			<lib:Item Name="Item" Item="$Required" />
+		</Properties>
+		
+		<Rules>
+
+			<Binding Source="[Item.Name]" Target="[Title.Content]" />
+			
+		</Rules>
+
+		<Content>
+			<Panel Name="Bg">
+				<Children>
+					<Text Name="Title" WordWrap="false" Font="font://is:XF_DQLUnselected" Color="White" Visible="false"/>
 				</Children>
 			</Panel>
 		</Content>

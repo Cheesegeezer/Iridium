@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using MediaBrowser.Library;
 using MediaBrowser.Library.Logging;
 using Microsoft.MediaCenter;
@@ -11,10 +10,6 @@ namespace Iridium
 {
     public class MyShortlist : ModelItem
     {
-        public MyShortlist()
-        {
-        }
-
         //Adds or Removes the Item from the Shortlist
         public void AddItemToShortlist(Item item)
         {
@@ -26,7 +21,7 @@ namespace Iridium
                 Logger.ReportInfo("**Iridium SHORTLIST** REMOVED --{0}-- FROM SHORTLIST", item.Name);
                 ShortlistOptionText();
                 ItemInShortlist();
-                this.FirePropertyChanged("AddItemToShortlist");
+                FirePropertyChanged("AddItemToShortlist");
             }
             else
             {
@@ -36,7 +31,7 @@ namespace Iridium
                 Logger.ReportInfo("**Iridium SHORTLIST** ADDED --{0}-- TO SHORTLIST", item.Name);
                 ShortlistOptionText();
                 ItemInShortlist();
-                this.FirePropertyChanged("AddItemToShortlist");
+                FirePropertyChanged("AddItemToShortlist");
             }
         }
 
@@ -87,13 +82,13 @@ namespace Iridium
             {
                 //Logger.ReportInfo("+++++++++++++++++++++++++++ item Name = {0}",Application.CurrentInstance.CurrentItem.Name);
                 IsItemInShortlist = true;
-                this.FirePropertyChanged("ItemInShortlist");
+                FirePropertyChanged("ItemInShortlist");
             }
             else
             {
                 //Logger.ReportInfo("---------------------------- item Name = {0}",Application.CurrentInstance.CurrentItem.Name);
                 IsItemInShortlist = false;
-                this.FirePropertyChanged("ItemInShortlist");
+                FirePropertyChanged("ItemInShortlist");
             }
         }
 

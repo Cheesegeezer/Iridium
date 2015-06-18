@@ -3,12 +3,15 @@
       xmlns:a="assembly://MediaBrowser/MediaBrowser"
 	  xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
       xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
+	  xmlns:ih="assembly://Iridium/Iridium"
 	  xmlns:me="Me">
 
   <UI Name="ImageButton">
     <Properties>
-       <a:Application Name="Application" Application="$Required"/>
+	  <a:Application Name="Application" Application="$Required"/>
       <ICommand Name="Command" ICommand="$Required"/>
+	  <lib:Item Name="Item" />
+	  <ih:IridiumHelper Name="ThemeHelper" />
       <Image Name="Image" Image="null"/>
       <cor:Boolean Name="Enabled" Boolean="true" />
       <Size Name="Size" Size="25,25" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using MediaBrowser.ApiInteraction;
 using MediaBrowser.Library;
 using MediaBrowser.Model.Dto;
@@ -18,7 +19,7 @@ namespace Iridium.APICalls
         //The API address - taken from MBC
         private string APIUrl()
         {
-                return Kernel.ApiClient.DashboardUrl.Split(new string[] { "dashboard" }, StringSplitOptions.None)[0];
+                return Kernel.ApiClient.DashboardUrl.Split(new[] { "dashboard" }, StringSplitOptions.None)[0];
         }
         
         //Guid = UserId
@@ -26,7 +27,13 @@ namespace Iridium.APICalls
         {
             string query = "&Limit=10&Fields=Name%2COverview%2CIsEpisode%2COfficialRating%2CStatus%2CPrimaryImageAspectRatio&format=Json"; //must include "&format=Json" in order to allow for the items to be read.
             string queryUrl = string.Format("{0}Shows/NextUp?UserId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
-            Logger.Info("***************************** UserId = ", userId);
+            return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
+        }
+
+        public ItemsResult SeriesNextUpAPIQuery(Guid userId, Guid seriesId)
+        {
+            string query = "&Limit=10&Fields=Name%2COverview%2CIsEpisode%2COfficialRating%2CStatus%2CPrimaryImageAspectRatio&format=Json"; //must include "&format=Json" in order to allow for the items to be read.
+            string queryUrl = string.Format("{0}Shows/NextUp?UserId={1}&SeriesId={2}{3}", APIUrl(), userId, seriesId, query); //Query Format taken from Swagger
             return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
         }
 
@@ -50,6 +57,13 @@ namespace Iridium.APICalls
             string queryUrl = string.Format("{0}Genres?UserId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
             return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
         }
+
+        public ItemsResult YearAPIQuery(Guid userId, Guid folderId)
+        {
+            string query = string.Format("&ParentId={0}&format=Json", folderId); //must include "&format=Json" in order to allow for the items to be read.
+            string queryUrl = string.Format("{0}Genres?UserId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
+            return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
+        }
         
         public ItemsResult SimilarAPIQuery(Guid userId, Guid itemId)
         {
@@ -58,26 +72,40 @@ namespace Iridium.APICalls
             return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
         }
 
+        public ItemsResult SimilarTVAPIQuery(Guid userId, Guid itemId)
+        {
+            string query = string.Format("&Limit=10&format=Json"); //must include "&format=Json" in order to allow for the items to be read.
+            string queryUrl = string.Format("{0}Shows/{1}/Similar?UserId={2}{3}", APIUrl(), itemId, userId, query); //Query Format taken from Swagger
+            return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
+        }
+
         internal ItemsResult GetResumableItems(Guid userId, Guid folderId)
         {
-            string query = string.Format("&ParentId={0}&Filters=IsResumable&format=Json", folderId); //must include "&format=Json" in order to allow for the items to be read.
+            string query = string.Format("&ParentId={0}&Filters=IsNotFolder,IsResumable&format=Json", folderId); //must include "&format=Json" in order to allow for the items to be read.
             string queryUrl = string.Format("{0}Items?Limit=10&Recursive=true&UserId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
             return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
         }
 
         internal ItemsResult GetRecentAddedItem(Guid userId, Guid folderId,int start, int limit)
         {
-            string query = string.Format("&ParentId={0}&Filters=IsNotFolder&SortBy=DateCreated&format=Json", folderId); //must include "&format=Json" in order to allow for the items to be read.
+            string query = string.Format("&ParentId={0}&Filters=IsNotFolder&IsUnaired=false&IsMissing=false&SortBy=DateCreated&format=Json", folderId); //must include "&format=Json" in order to allow for the items to be read.
             string queryUrl = string.Format("{0}Items?StartIndex={1}&Limit={2}&Recursive=true&SortOrder=Descending&UserId={3}{4}", APIUrl(), start, limit, userId, query); //Query Format taken from Swagger
             return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
         }
 
-        /*internal ItemsResult GetNext14RecentAddedItems(Guid userId, Guid folderId)
+        internal ItemsResult GetRecentWatchedItem(Guid userId, Guid folderId, int start, int limit)
         {
-            string query = string.Format("&ParentId={0}&Filters=IsNotFolder&SortBy=DateCreated&format=Json", folderId); //must include "&format=Json" in order to allow for the items to be read.
-            string queryUrl = string.Format("{0}Items?StartIndex=1&Limit=10&Recursive=true&SortOrder=Descending&UserId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
+            string query = string.Format("&ParentId={0}&Filters=IsNotFolder,IsPlayed&IsUnaired=false&IsMissing=false&SortBy=DateCreated&format=Json", folderId); //must include "&format=Json" in order to allow for the items to be read.
+            string queryUrl = string.Format("{0}Items?StartIndex={1}&Limit={2}&Recursive=true&SortOrder=Descending&UserId={3}{4}", APIUrl(), start, limit, userId, query); //Query Format taken from Swagger
             return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
-        }*/
+        }
+
+        internal ItemsResult GetRecentUnwatchedItem(Guid userId, Guid folderId, int start, int limit)
+        {
+            string query = string.Format("&ParentId={0}&Filters=IsNotFolder&IsUnaired=false&IsMissing=false&IsPlayed=false&SortBy=DateCreated&format=Json", folderId); //must include "&format=Json" in order to allow for the items to be read.
+            string queryUrl = string.Format("{0}Items?StartIndex={1}&Limit={2}&Recursive=true&SortOrder=Descending&UserId={3}{4}", APIUrl(), start, limit, userId, query); //Query Format taken from Swagger
+            return Kernel.ApiClient.GenericApiQuery(queryUrl);//Interrogate the API based on the query string.
+        }
 
         public IEnumerable<RecommendationDto> RecommendationDtoQuery(string url)
         {
@@ -85,7 +113,7 @@ namespace Iridium.APICalls
             {
                 throw new ArgumentNullException("url");
             }
-            using (var stream = Kernel.ApiClient.GetSerializedStream(url))
+            using (Stream stream = Kernel.ApiClient.GetSerializedStream(url))
             {
                 return DeserializeFromStream<IEnumerable<RecommendationDto>>(stream);
             }
@@ -94,7 +122,7 @@ namespace Iridium.APICalls
         public IEnumerable<RecommendationDto> GetRecommendedItems(Guid userId, Guid folderId)
         {
             string query = string.Format("&ParentId={0}&format=Json", folderId); //Add additional filters to this line
-            string queryUrl = string.Format("{0}Movies/Recommendations?Category=1&ItemLimit=8&UserId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
+            string queryUrl = string.Format("{0}Movies/Recommendations?Category=1&ItemLimit=10&UserId={1}{2}", APIUrl(), userId, query); //Query Format taken from Swagger
             return RecommendationDtoQuery(queryUrl);//Interrogate the API based on the query string.
         }
 

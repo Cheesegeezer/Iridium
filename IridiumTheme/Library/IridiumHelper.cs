@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using System.Web.Configuration;
 using MediaBrowser;
 using MediaBrowser.Library;
 using MediaBrowser.Library.Entities;
@@ -18,7 +17,6 @@ using Microsoft.MediaCenter.Hosting;
 using Microsoft.MediaCenter.UI;
 using Application = MediaBrowser.Application;
 using Timer = Microsoft.MediaCenter.UI.Timer;
-using Version = System.Version;
 
 namespace Iridium
 {
@@ -28,20 +26,23 @@ namespace Iridium
         private readonly Timer OverviewTimer;
         private int NavCount;
         private Item _currentItem;
-        public bool _showOverveiew = new bool();
+        public bool _showOverveiew;
         private static Image defaultBackdrop;
         private static Image currentBackdrop;
+        public static Guid SeriesId { get; set; }
+        public Item DummyItem { get; set; }
        
         private FolderModel _currentTopParent;
         private FolderModel _currentParent;
         private static string currentPage = "Page";
+        private Size _bigImageSize = new Size(300,168);
+        private Size _normalImageSize = new Size(296,164);
 
+        public static IridiumHelper Instance { get; set; }
         public IridiumHelper()
         {
             OverviewTimer = new Timer();
             setupHelper();
-            _bigImageSize = new Size(300,168);
-            _steppedInset = new Inset(50,1,50,1);
 
         }
 
@@ -55,27 +56,27 @@ namespace Iridium
 
         public Item CurrentItem
         {
-            get { return this._currentItem; }
+            get { return _currentItem; }
             set
             {
-                this._currentItem = value;
-                if (this.NavCount > 1)
+                _currentItem = value;
+                if (NavCount > 1)
                 {
-                    if (this.ShowOverview)
+                    if (ShowOverview)
                     {
-                        this.ShowOverview = false;
+                        ShowOverview = false;
                     }
-                    this.NavCount = 0;
+                    NavCount = 0;
                 }
-                this.NavCount++;
-                this.OverviewTimer.Stop();
-                this.OverviewTimer.Start();
-                base.FirePropertyChanged("EndTime");
-                base.FirePropertyChanged("CurrentItem");
-                base.FirePropertyChanged("GenreString");
-                base.FirePropertyChanged("PercentWatched");
-                this.FireMusicChanges();
-                this.FireGameChanges();
+                NavCount++;
+                OverviewTimer.Stop();
+                OverviewTimer.Start();
+                FirePropertyChanged("EndTime");
+                FirePropertyChanged("CurrentItem");
+                FirePropertyChanged("GenreString");
+                FirePropertyChanged("PercentWatched");
+                FireMusicChanges();
+                FireGameChanges();
             }
         }
 
@@ -119,9 +120,9 @@ namespace Iridium
         {
             get
             {
-                string endTime = string.Empty;
+                string endTime = String.Empty;
 
-                if (!string.IsNullOrEmpty(_currentItem.EndTimeString))
+                if (!String.IsNullOrEmpty(_currentItem.EndTimeString))
                 {
                     endTime = _currentItem.EndTimeString.Replace(LocalizedStrings.Instance.GetString("EndsStr") + " ",
                         "");
@@ -136,7 +137,7 @@ namespace Iridium
             get
             {
                 DateTime time = DateTime.Now;
-                if (this.Config.Enable24hrTime)
+                if (Config.Enable24hrTime)
                 {
                     return time.ToString("HH:mm");
                 }
@@ -208,7 +209,7 @@ namespace Iridium
             set
             {
                 navigatingForward = value;
-                base.FirePropertyChanged("NavigatingForward");
+                FirePropertyChanged("NavigatingForward");
             }
         }
 
@@ -236,13 +237,84 @@ namespace Iridium
             }
         }
 
+        private bool isMenuOpen;
         public bool IsMenuOpen
         {
             get { return isMenuOpen; }
             set
             {
                 isMenuOpen = value;
-                base.FirePropertyChanged("IsMenuOpen");
+                FirePropertyChanged("IsMenuOpen");
+            }
+        }
+
+        private bool buttonPanelHasFocus;
+        public bool ButtonPanelHasFocus
+        {
+            get
+            {
+                return buttonPanelHasFocus;
+            }
+            set
+            {
+                buttonPanelHasFocus = value;
+                base.FirePropertyChanged("ButtonPanelHasFocus");
+            }
+        }
+
+        private bool _vfHasFocus = true;
+        public bool VFHasFocus
+        {
+            get { return _vfHasFocus; }
+            set
+            {
+                _vfHasFocus = value;
+                FirePropertyChanged("VFHasFocus");
+            }
+        }
+
+        private bool _configHasFocus = false;
+        public bool ConfigHasFocus
+        {
+            get { return _configHasFocus; }
+            set
+            {
+                _configHasFocus = value;
+                FirePropertyChanged("ConfigHasFocus");
+            }
+        }
+
+        private int _headerIndex;
+        public int HeaderIndex
+        {
+            get
+            {
+                return this._headerIndex;
+            }
+            set
+            {
+                if (this._headerIndex != value)
+                {
+                    this._headerIndex = value;
+                    base.FirePropertyChanged("HeaderIndex");
+                }
+            }
+        }
+
+        private int _panelIndex;
+        public int PanelIndex
+        {
+            get
+            {
+                return this._panelIndex;
+            }
+            set
+            {
+                if (this._panelIndex != value)
+                {
+                    this._panelIndex = value;
+                    base.FirePropertyChanged("PanelIndex");
+                }
             }
         }
 
@@ -286,23 +358,35 @@ namespace Iridium
             }
         }
 
+        public Item TempItem { get; set; }
         public float PercentWatched()
         {
-            Item item = CurrentItem;
-            return ((item.RunTimeTicks > 0L) ? (item.PlayState.PositionTicks / ((float)item.RunTimeTicks)) : 0f);
+            Item item = TempItem;
+            return ((item.RunTimeTicks > 0L) ? (item.PlayState.PositionTicks / (float) (item.RunTimeTicks) * 100) : 0f);
         }
 
         public string PercentWatchedString
         {
-            get { return PercentWatched().ToString(CultureInfo.CurrentCulture); }
+            get { return PercentWatched().ToString("n1") + (" %"); }
         }
 
-        private readonly Size _bigImageSize;
+        public string TimeRemaining()
+        {
+            Item item = TempItem;
+            int tot = item.RunningTime;
+            int pos = new TimeSpan(item.PlayState.PositionTicks).Minutes;
+            
+            int rem = (tot) - (pos);
+            
+            return rem + ("mins");
+            
+        }
+
         public Size GetBigImageSize
         {
             get
             {
-                return new Size((this.BigImageSize.Width * 2), (this.BigImageSize.Height * 2));
+                return new Size(BigImageSize.Width * 2, BigImageSize.Height * 2);
             }
         }
 
@@ -310,7 +394,15 @@ namespace Iridium
         {
             get
             {
-                return this._bigImageSize;
+                return _bigImageSize;
+            }
+        }
+
+        public Size NormalImageSize
+        {
+            get
+            {
+                return _normalImageSize;
             }
         }
 
@@ -319,14 +411,14 @@ namespace Iridium
         {
             get
             {
-                return new Inset(this.SteppedInset.Left, SteppedInset.Top, SteppedInset.Right*2, SteppedInset.Bottom);
+                return new Inset(SteppedInset.Left, SteppedInset.Top, SteppedInset.Right*2, SteppedInset.Bottom);
             }
             
         }
 
         public Inset SteppedInset
         {
-            get { return this._steppedInset; }
+            get { return _steppedInset; }
         }
 
         
@@ -334,11 +426,11 @@ namespace Iridium
 
         public bool RALHasFocus
         {
-            get { return this._ralHasFocus; }
+            get { return _ralHasFocus; }
             set
             {
-                this._ralHasFocus = value;
-                base.FirePropertyChanged("RALHasFocus");
+                _ralHasFocus = value;
+                FirePropertyChanged("RALHasFocus");
             }
         }
 
@@ -383,7 +475,7 @@ namespace Iridium
         private string _dateStr;
         private Item _newItem;
         private bool _showNewItemPopout;
-        private bool isMenuOpen;
+        
 
 
         public bool ShowNewItemPopout
@@ -420,7 +512,7 @@ namespace Iridium
                 if (_dateStr != value)
                 {
                     _dateStr = value;
-                    base.FirePropertyChanged("Date");
+                    FirePropertyChanged("Date");
                 }
             }
         }
@@ -551,7 +643,7 @@ namespace Iridium
             {
                 string rating = GetDynamicProperty("TgdbRating");
 
-                if (!string.IsNullOrEmpty(rating))
+                if (!String.IsNullOrEmpty(rating))
                 {
                     return Convert.ToSingle(rating);
                 }
@@ -650,6 +742,7 @@ namespace Iridium
             };
         }
 
+        //Item curritem = Application.CurrentInstance.CurrentItem
         public bool getProperty(string propertyname)
         {
             return ShowOverview;
@@ -658,10 +751,10 @@ namespace Iridium
         private float CalculatePercentWatched()
         {
             float num = 0f;
-            if (!string.IsNullOrEmpty(CurrentItem.RunningTimeString))
+            if (!String.IsNullOrEmpty(CurrentItem.RunningTimeString))
             {
                 int num2 =
-                    int.Parse(CurrentItem.RunningTimeString.Substring(0, CurrentItem.RunningTimeString.IndexOf(' ')));
+                    Int32.Parse(CurrentItem.RunningTimeString.Substring(0, CurrentItem.RunningTimeString.IndexOf(' ')));
                 var totalMinutes = (int) CurrentItem.WatchedTime.TotalMinutes;
                 if ((num2 > 0) && (totalMinutes > 0))
                 {
@@ -901,6 +994,7 @@ namespace Iridium
 
         #region Custom Views
 
+        public string LayoutSeries { get { return "resx://Iridium/Iridium.Resources/TVShowsLayout#TVShowsLayout"; } }
         public string LayoutRoot
         {
             get { return "resx://Iridium/Iridium.Resources/LayoutRoot#LayoutRoot"; }
@@ -941,7 +1035,7 @@ namespace Iridium
             get { return "resx://Iridium/Iridium.Resources/LayoutThumb#IridiumLayoutThumb"; }
         }
 
-        public string LayoutThumbStrip
+        public string LayoutThumbstrip
         {
             get { return "resx://Iridium/Iridium.Resources/LayoutThumbStrip#IridiumLayoutThumbStrip"; }
         }
@@ -976,6 +1070,12 @@ namespace Iridium
         {
             get { return GetAPIItems.ResumeSet.Count; }
         }
+
+        public int SpotlightCount
+        {
+            get { return GetAPIItems.SpotlightAddedItemSet.Count; }
+        }
+
         public int GenresSetCount
         {
             get { return GetAPIItems.GenresSet.Count; }
@@ -986,17 +1086,17 @@ namespace Iridium
         }
         public int RecentlyAddedSetCount
         {
-            get { return GetAPIItems.RecentlyAddedSet.Count; }
+            get { return GetAPIItems.FirstAddedItem.Count; }
         }
         public int RemainingRecentlyAddedSetCount
         {
-            get { return GetAPIItems.RemainingRecentlyAddedSet.Count; }
+            get { return GetAPIItems.RemainingAddedItems.Count; }
         }
         public int RecentlyWatchedSetCount
         {
             get { return GetAPIItems.RecentlyWatchedSet.Count; }
         }
-        public int RecentlyUnatchedSetCount
+        public int RecentlyUnwatchedSetCount
         {
             get { return GetAPIItems.RecentlyUnwatchedSet.Count; }
         }
@@ -1013,45 +1113,138 @@ namespace Iridium
             get { return GetAPIItems.RecommendedSet.Count; }
         }
 
-        
-        public string RecommendedReason()
+        //SERIES NEXT UP
+        public ArrayListDataSet GetSeriesNextUp()
         {
-            return GetAPIItems.BecauseYouWatchedName;
+            return GetAPIItems.GetSeriesNextUp();
         }
 
-        public ArrayListDataSet GetRecommendedSet()
+        public ArrayListDataSet GetRALItems()
         {
-            return GetAPIItems.GetRecommendedSet();
+            return GetAPIItems.GetAppRAL();
         }
-
+        //RECENTLY ADDED LISTS
         public ArrayListDataSet ShowFirstNewItem()
         {
             return GetAPIItems.GetRecentlyAddedSet();
         }
-
         public ArrayListDataSet ShowSecondNewItem()
         {
             return GetAPIItems.GetSecondAddedSet();
         }
-
         public ArrayListDataSet ShowThirdNewItem()
         {
             return GetAPIItems.GetThirdAddedSet();
         }
-
         public ArrayListDataSet ShowRemainingNewItems()
         {
             return GetAPIItems.GetRemainingRecentlyAddedSet();
         }
 
+        public List<Item> QuickListItems { get; set; }
+
+        public ArrayListDataSet FirstNewItem
+        {
+            get { return GetAPIItems.FirstAddedItem; }
+        }
+        public ArrayListDataSet SecondNewItem
+        {
+            get { return GetAPIItems.SecondAddedSet; }
+        }
+        public ArrayListDataSet ThirdNewItem
+        {
+            get { return GetAPIItems.ThirdAddedSet; }
+        }
+        public ArrayListDataSet RemainingNewItems
+        {
+            get { return GetAPIItems.RemainingAddedItems; }
+        }
+
+        // WATCHED LISTS
+        public ArrayListDataSet ShowFirstWatchedItem()
+        {
+            return GetAPIItems.GetFirstWatchedSet();
+        }
+        public ArrayListDataSet ShowSecondWatchedItem()
+        {
+            return GetAPIItems.GetSecondWatchedSet();
+        }
+        public ArrayListDataSet ShowThirdWatchedItem()
+        {
+            return GetAPIItems.GetThirdWatchedSet();
+        }
+        public ArrayListDataSet ShowRemainingWatchedItems()
+        {
+            return GetAPIItems.GetRemainingWatchedSet();
+        }
+
+        public ArrayListDataSet FirstWatchedItem
+        {
+            get { return GetAPIItems.RecentlyWatchedSet; }
+        }
+        public ArrayListDataSet SecondWatchedItem
+        {
+            get { return GetAPIItems.SecondWatchedSet; }
+        }
+        public ArrayListDataSet ThirdWatchedItem
+        {
+            get { return GetAPIItems.ThirdWatchedSet; }
+        }
+        public ArrayListDataSet RemainingWatchedItems
+        {
+            get { return GetAPIItems.RemainingWatchedSet; }
+        }
+
+        // UNWATCHED LISTS
+        public ArrayListDataSet ShowFirstUnwatchedItem()
+        {
+            return GetAPIItems.GetFirstUnwatchedSet();
+        }
+        public ArrayListDataSet ShowSecondUnwatchedItem()
+        {
+            return GetAPIItems.GetSecondUnwatchedSet();
+        }
+        public ArrayListDataSet ShowThirdUnwatchedItem()
+        {
+            return GetAPIItems.GetThirdUnwatchedSet();
+        }
+        public ArrayListDataSet ShowRemainingUnwatchedItems()
+        {
+            return GetAPIItems.GetRemainingUnwatchedSet();
+        }
+
+        public ArrayListDataSet FirstUnwatchedItem
+        {
+            get { return GetAPIItems.RecentlyUnwatchedSet; }
+        }
+        public ArrayListDataSet SecondUnwatchedItem
+        {
+            get { return GetAPIItems.SecondUnwatchedSet; }
+        }
+        public ArrayListDataSet ThirdUnwatchedItem
+        {
+            get { return GetAPIItems.ThirdUnwatchedSet; }
+        }
+        public ArrayListDataSet RemainingUnwatchedItems
+        {
+            get { return GetAPIItems.RemainingUnwatchedSet; }
+        }
+
+        
+        //TV LISTS
         public ArrayListDataSet GetNextUpEpisodes()
         {
             return GetAPIItems.GetNextUpSet();
         }
-
-        public ArrayListDataSet GetResumeItems()
+        public ArrayListDataSet GetUpcomingTV()
         {
-            return GetAPIItems.GetResumeSet();
+            return GetAPIItems.GetUpcomingItemsSet();
+        }
+
+        //REMAINING LISTS
+        public ArrayListDataSet GetResumeItems
+        {
+            get { return GetAPIItems.GetResumeSet(); }
         }
 
         public ArrayListDataSet GetAcclaimedMovies()
@@ -1059,31 +1252,89 @@ namespace Iridium
             return GetAPIItems.GetAcclaimedSet();
         }
 
+        public ArrayListDataSet ShuffleAcclaimedMovies()
+        {
+            return ShuffleList(GetAPIItems.AcclaimedMoviesSet);
+        }
+
+        public string RecommendedReason()
+        {
+            return GetAPIItems.BecauseYouWatchedName;
+        }
+        public ArrayListDataSet GetRecommendedSet()
+        {
+            return GetAPIItems.GetRecommendedSet();
+        }
+        
+
+        
+
         public ArrayListDataSet GetSimilar()
         {
             return GetAPIItems.GetSimilarMoviesSet();
         }
+        private List<BaseItem> genresList;
 
-        public ArrayListDataSet GetGenres()
+        public void GetGenres()
         {
-            return GetAPIItems.GenresSet;
+            GetAPIItems.GetGenresSet();
+            if (GetAPIItems.GenresSet != null)
+            {
+                ShowGenres();
+            }
+            else Logger.ReportInfo("************** IRIDIUM NO GENRES FOUND");
         }
+
+        public void ShowGenres()
+        {
+
+            foreach (var genre in GetAPIItems.GenresSet)
+            {
+                if (genre == null)
+                {
+                    return;
+                }
+                genresList.Add(genre);
+                Microsoft.MediaCenter.UI.Application.DeferredInvoke(
+                _ => Application.CurrentInstance.Navigate(ItemFactory.Instance.Create(genresList.First())));
+            }
+            
+        }
+
+        
 
         public ArrayListDataSet GetNewsItems()
         {
             return GetAPIItems.NewsItemsList();
         }
 
-        public ArrayListDataSet GetUpcomingTV()
+        //Spotlight
+        public ArrayListDataSet GetSpotlightAddedItem()
         {
-            return GetAPIItems.GetUpcomingItemsSet();
+            return GetAPIItems.GetSpotlightAddedItem();
+        }
+
+        private static ArrayListDataSet ShuffleList(ArrayListDataSet arrList)
+        {
+            ArrayListDataSet randomList = new ArrayListDataSet();
+
+            Random r = new Random();
+            for (int cnt = 0; cnt < arrList.Count; cnt++)
+            {
+                object tmp = arrList[cnt];
+                int idx = r.Next(arrList.Count - cnt) + cnt;
+                arrList[cnt] = arrList[idx];
+                arrList[idx] = tmp;
+            }
+
+            return arrList;
         }
 
         #endregion
 
         public string PluginUpdatesString()
         {
-            string pluginUpdateString = string.Empty;
+            string pluginUpdateString = String.Empty;
             if (Application.CurrentInstance.PluginUpdatesAvailable)
             {
                 pluginUpdateString = "Restart to Update Plugins";
@@ -1093,6 +1344,59 @@ namespace Iridium
                 pluginUpdateString = "";
             }
             return pluginUpdateString;
+        }
+
+        public void NavigateToGenre(string itemType)
+        {
+            switch (Application.CurrentInstance.CurrentItem.BaseItem.GetType().Name)
+            {
+                case "Series":
+                case "Season":
+                case "Episode":
+                    itemType = "Series";
+                    break;
+
+                case "MusicAlbum":
+                case "MusicArtist":
+                case "MusicGenre":
+                case "Song":
+                    itemType = "MusicAlbum";
+                    break;
+
+                case "Game":
+                    itemType = "Game";
+                    break;
+            }
+
+            Async.Queue("Genre navigation", () =>
+            {
+                
+                ItemQuery query = new ItemQuery
+                {
+                    UserId = Kernel.CurrentUser.Id.ToString(),
+                    Fields = MB3ApiRepository.StandardFields,
+                    ParentId = Application.CurrentInstance.CurrentItem.Id.ToString(),
+                    IncludeItemTypes = new[] { itemType },
+                    Recursive = true
+                };
+                var index = new SearchResultFolder(Kernel.Instance.MB3ApiRepository.RetrieveItems(query).ToList()) ;
+                
+                Microsoft.MediaCenter.UI.Application.DeferredInvoke(_ => Application.CurrentInstance.Navigate(ItemFactory.Instance.Create(index)));
+            });
+        }
+
+        private Folder GetStartingFolder(BaseItem item)
+        {
+            var currentIndex = item as Index;
+            return currentIndex ?? (Folder)RootFolder;
+        }
+
+        public AggregateFolder RootFolder
+        {
+            get
+            {
+                return Kernel.Instance.RootFolder;
+            }
         }
 
         public string PluginStatus()
@@ -1128,6 +1432,16 @@ namespace Iridium
                 properties);
         }
 
+        public void OpenTVShowsView(Item item)
+        {
+            var properties = new Dictionary<string, object>();
+            properties.Add("Application", Application.CurrentInstance);
+            properties.Add("Folder", item.PhysicalParent );
+            properties.Add("ThemeHelper", this);
+            Application.CurrentInstance.OpenMCMLPage("resx://Iridium/Iridium.Resources/TVShowsLayout#TVShowsLayout",
+                properties);
+        }
+
         public ArrayListDataSet GetActorCollection()
         {
             return ActorCollection;
@@ -1160,7 +1474,6 @@ namespace Iridium
 
         private static void GetCollectionItems(string name, string[] personTypes, string id)
         {
-            
             Async.Queue("Person navigation", () =>
             {
                 ItemQuery query = new ItemQuery 
@@ -1176,7 +1489,7 @@ namespace Iridium
                 var index = new SearchResultFolder(Kernel.Instance.MB3ApiRepository.RetrieveItems(query).ToList())
                 {
                     Name = person.Name,
-                    Overview = person.Overview,
+                    Overview = person.Overview
                     
                 };
                 foreach (BaseItem collectionItem in index.Children)
@@ -1186,7 +1499,7 @@ namespace Iridium
                         return;
                     }
                     Item item = GetActorCollectionItem(collectionItem);
-                    Logger.ReportInfo("*************ACTOR COLLECTION ************** ITEM ADDED = {0}", collectionItem.Name);
+                    //Logger.ReportInfo("*************ACTOR COLLECTION ************** ITEM ADDED = {0}", collectionItem.Name);
                     ActorCollection.Add(item);
                 }
 
@@ -1206,21 +1519,18 @@ namespace Iridium
             return item;
         }
 
-        private void AddWeatherMenu()
+        public void AddWeatherMenu()
         {
             var kernel = new Kernel();
             Guid weatherFolderGuid = new Guid("F4F97F4C-7512-41A7-B50E-AE08740C158E");
-            //Create Genre collection
-            BaseItem weatherFolder = new BaseItem();
+            //Create Weather collection
+            BaseItem weatherFolder = new BaseItem()
             {
 
-                /*Id = weatherFolderGuid,
-                Name = "Weather",
-                DisplayMediaType = "MovieGenres",
-                IncludeItemTypes = new[] {"Weather"}*/
-            }
-            ;
-            kernel.RootFolder.AddVirtualChild(weatherFolder);
+                Id = weatherFolderGuid,
+                Name = "Weather"
+            };
+            RootFolder.AddVirtualChild(weatherFolder);
         }
 
         public void OpenNewsPage()
@@ -1233,6 +1543,5 @@ namespace Iridium
             };
             Application.CurrentInstance.OpenMCMLPage("resx://Iridium/Iridium.Resources/NewsScroller#NewsScroller", properties);
         }
-
     }
 }

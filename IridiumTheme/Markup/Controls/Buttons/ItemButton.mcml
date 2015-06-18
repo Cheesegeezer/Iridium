@@ -58,8 +58,8 @@
       <Changed Source="[Clicker.Invoked]">
         <Actions>
           <Set Target="[ThemeHelper.NavigatingForward]" Value="true"/>
-          <Set Target="[ThemeHelper.DefaultBackdrop]" Value="[ThemeHelper.CurrentBackdrop]"/>
           <Invoke Target="[Item.SelectAction]"/>
+			<Set Target="[ThemeHelper.SeriesId]" Value="[Item.Id]" />
           <PlaySound Sound="sound://sounds:Miniselect" />
         </Actions>
       </Changed>

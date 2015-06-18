@@ -1,0 +1,250 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+	  xmlns:cor="assembly://MSCorLib/System"
+    xmlns:a="assembly://MediaBrowser/MediaBrowser"
+	  xmlns:s="file://Styles_DoNotEdit.mcml"
+	  xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
+    xmlns:xi="resx://Iridium/Iridium.Resources/Images"
+      xmlns:ih="assembly://Iridium/Iridium"
+    
+	  >
+
+  <UI Name="Backdrop">
+    <Properties>
+      <Image Name="Image" Image="$Required"/>
+
+    </Properties>
+
+    <Rules>
+      <Binding Source="[Image]" Target="[MainBG.Content]" />
+    </Rules>
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+
+          <Clip Name="Clip" Orientation="Horizontal" FadeSize="150" FadeAmount="1" Layout="Anchor"  >
+            <LayoutInput>
+              <FormLayoutInput Vertical="Fill" Horizontal="Center"/>
+            </LayoutInput>
+
+            <Children>
+              <Graphic Name="MainBG" ColorFilter="color://s:BackdropFilter" Alpha="global://s:BackdropAlpha" Content="[Image]" MaintainAspectRatio="true" >
+              </Graphic>
+            </Children>
+          </Clip>
+
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+  <!--Video Backdrop-->
+  <UI Name="NowPlayingBackdrop">
+    <Properties>
+      <a:Application Name="Application" Application="$Required"/>
+      <ih:IridiumHelper Name="ThemeHelper"/>
+    </Properties>
+
+    <Locals>
+      <AnchorLayoutInput Name="FullLayout" Vertical="Near" Horizontal="Fill" />
+
+    </Locals>
+    
+    <Rules>
+
+		
+      <Changed Source="[Application.ShowNowPlaying]" InitialEvaluate="true">
+        <Conditions>
+          <Equality Source="[ThemeHelper.VideoBackdropApplicable]" Value="true" />
+          <Equality Source="[Application.ShowNowPlaying]" Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[VideoBackdrop.Visible]" Value="true" />
+        </Actions>
+      </Changed>
+      <Default Target="[VideoBackdrop.Visible]" Value="false"/>
+    </Rules>
+    
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Clip Name="Clip" Orientation="Vertical" ShowNear="false" ShowFar="false" FadeSize="75" LayoutInput="[FullLayout]">
+            <Children>
+              <Clip Name="Clip2" Orientation="Vertical" ShowNear="false" ShowFar="false" FadeSize="30" Layout="Fill">
+                <Children>
+                  <Video Name="VideoBackdrop" Layout="Fill" />
+                </Children>
+              </Clip>
+            </Children>
+          </Clip>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="Backdrop4">
+    <Properties>
+      <a:Application Name="Application" Application="$Required"/>
+      <Image Name="Image" Image="$Required"/>
+      <lib:Item Name="Item" Item="$Required"/>
+      <Image Name="LoadBackdropImage" Image="null"/>
+      <cor:Int32 Name="LoadDelay" Int32="0" />
+      <cor:Single Name="FadeTime" Single="1.5" />
+    </Properties>
+
+    <Locals>
+      <a:MultiBackdrop Name="MultiBackdrop"/>
+      <Timer Name="StartupTimer" Interval="50" AutoRepeat="false" Enabled="true"/>
+      <Timer Name="ChangeDelay" Interval="[Application.Config.BackdropLoadDelay]" AutoRepeat="false" Enabled="true"/>
+      <ih:IridiumHelper Name="ThemeHelper"></ih:IridiumHelper>
+      <Timer Name="MediaPlaying" Interval="300" AutoRepeat="true" Enabled="true"/>
+    </Locals>
+
+    <Rules>
+      <!--<Binding Source="[Item.BackdropImage]" Target="[Backdrop.Content]" />-->
+
+      <Default Target="[Backdrop.Content]" Value="[Item.BackdropImage]">
+        <Conditions>
+          <Equality Source="[Application.Config.ShowBackdrop]" Value="true"/>
+        </Conditions>
+      </Default>
+      <Changed Source="[ChangeDelay.Tick]">
+        <Conditions>
+          <Equality Source="[Application.Config.ShowBackdrop]" Value="true"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Backdrop.Content]" Value="[Item.BackdropImage]"/>
+        </Actions>
+      </Changed>
+      
+      <Changed Source="[Item]">
+        <Actions>
+          <Invoke Target="[ChangeDelay.Start]"></Invoke>
+          <Set Target="[StartupTimer.Enabled]" Value="true" />
+        </Actions>
+      </Changed>
+
+      <Changed Source="[Item.BackdropImage]">
+        <Actions>
+          <Invoke Target="[ChangeDelay.Start]"></Invoke>
+        </Actions>
+      </Changed>
+
+      <!--<Changed Source="[ChangeDelay.Tick]">
+        <Conditions>
+          <Equality Source="[Application.Config.ShowRootBackground]" Value="true"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Backdrop.Content]" Value="[Item.BackdropImage]"></Set>
+        </Actions>
+      </Changed>-->
+
+      <!--Initial Folder Tier-->
+      <Changed Source="[ChangeDelay.Tick]">
+        <Conditions>
+          <Equality Source="[Application.Config.ShowRootBackground]" Value="true"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Backdrop.Content]" Value="[Application.MainBackdrop!Image]"/>
+        </Actions>
+      </Changed>
+      
+      <Changed Source="[StartupTimer.Tick]">
+        <Actions>
+          <Invoke Target="[MultiBackdrop.BeginRotation]" InvokePolicy="AsynchronousLowPri" >
+            <item>
+              <lib:Item Item="[Item]" />
+            </item>
+          </Invoke>
+        </Actions>
+      </Changed>
+      
+      <!--Show ThemeBackground-->
+      <Binding Source="[Application.Config.ShowThemeBackground]" Target="[ThemeBackground.Visible]" />
+    </Rules>
+
+    <Content>
+      <!--- Backdrop support -->
+      <Panel Layout="Fill">
+
+        <Children>
+          <!--<ColorFill Name="VideoBackdrop" Content="Black" Layout="Fill" Visible="false">
+            <Animations>
+              <Animation Type="Hide">
+                <Keyframes>
+                  <AlphaKeyframe Value="1" Time="0" RelativeTo="Current"/>
+                  <AlphaKeyframe Value="0" Time="1" RelativeTo="Final"/>
+                </Keyframes>
+              </Animation>
+              
+              <Animation Type="Show">
+                <Keyframes>
+                  <AlphaKeyframe Value="0" Time="0" RelativeTo="Current"/>
+                  <AlphaKeyframe Value="1" Time="1" RelativeTo="Final"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+            <Children>
+              <Video Name="VideoPanel">
+                <LayoutInput>
+                  <FormLayoutInput Horizontal="Fill" Vertical="Fill"/>
+                </LayoutInput>
+              </Video>
+            </Children>
+          </ColorFill>-->
+
+          <Clip Name="Clip" Orientation="Vertical" FadeSize="0" ShowNear="false" Alpha="1" FadeAmount="0.5" Layout="Anchor"  >
+            <LayoutInput>
+              <FormLayoutInput Vertical="Fill" Horizontal="Fill" />
+            </LayoutInput>
+            <Children>
+              <Graphic Name="Backdrop" SizingPolicy="SizeToConstraint" Content="[Image]" CenterPointPercent="1,0,1" >
+                <Animations>
+                  <Animation Type="ContentChangeHide">
+                    <Keyframes>
+                      <AlphaKeyframe RelativeTo="Current" Time="0.0" Value="1"/>
+                      <!--<AlphaKeyframe RelativeTo="Current" Time="0.5" Value="1"/>-->
+                      <AlphaKeyframe RelativeTo="Current" Time="[ThemeHelper.Config.BackdropTransitionTime]" Value="0"/>
+                    </Keyframes>
+                  </Animation>
+                  <Animation Type="ContentChangeShow">
+                    <Keyframes>
+                      <AlphaKeyframe RelativeTo="Current" Time="0.0" Value="0"/>
+                      <AlphaKeyframe RelativeTo="Final" Time="[ThemeHelper.Config.BackdropTransitionTime]" Value="1"/>
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+              </Graphic>
+            </Children>
+          </Clip>
+
+          <Graphic Name="ThemeBackground" Content="image://xi:HomeBG" MaintainAspectRatio="true" SizingPolicy="SizeToConstraint" Visible="false">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0" Right="Parent,1" Top="Parent,0" Bottom="Parent,1" />
+            </LayoutInput>
+          </Graphic>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="InitialFolderBackground">
+    <Properties>
+      <a:Application Name="Application" Application="$Required"/>
+    </Properties>
+
+    <Locals>
+      <cor:String Name="img" String="[Application.MainBackdrop]" />
+    </Locals>
+
+    <Rules>
+      <Binding Source="[img!Image]" Target="[bg.Content]" />
+    </Rules>
+
+    <Content>
+      <Graphic Name="bg" Content="null" />
+    </Content>
+  </UI>
+</Mcml>

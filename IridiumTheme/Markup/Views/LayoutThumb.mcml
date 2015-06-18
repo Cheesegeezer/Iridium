@@ -297,7 +297,7 @@
 						</LayoutInput>
 					</Graphic>
 
-					<bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]" />
+					<!--<bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]" />-->
 					<Graphic Name="Overlay" Layout="Fill" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]"
 					         Alpha="[ThemeHelper.Config.FolderBackdropOverlayAlpha]" Content="image://vi:BackgroundOverlay" />
 					<bd:Backdrop4 LoadDelay="280" FadeTime="[ThemeHelper.Config.BackdropTransitionTime]" Application="[Application]"

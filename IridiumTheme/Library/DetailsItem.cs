@@ -4,9 +4,6 @@ namespace Iridium
 {
     public class DetailsItem : ModelItem
     {
-        public DetailsItem()
-        { }
-
         public Command Focus
         {
             get;

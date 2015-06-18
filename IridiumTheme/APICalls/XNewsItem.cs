@@ -1,9 +1,8 @@
-﻿using Microsoft.MediaCenter.UI;
+﻿using System;
+using Microsoft.MediaCenter.UI;
 
 namespace Iridium
 {
-    using System;
-
     public class XNewsItem : ModelItem
     {
         
@@ -23,12 +22,12 @@ namespace Iridium
         {
             get
             {
-                return this.title;
+                return title;
             }
             set
             {
-                this.title = value;
-                base.FirePropertyChanged("NewsTitle");
+                title = value;
+                FirePropertyChanged("NewsTitle");
             }
         }
 
@@ -36,11 +35,11 @@ namespace Iridium
         {
             get
             {
-                return this.id;
+                return id;
             }
             set
             {
-                this.id = value;
+                id = value;
                 FirePropertyChanged("NewsId");
             }
         }
@@ -49,11 +48,11 @@ namespace Iridium
         {
             get
             {
-                return this.description;
+                return description;
             }
             set
             {
-                this.description = value;
+                description = value;
                 FirePropertyChanged("NewsDesc");
             }
         }
@@ -62,11 +61,11 @@ namespace Iridium
         {
             get
             {
-                return this.date;
+                return date;
             }
             set
             {
-                this.date = value;
+                date = value;
                 FirePropertyChanged("NewsDate");
             }
         }

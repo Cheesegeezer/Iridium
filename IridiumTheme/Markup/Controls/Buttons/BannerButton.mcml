@@ -1,0 +1,164 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:a="assembly://MediaBrowser/MediaBrowser"
+      xmlns:lib="assembly://MediaBrowser/MediaBrowser.Library"
+      xmlns:ih="assembly://Iridium/Iridium"
+      xmlns:an="resx://MediaBrowser/MediaBrowser.Resources/Animations"
+      xmlns:sounds="resx://MediaBrowser/MediaBrowser.Resources/Sounds"
+      xmlns:i="resx://MediaBrowser/MediaBrowser.Resources/Images"
+	  xmlns:vi="resx://Iridium/Iridium.Resources/Images"
+      xmlns:s="file://Styles_DoNotEdit.mcml"
+      xmlns:me="Me">
+
+
+
+  <UI Name="BannerButton">
+
+    <Properties>
+
+      <ICommand Name="Command" ICommand="$Required" />
+      <cor:Boolean Name="IsNavigatingCommand" Boolean="false" />
+      <lib:Item Name="Item" Item="$Required" />
+      <cor:String Name="Text" String="" />
+      <Size Name="Size" Size="0,0" />
+		<Image Name="Content"/>
+      <a:Application Name="Application" Application="$Required"/>
+      <ih:IridiumHelper Name="ThemeHelper" IridiumHelper="$Required"/>
+	
+
+    </Properties>
+
+    <Locals>
+
+      <ClickHandler Name="Clicker" />
+      <ShortcutHandler Name="ClearBtn" Handle="true" Shortcut="Clear" HandlerStage="Bubbled" />
+      <KeyHandler Name="WatchedShortcut" Handle="true" Key="W" Modifiers="Control" HandlerStage="Bubbled"/>
+
+      <ShortcutHandler Name="PlayBtn" Handle="true" Shortcut="Play" HandlerStage="Bubbled"/>
+      <ShortcutHandler Name="PlayPauseBtn" Handle="true" Shortcut="PlayPause" HandlerStage="Bubbled"/>
+      <KeyHandler Name="PlayShortcut" Handle="true" HandlerStage="Bubbled" Key="P" Modifiers="Control"/>
+      <Command Name="PlayCommand"/>
+
+      <ShortcutHandler Name="RecordBtn" Handle="true" Shortcut="Record" HandlerStage="Bubbled"/>
+      <KeyHandler Name="RefreshShortcut" Handle="true" Key="R" Modifiers="Control" HandlerStage="Bubbled"/>
+
+
+    </Locals>
+
+    <Rules>
+		
+		<Binding Source="[Content]" Target="[BannerImage.Content]" />
+		<Binding Source="[Command]" Target="[Clicker.Command]" />
+      <Binding Source="[Command.Available]" Target="[Input.KeyInteractive]" />
+      <Default Target="[Input.KeyInteractive]" Value="true" />
+
+      <Rule>
+        <Conditions>
+          <Modified Source="[Clicker.Invoked]"/>
+          <Equality Source="[IsNavigatingCommand]" Value="true" />
+        </Conditions>
+        <Actions>
+          <PlaySound Sound="sound://sounds:Select" />
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <Modified Source="[Clicker.Invoked]"/>
+          <Equality Source="[IsNavigatingCommand]" Value="false"/>
+        </Conditions>
+        <Actions>
+          <PlaySound Sound="sound://sounds:Miniselect" />
+        </Actions>
+      </Rule>
+
+      <!-- Watched Toggle Commands -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Modified Source="[ClearBtn.Invoked]"/>
+          <Modified Source="[WatchedShortcut.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <PlaySound Sound="sound://sounds:Miniselect" />
+          <Invoke Target="[Item.ToggleWatched]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Refresh Toggle Commands -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Modified Source="[RecordBtn.Invoked]"/>
+          <Modified Source="[RefreshShortcut.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <PlaySound Sound="sound://sounds:Miniselect" />
+          <Invoke Target="[Item.RefreshMetadata]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Play Rules -->
+      <Rule ConditionLogicalOp ="Or">
+        <Conditions>
+          <Modified Source="[PlayBtn.Invoked]"/>
+          <Modified Source="[PlayPauseBtn.Invoked]"/>
+          <Modified Source="[PlayShortcut.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <PlaySound Sound="sound://sounds:Miniselect" />
+          <Invoke Target="[Item.PlayAction]"  />
+        </Actions>
+      </Rule>
+
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Conditions>
+          <Equality Source="[Command.Available]" ConditionOp="Equals" Value="true" />
+        </Conditions>
+        <Actions>
+			<Set Target="[FocusFrame.Visible]" Value="true" />
+			<Set Target="[BannerImage.Margins]" Value="-5,-15,0,0"/>
+          <Set Target="[Application.CurrentItem]" Value="[Item]"/>
+          <Set Target="[ThemeHelper.CurrentItem]" Value="[Item]"/>
+          <PlaySound Sound="sound://sounds:Focus" />
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Command.Available]" ConditionOp="Equals" SourceValue="false">
+        <Actions>
+          <Set Target="[BannerImage.Alpha]" Value=".5" />
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Command.Available]" ConditionOp="Equals" SourceValue="true">
+        <Actions>
+			
+            <Set Target="[BannerImage.Alpha]" Value="1" />
+        </Actions>
+      </Condition>
+
+    </Rules>
+
+    <Content>
+
+		<Panel>
+			<Children>
+				<Panel Name="BannerPanel" Layout="Anchor">
+					<LayoutInput>
+						<AnchorLayoutInput Left="Parent,0" Top="Parent,0" />
+					</LayoutInput>
+					<Children>
+						<Graphic Name="BannerImage" Content="[Content]" Margins="10,0,0,5" MaintainAspectRatio="true" MaximumSize="650,0"/>
+						<Graphic Name="FocusFrame" Visible="false" Content="image://vi:FocusFrame" ColorFilter="0,155,255" >
+							<LayoutInput>
+								<AnchorLayoutInput Left="BannerImage,0,-15" Right="BannerImage,1,35" Top="BannerImage,0,-15" Bottom="BannerImage,1,8" />
+							</LayoutInput>
+						</Graphic>
+					</Children>
+				</Panel>
+				
+					
+			</Children>
+		</Panel>
+    </Content>
+  </UI>
+
+</Mcml>

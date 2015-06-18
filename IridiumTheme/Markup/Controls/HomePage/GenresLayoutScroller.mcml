@@ -38,7 +38,7 @@
         <Default Target="[ScrollingData.Repeater]" Value="[Repeater]" />
 
         <!-- RECENT ITEMS MODEL-->
-          <Binding Target="[Repeater.Source]" Source="[ThemeHelper.GetGenres]"  />
+          <!--<Binding Target="[Repeater.Source]" Source="[ThemeHelper.GetGenres]"  />-->
           <Default Target="[GenreText.Content]" Value="[Application.LocalStrings.#GenresLabelStr!cor:String]" />
 
         <Condition Source="[ThemeHelper.GenresSetCount]" ConditionOp="Equals" SourceValue="0">

@@ -1,5 +1,5 @@
-﻿using MediaBrowser.Library.Persistance;
-using System;
+﻿using System;
+using MediaBrowser.Library.Persistance;
 
 namespace Iridium
 {
@@ -13,14 +13,14 @@ namespace Iridium
 
         public FolderConfigData(Guid folderId)
         {
-            this.FolderId = folderId.ToString();
+            FolderId = folderId.ToString();
         }
 
         public FolderConfigData(Guid folderId, string file)
         {
-            this.FolderId = folderId.ToString();
+            FolderId = folderId.ToString();
             this.file = file;
-            this.settings = XmlSettings<FolderConfigData>.Bind(this, file);
+            settings = XmlSettings<FolderConfigData>.Bind(this, file);
         }
         #endregion
 
@@ -53,8 +53,9 @@ namespace Iridium
         public string TvRalOption = "NextUp";
         public string NonTVRalOption = "New";
         public string FolderStarRatingStyle = "Numeric";
-        public Single FolderBackdropOverlayAlpha = 0.9f;
+        public Single FolderBackdropOverlayAlpha = 1.0f;
         public Single FolderDetailsThumbAlpha = 1.0f;
+        
 
         #region Load / Save Data
         public static FolderConfigData FromFile(Guid folderId, string file)
@@ -64,7 +65,7 @@ namespace Iridium
 
         public void Save()
         {
-            this.settings.Write();
+            settings.Write();
         }
 
         [SkipField]
@@ -93,8 +94,11 @@ namespace Iridium
         public bool enable24hrTime;
         public bool enableQuickPlay;
         public string ThemeStyle = "Shaeff";
+        public string WatchedColorStyle = "Green";
         public string GameDetailPosterLayout = "Prefer Poster";
+        
         public string CustomDetailPosterLayout = "Normal";
+        public bool UseTVShowView;
 
         public ConfigData()
         {
@@ -102,6 +106,7 @@ namespace Iridium
             askToQuit = false;
             EnableNPV = false;
             enableVideoBackdrop = true;
+            UseTVShowView = false;
             BackdropTransitionTime = 0.5f;
             //backdropOverlayAlpha = 0.3f;
             enable24hrTime = true;
@@ -109,6 +114,7 @@ namespace Iridium
             ThemeStyle = "Shaeff";
             GameDetailPosterLayout = "Prefer Poster";
             CustomDetailPosterLayout = "Normal";
+            WatchedColorStyle = "Green";
         }
 
         public ConfigData(string file)
@@ -116,6 +122,7 @@ namespace Iridium
             askToQuit = false;
             EnableNPV = true;
             enableVideoBackdrop = true;
+            UseTVShowView = false;
             BackdropTransitionTime = 0.5f;
             //backdropOverlayAlpha = 0.3f;
             enable24hrTime = true;
@@ -123,6 +130,7 @@ namespace Iridium
             ThemeStyle = "Shaeff";
             GameDetailPosterLayout = "Prefer Poster";
             CustomDetailPosterLayout = "Normal";
+            WatchedColorStyle = "Green";
             this.file = file;
             IridiumSettings = XmlSettings<ConfigData>.Bind(this, file);
         }

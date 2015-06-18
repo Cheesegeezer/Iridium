@@ -108,6 +108,8 @@
       <KeyHandler Name="SearchKey" Handle="true" HandlerStage="Bubbled" Key="S" Modifiers="Control"/>
       <ShortcutHandler Name="BackHandler" Handle="false" Shortcut="Back" HandlerStage="Bubbled"/>
 		<Timer Name="MsgDelay" AutoRepeat="false" Interval="150" Enabled="false"/>
+
+		<KeyHandler Key="Down" Name="ExitConfig" Handle="false" HandlerStage="Bubbled"/>
       
       <TypingHandler Name="TypingHandler" HandlerStage="Bubbled" TypingPolicy="TripleTap"  >
         <EditableText>
@@ -180,7 +182,7 @@
           <Equality Source="[Folder.IsRoot]" ConditionOp="Equals" Value="false" />
         </Conditions>
       </Binding>
-      
+		
       <!--CLOCK-->
       <Binding Source="[Application.Config.ShowClock]" Target="[ClockDisplay.Visible]"/>
 
@@ -202,6 +204,24 @@
       
 
      <Binding Target="[Helper.IsMenuOpen]" Source="[ContextMenu.Visible]"></Binding>
+
+		<Changed Source="[ExitConfig.Invoked]">
+			<Conditions>
+				<Equality Source="[Helper.ConfigHasFocus]" ConditionOp="Equals" Value="true" />
+			</Conditions>
+			<Actions>
+				<Set Target="[Helper.ConfigHasFocus]" Value="false" />
+			</Actions>
+		</Changed>
+		
+		<Changed Source="[Helper.ConfigHasFocus]">
+			<Conditions>
+				<Equality Source="[Helper.ConfigHasFocus]" ConditionOp="Equals" Value="true" />
+			</Conditions>
+			<Actions>
+				<Set Target="[Helper.ConfigHasFocus]" Value="false" />
+			</Actions>
+		</Changed>
 
       <!-- Config Popup Options -->
       <Changed Source="[Configure.Invoked]" ConditionLogicalOp="And">
@@ -497,7 +517,7 @@
 			</Actions>
 		</Changed>
 
-		<Condition Source="[Helper.PluginStatus]" ConditionOp="Equals" SourceValue="Trial" Target="[ExpiredOverlay.Visible]" Value="true" />
+		<Condition Source="[Helper.PluginStatus]" ConditionOp="Equals" SourceValue="Expired" Target="[ExpiredOverlay.Visible]" Value="true" />
 
 
       <!--CONFIG PANEL ICONS FOCUS/FOCUSLOST ACTIONS-->
@@ -658,25 +678,6 @@
             </LayoutInput>
           </NowPlaying>
 
-			<!--<Graphic Name="ExpiredMessage" Content="image://vi:PanelBG" Alpha="1" Navigation="ContainAll" Visible="true">
-				<LayoutInput>
-					<FormLayoutInput Left="Parent,0" Top="Parent,0.15" Right="Parent,1" Bottom="Parent,0.85"/>
-				</LayoutInput>
-				<Children>
-
-					<Panel>
-						<Layout>
-							<FlowLayout Orientation="Vertical" StripAlignment="Center" Spacing="15,15"/>
-						</Layout>
-						<Children>
-							<Text Content="IRIDIUM HAS EXPIRED" Font="font://is:MessageTextFont" Color="color://is:MessageTextColor" HorizontalAlignment="Center" />
-							<Text Content="Please purchase from MBC Plugin Catalogue" WordWrap="true" Font="font://is:MessageTextFont" Color="color://is:MessageTextColor" HorizontalAlignment="Center" />
-							
-						</Children>
-					</Panel>
-				</Children>
-			</Graphic>-->
-
 			<Graphic Name ="ExpiredOverlay" Alpha="1" Navigation="None" Content="image://vi:HomeBG" Visible="false" >
 				<LayoutInput>
 					<FormLayoutInput Top="Parent,0.10" Bottom="Parent,1" Right="Parent,1" Left="Parent,0"/>
@@ -684,14 +685,14 @@
 				<Children>
 					<Panel Name="textpanel" >
 						<Layout>
-							<FlowLayout Orientation="Vertical" StripAlignment="Center" ItemAlignment="Center" Spacing="50,50"/>
+							<FlowLayout Orientation="Vertical"  Spacing="50,50"/>
 						</Layout>
 						<LayoutInput>
-							<FormLayoutInput Left="Parent,0,100" />
+							<FormLayoutInput Left="Parent,0,200" Top="Parent,0,500" />
 						</LayoutInput>
 						<Children>
-							<Text Content="IRIDIUM HAS EXPIRED" Font="Xolonium,30,bold" Color="White" Margins="0,50,0,0" />
-							<Text Content="Please purchase a license from EMBY Classic Plugin Catalogue on the Server" Font="Xolonium,20,bold" Color="White" Margins="0,0,0,0" />
+							<Text Content="                         IRIDIUM HAS EXPIRED" Font="Xolonium,30,bold" Color="White" Margins="0,200,0,0" />
+							<Text Content="     Please purchase a license from EMBY Classic Plugin Catalogue on the Server" Font="Xolonium,20,bold" Color="White" Margins="0,0,0,0" />
 						</Children>
 					</Panel>
 				</Children>
@@ -753,8 +754,8 @@
                 <Children>
                   <ColorFill Content="Transparent" Padding="8,0,8,-3" Layout="Anchor">
                     <Children>
-                      <Text Name="FindAsYouType" Font="Neutra Text Book,150" Content="" Color="color://s:FontColorLight" />
-                      <Text Name="ShadowLabel" Content="" Color="255, 0, 0, 0" Font="Neutra Text Light,150">
+                      <Text Name="FindAsYouType" Font="Futurist Fixed-Width,150" Content="" Color="color://s:FontColorLight" />
+                      <Text Name="ShadowLabel" Content="" Color="255, 0, 0, 0" Font="Futurist Fixed-Width,150">
                         <LayoutInput>
                           <AnchorLayoutInput Top="FindAsYouType, 0, 2" Left="FindAsYouType, 0, 2"/>
                         </LayoutInput>
@@ -766,9 +767,9 @@
 
               <Panel Name="MouseBlocker" MouseInteractive="true" Layout="Fill" Visible="false" />
               
-              <Panel Padding="0,0,0,0" Name="ClockDisplay" >
+              <Panel Padding="0,0,0,0" Name="ClockDisplay" Navigation="None" >
                 <LayoutInput>
-                  <FormLayoutInput Top="Parent,0,5" Right="Parent,1,-20" />
+                  <FormLayoutInput Top="Parent,0,35" Right="Parent,1,-5" />
                 </LayoutInput>
                 <Children>
                   <Text Name="TimeDisplay" Color="color://is:ClockColor" Font="font://is:ClockFont"/>
@@ -795,9 +796,9 @@
               </ColorFill>
 
               <!--Options buttons, Search, Settings and NPV button-->
-              <Panel Name="ButtonPanel" Visible="false" Layout="HorizontalFlow" FocusOrder="100" Navigation="PreferFocusOrder" Margins="0,-10,0,0" >
+              <Panel Name="ButtonPanel" Visible="false" Layout="HorizontalFlow" Navigation="PreferFocusOrder" Margins="0,-10,0,0" >
                 <LayoutInput>
-                  <AnchorLayoutInput Top="Parent,0,35" Right="Parent,1,-10" />
+                  <AnchorLayoutInput Top="Parent,0,1" Right="Parent,1,-5" />
                 </LayoutInput>
                 <Animations>
                   <Animation Type="Show">
@@ -874,7 +875,7 @@
 
               <pda:PageDetailAreaIridium ThemeHelper="[Helper]" Name="ViewPanel" Folder="[Folder]" Application="[Application]" LayoutInput="[FullScreen]"/>
 
-              <Graphic Name="MainBG" Layout="Fill" Alpha="0" Content="image://vi:BackgroundBlack" Visible="[Application.Config.ShowRootBackground]"/>
+              <!--<Graphic Name="MainBG" Layout="Fill" Alpha="0" Content="image://vi:BackgroundBlack" Visible="[Application.Config.ShowRootBackground]"/>-->
             </Children>
           </Clip>
         </Children>

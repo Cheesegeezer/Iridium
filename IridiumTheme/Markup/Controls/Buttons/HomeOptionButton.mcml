@@ -11,23 +11,18 @@
 
   <UI Name="HomeOptionButton">
     <Properties>
-      <ICommand Name="Command" ICommand="$Required"/>
+      <Command Name="Command" />
       <cor:String Name="Label" String=""></cor:String>
       <cor:Boolean Name="Close" Boolean="false"/>
+	  <Command Name="LostFocus"/>
     </Properties>
     <Locals>
-      <ClickHandler Name="Clicker" Command="[Command]"/>
+      <ClickHandler Name="Clicker"/>
 
     </Locals>
     <Rules>
 
       <Default Target="[Input.KeyInteractive]" Value="true" />
-
-      <Changed Source="[Clicker.Invoked]">
-        <Actions>
-          <PlaySound Sound="sound://sounds:Miniselect" />
-        </Actions>
-      </Changed>
       
       <Condition Source="[Input.KeyFocus]" SourceValue="true">
         <Actions>
@@ -41,6 +36,15 @@
           <Set Target="[Text.Color]" Value="color://is:XC_RALOption"/>
         </Actions>
       </Condition>
+
+		<Changed Source="[Clicker.Invoked]">
+			<Conditions>
+				<Equality Source="[Command.Available]" Value="true" />
+			</Conditions>
+			<Actions>
+				<Invoke Target="[Command.Invoke]" />
+			</Actions>
+		</Changed>
 
    </Rules>
     

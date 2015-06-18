@@ -220,7 +220,7 @@
           </Panel>
           
           <ColorFill Name="Overlay" Layout="Fill" Visible="[ThemeHelper.Config.FolderShowBackdropOverlay]" Alpha="0.4" Content="Black" />
-          <bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]"/>
+          <!--<bd:NowPlayingBackdrop Name="NowPlayingBackdrop" Application="[Application]"/>-->
           <bd:Backdrop4 LoadDelay="280" FadeTime="0.5"  Application="[Application]" Name="Backdrop" Visible="[ThemeHelper.Config.FolderShowBackdrop]" Image="[Folder.BackdropImage]" Item="[Folder]"/>
 
         </Children>

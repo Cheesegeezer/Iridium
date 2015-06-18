@@ -20,6 +20,7 @@ xmlns:me="Me">
       <Command Name="CloseCommand" Command="$Required" />
       <Command Name="BackCommand" />
       <Command Name="NullCommand" />
+		
     </Properties>
 
     <Locals>
@@ -70,7 +71,6 @@ xmlns:me="Me">
       <ShortcutHandler Name="ChannelUp" Shortcut="ChannelUp" Command="[NullCommand]" Handle="false" HandlerStage="Bubbled" />
       <ShortcutHandler Name="ChannelDown" Shortcut="ChannelDown" Command="[NullCommand]" Handle="false" HandlerStage="Bubbled" />
 
-
       <BooleanChoice Name="FolderShowBackdrop" Value="[Config.FolderShowBackdrop]" />
       <BooleanChoice Name="FolderShowNewsScroller" Value="[Config.FolderShowNewsScroller]" />
       <BooleanChoice Name="FolderShowBackdropOverlay" Value="[Config.FolderShowBackdropOverlay]" />
@@ -82,6 +82,7 @@ xmlns:me="Me">
       <BooleanChoice Name="FolderShowFullMPAAIcons" Value="[Config.FolderShowFullMPAAIcons]" />
       <BooleanChoice Name="FolderShowDetailsQuickList" Value="[Config.FolderShowDetailsQuickList]" />
       <BooleanChoice Name="FolderShowFlatCoverflow" Value="[Config.FolderShowFlatCoverflow]" />
+		
 
       <!--<Choice Name="FolderOrientation">
         <Options>
@@ -543,7 +544,7 @@ xmlns:me="Me">
         </Conditions>
       </Binding>
 
-      <!-- Visibility -->
+	  <!-- Visibility -->
       <Condition Source="[Folder.IsRoot]" ConditionOp="Equals" SourceValue="true">
         <Actions>
           <Set Target="[SortButton.Visible]" Value="false" />
